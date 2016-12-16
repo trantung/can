@@ -290,3 +290,23 @@ function removeTagsHtml($text)
 	$text = html_entity_decode($text);
 	return $text;
 }
+
+function getMarryStatus()
+{
+    return array(
+        '0'=>'Tình trạng hôn nhân',
+        'Y'=>'Chưa kết hôn',
+        'N'=>'Đã kết hôn',
+        'O'=>'Không rõ',
+        );
+}
+
+function getSex()
+{
+    return array(
+        '0'=>'Giới tính',
+        'M'=>'Nam',
+        'F'=>'Nữ',
+        'O'=>'Khác',
+        );
+}

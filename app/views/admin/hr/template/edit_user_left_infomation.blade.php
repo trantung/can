@@ -15,52 +15,53 @@
       </div> --}}
         <div class="form-group form-group-sm row">
           <div class="col-lg-8">
-            <input class="form-control input-sm" type="text" name="fullname" placeholder="Họ tên">
+            <input class="form-control input-sm" type="text" name="fullname" placeholder="Họ tên" value="{{$personal->fullname}}">
           </div>
         </div>
         {{-- full name --}}
         <div class="form-group form-group-sm row">
           <div class="col-lg-8">
-            <input class="form-control input-sm" type="text" name="id_employees" placeholder="Mã nhân viên">
+            <input class="form-control input-sm" type="text" name="id_employees" placeholder="Mã nhân viên" value="{{$personal->id_employees}}">
           </div>
         </div>
         {{-- id --}}
 
         <div class="form-group form-group-sm row">
           <div class="col-lg-8">
-            <input class="form-control input-sm" placeholder="Tên thường gọi" type="text" name="nickname">
+            <input class="form-control input-sm" placeholder="Tên thường gọi" type="text" name="nickname" value="{{$personal->nickname}}">
           </div>
         </div>
         {{-- nickname --}}
         <div class="form-group form-group-sm row">
           <div class="col-lg-8">
-            <input class="form-control input-sm" type="text" name="birthday" id="datepickerStartdate" placeholder="Năm sinh">
+            <input class="form-control input-sm" type="text" name="birthday" id="datepickerStartdate" placeholder="Năm sinh" value="{{$personal->birthday}}">
           </div>
         </div>
         {{-- birthday --}}
         <div class="form-group form-group-sm row">
             <div class="col-lg-8">
-                <input class="form-control input-sm" type="text" name="address" placeholder="Địa chỉ">
+                <input class="form-control input-sm" type="text" name="address" placeholder="Địa chỉ" value="{{$personal->address}}">
             </div>
         </div>
         {{-- address --}}
 
         <div class="form-group form-group-sm row">
           <div class="col-lg-8">
-            {{ Form::select('marry', getMarryStatus(), 'Y', array('class'=>'form-control')) }}
+            {{ Form::select('marry', getMarryStatus(), $personal->marry, array('class'=>'form-control')) }}
+
           </div>
         </div>
         {{-- marry --}}
 
         <div class="form-group form-group-sm row">
           <div class="col-lg-8">
-            <input class="form-control input-sm" type="text" name="mobile" placeholder="Số điện thoại">
+            <input class="form-control input-sm" type="text" name="mobile" placeholder="Số điện thoại" value="{{$personal->mobile}}">
           </div>
         </div>
         {{-- mobile --}}
          <div class="form-group form-group-sm row">
           <div class="col-lg-8">
-            <input class="form-control input-sm" type="email" name="email" placeholder="Email">
+            <input class="form-control input-sm" type="email" name="email" placeholder="Email" value="{{$personal->email}}">
           </div>
         </div>
         {{-- email --}}

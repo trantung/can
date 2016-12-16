@@ -20,17 +20,17 @@
                 <a href="{{ action('ManagerController@index') }}">
                     <i class="fa fa-users"></i> <span>Quản lý thành viên</span>
                 </a>
-                <ul>
+               {{--  <ul>
                     <li>
                         <a href="{{ action('ManagerController@index') }}">
                             <i class="fa fa-users"></i> <span>Quản lý  thành viên</span>
                         </a>
                     </li>
-                </ul>
+                </ul> --}}
             </li>
             <li>
-                <a href="{{ action('ManagerController@index') }}">
-                    <i class="fa fa-users"></i> <span>Quản lý thành viên</span>
+                <a href="{{ action('HumanResourcesController@index') }}">
+                    <i class="fa fa-users"></i> <span>Quản lý nhân sự</span>
                 </a>
             </li>
             @endif

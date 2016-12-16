@@ -24,7 +24,7 @@ class CreatePersonalInfoTable extends Migration {
             $table->integer('mobile')->nullable()->unique();
             $table->string('email', 256)->nullable()->unique();
             $table->integer('idcard')->nullable()->unique()->unsigned();
-            $table->timestamp('date_of_issue', 256)->nullable();
+            $table->date('date_of_issue', 256)->nullable();
             $table->string('place_of_issue', 256)->nullable();
             $table->enum('sex', array('M', 'F', 'O'))->default('M');
             $table->integer('tax_code')->nullable()->unique()->unsigned();

@@ -7,7 +7,7 @@
   @include('admin.common.navbar')
 
   <!-- Left side column. contains the logo and sidebar -->
-  @include('admin.common.sidebar')
+  {{-- @include('admin.common.sidebar') --}}
 
   <!-- Content Wrapper. Contains page content -->
   <div class="container-fluid">
@@ -48,6 +48,11 @@
 </div>
 <!-- ./wrapper -->
 
+  <!-- Left side column. contains the logo and sidebar -->
+  @include('admin.common.sidebar')
 {{-- @include('admin.common.footer') --}}
+  <!-- Add the sidebar's background. This div must be placed
+       immediately after the control sidebar -->
+  <div class="control-sidebar-bg"></div>
 </body>
 </html>
