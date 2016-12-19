@@ -1,6 +1,6 @@
 <?php
 
-class BranchCategoryController extends BaseCategoryController {
+class ContractCategoryController extends BaseCategoryController {
 
 
     protected $model;
@@ -129,4 +129,42 @@ class BranchCategoryController extends BaseCategoryController {
     protected function viewOfActionEdit(){
         return 'admin.system.branch.edit';
     }
+
+    /**
+   * [destroy set branch status is deleted]
+   * @param  [int] $id [id of branch need set status is deleted]
+   * @return [status]     [true or false]
+   */
+    public function destroyBranchAndDepartment($id){
+        // try {
+        //     DB::beginTransaction();
+        //     $permission = $this->auth->permission(self::MODULE_NAME, self::PERMISSION_DELETED);
+        //     // check premission of user.
+        //     if(!$permission){
+        //         return $this->response->json(false,'','MESSAGE.PERMISSION_DENIED');
+        //     }
+        //     // check branch exit.
+        //     $branch = $this->FindDataBySomeModel($this->branch, $id);
+        //     if(!$branch){
+        //         return $this->response->json(false,'','MESSAGE.RECORD_NOT_FOUND');
+        //     }
+
+        //     // delete array relation department id .
+        //     $this->department->where(self::COMPANY_ID, $this->company_id)
+        //                      ->where(self::BRANCH_ID, $branch->id)
+        //                      ->where(self::DELETED, self::ZERO)
+        //                      ->update([self::DELETED => self::ONE]);
+        //     // delete this branch.
+        //     $branch->deleted = self::ONE;
+        //     $branch->save();
+        // } catch (Exception $e) {
+        //     DB::rollback();
+
+        //     return $this->response->json(false,'',$this->getErrorMessages($e));
+        // }
+        // DB::commit();
+
+        // return $this->response->json(true, $id, 'MESSAGE.DELETE_SUCCESS');
+    }
+
 }

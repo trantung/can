@@ -130,6 +130,8 @@ class HumanResourcesController extends AdminController {
             return Redirect::action('HumanResourcesController@create')
                 ->withErrors($validator);
         }
+        $input[self::CREATED_BY] = Auth::admin()->get()->id;
+        $input[self::UPDATED_BY] = Auth::admin()->get()->id;
 
         return $input;
     }

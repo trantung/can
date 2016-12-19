@@ -49,6 +49,8 @@ class PersonalInfo extends Eloquent implements UserInterface, RemindableInterfac
         'ethnic_group_id',
         'religion_category_id',
         'contract_category_id',
+        'created_by',
+        'updated_by',
         );
     protected $dates = ['deleted_at'];
 

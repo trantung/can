@@ -12,7 +12,7 @@ class AdminController extends BaseController {
 	{
 		$checkLogin = Auth::admin()->check();
         if($checkLogin) {
-    		return Redirect::action('ManagerController@edit', Auth::admin()->get()->id);
+    		return Redirect::action('ManagerController@index', Auth::admin()->get()->id);
         } else {
             return View::make('admin.layout.login');
         }
@@ -90,23 +90,28 @@ class AdminController extends BaseController {
     }
     public function doLogin()
     {
-        $rules = array(
-            'username'   => 'required',
-            'password'   => 'required',
-        );
-        $input = Input::except('_token');
-        $validator = Validator::make($input, $rules);
-        if ($validator->fails()) {
-            return Redirect::route('admin.login')
-                ->withErrors($validator)
-                ->withInput(Input::except('password'));
-        } else {
-            $checkLogin = Auth::admin()->attempt($input);
-            if($checkLogin) {
-        		return Redirect::action('HumanResourcesController@index');
+        try {
+            $rules = array(
+                'username'   => 'required',
+                'password'   => 'required',
+            );
+            $input = Input::except('_token');
+            $validator = Validator::make($input, $rules);
+            if ($validator->fails()) {
+                return Redirect::route('admin.login')
+                    ->withErrors($validator)
+                    ->withInput(Input::except('password'));
             } else {
-                return Redirect::route('admin.login');
+                $checkLogin = Auth::admin()->attempt($input);
+                if($checkLogin) {
+            		return Redirect::action('HumanResourcesController@index');
+                } else {
+                    return Redirect::route('admin.login');
+                }
             }
+
+        } catch (Exception $e) {
+            dd($e->getMessage());
         }
     }
     public function logout()

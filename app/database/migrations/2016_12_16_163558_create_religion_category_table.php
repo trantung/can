@@ -16,6 +16,8 @@ class CreateReligionCategoryTable extends Migration {
             $table->increments('id');
             $table->string('name', 256)->nullable();
             $table->string('description', 256)->nullable();
+            $table->integer('created_by')->nullable()->unsigned();
+            $table->integer('updated_by')->nullable()->unsigned();
             $table->softDeletes();
             $table->timestamps();
         });

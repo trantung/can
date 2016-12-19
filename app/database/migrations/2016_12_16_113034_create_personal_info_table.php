@@ -39,6 +39,8 @@ class CreatePersonalInfoTable extends Migration {
             $table->integer('position_category_id')->nullable()->unsigned();
             $table->integer('employees_category_id')->nullable()->unsigned();
             $table->integer('contract_category_id')->nullable()->unsigned();
+            $table->integer('created_by')->nullable()->unsigned();
+            $table->integer('updated_by')->nullable()->unsigned();
             $table->softDeletes();
             $table->timestamps();
         });

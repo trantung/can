@@ -23,7 +23,10 @@ Route::group(['prefix' => 'admin'], function () {
 	Route::get('/manager/search', array('uses' => 'ManagerController@search', 'as' => 'admin.manager.search'));
 	Route::resource('/manager', 'ManagerController');
     Route::resource('/hr', 'HumanResourcesController');
-    // Route::resource('/branch', 'category\BranchCategoryController');
+    Route::resource('/branch', 'BranchCategoryController');
+    Route::resource('/position', 'PositionCategoryController');
+    Route::resource('/contract', 'ContractCategoryController');
+    Route::resource('/religion', 'ReligionCategoryController');
 
 });
 

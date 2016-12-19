@@ -15,7 +15,7 @@
 			"app/commands",
 			"app/controllers",
 			"app/controllers/admin",
-            "app/controllers/site",
+            "app/controllers/admin/category",
 			"app/models",
 			"app/services",
 			"app/database/migrations",

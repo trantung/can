@@ -1,6 +1,6 @@
 <?php
 
-class BranchCategoryController extends BaseCategoryController {
+class ReligionCategoryController extends BaseCategoryController {
 
 
     protected $model;
