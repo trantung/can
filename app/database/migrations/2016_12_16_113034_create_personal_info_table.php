@@ -14,23 +14,23 @@ class CreatePersonalInfoTable extends Migration {
 	{
 		Schema::create('personal_info', function(Blueprint $table) {
             $table->increments('id');
-            $table->string('fullname', 256)->nullable();
-            $table->string('id_employees', 256)->nullable();
-            $table->string('nickname', 256)->nullable();
-            $table->string('image', 256)->nullable();
+            $table->string('fullname', 255)->nullable();
+            $table->string('id_employees', 255)->nullable();
+            $table->string('nickname', 255)->nullable();
+            $table->string('image', 255)->nullable();
             $table->date('birthday')->nullable();
-            $table->string('address', 256)->nullable();
+            $table->string('address', 255)->nullable();
             $table->enum('marry',  array('Y', 'N', 'O'))->default('O');
             $table->integer('mobile')->nullable()->unique();
-            $table->string('email', 256)->nullable()->unique();
+            $table->string('email', 255)->nullable()->unique();
             $table->integer('idcard')->nullable()->unique()->unsigned();
-            $table->date('date_of_issue', 256)->nullable();
-            $table->string('place_of_issue', 256)->nullable();
+            $table->date('date_of_issue', 255)->nullable();
+            $table->string('place_of_issue', 255)->nullable();
             $table->enum('sex', array('M', 'F', 'O'))->default('M');
             $table->integer('tax_code')->nullable()->unique()->unsigned();
             $table->integer('insurance_id')->nullable()->unsigned();
-            $table->string('bank_id', 256)->nullable();
-            $table->string('bank_name', 256)->nullable();
+            $table->string('bank_id', 255)->nullable();
+            $table->string('bank_name', 255)->nullable();
             // $table->integer('company_id')->unsigned()->nullable();
             $table->integer('ethnic_group_id')->nullable()->unsigned();
             $table->integer('religion_category_id')->nullable()->unsigned();

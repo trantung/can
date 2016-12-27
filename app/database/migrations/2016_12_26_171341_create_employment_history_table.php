@@ -14,8 +14,8 @@ class CreateEmploymentHistoryTable extends Migration {
 	{
 		Schema::create('employment_history', function(Blueprint $table) {
             $table->increments('id');
-            $table->string('why_out', 256)->nullable();
-            $table->string('description', 256)->nullable();
+            $table->string('why_out', 255)->nullable();
+            $table->string('description', 255)->nullable();
             $table->integer('company_name')->nullable()->unsigned();
             $table->integer('branch')->nullable()->unsigned();
             $table->integer('position')->nullable()->unsigned();

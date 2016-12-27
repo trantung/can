@@ -14,7 +14,7 @@ class CreateEmploymentEducationalTable extends Migration {
 	{
 		Schema::create('employment_educational', function(Blueprint $table) {
             $table->increments('id');
-            $table->string('school_name', 256)->nullable();
+            $table->string('school_name', 255)->nullable();
             $table->integer('industry_id')->nullable()->unsigned();
             $table->integer('certificate_id')->nullable()->unsigned();
             $table->integer('personal_id')->nullable()->unsigned();

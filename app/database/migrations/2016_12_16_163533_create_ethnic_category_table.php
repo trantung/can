@@ -13,8 +13,8 @@ class CreateEthnicCategoryTable extends Migration {
     {
         Schema::create('ethnic', function(Blueprint $table) {
             $table->increments('id');
-            $table->string('name', 256)->nullable();
-            $table->string('description', 256)->nullable();
+            $table->string('name', 255)->nullable();
+            $table->string('description', 255)->nullable();
             $table->integer('created_by')->nullable()->unsigned();
             $table->integer('updated_by')->nullable()->unsigned();
             $table->softDeletes();
