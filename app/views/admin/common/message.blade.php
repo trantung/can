@@ -1,4 +1,4 @@
-@if (count($errors->all()) > 0)
+@if (count($errors->all()) > 0 && !Session::get('model1') && !Session::get('add_new_employer_history'))
 <div class="alert alert-danger alert-block">
 	<button type="button" class="close" data-dismiss="alert">&times;</button>
 	{{ HTML::ul($errors->all()) }}
@@ -20,7 +20,7 @@
 @endif
 
 @if ($message = Session::get('error'))
-<div class="alert alert-danger alert-dismissable">
+<div class="alert alert-danger alert-dismissable error">
     <i class="fa fa-ban"></i>
     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
     @if(is_array($message))

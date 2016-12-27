@@ -8,18 +8,13 @@ class ReligionCategoryController extends BaseCategoryController {
 
     const ZERO       = 0;
     const ONE        = 1;
-    // field of branch table.
+    // field of contract table.
     const ID              = 'id';
     const NAME            = 'name';
     const CRETED_BY       = 'created_by';
     const UPDATED_BY      = 'created_by';
     const DELETED         = 'deleted';
     const DESCRIPTION     = 'description';
-    const ADDRESS         = 'address';
-    const COMPANY_ID      = 'company_id';
-
-    const DEPARTMENT_ID   = 'department_id';
-    const BRANCH_ID       = 'branch_id';
 
 
 
@@ -31,7 +26,7 @@ class ReligionCategoryController extends BaseCategoryController {
     */
     protected function getModel()
     {
-        return new Branch;
+        return new Religion;
     }
 
     /**
@@ -40,7 +35,7 @@ class ReligionCategoryController extends BaseCategoryController {
     * @return array
     */
     protected function getInputFieldStore(){
-        return Input::only(self::NAME, self::ADDRESS);
+        return Input::only(self::NAME, self::DESCRIPTION);
     }
 
     /**
@@ -49,7 +44,7 @@ class ReligionCategoryController extends BaseCategoryController {
     * @return array
     */
     protected function getInputFieldUpdate(){
-        return Input::only(self::NAME, self::ADDRESS);
+        return Input::only(self::NAME, self::DESCRIPTION);
     }
 
     /**
@@ -84,8 +79,8 @@ class ReligionCategoryController extends BaseCategoryController {
     * @param collection.
     * @return model
     */
-    protected function getSubTable($input){
-        return $input->toArray();
+    protected function getSubTable(){
+        return NULL;
     }
 
     /**
@@ -96,7 +91,6 @@ class ReligionCategoryController extends BaseCategoryController {
     protected function storeValidater(array $array){
         return Validator::make($array,[
             self::NAME => 'required',
-            self::ADDRESS => 'required',
         ]);
     }
 
@@ -108,25 +102,25 @@ class ReligionCategoryController extends BaseCategoryController {
     protected function updateValidater(array $array){
         return Validator::make($array,[
             self::NAME => 'required',
-            self::ADDRESS => 'required',
         ]);
     }
 
     protected function redirectBackAction(){
-        return Redirect::action('BranchCategoryController@index');
+        return Redirect::action('ReligionCategoryController@index');
     }
 
 
     protected function viewOfActionIndex(){
-        return 'admin.system.branch.index';
+        return 'admin.system.religion.index';
     }
     protected function viewOfActionCreate(){
-        return 'admin.system.branch.create';
+        return 'admin.system.religion.create';
     }
     protected function viewOfActionShow(){
-        return 'admin.system.branch.detail';
+        return 'admin.system.religion.detail';
     }
     protected function viewOfActionEdit(){
-        return 'admin.system.branch.edit';
+        return 'admin.system.religion.edit';
     }
+
 }

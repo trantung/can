@@ -6,9 +6,6 @@
 
 @section('content')
 
-    <!-- inclue Search form -->
-    @include('admin.manager.search')
-
     <div class="row margin-bottom">
         <div class="col-xs-12">
             <a href="{{ action('BranchCategoryController@create') }}" class="btn btn-primary">Thêm mới chi nhánh</a>

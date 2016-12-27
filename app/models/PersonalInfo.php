@@ -42,7 +42,7 @@ class PersonalInfo extends Eloquent implements UserInterface, RemindableInterfac
         'bank_id',
         'bank_name',
         // 'company_id',
-        'nationnality_category_id',
+        'nationality_category_id',
         'branch_category_id',
         'position_category_id',
         'employees_category_id',
@@ -54,5 +54,14 @@ class PersonalInfo extends Eloquent implements UserInterface, RemindableInterfac
         );
     protected $dates = ['deleted_at'];
 
+    public function employmentEducational()
+    {
+        return $this->hasMany('EmploymentEducational', 'personal_id');
+    }
+
+    public function employmentHistory()
+    {
+        return $this->hasMany('EmploymentHistory', 'personal_id');
+    }
 
 }

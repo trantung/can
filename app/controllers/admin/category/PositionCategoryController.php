@@ -11,15 +11,14 @@ class PositionCategoryController extends BaseCategoryController {
     // field of branch table.
     const ID              = 'id';
     const NAME            = 'name';
-    const CRETED_BY       = 'created_by';
+    const CREATED_BY      = 'created_by';
     const UPDATED_BY      = 'created_by';
     const DELETED         = 'deleted';
     const DESCRIPTION     = 'description';
-    const ADDRESS         = 'address';
     const COMPANY_ID      = 'company_id';
 
     const DEPARTMENT_ID   = 'department_id';
-    const BRANCH_ID       = 'branch_id';
+    const BRANCH_ID       = 'branch_category_id';
 
 
 
@@ -31,7 +30,7 @@ class PositionCategoryController extends BaseCategoryController {
     */
     protected function getModel()
     {
-        return new Branch;
+        return new Position;
     }
 
     /**
@@ -40,7 +39,7 @@ class PositionCategoryController extends BaseCategoryController {
     * @return array
     */
     protected function getInputFieldStore(){
-        return Input::only(self::NAME, self::ADDRESS);
+        return Input::only(self::NAME, self::BRANCH_ID, self::DESCRIPTION);
     }
 
     /**
@@ -49,7 +48,7 @@ class PositionCategoryController extends BaseCategoryController {
     * @return array
     */
     protected function getInputFieldUpdate(){
-        return Input::only(self::NAME, self::ADDRESS);
+        return Input::only(self::NAME, self::BRANCH_ID, self::DESCRIPTION);
     }
 
     /**
@@ -84,8 +83,8 @@ class PositionCategoryController extends BaseCategoryController {
     * @param collection.
     * @return model
     */
-    protected function getSubTable($input){
-        return $input->toArray();
+    protected function getSubTable(){
+        return $this->buildArrayData( Branch::orderBy('id', 'asc')->get() );;
     }
 
     /**
@@ -96,7 +95,7 @@ class PositionCategoryController extends BaseCategoryController {
     protected function storeValidater(array $array){
         return Validator::make($array,[
             self::NAME => 'required',
-            self::ADDRESS => 'required',
+            self::BRANCH_ID => 'required',
         ]);
     }
 
@@ -108,25 +107,25 @@ class PositionCategoryController extends BaseCategoryController {
     protected function updateValidater(array $array){
         return Validator::make($array,[
             self::NAME => 'required',
-            self::ADDRESS => 'required',
+            self::BRANCH_ID => 'required',
         ]);
     }
 
     protected function redirectBackAction(){
-        return Redirect::action('BranchCategoryController@index');
+        return Redirect::action('PositionCategoryController@index');
     }
 
 
     protected function viewOfActionIndex(){
-        return 'admin.system.branch.index';
+        return 'admin.system.position.index';
     }
     protected function viewOfActionCreate(){
-        return 'admin.system.branch.create';
+        return 'admin.system.position.create';
     }
     protected function viewOfActionShow(){
-        return 'admin.system.branch.detail';
+        return 'admin.system.position.detail';
     }
     protected function viewOfActionEdit(){
-        return 'admin.system.branch.edit';
+        return 'admin.system.position.edit';
     }
 }

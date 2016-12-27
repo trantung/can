@@ -120,5 +120,15 @@ class AdminController extends BaseController {
         Session::flush();
         return Redirect::route('admin.login');
     }
+
+    protected function buildArrayData($data)
+    {
+        $result = [];
+        foreach ($data as $key => $value) {
+           $result[$value->id] = $value->name;
+        }
+        return $result;
+    }
+
 }
 

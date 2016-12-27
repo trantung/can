@@ -13,18 +13,20 @@
 <div class="row">
     {{ Form::open(array('action' => 'HumanResourcesController@store')) }}
         <div class="col-md-6 col-sm-12 col-xs-12">
-            @include('admin.common.user_left_infomation')
+            @include('admin.hr.template.employment_left_infomation')
         </div>
         <div class="col-md-6 col-sm-12 col-xs-12">
-            @include('admin.common.user_right_infomation')
+            @include('admin.hr.template.employment_right_infomation')
         </div>
     {{ Form::close() }}
 </div>
-<hr>
-@include('admin.common.user_educational')
-<hr>
-@include('admin.common.user_employment_history')
 
+@if(isset($personal->employmentEducational))
+<hr>
+@include('admin.hr.template.employment_educational')
+<hr>
+@include('admin.hr.template.employment_history')
+@endif
 <style type="text/css">
     hr {
     margin-top: 20px;

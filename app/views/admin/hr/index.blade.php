@@ -6,7 +6,7 @@
 @section('content')
 
     <!-- inclue Search form -->
-    @include('admin.manager.search')
+    @include('admin.hr.template.search')
 
     <div class="row margin-bottom">
         <div class="col-xs-12">
@@ -46,7 +46,7 @@
                   <td>{{ $value->email }}</td>
                   <td>{{ $branch_category_id[$value->branch_category_id] }}</td>
                   <td>{{ $position_category_id[$value->position_category_id] }}</td>
-                  <td>{{ $employees_category_id[$value->employees_category_id] }}</td>
+                  <td>{{ isset($employees_category_id[$value->employees_category_id]) ? $employees_category_id[$value->employees_category_id] : '';}}</td>
                   <td>
                     {{-- <a href="#" class="btn btn-success">Xem</a> --}}
                     {{-- <a href="{{action('HumanResourcesController@changePassword', $value->id) }}" class="btn btn-primary">Change Pass</a> --}}

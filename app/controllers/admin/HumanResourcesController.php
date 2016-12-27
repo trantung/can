@@ -3,6 +3,7 @@
 class HumanResourcesController extends AdminController {
 
     const ID                = 'id';
+    const NAME                = 'name';
     const IDCARD            = 'idcard';
     const DATE_OF_ISSUE     =  'date_of_issue';
     const IMAGE             = 'image';
@@ -21,13 +22,37 @@ class HumanResourcesController extends AdminController {
     const MARRY             = 'marry';
     const MOBILE            = 'mobile';
     const EMAIL             = 'email';
-    const ETHINIC_GROUP_ID  ='ethnic_group_id';
-    const NATIONNALITY_ID   ='nationnality_category_id';
+    const CREATED_BY             = 'created_by';
+    const UPDATED_BY             = 'updated_by';
+    const ETHNIC_GROUP_ID  ='ethnic_group_id';
+    const NATIONALITY_ID   ='nationality_category_id';
     const BRANCH_ID         = 'branch_category_id';
     const POSITION_ID       = 'position_category_id';
     const EMPLOYEES_CATEGORY_ID = 'employees_category_id';
     const RELIGION_CATEGORY_ID       = 'religion_category_id';
     const CONTRACT_CATEGORY_ID = 'contract_category_id';
+    const INDUSTRY_CATEGORY_ID = 'industry_category_id';
+    const CERTIFICATE_CATEGORY_ID = 'certificate_category_id';
+    const COMPANY_CATEGORY_ID = 'company_category_id';
+
+    const KEYWORD = 'keyword';
+
+    protected function getAllCategory($key, $value)
+    {
+       return [
+            self::ETHNIC_GROUP_ID           =>$this->buildArrayData(Ethnic::orderBy('id', 'asc')->get() ),
+            self::RELIGION_CATEGORY_ID      =>$this->buildArrayData(Religion::orderBy('id', 'asc')->get() ),
+            self::CONTRACT_CATEGORY_ID      =>$this->buildArrayData(Contract::orderBy('id', 'asc')->get() ),
+            self::COMPANY_CATEGORY_ID       =>$this->buildArrayData(Company::orderBy('id', 'asc')->get() ),
+            self::BRANCH_ID                 =>$this->buildArrayData(Branch::orderBy('id', 'asc')->get() ),
+            self::POSITION_ID               =>$this->buildArrayData(Position::orderBy('id', 'asc')->get() ),
+            self::EMPLOYEES_CATEGORY_ID     =>$this->buildArrayData(Employees::orderBy('id', 'asc')->get() ),
+            self::NATIONALITY_ID            =>$this->buildArrayData(Nationality::orderBy('id', 'asc')->get() ),
+            self::INDUSTRY_CATEGORY_ID      =>$this->buildArrayData(Industry::orderBy('id', 'asc')->get() ),
+            self::CERTIFICATE_CATEGORY_ID   =>$this->buildArrayData(Certificate::orderBy('id', 'asc')->get() ),
+            $key => $value,
+        ];
+    }
     /**
      * Display a listing of the resource.
      *
@@ -35,37 +60,73 @@ class HumanResourcesController extends AdminController {
      */
     public function index()
     {
-        $data = PersonalInfo::orderBy('id', 'asc')->paginate(PAGINATE);
+        $input =  Input::only(
+            self::KEYWORD,
+            self::ETHNIC_GROUP_ID,
+            self::RELIGION_CATEGORY_ID,
+            self::EMPLOYEES_CATEGORY_ID,
+            self::ID_EMPLOYEES,
+            self::BRANCH_ID,
+            self::POSITION_ID,
+            self::NATIONALITY_ID,
+            self::CONTRACT_CATEGORY_ID,
+            self::INDUSTRY_CATEGORY_ID,
+            self::CERTIFICATE_CATEGORY_ID
+            );
+        $data = PersonalInfo::where(function ($query) use ($input){
+            if ($input[self::KEYWORD]) {
+                $query = $query->where(self::EMAIL, 'like', '%'.$input[self::KEYWORD].'%')
+                                ->orWhere( self::NICKNAME, 'like', '%'.$input[self::KEYWORD].'%')
+                                ->orWhere( self::IDCARD, 'like', '%'.$input[self::KEYWORD].'%')
+                                ->orWhere( self::TAX_CODE, 'like', '%'.$input[self::KEYWORD].'%')
+                                ->orWhere( self::BANK_ID, 'like', '%'.$input[self::KEYWORD].'%')
+                                ->orWhere( self::BANK_NAME, 'like', '%'.$input[self::KEYWORD].'%')
+                                ->orWhere( self::FULLNAME, 'like', '%'.$input[self::KEYWORD].'%')
+                                ->orWhere( self::ID_EMPLOYEES, 'like', '%'.$input[self::KEYWORD].'%')
+                                ->orWhere( self::NICKNAME, 'like', '%'.$input[self::KEYWORD].'%')
+                                ->orWhere( self::ADDRESS, 'like', '%'.$input[self::KEYWORD].'%')
+                                ->orWhere( self::MOBILE, 'like', '%'.$input[self::KEYWORD].'%')
+                                ->orWhere( self::EMAIL, 'like', '%'.$input[self::KEYWORD].'%');
+            }
+            if ($input[self::ETHNIC_GROUP_ID]) {
+                $query = $query->where(self::ETHNIC_GROUP_ID, $input[self::ETHNIC_GROUP_ID]);
+            }
+            if ($input[self::RELIGION_CATEGORY_ID]) {
+                $query = $query->where(self::RELIGION_CATEGORY_ID, $input[self::RELIGION_CATEGORY_ID]);
+            }
+            if ($input[self::EMPLOYEES_CATEGORY_ID]) {
+                $query = $query->where(self::EMPLOYEES_CATEGORY_ID, $input[self::EMPLOYEES_CATEGORY_ID]);
+            }
+            if ($input[self::ID_EMPLOYEES]) {
+                $query = $query->where(self::ID_EMPLOYEES, $input[self::ID_EMPLOYEES]);
+            }
+            if ($input[self::BRANCH_ID]) {
+                $query = $query->where(self::BRANCH_ID, $input[self::BRANCH_ID]);
+            }
+            if ($input[self::POSITION_ID]) {
+                $query = $query->where(self::POSITION_ID, $input[self::POSITION_ID]);
+            }
+            if ($input[self::NATIONALITY_ID]) {
+                $query = $query->where(self::NATIONALITY_ID, $input[self::NATIONALITY_ID]);
+            }
+            if ($input[self::CONTRACT_CATEGORY_ID]) {
+                $query = $query->where(self::CONTRACT_CATEGORY_ID, $input[self::CONTRACT_CATEGORY_ID]);
+            }
+            if ($input[self::INDUSTRY_CATEGORY_ID]) {
+                $query = $query->where(self::INDUSTRY_CATEGORY_ID, $input[self::INDUSTRY_CATEGORY_ID]);
+            }
+            if ($input[self::CERTIFICATE_CATEGORY_ID]) {
+                $query = $query->where(self::CERTIFICATE_CATEGORY_ID, $input[self::CERTIFICATE_CATEGORY_ID]);
+            }
+            // todo
+            // if ($input['start_date'])
+            //  $query = $query->where('updated_at', '>=' ,$input['start_date']);
+            // if ($input['end_date'])
+            //  $query = $query->where('updated_at', '<=' ,$input['end_date'].' 23:59:59');
+        })->orderBy(self::ID, 'asc')->paginate(PAGINATE);
+        $result = $this->getAllCategory('data', $data);
 
-        $ethnic_group_id = ['Dân tộc', 'Kinh', 'Ede', 'Khác'];
-       $contract_category_id = ['Loại hợp đồng', 'ngan han', 'dai han', 'Khác'];
-       $religion_category_id = ['Tôn giáo', 'khong', 'Phat', 'Khác'];
-       $branch_category_id = ['Chi nhánh', 'So 1', 'So 2', 'Khác'];
-       $position_category_id = ['Chức vụ', 'Giam doc', 'CTO', 'CEO'];
-       $employees_category_id = ['Loại nhân viên', 'Lao động phổ thông Full time', 'Lao động phổ thông parttime', 'Chuyên viên'];
-       $nationnality_category_id = ['Việt Nam', 'Lào ', 'Anh', 'Mỹ'];
-        $result = [
-            'ethnic_group_id'=>$ethnic_group_id,
-            'religion_category_id'=>$religion_category_id,
-            'contract_category_id'=>$contract_category_id,
-            'branch_category_id'=>$branch_category_id,
-            'position_category_id'=>$position_category_id,
-            'employees_category_id'=>$employees_category_id,
-            'nationnality_category_id'=>$nationnality_category_id,
-            'data'=>$data,
-        ];
-        // return View::make('admin.hr.index')->with(compact('data'));
         return View::make('admin.hr.index', $result);
-    }
-
-    public function search()
-    {
-        // $input = Input::all();
-        // if (!$input['keyword'] && !$input['role_id'] && $input['start_date'] && $input['end_date']) {
-        //     return Redirect::action('HumanResourcesController@index');
-        // }
-        // $data = AdminManager::searchUserOperation($input);
-        // return View::make('admin.hr.index')->with(compact('data'));
     }
 
     /**
@@ -75,30 +136,15 @@ class HumanResourcesController extends AdminController {
      */
     public function create()
     {
-       $ethnic_group_id = ['Dân tộc', 'Kinh', 'Ede', 'Khác'];
-       $contract_category_id = ['Loại hợp đồng', 'ngan han', 'dai han', 'Khác'];
-       $religion_category_id = ['Tôn giáo', 'khong', 'Phat', 'Khác'];
-       $branch_category_id = ['Chi nhánh', 'So 1', 'So 2', 'Khác'];
-       $position_category_id = ['Chức vụ', 'Giam doc', 'CTO', 'CEO'];
-       $employees_category_id = ['Loại nhân viên', 'Lao động phổ thông Full time', 'Lao động phổ thông parttime', 'Chuyên viên'];
-       $nationnality_category_id = ['Việt Nam', 'Lào ', 'Anh', 'Mỹ'];
-        $result = [
-            'ethnic_group_id'=>$ethnic_group_id,
-            'religion_category_id'=>$religion_category_id,
-            'contract_category_id'=>$contract_category_id,
-            'branch_category_id'=>$branch_category_id,
-            'position_category_id'=>$position_category_id,
-            'employees_category_id'=>$employees_category_id,
-            'nationnality_category_id'=>$nationnality_category_id,
-        ];
+        $result = $this->getAllCategory('data', null);
 
         return View::make('admin.hr.create', $result);
         // return View::make('admin.hr.create');
     }
 
-    public function getAndValidateInput($rules)
+    public function getInput()
     {
-        $input = Input::only(
+        return Input::only(
             self::IDCARD,
             self::DATE_OF_ISSUE,
             // self::IMAGE,
@@ -117,23 +163,14 @@ class HumanResourcesController extends AdminController {
             self::MARRY,
             self::MOBILE,
             self::EMAIL,
-            self::ETHINIC_GROUP_ID,
-            self::NATIONNALITY_ID,
+            self::ETHNIC_GROUP_ID,
+            self::NATIONALITY_ID,
             self::BRANCH_ID,
             self::POSITION_ID,
             self::EMPLOYEES_CATEGORY_ID,
             self::RELIGION_CATEGORY_ID,
             self::CONTRACT_CATEGORY_ID
             );
-        $validator = Validator::make($input,$rules);
-        if($validator->fails()) {
-            return Redirect::action('HumanResourcesController@create')
-                ->withErrors($validator);
-        }
-        $input[self::CREATED_BY] = Auth::admin()->get()->id;
-        $input[self::UPDATED_BY] = Auth::admin()->get()->id;
-
-        return $input;
     }
 
     /**
@@ -145,37 +182,44 @@ class HumanResourcesController extends AdminController {
     {
         try {
             $rules = array(
-                // sefl::IDCARD   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // sefl::DATE_OF_ISSUE   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // sefl::IMAGE   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // sefl::PLACE_OF_ISSUE   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // sefl::NATIONNALITY_ID   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // sefl::SEX   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // sefl::ETHINIC_GROUP_ID   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // sefl::RELIGION_ID   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // sefl::CONTRACT_CATEGORY_ID   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // sefl::TAX_CODE   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // sefl::INSURANCE_ID   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // sefl::BANK_ID   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // sefl::BANK_NAME   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // sefl::COMPANY_ID   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // sefl::BRANCH_ID   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // sefl::POSITION_ID   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // sefl::EMPLOYEES_CATEGORY_ID   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // sefl::FULLNAME   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // sefl::ID_EMPLOYEES   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // sefl::NICKNAME   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // sefl::BIRTHDAY   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // sefl::ADDRESS   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // sefl::MARRY   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // sefl::MOBILE   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // sefl::EMAIL   => 'required|unique:admins,deleted_at,NULL|unique_delete',
+                self::IDCARD   => 'required|unique:admins,deleted_at,NULL|unique_delete',
+                // self::DATE_OF_ISSUE   => 'required|unique:admins,deleted_at,NULL|unique_delete',
+                // self::IMAGE   => 'required|unique:admins,deleted_at,NULL|unique_delete',
+                // self::PLACE_OF_ISSUE   => 'required|unique:admins,deleted_at,NULL|unique_delete',
+                // self::NATIONALITY_ID   => 'required|unique:admins,deleted_at,NULL|unique_delete',
+                // self::SEX   => 'required|unique:admins,deleted_at,NULL|unique_delete',
+                // self::ETHNIC_GROUP_ID   => 'required|unique:admins,deleted_at,NULL|unique_delete',
+                // self::RELIGION_ID   => 'required|unique:admins,deleted_at,NULL|unique_delete',
+                // self::CONTRACT_CATEGORY_ID   => 'required|unique:admins,deleted_at,NULL|unique_delete',
+                // self::TAX_CODE   => 'required|unique:admins,deleted_at,NULL|unique_delete',
+                // self::INSURANCE_ID   => 'required|unique:admins,deleted_at,NULL|unique_delete',
+                // self::BANK_ID   => 'required|unique:admins,deleted_at,NULL|unique_delete',
+                // self::BANK_NAME   => 'required|unique:admins,deleted_at,NULL|unique_delete',
+                // self::COMPANY_ID   => 'required|unique:admins,deleted_at,NULL|unique_delete',
+                // self::BRANCH_ID   => 'required|unique:admins,deleted_at,NULL|unique_delete',
+                // self::POSITION_ID   => 'required|unique:admins,deleted_at,NULL|unique_delete',
+                // self::EMPLOYEES_CATEGORY_ID   => 'required|unique:admins,deleted_at,NULL|unique_delete',
+                // self::FULLNAME   => 'required|unique:admins,deleted_at,NULL|unique_delete',
+                // self::ID_EMPLOYEES   => 'required|unique:admins,deleted_at,NULL|unique_delete',
+                // self::NICKNAME   => 'required|unique:admins,deleted_at,NULL|unique_delete',
+                // self::BIRTHDAY   => 'required|unique:admins,deleted_at,NULL|unique_delete',
+                // self::ADDRESS   => 'required|unique:admins,deleted_at,NULL|unique_delete',
+                // self::MARRY   => 'required|unique:admins,deleted_at,NULL|unique_delete',
+                // self::MOBILE   => 'required|unique:admins,deleted_at,NULL|unique_delete',
+                // self::EMAIL   => 'required|unique:admins,deleted_at,NULL|unique_delete',
             );
-            $input = $this->getAndValidateInput($rules);
+
+            $input = $this->getInput();
+            $validator =  Validator::make($input,$rules);
+            if($validator->fails()) {
+                return Redirect::action('HumanResourcesController@create')
+                    ->withErrors($validator);
+            }
+            $input[self::CREATED_BY] = Auth::admin()->get()->id;
+            $input[self::UPDATED_BY] = Auth::admin()->get()->id;
+
             $id = PersonalInfo::create($input)->id;
-            if($id) {
-                return Redirect::action('HumanResourcesController@index');
-            } else {
+            if(!$id) {
                 dd('Error');
             }
 
@@ -183,6 +227,7 @@ class HumanResourcesController extends AdminController {
 
             return $this->returnError($e);
         }
+        return Redirect::action('HumanResourcesController@index');
     }
 
 
@@ -206,30 +251,13 @@ class HumanResourcesController extends AdminController {
      */
     public function edit($id)
     {
-        // dd(1);
         try {
-           $personal = PersonalInfo::find($id);
-           $ethnic_group_id = ['Dân tộc', 'Kinh', 'Ede', 'Khác'];
-           $contract_category_id = ['Loại hợp đồng', 'ngan han', 'dai han', 'Khác'];
-           $religion_category_id = ['Tôn giáo', 'khong', 'Phat', 'Khác'];
-           $branch_category_id = ['Chi nhánh', 'So 1', 'So 2', 'Khác'];
-           $position_category_id = ['Chức vụ', 'Giam doc', 'CTO', 'CEO'];
-           $employees_category_id = ['Loại nhân viên', 'Lao động phổ thông Full time', 'Lao động phổ thông parttime', 'Chuyên viên'];
-           $nationnality_category_id = ['Việt Nam', 'Lào ', 'Anh', 'Mỹ'];
-        } catch (Exception $e) {
+            $personal = PersonalInfo::find($id);
+            $result = $this->getAllCategory('personal', $personal);
 
+        } catch (Exception $e) {
             return $this->returnError($e);
         }
-        $result = [
-            'personal'=>$personal,
-            'ethnic_group_id'=>$ethnic_group_id,
-            'religion_category_id'=>$religion_category_id,
-            'contract_category_id'=>$contract_category_id,
-            'branch_category_id'=>$branch_category_id,
-            'position_category_id'=>$position_category_id,
-            'employees_category_id'=>$employees_category_id,
-            'nationnality_category_id'=>$nationnality_category_id,
-        ];
         return View::make('admin.hr.edit', $result);
     }
 
@@ -245,34 +273,40 @@ class HumanResourcesController extends AdminController {
         try {
             // dd('vao');
             $rules = array(
-                // sefl::IDCARD   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // sefl::DATE_OF_ISSUE   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // sefl::IMAGE   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // sefl::PLACE_OF_ISSUE   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // sefl::NATIONNALITY_ID   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // sefl::SEX   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // sefl::ETHINIC_GROUP_ID   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // sefl::RELIGION_ID   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // sefl::CONTRACT_CATEGORY_ID   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // sefl::TAX_CODE   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // sefl::INSURANCE_ID   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // sefl::BANK_ID   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // sefl::BANK_NAME   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // sefl::COMPANY_ID   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // sefl::BRANCH_ID   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // sefl::POSITION_ID   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // sefl::EMPLOYEES_CATEGORY_ID   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // sefl::FULLNAME   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // sefl::ID_EMPLOYEES   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // sefl::NICKNAME   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // sefl::BIRTHDAY   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // sefl::ADDRESS   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // sefl::MARRY   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // sefl::MOBILE   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // sefl::EMAIL   => 'required|unique:admins,deleted_at,NULL|unique_delete',
+                self::IDCARD   => 'required|unique:admins,deleted_at,NULL|unique_delete',
+                // self::DATE_OF_ISSUE   => 'required|unique:admins,deleted_at,NULL|unique_delete',
+                // self::IMAGE   => 'required|unique:admins,deleted_at,NULL|unique_delete',
+                // self::PLACE_OF_ISSUE   => 'required|unique:admins,deleted_at,NULL|unique_delete',
+                // self::NATIONALITY_ID   => 'required|unique:admins,deleted_at,NULL|unique_delete',
+                // self::SEX   => 'required|unique:admins,deleted_at,NULL|unique_delete',
+                // self::ETHNIC_GROUP_ID   => 'required|unique:admins,deleted_at,NULL|unique_delete',
+                // self::RELIGION_ID   => 'required|unique:admins,deleted_at,NULL|unique_delete',
+                // self::CONTRACT_CATEGORY_ID   => 'required|unique:admins,deleted_at,NULL|unique_delete',
+                // self::TAX_CODE   => 'required|unique:admins,deleted_at,NULL|unique_delete',
+                // self::INSURANCE_ID   => 'required|unique:admins,deleted_at,NULL|unique_delete',
+                // self::BANK_ID   => 'required|unique:admins,deleted_at,NULL|unique_delete',
+                // self::BANK_NAME   => 'required|unique:admins,deleted_at,NULL|unique_delete',
+                // self::COMPANY_ID   => 'required|unique:admins,deleted_at,NULL|unique_delete',
+                // self::BRANCH_ID   => 'required|unique:admins,deleted_at,NULL|unique_delete',
+                // self::POSITION_ID   => 'required|unique:admins,deleted_at,NULL|unique_delete',
+                // self::EMPLOYEES_CATEGORY_ID   => 'required|unique:admins,deleted_at,NULL|unique_delete',
+                // self::FULLNAME   => 'required|unique:admins,deleted_at,NULL|unique_delete',
+                // self::ID_EMPLOYEES   => 'required|unique:admins,deleted_at,NULL|unique_delete',
+                // self::NICKNAME   => 'required|unique:admins,deleted_at,NULL|unique_delete',
+                // self::BIRTHDAY   => 'required|unique:admins,deleted_at,NULL|unique_delete',
+                // self::ADDRESS   => 'required|unique:admins,deleted_at,NULL|unique_delete',
+                // self::MARRY   => 'required|unique:admins,deleted_at,NULL|unique_delete',
+                // self::MOBILE   => 'required|unique:admins,deleted_at,NULL|unique_delete',
+                // self::EMAIL   => 'required|unique:admins,deleted_at,NULL|unique_delete',
             );
-            $input = $this->getAndValidateInput($rules);
-            // dd($input);
+            $input = $this->getInput();
+            $validator =  Validator::make($input,$rules);
+            if($validator->fails()) {
+                return Redirect::action('HumanResourcesController@edit',['id'=>$id])
+                    ->withErrors($validator);
+            }
+            $input[self::CREATED_BY] = Auth::admin()->get()->id;
+            $input[self::UPDATED_BY] = Auth::admin()->get()->id;
 
             $result = PersonalInfo::where(self::ID, $id)->update($input);
             if(!$result) {

@@ -13,17 +13,17 @@
 <div class="row">
     {{ Form::open(array('action' => array('HumanResourcesController@update', $personal->id), 'method' => 'PUT', 'files' => true)) }}
         <div class="col-md-6 col-sm-12 col-xs-12">
-            @include('admin.hr.template.edit_user_left_infomation')
+            @include('admin.hr.template.edit_employment_left_infomation')
         </div>
         <div class="col-md-6 col-sm-12 col-xs-12">
-            @include('admin.hr.template.edit_user_right_infomation')
+            @include('admin.hr.template.edit_employment_right_infomation')
         </div>
     {{ Form::close() }}
 </div>
 <hr>
-@include('admin.common.user_educational')
+@include('admin.hr.template.employment_educational')
 <hr>
-@include('admin.common.user_employment_history')
+@include('admin.hr.template.employment_history')
 
 <style type="text/css">
     hr {

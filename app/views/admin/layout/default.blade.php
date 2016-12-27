@@ -2,6 +2,15 @@
 <html>
 @include('admin.common.header')
 <body class="hold-transition skin-green-light sidebar-mini">
+<style type="text/css" media="screen">
+    .input-delete, .input-delete:hover, .input-delete:focus {
+        padding: 0!important;
+        margin: 0!important;
+        border: 0!important;
+        background: none!important;
+        outline: none!important;
+    }
+</style>
 <div class="wrapper">
 
   @include('admin.common.navbar')
@@ -55,4 +64,5 @@
        immediately after the control sidebar -->
   <div class="control-sidebar-bg"></div>
 </body>
+
 </html>

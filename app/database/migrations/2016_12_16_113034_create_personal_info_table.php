@@ -18,7 +18,7 @@ class CreatePersonalInfoTable extends Migration {
             $table->string('id_employees', 256)->nullable();
             $table->string('nickname', 256)->nullable();
             $table->string('image', 256)->nullable();
-            $table->date('birthday', 256)->nullable();
+            $table->date('birthday')->nullable();
             $table->string('address', 256)->nullable();
             $table->enum('marry',  array('Y', 'N', 'O'))->default('O');
             $table->integer('mobile')->nullable()->unique();
@@ -34,7 +34,7 @@ class CreatePersonalInfoTable extends Migration {
             // $table->integer('company_id')->unsigned()->nullable();
             $table->integer('ethnic_group_id')->nullable()->unsigned();
             $table->integer('religion_category_id')->nullable()->unsigned();
-            $table->integer('nationnality_category_id')->nullable()->unsigned();
+            $table->integer('nationality_category_id')->nullable()->unsigned();
             $table->integer('branch_category_id')->unsigned()->nullable();
             $table->integer('position_category_id')->nullable()->unsigned();
             $table->integer('employees_category_id')->nullable()->unsigned();

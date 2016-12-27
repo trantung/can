@@ -8,7 +8,7 @@ abstract class BaseCategoryController extends AdminController {
     const ONE        = 1;
     const ID         = 'id';
     const NAME       = 'name';
-    const CRETED_BY       = 'created_by';
+    const CREATED_BY      = 'created_by';
     const UPDATED_BY      = 'updated_by';
     const DELETED         = 'deleted';
 
@@ -61,10 +61,9 @@ abstract class BaseCategoryController extends AdminController {
 
     /**
     * return sub table result.
-    * @param collection.
     * @return array
     */
-    abstract protected function getSubTable($input);
+    abstract protected function getSubTable();
 
     /**
     * [validator validator]
@@ -98,7 +97,9 @@ abstract class BaseCategoryController extends AdminController {
     public function index()
     {
         $data = $this->model->orderBy('id', 'asc')->paginate(10);
-        return View::make($this->viewOfActionIndex())->with(compact('data'));
+        $subTable = $this->getSubTable();
+
+        return View::make($this->viewOfActionIndex(), ['data'=>$data, 'subTable'=>$subTable]);
     }
     /**
      * Show the form for creating a new resource.
@@ -107,7 +108,8 @@ abstract class BaseCategoryController extends AdminController {
      */
     public function create()
     {
-        return View::make($this->viewOfActionCreate());
+        $subTable = $this->getSubTable();
+        return View::make($this->viewOfActionCreate(), ['subTable'=>$subTable]);
     }
 
   /**
@@ -137,7 +139,9 @@ abstract class BaseCategoryController extends AdminController {
     public function edit($id)
     {
         $data = $this->model->find($id);
-        return View::make($this->viewOfActionEdit())->withData($data);
+        $subTable = $this->getSubTable();
+
+        return View::make($this->viewOfActionEdit(), ['data'=>$data, 'subTable'=>$subTable] );
     }
   /**
    * [update update once model]

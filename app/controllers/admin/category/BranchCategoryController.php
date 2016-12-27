@@ -84,8 +84,8 @@ class BranchCategoryController extends BaseCategoryController {
     * @param collection.
     * @return model
     */
-    protected function getSubTable($input){
-        return $input->toArray();
+    protected function getSubTable(){
+        return NULL;
     }
 
     /**

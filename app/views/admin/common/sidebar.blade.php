@@ -4,17 +4,7 @@
     <section class="sidebar">
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ol class="sidebar-menu">
-{{--            <li class="header">Menu</li>
-            <li><a href="{{ action('NewsController@index') }}"><i class="fa fa-newspaper-o"></i> <span>Tin chi tiết</span></a></li>
-            <li><a href="{{ action('NewsTypeController@index') }}"><i class="fa fa-newspaper-o"></i> <span>Danh mục Tin</span></a></li>
-            <li><a href="{{ action('AdminTypeAboutController@index') }}"><i class="fa fa-newspaper-o"></i> <span>Trang giới thiệu</span></a></li>
-            <li><a href="{{ action('AdminAboutUsController@index') }}"><i class="fa fa-newspaper-o"></i> <span>Chi tiết trang giới thiệu</span></a></li>
-            <li><a href="{{ action('DesContentController@index') }}"><i class="fa fa-newspaper-o"></i> <span>Giới thiệu chung trang chủ</span></a></li>
-            <li><a href="{{ action('AdminIntroduceController@index') }}"><i class="fa fa-newspaper-o"></i> <span>Giới thiệu chi tiết trang chủ</span></a></li>
-            <li><a href="{{ action('AdminContactController@index') }}"><i class="fa fa-newspaper-o"></i> <span>Liên hệ</span></a></li>
-            <li><a href="{{ action('AdminContactController@feedback') }}"><i class="fa fa-newspaper-o"></i> <span>Feedback</span></a></li>
-            <li><a href="{{ action('AdminSlideController@index') }}"><i class="fa fa-newspaper-o"></i> <span>Slide</span></a></li>
-            <li><a href="{{ action('BottomTextController@index') }}"><i class="fa fa-newspaper-o"></i> <span>Text bottom</span></a></li> --}}
+
             @if(Admin::isAdmin())
             <li>
                 <a href="{{ action('ManagerController@index') }}">
@@ -28,12 +18,57 @@
                     </li>
                 </ul> --}}
             </li>
+            @endif
             <li>
                 <a href="{{ action('HumanResourcesController@index') }}">
                     <i class="fa fa-users"></i> <span>Quản lý nhân sự</span>
                 </a>
             </li>
-            @endif
+            <li>
+                <a href="{{ action('CompanyCategoryController@index') }}">
+                    <span>Danh sách Công ty</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ action('BranchCategoryController@index') }}">
+                    <span>Danh sách Chi nhánh</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ action('PositionCategoryController@index') }}">
+                    <span>Danh sách Vị trí công tác</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ action('ContractCategoryController@index') }}">
+                    <span>Danh sách Hợp đồng lao động</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ action('ReligionCategoryController@index') }}">
+                    <span>Danh sách Tôn giáo</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ action('EthnicCategoryController@index') }}">
+                    <span>Danh sách Dân tộc</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ action('NationalityCategoryController@index') }}">
+                    <span>Danh sách Quốc gia vùng lãnh thổ</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ action('IndustryCategoryController@index') }}">
+                    <span>Danh sách Ngành nghề</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ action('CertificateCategoryController@index') }}">
+                    <span>Danh sách Bằng cấp & chứng chỉ</span>
+                </a>
+            </li>
         </ol>
     </section>
     <!-- /.sidebar -->
