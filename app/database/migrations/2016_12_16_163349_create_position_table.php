@@ -17,6 +17,7 @@ class CreatePositionTable extends Migration {
             $table->string('name', 255)->nullable();
             $table->string('description', 255)->nullable();
             $table->integer('branch_category_id')->unsigned()->nullable();
+            $table->integer('company_category_id')->unsigned()->nullable();
             $table->integer('created_by')->nullable()->unsigned();
             $table->integer('updated_by')->nullable()->unsigned();
             $table->softDeletes();

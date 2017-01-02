@@ -30,6 +30,14 @@
                   </div>
                 </div>
                 <div class="form-group">
+              <label for="name">Tên công ty</label>
+              <div class="row">
+                <div class="col-sm-6">
+                    {{ Form::select('company_id', $subTable, $data->company_id ,array('class'=>'form-control')) }}
+                </div>
+              </div>
+            </div>
+                <div class="form-group">
                   <label for="password">Địa chỉ</label>
                   <div class="row">
                     <div class="col-sm-6">

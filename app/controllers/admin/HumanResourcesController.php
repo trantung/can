@@ -39,12 +39,20 @@ class HumanResourcesController extends AdminController {
 
     protected function getAllCategory($key, $value)
     {
+        if (debug_backtrace()[1]['function'] == 'index') {
+            $branch = $this->buildArrayData( Branch::orderBy('id', 'asc')->get());
+        }else{
+
+            $branch = $this->buildArrayData( Company::orderBy('id', 'asc')->with('branchs')->get(),'branchs' );
+        }
+
        return [
             self::ETHNIC_GROUP_ID           =>$this->buildArrayData(Ethnic::orderBy('id', 'asc')->get() ),
             self::RELIGION_CATEGORY_ID      =>$this->buildArrayData(Religion::orderBy('id', 'asc')->get() ),
             self::CONTRACT_CATEGORY_ID      =>$this->buildArrayData(Contract::orderBy('id', 'asc')->get() ),
             self::COMPANY_CATEGORY_ID       =>$this->buildArrayData(Company::orderBy('id', 'asc')->get() ),
-            self::BRANCH_ID                 =>$this->buildArrayData(Branch::orderBy('id', 'asc')->get() ),
+            // self::BRANCH_ID                 =>$this->buildArrayData(Branch::orderBy('id', 'asc')->get() ),
+            self::BRANCH_ID                 =>$branch,
             self::POSITION_ID               =>$this->buildArrayData(Position::orderBy('id', 'asc')->get() ),
             self::EMPLOYEES_CATEGORY_ID     =>$this->buildArrayData(Employees::orderBy('id', 'asc')->get() ),
             self::NATIONALITY_ID            =>$this->buildArrayData(Nationality::orderBy('id', 'asc')->get() ),

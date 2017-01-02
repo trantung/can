@@ -40,7 +40,7 @@ class BranchCategoryController extends BaseCategoryController {
     * @return array
     */
     protected function getInputFieldStore(){
-        return Input::only(self::NAME, self::ADDRESS);
+        return Input::only(self::NAME, self::ADDRESS, self::COMPANY_ID);
     }
 
     /**
@@ -49,7 +49,7 @@ class BranchCategoryController extends BaseCategoryController {
     * @return array
     */
     protected function getInputFieldUpdate(){
-        return Input::only(self::NAME, self::ADDRESS);
+        return Input::only(self::NAME, self::ADDRESS, self::COMPANY_ID);
     }
 
     /**
@@ -85,7 +85,7 @@ class BranchCategoryController extends BaseCategoryController {
     * @return model
     */
     protected function getSubTable(){
-        return NULL;
+        return $this->buildArrayData( Company::select([self::NAME, self::ID])->orderBy('id', 'asc')->get() );
     }
 
     /**
@@ -97,6 +97,7 @@ class BranchCategoryController extends BaseCategoryController {
         return Validator::make($array,[
             self::NAME => 'required',
             self::ADDRESS => 'required',
+            self::COMPANY_ID => 'required|integer',
         ]);
     }
 
@@ -109,6 +110,7 @@ class BranchCategoryController extends BaseCategoryController {
         return Validator::make($array,[
             self::NAME => 'required',
             self::ADDRESS => 'required',
+            self::COMPANY_ID => 'required|integer',
         ]);
     }
 

@@ -121,12 +121,19 @@ class AdminController extends BaseController {
         return Redirect::route('admin.login');
     }
 
-    protected function buildArrayData($data)
+    protected function buildArrayData($data, $subTable = null)
     {
         $result = [];
+
         foreach ($data as $key => $value) {
-           $result[$value->id] = $value->name;
+           if($subTable){
+            $result[$value->name] =  $this->buildArrayData($value->$subTable);
+           }else {
+
+            $result[$value->id] = $value->name;
+           }
         }
+
         return $result;
     }
 

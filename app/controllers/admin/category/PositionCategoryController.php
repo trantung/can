@@ -84,7 +84,10 @@ class PositionCategoryController extends BaseCategoryController {
     * @return model
     */
     protected function getSubTable(){
-        return $this->buildArrayData( Branch::orderBy('id', 'asc')->get() );;
+        if (debug_backtrace()[1]['function'] == 'index') {
+            return $this->buildArrayData( Branch::orderBy('id', 'asc')->get());
+        }
+        return $this->buildArrayData( Company::orderBy('id', 'asc')->with('branchs')->get(),'branchs' );
     }
 
     /**

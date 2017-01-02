@@ -8,4 +8,8 @@ class Company extends Eloquent
     protected $table = 'company';
     protected $fillable = ['name', 'description', 'created_by', 'updated_by'];
 
+    public function branchs()
+    {
+        return $this->hasMany('Branch');
+    }
 }

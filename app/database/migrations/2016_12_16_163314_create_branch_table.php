@@ -16,6 +16,7 @@ class CreateBranchTable extends Migration {
             $table->increments('id');
             $table->string('name', 255)->nullable();
             $table->string('address', 255)->nullable();
+            $table->integer('company_id')->nullable()->unsigned();
             $table->integer('created_by')->nullable()->unsigned();
             $table->integer('updated_by')->nullable()->unsigned();
             $table->softDeletes();
