@@ -25,6 +25,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/hr/{id}/edit', array('uses' => 'HumanResourcesController@edit', 'as' => 'hr.edit'));
     Route::resource('/hr', 'HumanResourcesController');
     Route::resource('/branch', 'BranchCategoryController');
+    Route::get('/position-with-branch-id', 'PositionCategoryController@getPositionWithBranch');
     Route::resource('/position', 'PositionCategoryController');
     Route::resource('/contract', 'ContractCategoryController');
     Route::resource('/religion', 'ReligionCategoryController');

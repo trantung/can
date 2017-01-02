@@ -131,4 +131,9 @@ class PositionCategoryController extends BaseCategoryController {
     protected function viewOfActionEdit(){
         return 'admin.system.position.edit';
     }
+    public function getPositionWithBranch()
+    {
+        $partern = Input::only(self::BRANCH_ID);
+        return $this->buildArrayData(Position::where($partern)->get());
+    }
 }

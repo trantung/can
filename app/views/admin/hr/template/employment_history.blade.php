@@ -56,15 +56,15 @@
                     </div>
                     {{-- company name --}}
                     <div class="form-group form-group-sm row">
-                        <label class="col-lg-3 control-label">Chi nhánh</label>
+                        <label class="col-lg-3 control-label"><span class="text-danger">*</span>Chi nhánh</label>
                         <div class="col-lg-8">
-                        {{ Form::select('branch', $branch_category_id, Input::old('branch'), array('class'=>'form-control input-sm')) }}
+                        {{ Form::select('branch', $branch_category_id, Input::old('branch'), array('class'=>'form-control input-sm', 'id'=>'section_branch_model')) }}
                         </div>
                     </div>
                     <div class="form-group form-group-sm row">
                         <label class="col-lg-3 control-label">Vị trí<span class="text-danger">*</span></label>
                         <div class="col-lg-8">
-                        {{ Form::select('position', $position_category_id, Input::old('position'), array('class'=>'form-control input-sm')) }}
+                        {{ Form::select('position', [], Input::old('position'), array('class'=>'form-control input-sm',  'id'=>'section_position_model')) }}
                         </div>
                     </div>
                     {{-- position--}}

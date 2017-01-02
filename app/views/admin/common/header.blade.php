@@ -5,7 +5,7 @@
 	<!-- Tell the browser to be responsive to screen width -->
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 	<!-- Bootstrap 3.3.5 -->
-	
+
 	{{HTML::style('adminlte/bootstrap/css/bootstrap.min.css') }}
 	<!-- Font Awesome -->
 	{{HTML::style('adminlte/dist/css/font-awesome.min.css') }}
@@ -25,7 +25,7 @@
 	{{-- {{HTML::style('adminlte/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') }} --}}
 	<!-- Date Time Picker -->
 	{{HTML::style('adminlte/plugins/datetimepicker/bootstrap-datetimepicker.min.css') }}
-	
+
 	{{ HTML::style('adminlte/plugins/jQueryUI/jquery-ui.css') }}
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -93,14 +93,39 @@
 			startView: 2,
 			forceParse: 0,
 	    });
-	
+
 	    $('#datepickerStartdate').datepicker({
 	    	dateFormat: 'yy-mm-dd',
 			});
 	    $('#datepickerEnddate').datepicker({
 	    	dateFormat: 'yy-mm-dd',
 			});
+
 	  });
+
+      $(document).ready(function(){
+         $('#section_branch_model').change( function($this){
+            var token =  $("input[name=_token]").val();
+            var data = {'branch_category_id':$('#section_branch').val()};
+            $.ajax({
+                type: "GET",
+                url : "{{action('PositionCategoryController@getPositionWithBranch')}}",
+                data : data,
+                success : function(data){
+                    var select = '';
+                    // data.foreach(function(item){
+                    //     select = select . '<option value="1">CTO</option>'
+                    // });
+                    for (var key in data) {
+                        var value = data[key];
+                        select = select + '<option value="'+key+'">'+data[key]+'</option>';
+                    }
+                    $('#section_position_model').html(select);
+                    // console.log(select);
+                }
+            },"json");
+        })
+     });
 	</script>
 
 </head>

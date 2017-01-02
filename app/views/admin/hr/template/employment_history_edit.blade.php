@@ -26,13 +26,13 @@
                     <div class="form-group form-group-sm row">
                         <label class="col-lg-3 control-label">Chi nhánh</label>
                         <div class="col-lg-8">
-                        {{ Form::select('branch', $branch_category_id, $company->branch, array('class'=>'form-control input-sm')) }}
+                        {{ Form::select('branch', $branch_category_id, $company->branch, array('class'=>'form-control input-sm', 'id'=>'section_branch_model')) }}
                         </div>
                     </div>
                     <div class="form-group form-group-sm row">
                         <label class="col-lg-3 control-label">Vị trí<span class="text-danger">*</span></label>
                         <div class="col-lg-8">
-                        {{ Form::select('position', $position_category_id, $company->position, array('class'=>'form-control input-sm')) }}
+                        {{ Form::select('position', $position_category_id, $company->position, array('class'=>'form-control input-sm', 'id'=>'section_position_model')) }}
                         </div>
                     </div>
                     {{-- position--}}

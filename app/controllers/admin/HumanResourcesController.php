@@ -247,7 +247,7 @@ class HumanResourcesController extends AdminController {
      */
     public function show($id)
     {
-        dd('show');
+        dd('show333');
     }
 
 

@@ -35,4 +35,31 @@
     border-top: 1px solid #aaa;
 }
 </style>
+<script>
+     $(document).ready(function(){
+        $('#section_branch').change( function($this){
+            // console.log($('#section_branch').val());
+                var token =  $("input[name=_token]").val();
+                var data = {'branch_category_id':$('#section_branch').val()};
+                $.ajax({
+                    type: "GET",
+                    url : "{{action('PositionCategoryController@getPositionWithBranch')}}",
+                    data : data,
+                    success : function(data){
+                        var select = '';
+                        // data.foreach(function(item){
+                        //     select = select . '<option value="1">CTO</option>'
+                        // });
+                        for (var key in data) {
+                            var value = data[key];
+                            select = select + '<option value="'+key+'">'+data[key]+'</option>';
+                        }
+                        $('#section_position').html(select);
+                        // console.log(select);
+                    }
+                },"json");
+
+        })
+     });
+</script>
 @stop

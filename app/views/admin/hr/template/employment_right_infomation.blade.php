@@ -94,13 +94,13 @@
         {{-- company_name --}}
         <div class="form-group form-group-sm row">
           <div class="col-xs-12">
-            {{ Form::select('branch_category_id', $branch_category_id, null, array('class'=>'form-control input-sm')) }}
+            {{ Form::select('branch_category_id', $branch_category_id, null, array('class'=>'form-control input-sm', 'id'=>'section_branch')) }}
           </div>
         </div>
         {{-- branch --}}
         <div class="form-group form-group-sm row">
            <div class="col-xs-12">
-            {{ Form::select('position_category_id', $position_category_id, null, array('class'=>'form-control input-sm')) }}
+            {{ Form::select('position_category_id', [], null, array('class'=>'form-control input-sm', 'id'=>'section_position')) }}
           </div>
         </div>
         {{-- position --}}

@@ -107,14 +107,14 @@
         <div class="form-group form-group-sm row">
           <div class="col-xs-12">
           <label class="control-label">Chi nhánh</label>
-            {{ Form::select('branch_category_id', $branch_category_id, $personal->branch_category_id, array('class'=>'form-control input-sm')) }}
+            {{ Form::select('branch_category_id', $branch_category_id, $personal->branch_category_id, array('class'=>'form-control input-sm', 'id'=>'section_branch')) }}
           </div>
         </div>
         {{-- branch --}}
         <div class="form-group form-group-sm row">
            <div class="col-xs-12">
            <label class="control-label">Vị trí hiện tại</label>
-            {{ Form::select('position_category_id', $position_category_id, $personal->position_category_id, array('class'=>'form-control input-sm')) }}
+            {{ Form::select('position_category_id', $position_category_id, $personal->position_category_id, array('class'=>'form-control input-sm','id'=>'section_position')) }}
           </div>
         </div>
         {{-- position --}}
