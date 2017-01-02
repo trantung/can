@@ -13,10 +13,11 @@ class CommonUpload
 			$file = Input::file($imageUrl);
 			$filename = $file->getClientOriginalName();
 			$uploadSuccess = $file->move($destinationPath, $filename);
-			return $filename;
-		}
-		if ($image) {
-			return $image;
+			// return $filename;
+            return $path.$folder.$id.'/'.$filename;
+        }
+        if ($image) {
+            return $image;
 		}
 	}
 

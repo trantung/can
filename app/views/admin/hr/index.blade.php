@@ -45,7 +45,7 @@
                   <td>{{ $value->mobile }}</td>
                   <td>{{ $value->email }}</td>
                   <td>{{ $branch_category_id[$value->branch_category_id] }}</td>
-                  <td>{{ $position_category_id[$value->position_category_id] }}</td>
+                  <td>{{ isset($position_category_id[$value->position_category_id]) ? $position_category_id[$value->position_category_id] : '';}}</td>
                   <td>{{ isset($employees_category_id[$value->employees_category_id]) ? $employees_category_id[$value->employees_category_id] : '';}}</td>
                   <td>
                     {{-- <a href="#" class="btn btn-success">Xem</a> --}}

@@ -16,6 +16,7 @@ class HumanResourcesController extends AdminController {
     const COMPANY_ID        = 'company_id';
     const FULLNAME          = 'fullname';
     const ID_EMPLOYEES       = 'id_employees';
+    const EMPLOYEES         = 'employees';
     const NICKNAME          = 'nickname';
     const BIRTHDAY          = 'birthday';
     const ADDRESS           = 'address';
@@ -131,7 +132,7 @@ class HumanResourcesController extends AdminController {
             //  $query = $query->where('updated_at', '>=' ,$input['start_date']);
             // if ($input['end_date'])
             //  $query = $query->where('updated_at', '<=' ,$input['end_date'].' 23:59:59');
-        })->orderBy(self::ID, 'asc')->paginate(PAGINATE);
+        })->orderBy(self::ID, 'desc')->paginate(PAGINATE);
         $result = $this->getAllCategory('data', $data);
 
         return View::make('admin.hr.index', $result);
@@ -155,7 +156,7 @@ class HumanResourcesController extends AdminController {
         return Input::only(
             self::IDCARD,
             self::DATE_OF_ISSUE,
-            // self::IMAGE,
+            self::IMAGE,
             self::PLACE_OF_ISSUE,
             self::SEX,
             self::TAX_CODE,
@@ -199,10 +200,10 @@ class HumanResourcesController extends AdminController {
                 // self::ETHNIC_GROUP_ID   => 'required|unique:admins,deleted_at,NULL|unique_delete',
                 // self::RELIGION_ID   => 'required|unique:admins,deleted_at,NULL|unique_delete',
                 // self::CONTRACT_CATEGORY_ID   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // self::TAX_CODE   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // self::INSURANCE_ID   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // self::BANK_ID   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // self::BANK_NAME   => 'required|unique:admins,deleted_at,NULL|unique_delete',
+                self::TAX_CODE   => 'required',
+                self::INSURANCE_ID   => 'required',
+                self::BANK_ID   => 'required',
+                self::BANK_NAME   => 'required',
                 // self::COMPANY_ID   => 'required|unique:admins,deleted_at,NULL|unique_delete',
                 // self::BRANCH_ID   => 'required|unique:admins,deleted_at,NULL|unique_delete',
                 // self::POSITION_ID   => 'required|unique:admins,deleted_at,NULL|unique_delete',
@@ -214,7 +215,7 @@ class HumanResourcesController extends AdminController {
                 // self::ADDRESS   => 'required|unique:admins,deleted_at,NULL|unique_delete',
                 // self::MARRY   => 'required|unique:admins,deleted_at,NULL|unique_delete',
                 // self::MOBILE   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // self::EMAIL   => 'required|unique:admins,deleted_at,NULL|unique_delete',
+                self::EMAIL   => 'email|max:255',
             );
 
             $input = $this->getInput();
@@ -223,9 +224,13 @@ class HumanResourcesController extends AdminController {
                 return Redirect::action('HumanResourcesController@create')
                     ->withErrors($validator);
             }
+            if(!$input[self::IMAGE]) {
+                $input[self::IMAGE] = DEFAULT_PICTURE;
+            }else{
+                $input[self::IMAGE] = CommonUpload::uploadImage('', UPLOADIMG, self::IMAGE, UPLOAD_EMPLOYEES);
+            }
             $input[self::CREATED_BY] = Auth::admin()->get()->id;
             $input[self::UPDATED_BY] = Auth::admin()->get()->id;
-
             $id = PersonalInfo::create($input)->id;
             if(!$id) {
                 dd('Error');
@@ -313,10 +318,14 @@ class HumanResourcesController extends AdminController {
                 return Redirect::action('HumanResourcesController@edit',['id'=>$id])
                     ->withErrors($validator);
             }
+            if($input[self::IMAGE]){
+                $input[self::IMAGE] = CommonUpload::uploadImage('', UPLOADIMG, self::IMAGE, UPLOAD_EMPLOYEES);
+            }
+
             $input[self::CREATED_BY] = Auth::admin()->get()->id;
             $input[self::UPDATED_BY] = Auth::admin()->get()->id;
 
-            $result = PersonalInfo::where(self::ID, $id)->update($input);
+            $result = PersonalInfo::where(self::ID, $id)->update(array_filter($input));
             if(!$result) {
                 dd('Error');
             }

@@ -20,6 +20,7 @@ define('UPLOADIMG', '/images');
 //url upload news
 define('UPLOAD_NEWS', '/news');
 define('UPLOAD_SLIDE', '/slide');
+define('UPLOAD_EMPLOYEES', '/employees');
 //folder upload image facebook
 define('FOLDER_SEO_NEWS', 'fb_news');
 define('FOLDER_SEO', 'seo');
@@ -51,6 +52,7 @@ define('Footer', 2);
 define('CHILD_PAGE', 3);
 define('CHILD_PAGE_RELATION', 4);
 //advertise url image
+define('DEFAULT_PICTURE', '/images/employees/default.jpg');
 define('UPLOAD_ADVERTISE', '/images/advertise');
 define('BOTTOM', 'bottom');
 //define paging frontend

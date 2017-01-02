@@ -1,9 +1,9 @@
  <!-- left column -->
     <div class="col-md-3 col-sm-6 col-xs-12">
       <div class="text-center">
-        <img src="http://lorempixel.com/200/200/people/9/" class="avatar img-circle img-thumbnail" alt="avatar">
+        <img src="{{asset($personal->image)}}" class="avatar img-circle img-thumbnail" alt="avatar">
         <h6>Upload a photo...</h6>
-        <input type="file" class="text-center center-block well well-sm" style="width: 100%" id="image">
+        <input type="file" class="text-center center-block well well-sm" style="width: 100%" id="image" name="image">
       </div>
     </div>
     <!-- edit form column -->
