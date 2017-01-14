@@ -3,8 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCompanyCategoryTable extends Migration {
-
+class CreateDepartmentCategoryTable extends Migration {
 
     /**
      * Run the migrations.
@@ -13,11 +12,10 @@ class CreateCompanyCategoryTable extends Migration {
      */
     public function up()
     {
-        Schema::create('company', function(Blueprint $table) {
+        Schema::create('department', function(Blueprint $table) {
             $table->increments('id');
             $table->string('name', 255)->nullable();
             $table->string('description', 255)->nullable();
-            $table->string('code', 255)->nullable();
             $table->integer('created_by')->nullable()->unsigned();
             $table->integer('updated_by')->nullable()->unsigned();
             $table->softDeletes();
@@ -32,7 +30,7 @@ class CreateCompanyCategoryTable extends Migration {
      */
     public function down()
     {
-        Schema::drop('company');
+        Schema::drop('department');
     }
 
 }

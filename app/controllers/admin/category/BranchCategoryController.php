@@ -118,6 +118,18 @@ class BranchCategoryController extends BaseCategoryController {
         return Redirect::action('BranchCategoryController@index');
     }
 
+    /**
+     * Display a listing of the resource.
+     *
+     * @return Response
+     */
+    public function index()
+    {
+        $data = $this->model->orderBy('id', 'asc')->paginate(10);
+        $subTable = $this->getSubTable();
+
+        return View::make($this->viewOfActionIndex(), ['data'=>$data, 'subTable'=>$subTable]);
+    }
 
     protected function viewOfActionIndex(){
         return 'admin.system.branch.index';

@@ -41,7 +41,7 @@ class PersonalInfo extends Eloquent implements UserInterface, RemindableInterfac
         'insurance_id',
         'bank_id',
         'bank_name',
-        // 'company_id',
+        'cv',
         'nationality_category_id',
         'branch_category_id',
         'position_category_id',

@@ -40,6 +40,11 @@
                 </a>
             </li>
             <li>
+                <a href="{{ action('DepartmentCategoryController@index') }}">
+                    <span>Danh sách Bộ phận</span>
+                </a>
+            </li>
+            <li>
                 <a href="{{ action('ContractCategoryController@index') }}">
                     <span>Danh sách Hợp đồng lao động</span>
                 </a>
@@ -67,6 +72,11 @@
             <li>
                 <a href="{{ action('CertificateCategoryController@index') }}">
                     <span>Danh sách Bằng cấp & chứng chỉ</span>
+                </a>
+            </li>
+            <li>
+                <a href="/admin/nhap-luong">
+                    <span>Nhập lương nhân viên</span>
                 </a>
             </li>
         </ol>

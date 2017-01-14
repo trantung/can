@@ -7,6 +7,7 @@ class HumanResourcesController extends AdminController {
     const IDCARD            = 'idcard';
     const DATE_OF_ISSUE     =  'date_of_issue';
     const IMAGE             = 'image';
+    const CV             = 'cv';
     const PLACE_OF_ISSUE    = 'place_of_issue';
     const SEX               = 'sex';
     const TAX_CODE          = 'tax_code';
@@ -40,12 +41,14 @@ class HumanResourcesController extends AdminController {
 
     protected function getAllCategory($key, $value)
     {
-        if (debug_backtrace()[1]['function'] == 'index') {
-            $branch = $this->buildArrayData( Branch::orderBy('id', 'asc')->get());
-        }else{
+        // if (debug_backtrace()[1]['function'] == 'index') {
+        //     $branch = $this->buildArrayData( Branch::orderBy('id', 'asc')->get());
+        // }else{
 
-            $branch = $this->buildArrayData( Company::orderBy('id', 'asc')->with('branchs')->get(),'branchs' );
-        }
+        //     $branch = $this->buildArrayData( Company::orderBy('id', 'asc')->with('branchs')->get(),'branchs' );
+        // }
+
+        // dd($branch);
 
        return [
             self::ETHNIC_GROUP_ID           =>$this->buildArrayData(Ethnic::orderBy('id', 'asc')->get() ),
@@ -53,7 +56,7 @@ class HumanResourcesController extends AdminController {
             self::CONTRACT_CATEGORY_ID      =>$this->buildArrayData(Contract::orderBy('id', 'asc')->get() ),
             self::COMPANY_CATEGORY_ID       =>$this->buildArrayData(Company::orderBy('id', 'asc')->get() ),
             // self::BRANCH_ID                 =>$this->buildArrayData(Branch::orderBy('id', 'asc')->get() ),
-            self::BRANCH_ID                 =>$branch,
+            // self::BRANCH_ID                 =>$branch,
             self::POSITION_ID               =>$this->buildArrayData(Position::orderBy('id', 'asc')->get() ),
             self::EMPLOYEES_CATEGORY_ID     =>$this->buildArrayData(Employees::orderBy('id', 'asc')->get() ),
             self::NATIONALITY_ID            =>$this->buildArrayData(Nationality::orderBy('id', 'asc')->get() ),
@@ -127,11 +130,6 @@ class HumanResourcesController extends AdminController {
             if ($input[self::CERTIFICATE_CATEGORY_ID]) {
                 $query = $query->where(self::CERTIFICATE_CATEGORY_ID, $input[self::CERTIFICATE_CATEGORY_ID]);
             }
-            // todo
-            // if ($input['start_date'])
-            //  $query = $query->where('updated_at', '>=' ,$input['start_date']);
-            // if ($input['end_date'])
-            //  $query = $query->where('updated_at', '<=' ,$input['end_date'].' 23:59:59');
         })->orderBy(self::ID, 'desc')->paginate(PAGINATE);
         $result = $this->getAllCategory('data', $data);
 
@@ -146,7 +144,6 @@ class HumanResourcesController extends AdminController {
     public function create()
     {
         $result = $this->getAllCategory('data', null);
-
         return View::make('admin.hr.create', $result);
         // return View::make('admin.hr.create');
     }
@@ -157,6 +154,7 @@ class HumanResourcesController extends AdminController {
             self::IDCARD,
             self::DATE_OF_ISSUE,
             self::IMAGE,
+            self::CV,
             self::PLACE_OF_ISSUE,
             self::SEX,
             self::TAX_CODE,
@@ -194,6 +192,7 @@ class HumanResourcesController extends AdminController {
                 self::IDCARD   => 'required|unique:admins,deleted_at,NULL|unique_delete',
                 // self::DATE_OF_ISSUE   => 'required|unique:admins,deleted_at,NULL|unique_delete',
                 // self::IMAGE   => 'required|unique:admins,deleted_at,NULL|unique_delete',
+                // self::CV   => 'required|unique:admins,deleted_at,NULL|unique_delete',
                 // self::PLACE_OF_ISSUE   => 'required|unique:admins,deleted_at,NULL|unique_delete',
                 // self::NATIONALITY_ID   => 'required|unique:admins,deleted_at,NULL|unique_delete',
                 // self::SEX   => 'required|unique:admins,deleted_at,NULL|unique_delete',
@@ -228,6 +227,11 @@ class HumanResourcesController extends AdminController {
                 $input[self::IMAGE] = DEFAULT_PICTURE;
             }else{
                 $input[self::IMAGE] = CommonUpload::uploadImage('', UPLOADIMG, self::IMAGE, UPLOAD_EMPLOYEES);
+            }
+            if(!$input[self::CV]) {
+                $input[self::CV] = '';
+            }else{
+                $input[self::CV] = CommonUpload::uploadImage('', UPLOADIMG, self::CV, UPLOAD_EMPLOYEES);
             }
             $input[self::CREATED_BY] = Auth::admin()->get()->id;
             $input[self::UPDATED_BY] = Auth::admin()->get()->id;
@@ -289,6 +293,7 @@ class HumanResourcesController extends AdminController {
                 self::IDCARD   => 'required|unique:admins,deleted_at,NULL|unique_delete',
                 // self::DATE_OF_ISSUE   => 'required|unique:admins,deleted_at,NULL|unique_delete',
                 // self::IMAGE   => 'required|unique:admins,deleted_at,NULL|unique_delete',
+                // self::CV   => 'required|unique:admins,deleted_at,NULL|unique_delete',
                 // self::PLACE_OF_ISSUE   => 'required|unique:admins,deleted_at,NULL|unique_delete',
                 // self::NATIONALITY_ID   => 'required|unique:admins,deleted_at,NULL|unique_delete',
                 // self::SEX   => 'required|unique:admins,deleted_at,NULL|unique_delete',
@@ -320,6 +325,9 @@ class HumanResourcesController extends AdminController {
             }
             if($input[self::IMAGE]){
                 $input[self::IMAGE] = CommonUpload::uploadImage('', UPLOADIMG, self::IMAGE, UPLOAD_EMPLOYEES);
+            }
+            if($input[self::CV]){
+                $input[self::CV] = CommonUpload::uploadImage('', UPLOADIMG, self::CV, UPLOAD_EMPLOYEES);
             }
 
             $input[self::CREATED_BY] = Auth::admin()->get()->id;

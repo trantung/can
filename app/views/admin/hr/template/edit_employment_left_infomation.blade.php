@@ -5,6 +5,15 @@
         <h6>Upload a photo...</h6>
         <input type="file" class="text-center center-block well well-sm" style="width: 100%" id="image" name="image">
       </div>
+
+      <div class="text-center">
+        <h6>Upload a cv...</h6>
+        <input type="file" class="text-center center-block well well-sm" style="width: 100%" id="cv" name="cv">
+      @if($personal->cv)
+      <a href="{{asset($personal->cv)}}">CV link</a>
+
+      @endif
+      </div>
     </div>
     <!-- edit form column -->
     <div class="col-md-9 col-sm-6 col-xs-12 personal-info">

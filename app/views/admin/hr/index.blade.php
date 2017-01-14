@@ -28,11 +28,11 @@
                   <th>Mã nhân viên</th>
                   <th>Tên nhân viên</th>
                   <th>Ngày sinh</th>
-                  <th>Email</th>
                   <th>Điện thoại</th>
+                  <th>Email</th>
                   <th>Chi nhánh</th>
                   <th>Vị trí</th>
-                  <th>Loại hợp đồng</th>
+                  {{-- <th>Loại hợp đồng</th> --}}
                   {{-- <th>Đăng nhập cuối</th> --}}
                   <th style="width:200px;">Action</th>
                 </tr>
@@ -44,9 +44,9 @@
                   <td>{{ $value->birthday }}</td>
                   <td>{{ $value->mobile }}</td>
                   <td>{{ $value->email }}</td>
-                  <td>{{ $branch_category_id[$value->branch_category_id] }}</td>
+                  <td>{{ $company_category_id[$value->branch_category_id] }}</td>
                   <td>{{ isset($position_category_id[$value->position_category_id]) ? $position_category_id[$value->position_category_id] : '';}}</td>
-                  <td>{{ isset($employees_category_id[$value->employees_category_id]) ? $employees_category_id[$value->employees_category_id] : '';}}</td>
+                  {{-- <td>{{ isset($employees_category_id[$value->employees_category_id]) ? $employees_category_id[$value->employees_category_id] : '';}}</td> --}}
                   <td>
                     {{-- <a href="#" class="btn btn-success">Xem</a> --}}
                     {{-- <a href="{{action('HumanResourcesController@changePassword', $value->id) }}" class="btn btn-primary">Change Pass</a> --}}

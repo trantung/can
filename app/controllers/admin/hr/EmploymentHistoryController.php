@@ -28,7 +28,7 @@ class EmploymentHistoryController extends AdminController {
         try {
             $rules = array(
                 self::COMPANY_NAME   => 'required',
-                self::BRANCH   => 'required|integer',
+                // self::BRANCH   => 'required|integer',
                 self::POSITION   => 'required|integer',
                 self::WHY_OUT   => 'required',
                 self::DESCRIPTION   => 'required',
@@ -37,7 +37,7 @@ class EmploymentHistoryController extends AdminController {
             );
             $input = Input::only(
                 self::COMPANY_NAME,
-                self::BRANCH,
+                // self::BRANCH,
                 self::POSITION,
                 self::WHY_OUT,
                 self::DESCRIPTION,
@@ -102,7 +102,7 @@ class EmploymentHistoryController extends AdminController {
         try {
             $rules = array(
                 self::COMPANY_NAME   => 'required',
-                self::BRANCH   => 'required|integer',
+                // self::BRANCH   => 'required|integer',
                 self::POSITION   => 'required|integer',
                 self::WHY_OUT   => 'required',
                 self::DESCRIPTION   => 'required',
@@ -111,7 +111,7 @@ class EmploymentHistoryController extends AdminController {
             );
             $input = Input::only(
                 self::COMPANY_NAME,
-                self::BRANCH,
+                // self::BRANCH,
                 self::POSITION,
                 self::WHY_OUT,
                 self::DESCRIPTION,

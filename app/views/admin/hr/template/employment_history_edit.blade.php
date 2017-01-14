@@ -23,12 +23,12 @@
                         </div>
                     </div>
                     {{-- company name --}}
-                    <div class="form-group form-group-sm row">
+                   {{--  <div class="form-group form-group-sm row">
                         <label class="col-lg-3 control-label">Chi nhánh</label>
                         <div class="col-lg-8">
                         {{ Form::select('branch', $branch_category_id, $company->branch, array('class'=>'form-control input-sm', 'id'=>'section_branch_model')) }}
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="form-group form-group-sm row">
                         <label class="col-lg-3 control-label">Vị trí<span class="text-danger">*</span></label>
                         <div class="col-lg-8">

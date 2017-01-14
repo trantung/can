@@ -140,6 +140,7 @@ abstract class BaseCategoryController extends AdminController {
     {
         $data = $this->model->find($id);
         $subTable = $this->getSubTable();
+        // dd()
 
         return View::make($this->viewOfActionEdit(), ['data'=>$data, 'subTable'=>$subTable] );
     }
@@ -156,6 +157,7 @@ abstract class BaseCategoryController extends AdminController {
             if($validator->fails()) {
                 return Redirect::back()->withErrors($validator)->withInput($input);
             }
+            // dd($input);
             $result = $this->model->where(self::ID, $id)->update($input);
             if(!$result) {
                 dd('Error');

@@ -18,6 +18,7 @@ class CreatePersonalInfoTable extends Migration {
             $table->string('id_employees', 255)->nullable();
             $table->string('nickname', 255)->nullable();
             $table->string('image', 255)->nullable();
+            $table->string('cv', 255)->nullable();
             $table->date('birthday')->nullable();
             $table->string('address', 255)->nullable();
             $table->enum('marry',  array('Y', 'N', 'O'))->default('O');

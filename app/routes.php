@@ -35,6 +35,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('/nationality', 'NationalityCategoryController');//
     Route::resource('/industry', 'IndustryCategoryController');//
     Route::resource('/certificate', 'CertificateCategoryController');//
+    Route::resource('/department', 'DepartmentCategoryController');//
 
     //
     Route::post('/{employment}/employment-education', array('uses' => 'EmploymentEducationalController@storeSchool', 'as' => 'employment.newEducation'));
@@ -47,6 +48,10 @@ Route::group(['prefix' => 'admin'], function () {
     Route::put('/{employment}/employment-history/{id}', 'EmploymentHistoryController@updateHistory');
     Route::delete('/{employment}/employment-history/{id}', array('uses' => 'EmploymentHistoryController@destroyHistory', 'as' => 'employment.destroyHistory'));
     Route::get('/employment-history/{id}/edit', array('uses' => 'EmploymentHistoryController@editHistory', 'as' => 'employment.editHistory'));
+
+    Route::get('/nhap-luong', function (){
+        return View::make('admin.demo.luong');
+    });
 
 });
 

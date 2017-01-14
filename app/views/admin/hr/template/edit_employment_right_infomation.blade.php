@@ -107,7 +107,7 @@
         <div class="form-group form-group-sm row">
           <div class="col-xs-12">
           <label class="control-label">Chi nhánh</label>
-            {{ Form::select('branch_category_id', $branch_category_id, $personal->branch_category_id, array('class'=>'form-control input-sm', 'id'=>'section_branch')) }}
+            {{ Form::select('branch_category_id', $company_category_id, $personal->branch_category_id, array('class'=>'form-control input-sm', 'id'=>'section_branch')) }}
           </div>
         </div>
         {{-- branch --}}

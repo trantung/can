@@ -1,14 +1,14 @@
 @extends('admin.layout.default')
 @if(Admin::isAdmin())
 @section('title')
-{{ $title='Thêm mới Chức danh' }}
+{{ $title='Thêm mới Công ty' }}
 @stop
 
 @section('content')
 
 <div class="row margin-bottom">
   <div class="col-xs-12">
-    <a href="{{ action('PositionCategoryController@index') }}" class="btn btn-success">Danh sách Chức danh</a>
+    <a href="{{ action('CompanyCategoryController@index') }}" class="btn btn-success">Danh sách Công ty</a>
   </div>
 </div>
 
@@ -16,21 +16,13 @@
     <div class="col-xs-12">
         <div class="box box-primary">
         <!-- form start -->
-        {{ Form::open(array('action' => 'PositionCategoryController@store')) }}
+        {{ Form::open(array('action' => 'CompanyCategoryController@store')) }}
           <div class="box-body">
             <div class="form-group">
-              <label for="username">Tên Chức danh</label>
+              <label for="username">Tên Công ty</label>
               <div class="row">
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" id="name" placeholder="Tên Chức danh" name="name" value="{{Input::old('name')}}">
-                </div>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="branch_id">Cơ cấu tổ chức</label>
-              <div class="row">
-                <div class="col-sm-6">
-                {{ Form::select('branch_category_id', $subTable, null, array('class'=>'form-control input-sm')) }}
+                    <input type="text" class="form-control" id="name" placeholder="Tên Công ty" name="name" value="{{Input::old('name')}}">
                 </div>
               </div>
             </div>
