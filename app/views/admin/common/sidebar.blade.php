@@ -30,7 +30,7 @@
                 </a>
             </li> --}}
             <li>
-                <a href="{{ action('BranchCategoryController@index') }}">
+                <a href="{{ action('CompanyCategoryController@index') }}">
                     <span>Cơ cấu tổ chức</span>
                 </a>
             </li>
