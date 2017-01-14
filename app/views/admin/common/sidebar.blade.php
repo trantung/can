@@ -24,26 +24,26 @@
                     <i class="fa fa-users"></i> <span>Quản lý nhân sự</span>
                 </a>
             </li>
-            <li>
+            {{-- <li>
                 <a href="{{ action('CompanyCategoryController@index') }}">
                     <span>Danh sách Công ty</span>
                 </a>
-            </li>
+            </li> --}}
             <li>
                 <a href="{{ action('BranchCategoryController@index') }}">
-                    <span>Danh sách Chi nhánh</span>
+                    <span>Cơ cấu tổ chức</span>
                 </a>
             </li>
             <li>
                 <a href="{{ action('PositionCategoryController@index') }}">
-                    <span>Danh sách Vị trí công tác</span>
+                    <span>Vị trí công tác</span>
                 </a>
             </li>
-            <li>
+            {{-- <li>
                 <a href="{{ action('DepartmentCategoryController@index') }}">
                     <span>Danh sách Bộ phận</span>
                 </a>
-            </li>
+            </li> --}}
             <li>
                 <a href="{{ action('ContractCategoryController@index') }}">
                     <span>Danh sách Hợp đồng lao động</span>
