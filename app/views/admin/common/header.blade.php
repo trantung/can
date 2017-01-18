@@ -100,6 +100,18 @@
 	    $('#datepickerEnddate').datepicker({
 	    	dateFormat: 'yy-mm-dd',
 			});
+         $('#datepicker1').datepicker({
+            dateFormat: 'yy-mm-dd',
+            });
+          $('#datepicker2').datepicker({
+            dateFormat: 'yy-mm-dd',
+            });
+           $('#datepicker3').datepicker({
+            dateFormat: 'yy-mm-dd',
+            });
+           $('#datepicker4').datepicker({
+            dateFormat: 'yy-mm-dd',
+            });
 
 	  });
 

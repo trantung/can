@@ -1,120 +1,65 @@
- <!-- left column -->
-    <div class="col-md-6 col-sm-6 col-xs-12">
+ <!-- right column -->
+<div class="row">
+    <div class="col-md-8 col-sm-6 col-xs-12 personal-info">
+        <div class="form-group form-group-sm">
+            <label class="control-label">Tên thường gọi</label>
+            <input value="{{Input::old('ten_thuong_goi')}}"  class="form-control input-sm" type="text" name="ten_thuong_goi" placeholder="Tên thường gọi">
+        </div>
+        {{-- ten_thuong_goi --}}
+        <div class="form-group form-group-sm">
+            <label class="control-label">Nơi sinh</label>
+            {{ Form::select('noi_sinh', $thanh_pho, Input::old('noi_sinh'), array('class'=>'form-control input-sm')) }}
+        </div>
+        {{-- noi_sinh --}}
+        <div class="form-group form-group-sm ">
+            <label class="control-label">Nơi cấp CMND</label>
+            {{ Form::select('noi_cap', $thanh_pho, Input::old('noi_cap'), array('class'=>'form-control input-sm')) }}
+        </div>
+        {{-- noi_cap --}}
+        <div class="form-group form-group-sm">
+            <label class="control-label">Di động</label>
+            <input value="{{Input::old('mobile')}}"  class="form-control input-sm" type="text" name="mobile" placeholder="Di động">
+        </div>
+        {{-- mobile --}}
+        <div class="form-group form-group-sm">
+            <label class="control-label">Email</label>
+            <input value="{{Input::old('email')}}"  class="form-control input-sm" type="text" name="email" placeholder="Email">
+        </div>
+        {{-- email --}}
+        <div class="form-group form-group-sm">
+            <label class="control-label">Quốc tịch</label>
+            <input value="{{Input::old('quoc_tich')!=NULL? Input::old('quoc_tich'):'Việt Nam'}}"  class="form-control input-sm" type="text" name="quoc_tich" placeholder="Việt Nam">
 
-        <div class="form-group form-group-sm row">
-          {{-- <label class="col-lg-3 control-label">CMND<span class="text-danger">*</span></label> --}}
-          <div class="col-xs-12">
-            <input class="form-control input-sm" type="text" name="idcard" value="{{Input::old('idcard')}}" placeholder="Chứng minh nhân dân" >
-            {{-- <em class="text-danger">*</em> --}}
-          </div>
         </div>
-        {{-- id card --}}
-        <div class="form-group form-group-sm row">
-        <div class="col-xs-12">
-            <input class="form-control input-sm" type="text" name="date_of_issue" value="{{Input::old('date_of_issue')}}"  placeholder="Ngày cấp"  id="datepickerEnddate" >
+        {{-- quoc_tich --}}
+        <div class="form-group form-group-sm">
+            <label class="control-label">Nơi cấp hộ chiếu</label>
+            <input value="{{Input::old('noi_cap_ho_chieu')}}"  class="form-control input-sm" type="text" name="noi_cap_ho_chieu" placeholder="Nơi cấp hộ chiếu">
         </div>
+        {{-- noi_cap_ho_chieu --}}
+        <div class="form-group form-group-sm ">
+            <label class="control-label">Ngày cấp MST</label>
+            <input class="form-control input-sm" type="text" name="ngay_cap_mst" id="datepicker4" placeholder="Ngày cấp MST" {{Input::old('ngay_cap_mst')}}>
         </div>
-        {{-- date_of_issue --}}
-        <div class="form-group form-group-sm row">
-        <div class="col-xs-12">
-            <input class="form-control input-sm" type="text" name="place_of_issue " value="{{Input::old('place_of_issue')}}"  placeholder="Nơi cấp" >
+        {{-- ngay_cap_mst --}}
+        <div class="form-group form-group-sm">
+            <label class="control-label">Nguyên quán</label>
+            <input value="{{Input::old('nguyen_quan')}}"  class="form-control input-sm" type="text" name="nguyen_quan" placeholder="Nguyên quán">
         </div>
-        </div>
-        {{-- place_of_issue --}}
-        <div class="form-group form-group-sm row">
-        <div class="col-xs-12">
-            {{ Form::select('nationality_category_id', $nationality_category_id, Input::old('nationality_category_id'), array('class'=>'form-control input-sm')) }}
-        </div>
-        </div>
-        {{-- Nationnality --}}
-        <div class="form-group form-group-sm row">
-          <div class="col-xs-12">
-            {{ Form::select('sex', getSex(), Input::old('sex'), array('class'=>'form-control input-sm')) }}
-
-          </div>
-        </div>
-        {{-- sex --}}
-        <div class="form-group form-group-sm row">
-        <div class="col-xs-12">
-        {{ Form::select('ethnic_group_id', $ethnic_group_id, Input::old('ethnic_group_id'), array('class'=>'form-control input-sm')) }}
-        </div>
-        </div>
-        {{-- Ethnic Group --}}
-        <div class="form-group form-group-sm row">
-        <div class="col-xs-12">
-            {{ Form::select('religion_category_id', $religion_category_id, Input::old('religion_category_id'), array('class'=>'form-control input-sm')) }}
-        </div>
-        </div>
-        {{-- religion --}}
-        <div class="form-group form-group-sm row">
-          <div class="col-xs-12">
-             {{ Form::select('contract_category_id', $contract_category_id, Input::old('contract_category_id'), array('class'=>'form-control input-sm')) }}
-          </div>
-        </div>
-        {{-- contract_category --}}
-
-    </div>
-    <!-- edit form column -->
-    <div class="col-md-6 col-sm-6 col-xs-12 personal-info">
-        <div class="form-group form-group-sm row">
-            <div class="col-xs-12">
-                <input class="form-control input-sm" type="text" value="{{Input::old('tax_code')}}"  name="tax_code" placeholder="Mã số thuế">
-            </div>
-        </div>
-        {{-- tax_code --}}
-        <div class="form-group form-group-sm row">
-            <div class="col-xs-12">
-                <input class="form-control input-sm" type="text" value="{{Input::old('insurance_id')}}"  name="insurance_id" placeholder="Số sổ bảo hiểm y tế">
-            </div>
-        </div>
-        {{-- insurance_id --}}
-        <div class="form-group form-group-sm row">
-        <div class="col-xs-12">
-            <input class="form-control input-sm" type="text" value="{{Input::old('bank_id')}}"  name="bank_id" placeholder="Số tài khoản ngân hàng">
-        </div>
-        </div>
-        {{-- tax_code --}}
-         <div class="form-group form-group-sm row">
-         <div class="col-xs-12">
-            <input class="form-control input-sm" type="text" value="{{Input::old('bank_name')}}"  name="bank_name" placeholder="Ngân hàng">
-        </div>
-        </div>
-        {{-- bank name --}}
-
-        {{-- <div class="form-group form-group-sm row">
-           <div class="col-xs-12">
-            <select class="form-control input-sm" name="company_id">
-                <option value="0">Công ty</option>
-                <option value="m">Nam</option>
-                <option value="w">Nữ</option>
-                <option value="t">Khác</option>
-            </select>
-          </div>
-        </div> --}}
-        {{-- company_name --}}
-        <div class="form-group form-group-sm row">
-          <div class="col-xs-12">
-            {{ Form::select('branch_category_id', $company_category_id, Input::old(''), array('class'=>'form-control input-sm', 'id'=>'section_branch')) }}
-          </div>
-        </div>
-        {{-- branch --}}
-        <div class="form-group form-group-sm row">
-           <div class="col-xs-12">
-            {{ Form::select('position_category_id', $position_category_id, Input::old(''), array('class'=>'form-control input-sm', 'id'=>'section_position')) }}
-          </div>
-        </div>
-        {{-- position --}}
-        <div class="form-group form-group-sm row">
-           <div class="col-xs-12">
-            {{ Form::select('employees_category_id', $employees_category_id, Input::old('employees_category_id'), array('class'=>'form-control input-sm')) }}
-          </div>
-        </div>
-        {{-- personal_category --}}
-
-
-         <div class="form-group form-group-sm row">
-            <div class="col-xs-12">
+        {{-- nguyen_quan --}}
+        <div class="form-group form-group-sm ">
             <input type="submit" class="btn btn-primary" value="Thêm mới">
-            </div>
         </div>
     </div>
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="text-center">
+
+        <img src="{{asset(DEFAULT_PICTURE)}}" class="avatar img-circle img-thumbnail" alt="avatar">
+        <h6>Upload a photo...</h6>
+        <input type="file" class="text-center center-block well well-sm" style="width: 100%" id="image" name="image">
+      </div>
+    </div>
+</div>
+
+
+

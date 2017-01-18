@@ -1,73 +1,104 @@
  <!-- left column -->
-    <div class="col-md-3 col-sm-6 col-xs-12">
-      <div class="text-center">
-
-        <img src="{{asset(DEFAULT_PICTURE)}}" class="avatar img-circle img-thumbnail" alt="avatar">
-        <h6>Upload a photo...</h6>
-        <input type="file" class="text-center center-block well well-sm" style="width: 100%" id="image" name="image">
-
-        <h6>Upload a cv...</h6>
-        <input type="file" class="text-center center-block well well-sm" style="width: 100%" id="cv" name="cv">
-      </div>
+<div class="row">
+    <div class="col-md-6 col-sm-6 col-xs-12 personal-info">
+        <div class="form-group form-group-sm">
+            <label class="control-label">Mã nhân viên</label>
+            <input value="{{Input::old('ma_nv')}}"  class="form-control input-sm" type="text" name="ma_nv" placeholder="Mã nhân viên">
+        </div>
+        {{-- ma_nv --}}
+        <div class="form-group form-group-sm ">
+            <label class="control-label">Giới tính</label>
+            {{ Form::select('gioi_tinh', getSex(), Input::old('gioi_tinh'), array('class'=>'form-control input-sm')) }}
+        </div>
+        {{-- gioi_tinh --}}
+         <div class="form-group form-group-sm">
+            <label class="control-label">CMND</label>
+            <input value="{{Input::old('cmt')}}"  class="form-control input-sm" type="text" name="cmt" placeholder="CMND">
+        </div>
+        {{-- cmt --}}
+    </div>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+         <div class="form-group form-group-sm">
+            <label class="control-label">Họ tên</label>
+            <input value="{{Input::old('ho_ten')}}"  class="form-control input-sm" type="text" name="ho_ten" placeholder="Họ tên">
+        </div>
+        {{-- ho_ten --}}
+        <div class="form-group form-group-sm ">
+            <label class="control-label">Năm sinh</label>
+            <input class="form-control input-sm" type="text" name="nam_sinh" id="datepicker1" placeholder="Năm sinh" {{Input::old('nam_sinh')}}>
+        </div>
+        {{-- nam_sinh --}}
+        <div class="form-group form-group-sm ">
+            <label class="control-label">Ngày cấp CMND</label>
+            <input class="form-control input-sm" type="text" name="ngay_cap" id="datepicker2" placeholder="Ngày cấp CMND" {{Input::old('ngay_cap')}}>
+        </div>
+        {{-- ngay_cap --}}
 
     </div>
-    <!-- edit form column -->
-    <div class="col-md-9 col-sm-6 col-xs-12 personal-info">
-      {{-- <div class="alert alert-info alert-dismissable">
-        <a class="panel-close close" data-dismiss="alert">×</a>
-        <i class="fa fa-coffee"></i>
-        This is an <strong>.alert</strong>. Use this to show important messages to the user.
-      </div> --}}
-        <div class="form-group form-group-sm row">
-          <div class="col-lg-8">
-            <input class="form-control input-sm" type="text" name="fullname" placeholder="Họ tên">
-          </div>
-        </div>
-        {{-- full name --}}
-        <div class="form-group form-group-sm row">
-          <div class="col-lg-8">
-            <input class="form-control input-sm" type="text" name="id_employees" placeholder="Mã nhân viên">
-          </div>
-        </div>
-        {{-- id --}}
+</div>
 
-        <div class="form-group form-group-sm row">
-          <div class="col-lg-8">
-            <input class="form-control input-sm" placeholder="Tên thường gọi" type="text" name="nickname">
-          </div>
-        </div>
-        {{-- nickname --}}
-        <div class="form-group form-group-sm row">
-          <div class="col-lg-8">
-            <input class="form-control input-sm" type="text" name="birthday" id="datepickerStartdate" placeholder="Năm sinh">
-          </div>
-        </div>
-        {{-- birthday --}}
-        <div class="form-group form-group-sm row">
-            <div class="col-lg-8">
-                <input class="form-control input-sm" type="text" name="address" placeholder="Địa chỉ">
-            </div>
-        </div>
-        {{-- address --}}
 
-        <div class="form-group form-group-sm row">
-          <div class="col-lg-8">
-            {{ Form::select('marry', getMarryStatus(), 'Y', array('class'=>'form-control')) }}
-          </div>
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12 personal-info">
+        <div class="form-group form-group-sm">
+            <label class="control-label">Địa chỉ thường trú</label>
+            <input value="{{Input::old('dia_chi_thuong_tru')}}"  class="form-control input-sm" type="text" name="dia_chi_thuong_tru" placeholder="Địa chỉ thường trú">
         </div>
-        {{-- marry --}}
+        {{-- dia_chi_thuong_tru --}}
+        <div class="form-group form-group-sm">
+            <label class="control-label">Địa chỉ tạm trú</label>
+            <input value="{{Input::old('dia_chi_tam_tru')}}"  class="form-control input-sm" type="text" name="dia_chi_tam_tru" placeholder="Địa chỉ tạm trú">
+        </div>
+        {{-- dia_chi_tam_tru --}}
+    </div>
+</div>
 
-        <div class="form-group form-group-sm row">
-          <div class="col-lg-8">
-            <input class="form-control input-sm" type="text" name="mobile" placeholder="Số điện thoại">
-          </div>
+
+<div class="row">
+    <div class="col-md-6 col-sm-6 col-xs-12 personal-info">
+        <div class="form-group form-group-sm">
+            <label class="control-label">Dân tộc</label>
+            {{ Form::select('dan_toc', $danh_sach_dan_toc, Input::old('dan_toc'), array('class'=>'form-control input-sm')) }}
         </div>
-        {{-- mobile --}}
-         <div class="form-group form-group-sm row">
-          <div class="col-lg-8">
-            <input class="form-control input-sm" type="email" name="email" placeholder="Email">
-          </div>
+        {{-- dan_toc --}}
+        <div class="form-group form-group-sm">
+            <label class="control-label">Số hộ chiếu</label>
+            <input value="{{Input::old('ho_chieu')}}"  class="form-control input-sm" type="text" name="ho_chieu" placeholder="Địa chỉ tạm trú">
         </div>
-        {{-- email --}}
+        {{-- ho_chieu --}}
+        <div class="form-group form-group-sm ">
+            <label class="control-label">Tình trạng hôn nhân</label>
+            {{ Form::select('tinh_trang_hon_nhan', getMarryStatus(), 'Y', array('class'=>'form-control')) }}
+        </div>
+        {{-- ngay_cap_ho_chieu --}}
+        <div class="form-group form-group-sm">
+            <label class="control-label">Số tài khoản</label>
+            <input value="{{Input::old('so_tai_khoan')}}"  class="form-control input-sm" type="text" name="so_tai_khoan" placeholder="Số tài khoản">
+        </div>
+        {{-- so_tai_khoan --}}
 
     </div>
+     <div class="col-md-6 col-sm-6 col-xs-12 personal-info">
+        <div class="form-group form-group-sm">
+            <label class="control-label">Tôn giáo</label>
+            {{ Form::select('ton_giao', $danh_sach_ton_giao, Input::old('ton_giao'), array('class'=>'form-control input-sm')) }}
+        </div>
+        {{-- ton_giao --}}
+         <div class="form-group form-group-sm ">
+            <label class="control-label">Ngày cấp hộ chiếu</label>
+            <input class="form-control input-sm" type="text" name="ngay_cap_ho_chieu" id="datepicker3" placeholder="Năm sinh" {{Input::old('ngay_cap_ho_chieu')}}>
+        </div>
+        {{-- ngay_cap_ho_chieu --}}
+        <div class="form-group form-group-sm">
+            <label class="control-label">Mã số thuế</label>
+            <input value="{{Input::old('ma_so_thue')}}"  class="form-control input-sm" type="text" name="ma_so_thue" placeholder="Mã số thuế">
+        </div>
+        {{-- ho_chieu --}}
+        <div class="form-group form-group-sm">
+            <label class="control-label">Ngân hàng</label>
+            <input value="{{Input::old('ngan_hang')}}"  class="form-control input-sm" type="text" name="ngan_hang" placeholder="Ngân hàng">
+        </div>
+        {{-- ngan_hang --}}
+
+    </div>
+</div>

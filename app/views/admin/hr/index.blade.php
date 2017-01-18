@@ -6,7 +6,7 @@
 @section('content')
 
     <!-- inclue Search form -->
-    @include('admin.hr.template.search')
+    {{-- @include('admin.hr.template.search') --}}
 
     <div class="row margin-bottom">
         <div class="col-xs-12">
@@ -30,8 +30,8 @@
                   <th>Ngày sinh</th>
                   <th>Điện thoại</th>
                   <th>Email</th>
-                  <th>Chi nhánh</th>
-                  <th>Vị trí</th>
+                  {{-- <th>Chi nhánh</th> --}}
+                  {{-- <th>Vị trí</th> --}}
                   {{-- <th>Loại hợp đồng</th> --}}
                   {{-- <th>Đăng nhập cuối</th> --}}
                   <th style="width:200px;">Action</th>
@@ -39,13 +39,13 @@
                 @foreach($data as $key => $value)
                 <tr>
                   <td>{{ $key+1 }}</td>
-                  <td>{{ $value->id_employees }}</td>
-                  <td>{{ $value->fullname }}</td>
-                  <td>{{ $value->birthday }}</td>
+                  <td>{{ $value->ma_nv }}</td>
+                  <td>{{ $value->ho_ten }}</td>
+                  <td>{{ $value->nam_sinh }}</td>
                   <td>{{ $value->mobile }}</td>
                   <td>{{ $value->email }}</td>
-                  <td>{{ $company_category_id[$value->branch_category_id] }}</td>
-                  <td>{{ isset($position_category_id[$value->position_category_id]) ? $position_category_id[$value->position_category_id] : '';}}</td>
+                  {{-- <td>{{ $company_category_id[$value->branch_category_id] }}</td> --}}
+                  {{-- <td>{{ isset($position_category_id[$value->position_category_id]) ? $position_category_id[$value->position_category_id] : '';}}</td> --}}
                   {{-- <td>{{ isset($employees_category_id[$value->employees_category_id]) ? $employees_category_id[$value->employees_category_id] : '';}}</td> --}}
                   <td>
                     {{-- <a href="#" class="btn btn-success">Xem</a> --}}

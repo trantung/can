@@ -26,7 +26,7 @@ class HumanResourcesController extends AdminController {
     const EMAIL             = 'email';
     const CREATED_BY             = 'created_by';
     const UPDATED_BY             = 'updated_by';
-    const ETHNIC_GROUP_ID  ='ethnic_group_id';
+    const ETHNIC_GROUP_ID  ='dan_toc';
     const NATIONALITY_ID   ='nationality_category_id';
     const BRANCH_ID         = 'branch_category_id';
     const POSITION_ID       = 'position_category_id';
@@ -48,20 +48,21 @@ class HumanResourcesController extends AdminController {
         //     $branch = $this->buildArrayData( Company::orderBy('id', 'asc')->with('branchs')->get(),'branchs' );
         // }
 
-        // dd($branch);
+        // dd(Province::get()->toArray());
 
        return [
-            self::ETHNIC_GROUP_ID           =>$this->buildArrayData(Ethnic::orderBy('id', 'asc')->get() ),
-            self::RELIGION_CATEGORY_ID      =>$this->buildArrayData(Religion::orderBy('id', 'asc')->get() ),
-            self::CONTRACT_CATEGORY_ID      =>$this->buildArrayData(Contract::orderBy('id', 'asc')->get() ),
-            self::COMPANY_CATEGORY_ID       =>$this->buildArrayData(Company::orderBy('id', 'asc')->get() ),
+            'danh_sach_dan_toc'           =>$this->buildArrayData(Ethnic::orderBy('id', 'asc')->get() ),
+            'danh_sach_ton_giao'          =>$this->buildArrayData(Religion::orderBy('id', 'asc')->get() ),
+            // self::CONTRACT_CATEGORY_ID      =>$this->buildArrayData(Contract::orderBy('id', 'asc')->get() ),
+            // self::COMPANY_CATEGORY_ID       =>$this->buildArrayData(Company::orderBy('id', 'asc')->get() ),
             // self::BRANCH_ID                 =>$this->buildArrayData(Branch::orderBy('id', 'asc')->get() ),
             // self::BRANCH_ID                 =>$branch,
-            self::POSITION_ID               =>$this->buildArrayData(Position::orderBy('id', 'asc')->get() ),
-            self::EMPLOYEES_CATEGORY_ID     =>$this->buildArrayData(Employees::orderBy('id', 'asc')->get() ),
-            self::NATIONALITY_ID            =>$this->buildArrayData(Nationality::orderBy('id', 'asc')->get() ),
-            self::INDUSTRY_CATEGORY_ID      =>$this->buildArrayData(Industry::orderBy('id', 'asc')->get() ),
-            self::CERTIFICATE_CATEGORY_ID   =>$this->buildArrayData(Certificate::orderBy('id', 'asc')->get() ),
+            'vi_tri'               =>$this->buildArrayData(Position::orderBy('id', 'asc')->get() ),
+            'thanh_pho'               =>$this->buildArrayData(Province::get(), 'provinceid' ),
+            // self::EMPLOYEES_CATEGORY_ID     =>$this->buildArrayData(Employees::orderBy('id', 'asc')->get() ),
+            'danh_sach_quoc_gia'            =>$this->buildArrayData(Nationality::orderBy('id', 'asc')->get() ),
+            'quoc_gia'      =>$this->buildArrayData(Industry::orderBy('id', 'asc')->get() ),
+            'bang_cap'   =>$this->buildArrayData(Certificate::orderBy('id', 'asc')->get() ),
             $key => $value,
         ];
     }
@@ -72,67 +73,69 @@ class HumanResourcesController extends AdminController {
      */
     public function index()
     {
-        $input =  Input::only(
-            self::KEYWORD,
-            self::ETHNIC_GROUP_ID,
-            self::RELIGION_CATEGORY_ID,
-            self::EMPLOYEES_CATEGORY_ID,
-            self::ID_EMPLOYEES,
-            self::BRANCH_ID,
-            self::POSITION_ID,
-            self::NATIONALITY_ID,
-            self::CONTRACT_CATEGORY_ID,
-            self::INDUSTRY_CATEGORY_ID,
-            self::CERTIFICATE_CATEGORY_ID
-            );
-        $data = PersonalInfo::where(function ($query) use ($input){
-            if ($input[self::KEYWORD]) {
-                $query = $query->where(self::EMAIL, 'like', '%'.$input[self::KEYWORD].'%')
-                                ->orWhere( self::NICKNAME, 'like', '%'.$input[self::KEYWORD].'%')
-                                ->orWhere( self::IDCARD, 'like', '%'.$input[self::KEYWORD].'%')
-                                ->orWhere( self::TAX_CODE, 'like', '%'.$input[self::KEYWORD].'%')
-                                ->orWhere( self::BANK_ID, 'like', '%'.$input[self::KEYWORD].'%')
-                                ->orWhere( self::BANK_NAME, 'like', '%'.$input[self::KEYWORD].'%')
-                                ->orWhere( self::FULLNAME, 'like', '%'.$input[self::KEYWORD].'%')
-                                ->orWhere( self::ID_EMPLOYEES, 'like', '%'.$input[self::KEYWORD].'%')
-                                ->orWhere( self::NICKNAME, 'like', '%'.$input[self::KEYWORD].'%')
-                                ->orWhere( self::ADDRESS, 'like', '%'.$input[self::KEYWORD].'%')
-                                ->orWhere( self::MOBILE, 'like', '%'.$input[self::KEYWORD].'%')
-                                ->orWhere( self::EMAIL, 'like', '%'.$input[self::KEYWORD].'%');
-            }
-            if ($input[self::ETHNIC_GROUP_ID]) {
-                $query = $query->where(self::ETHNIC_GROUP_ID, $input[self::ETHNIC_GROUP_ID]);
-            }
-            if ($input[self::RELIGION_CATEGORY_ID]) {
-                $query = $query->where(self::RELIGION_CATEGORY_ID, $input[self::RELIGION_CATEGORY_ID]);
-            }
-            if ($input[self::EMPLOYEES_CATEGORY_ID]) {
-                $query = $query->where(self::EMPLOYEES_CATEGORY_ID, $input[self::EMPLOYEES_CATEGORY_ID]);
-            }
-            if ($input[self::ID_EMPLOYEES]) {
-                $query = $query->where(self::ID_EMPLOYEES, $input[self::ID_EMPLOYEES]);
-            }
-            if ($input[self::BRANCH_ID]) {
-                $query = $query->where(self::BRANCH_ID, $input[self::BRANCH_ID]);
-            }
-            if ($input[self::POSITION_ID]) {
-                $query = $query->where(self::POSITION_ID, $input[self::POSITION_ID]);
-            }
-            if ($input[self::NATIONALITY_ID]) {
-                $query = $query->where(self::NATIONALITY_ID, $input[self::NATIONALITY_ID]);
-            }
-            if ($input[self::CONTRACT_CATEGORY_ID]) {
-                $query = $query->where(self::CONTRACT_CATEGORY_ID, $input[self::CONTRACT_CATEGORY_ID]);
-            }
-            if ($input[self::INDUSTRY_CATEGORY_ID]) {
-                $query = $query->where(self::INDUSTRY_CATEGORY_ID, $input[self::INDUSTRY_CATEGORY_ID]);
-            }
-            if ($input[self::CERTIFICATE_CATEGORY_ID]) {
-                $query = $query->where(self::CERTIFICATE_CATEGORY_ID, $input[self::CERTIFICATE_CATEGORY_ID]);
-            }
-        })->orderBy(self::ID, 'desc')->paginate(PAGINATE);
+        // $input =  Input::only(
+            // self::KEYWORD,
+            // self::ETHNIC_GROUP_ID,
+            // self::RELIGION_CATEGORY_ID,
+            // self::EMPLOYEES_CATEGORY_ID,
+            // self::ID_EMPLOYEES,
+            // self::BRANCH_ID,
+            // self::POSITION_ID,
+            // self::NATIONALITY_ID,
+            // self::CONTRACT_CATEGORY_ID,
+            // self::INDUSTRY_CATEGORY_ID,
+            // self::CERTIFICATE_CATEGORY_ID
+            // );
+        // $data = PersonalInfo::where(function ($query) use ($input){
+        //     if ($input[self::KEYWORD]) {
+        //         $query = $query->where(self::EMAIL, 'like', '%'.$input[self::KEYWORD].'%')
+        //                         ->orWhere( self::NICKNAME, 'like', '%'.$input[self::KEYWORD].'%')
+        //                         ->orWhere( self::IDCARD, 'like', '%'.$input[self::KEYWORD].'%')
+        //                         ->orWhere( self::TAX_CODE, 'like', '%'.$input[self::KEYWORD].'%')
+        //                         ->orWhere( self::BANK_ID, 'like', '%'.$input[self::KEYWORD].'%')
+        //                         ->orWhere( self::BANK_NAME, 'like', '%'.$input[self::KEYWORD].'%')
+        //                         ->orWhere( self::FULLNAME, 'like', '%'.$input[self::KEYWORD].'%')
+        //                         ->orWhere( self::ID_EMPLOYEES, 'like', '%'.$input[self::KEYWORD].'%')
+        //                         ->orWhere( self::NICKNAME, 'like', '%'.$input[self::KEYWORD].'%')
+        //                         ->orWhere( self::ADDRESS, 'like', '%'.$input[self::KEYWORD].'%')
+        //                         ->orWhere( self::MOBILE, 'like', '%'.$input[self::KEYWORD].'%')
+        //                         ->orWhere( self::EMAIL, 'like', '%'.$input[self::KEYWORD].'%');
+        //     }
+        //     if ($input[self::ETHNIC_GROUP_ID]) {
+        //         $query = $query->where(self::ETHNIC_GROUP_ID, $input[self::ETHNIC_GROUP_ID]);
+        //     }
+        //     if ($input[self::RELIGION_CATEGORY_ID]) {
+        //         $query = $query->where(self::RELIGION_CATEGORY_ID, $input[self::RELIGION_CATEGORY_ID]);
+        //     }
+        //     if ($input[self::EMPLOYEES_CATEGORY_ID]) {
+        //         $query = $query->where(self::EMPLOYEES_CATEGORY_ID, $input[self::EMPLOYEES_CATEGORY_ID]);
+        //     }
+        //     if ($input[self::ID_EMPLOYEES]) {
+        //         $query = $query->where(self::ID_EMPLOYEES, $input[self::ID_EMPLOYEES]);
+        //     }
+        //     if ($input[self::BRANCH_ID]) {
+        //         $query = $query->where(self::BRANCH_ID, $input[self::BRANCH_ID]);
+        //     }
+        //     if ($input[self::POSITION_ID]) {
+        //         $query = $query->where(self::POSITION_ID, $input[self::POSITION_ID]);
+        //     }
+        //     if ($input[self::NATIONALITY_ID]) {
+        //         $query = $query->where(self::NATIONALITY_ID, $input[self::NATIONALITY_ID]);
+        //     }
+        //     if ($input[self::CONTRACT_CATEGORY_ID]) {
+        //         $query = $query->where(self::CONTRACT_CATEGORY_ID, $input[self::CONTRACT_CATEGORY_ID]);
+        //     }
+        //     if ($input[self::INDUSTRY_CATEGORY_ID]) {
+        //         $query = $query->where(self::INDUSTRY_CATEGORY_ID, $input[self::INDUSTRY_CATEGORY_ID]);
+        //     }
+        //     if ($input[self::CERTIFICATE_CATEGORY_ID]) {
+        //         $query = $query->where(self::CERTIFICATE_CATEGORY_ID, $input[self::CERTIFICATE_CATEGORY_ID]);
+        //     }
+        // })->orderBy(self::ID, 'desc')->paginate(PAGINATE);
+        $data = PersonalInfo::orderBy(self::ID, 'desc')->paginate(PAGINATE);
         $result = $this->getAllCategory('data', $data);
 
+        // dd($result);
         return View::make('admin.hr.index', $result);
     }
 
@@ -144,6 +147,8 @@ class HumanResourcesController extends AdminController {
     public function create()
     {
         $result = $this->getAllCategory('data', null);
+
+        // dd($result);
         return View::make('admin.hr.create', $result);
         // return View::make('admin.hr.create');
     }
@@ -151,32 +156,32 @@ class HumanResourcesController extends AdminController {
     public function getInput()
     {
         return Input::only(
-            self::IDCARD,
-            self::DATE_OF_ISSUE,
-            self::IMAGE,
-            self::CV,
-            self::PLACE_OF_ISSUE,
-            self::SEX,
-            self::TAX_CODE,
-            self::INSURANCE_ID,
-            self::BANK_ID,
-            self::BANK_NAME,
-            // self::COMPANY_ID,
-            self::FULLNAME,
-            self::ID_EMPLOYEES,
-            self::NICKNAME,
-            self::BIRTHDAY,
-            self::ADDRESS,
-            self::MARRY,
-            self::MOBILE,
-            self::EMAIL,
-            self::ETHNIC_GROUP_ID,
-            self::NATIONALITY_ID,
-            self::BRANCH_ID,
-            self::POSITION_ID,
-            self::EMPLOYEES_CATEGORY_ID,
-            self::RELIGION_CATEGORY_ID,
-            self::CONTRACT_CATEGORY_ID
+            'ma_nv',
+            'ho_ten',
+            'ten_thuong_goi',
+            'image',
+            'gioi_tinh',
+            'nam_sinh',
+            'noi_sinh',
+            'cmt',
+            'ngay_cap',
+            'noi_cap',
+            'dia_chi_thuong_tru',
+            'dia_chi_tam_tru',
+            'mobile',
+            'email',
+            'dan_toc',
+            'ton_giao',
+            'quoc_tich',
+            'ho_chieu',
+            'ngay_cap_ho_chieu',
+            'noi_cap_ho_chieu',
+            'tinh_trang_hon_nhan',
+            'ma_so_thue',
+            'ngay_cap_mst',
+            'so_tai_khoan',
+            'ngan_hang',
+            'nguyen_quan'
             );
     }
 
@@ -189,32 +194,14 @@ class HumanResourcesController extends AdminController {
     {
         try {
             $rules = array(
-                self::IDCARD   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // self::DATE_OF_ISSUE   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // self::IMAGE   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // self::CV   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // self::PLACE_OF_ISSUE   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // self::NATIONALITY_ID   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // self::SEX   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // self::ETHNIC_GROUP_ID   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // self::RELIGION_ID   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // self::CONTRACT_CATEGORY_ID   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                self::TAX_CODE   => 'required',
-                self::INSURANCE_ID   => 'required',
-                self::BANK_ID   => 'required',
-                self::BANK_NAME   => 'required',
-                // self::COMPANY_ID   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // self::BRANCH_ID   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // self::POSITION_ID   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // self::EMPLOYEES_CATEGORY_ID   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // self::FULLNAME   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // self::ID_EMPLOYEES   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // self::NICKNAME   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // self::BIRTHDAY   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // self::ADDRESS   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // self::MARRY   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                // self::MOBILE   => 'required|unique:admins,deleted_at,NULL|unique_delete',
-                self::EMAIL   => 'email|max:255',
+            'ma_nv'=>'required|unique:personal_info,ma_nv,NULL|unique_delete',
+            'mobile'=>'required|unique:personal_info,mobile,NULL|unique_delete',
+            'ho_ten'=>'required',
+            'gioi_tinh'=>'required',
+            'nam_sinh'=>'required',
+            'cmt'=>'required',
+            'ngay_cap'=>'required',
+            'noi_cap'=>'required',
             );
 
             $input = $this->getInput();
@@ -228,11 +215,11 @@ class HumanResourcesController extends AdminController {
             }else{
                 $input[self::IMAGE] = CommonUpload::uploadImage('', UPLOADIMG, self::IMAGE, UPLOAD_EMPLOYEES);
             }
-            if(!$input[self::CV]) {
-                $input[self::CV] = '';
-            }else{
-                $input[self::CV] = CommonUpload::uploadImage('', UPLOADIMG, self::CV, UPLOAD_EMPLOYEES);
-            }
+            // if(!$input[self::CV]) {
+            //     $input[self::CV] = '';
+            // }else{
+            //     $input[self::CV] = CommonUpload::uploadImage('', UPLOADIMG, self::CV, UPLOAD_EMPLOYEES);
+            // }
             $input[self::CREATED_BY] = Auth::admin()->get()->id;
             $input[self::UPDATED_BY] = Auth::admin()->get()->id;
             $id = PersonalInfo::create($input)->id;

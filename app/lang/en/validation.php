@@ -100,6 +100,14 @@ return array(
 	|
 	*/
 
-	'attributes' => array(),
+	'attributes' => array(
+            'ma_nv'=>' Mã nhân viên ',
+            'ho_ten'=>'Họ tên',
+            'gioi_tinh'=>'Giới tính',
+            'nam_sinh'=>'Năm sinh',
+            'cmt'=>'CMND',
+            'ngay_cap'=>'Ngày cấp CMND',
+            'noi_cap'=>'Nơi cấp CMND',
+        ),
 
 );

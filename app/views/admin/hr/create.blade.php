@@ -12,10 +12,10 @@
 </div>
 <div class="row">
     {{ Form::open(array('action' => 'HumanResourcesController@store')) }}
-        <div class="col-md-6 col-sm-12 col-xs-12">
+        <div class="col-md-7 col-sm-7 col-xs-12">
             @include('admin.hr.template.employment_left_infomation')
         </div>
-        <div class="col-md-6 col-sm-12 col-xs-12">
+        <div class="col-md-5 col-sm-5 col-xs-12">
             @include('admin.hr.template.employment_right_infomation')
         </div>
     {{ Form::close() }}
@@ -35,31 +35,4 @@
     border-top: 1px solid #aaa;
 }
 </style>
-<script>
-     $(document).ready(function(){
-        $('#section_branch').change( function($this){
-            // console.log($('#section_branch').val());
-                // var token =  $("input[name=_token]").val();
-                // var data = {'branch_category_id':$('#section_branch').val()};
-                // $.ajax({
-                //     type: "GET",
-                {{-- //     url : "{{action('PositionCategoryController@getPositionWithBranch')}}", --}}
-                //     data : data,
-                //     success : function(data){
-                //         var select = '';
-                //         // data.foreach(function(item){
-                //         //     select = select . '<option value="1">CTO</option>'
-                //         // });
-                //         for (var key in data) {
-                //             var value = data[key];
-                //             select = select + '<option value="'+key+'">'+data[key]+'</option>';
-                //         }
-                //         $('#section_position').html(select);
-                //         // console.log(select);
-                //     }
-                // },"json");
-
-        })
-     });
-</script>
 @stop
