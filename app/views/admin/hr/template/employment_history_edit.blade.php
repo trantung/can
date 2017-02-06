@@ -31,16 +31,16 @@
                     </div>
                     {{-- position--}}
                     <div class="form-group form-group-sm row">
-                        <label class="col-lg-3 control-label">Ngày kết thúc<span class="text-danger">*</span></label>
+                        <label class="col-lg-3 control-label">Ngày bắt đầu<span class="text-danger">*</span></label>
                         <div class="col-lg-8">
-                        <input type="text" name="start_date" class="form-control" id="startdate" placeholder="Từ ngày yyyy-mm-dd" value="{{$company->start_date}}"/>
+                        <input type="text" name="start_date" class="form-control" id="datepicker1" placeholder="Từ ngày yyyy-mm-dd" value="{{$company->start_date}}"/>
                         </div>
                     </div>
                     {{-- start_date --}}
                     <div class="form-group form-group-sm row">
-                        <label class="col-lg-3 control-label">Ngày kết thúc<span class="text-danger">*</span></label>
+                        <label class="col-lg-3 control-label">Ngày kết thúc</label>
                         <div class="col-lg-8">
-                        <input type="text" name="end_date" class="form-control" id="enddate" placeholder="Đến ngày yyyy-mm-dd" value="{{$company->end_date}}"/>
+                        <input type="text" name="end_date" class="form-control" id="datepicker2" placeholder="Đến ngày yyyy-mm-dd" value="{{$company->end_date != '0000-00-00'? $company->end_date: ''}}"/>
                         </div>
                     </div>
                     {{-- end_date --}}

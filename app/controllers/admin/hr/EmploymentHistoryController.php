@@ -31,9 +31,9 @@ class EmploymentHistoryController extends AdminController {
                 // self::BRANCH   => 'required|integer',
                 self::POSITION   => 'required|integer',
                 self::WHY_OUT   => 'required',
-                self::DESCRIPTION   => 'required',
+                // self::DESCRIPTION   => 'required',
                 self::START_DATE   => 'required|date',
-                self::END_DATE   => 'required|date',
+                // self::END_DATE   => 'required|date',
             );
             $input = Input::only(
                 self::COMPANY_NAME,
@@ -105,9 +105,9 @@ class EmploymentHistoryController extends AdminController {
                 // self::BRANCH   => 'required|integer',
                 self::POSITION   => 'required|integer',
                 self::WHY_OUT   => 'required',
-                self::DESCRIPTION   => 'required',
+                // self::DESCRIPTION   => 'required',
                 self::START_DATE   => 'required|date',
-                self::END_DATE   => 'required|date',
+                // self::END_DATE   => 'required|date',
             );
             $input = Input::only(
                 self::COMPANY_NAME,

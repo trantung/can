@@ -8,7 +8,7 @@
                 <div class="well well-lg">
                 <h4><b>{{isset($company_category_id[$value->company_name])? $company_category_id[$value->company_name]: '' }} </b></h4>
                 {{-- <h4><b>{{isset($company_category_id[$value->company_name])? $company_category_id[$value->company_name]: '' }} - {{isset($branch_category_id[$value->branch])? $branch_category_id[$value->branch]: "" }}</b></h4> --}}
-                {{$value->start_date}}  <b>-</b> {{$value->end_date}} </br>
+                {{$value->start_date}}  <b>-</b> {{$value->end_date != '0000-00-00'? $value->end_date: 'Đến nay'}} </br>
                 Vị trí: {{isset($position_category_id[$value->position])? $position_category_id[$value->position] : '' }}</br>
                 Lý do chuyển công tác: {{$value->why_out}} </br>
                 Ghi chú: {{$value->description}}
@@ -70,14 +70,14 @@
                     </div>
                     {{-- position--}}
                     <div class="form-group form-group-sm row">
-                        <label class="col-lg-3 control-label">Ngày kết thúc<span class="text-danger">*</span></label>
+                        <label class="col-lg-3 control-label">Ngày bắt đầu<span class="text-danger">*</span></label>
                         <div class="col-lg-8">
                         <input type="text" name="start_date" class="form-control" id="startdate" placeholder="Từ ngày yyyy-mm-dd" value="{{Input::old('start_date');}}"/>
                         </div>
                     </div>
                     {{-- start_date --}}
                     <div class="form-group form-group-sm row">
-                        <label class="col-lg-3 control-label">Ngày kết thúc<span class="text-danger">*</span></label>
+                        <label class="col-lg-3 control-label">Ngày kết thúc</label>
                         <div class="col-lg-8">
                         <input type="text" name="end_date" class="form-control" id="enddate" placeholder="Đến ngày yyyy-mm-dd" value="{{Input::old('end_date');}}"/>
                         </div>
