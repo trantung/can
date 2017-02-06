@@ -18,12 +18,21 @@
         <div class="col-md-6 col-sm-12 col-xs-12">
             @include('admin.hr.template.edit_employment_right_infomation')
         </div>
+        <div class="pull-right" style="margin-top:40px">
+            <div class="form-group form-group-sm ">
+                <input type="submit" class="btn btn-primary" value="Thêm mới">
+            </div>
+        </div>
     {{ Form::close() }}
 </div>
 <hr>
-@include('admin.hr.template.employment_educational')
+@include('admin.hr.template.create.employment_educational')
 <hr>
-@include('admin.hr.template.employment_history')
+@include('admin.hr.template.create.employment_history')
+<hr>
+@include('admin.hr.template.create.employment_files')
+<hr>
+@include('admin.hr.template.create.employment_bonus_history')
 
 <style type="text/css">
     hr {

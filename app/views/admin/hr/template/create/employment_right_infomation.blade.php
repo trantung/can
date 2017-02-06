@@ -47,9 +47,6 @@
             <input value="{{Input::old('nguyen_quan')}}"  class="form-control input-sm" type="text" name="nguyen_quan" placeholder="Nguyên quán">
         </div>
         {{-- nguyen_quan --}}
-        <div class="form-group form-group-sm ">
-            <input type="submit" class="btn btn-primary" value="Thêm mới">
-        </div>
     </div>
     <div class="col-md-4 col-sm-6 col-xs-12">
         <div class="text-center">

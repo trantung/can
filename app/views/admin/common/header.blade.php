@@ -27,6 +27,25 @@
 	{{HTML::style('adminlte/plugins/datetimepicker/bootstrap-datetimepicker.min.css') }}
 
 	{{ HTML::style('adminlte/plugins/jQueryUI/jquery-ui.css') }}
+    <style type="text/css" media="screen">
+        legend {
+            display: block;
+            width: auto;
+            padding: 0;
+            margin-bottom: 20px;
+            font-size: 21px;
+            line-height: inherit;
+            color: #333;
+            border: 0;
+            border-bottom: none;
+        }
+
+        fieldset {
+            padding: .35em .625em .75em;
+            margin: 0 2px;
+            border: 1px solid silver;
+        }
+    </style>
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 	<!--[if lt IE 9]>
@@ -110,6 +129,12 @@
             dateFormat: 'yy-mm-dd',
             });
            $('#datepicker4').datepicker({
+            dateFormat: 'yy-mm-dd',
+            });
+            $('#date_bonus').datepicker({
+            dateFormat: 'yy-mm-dd',
+            });
+             $('#pay_time').datepicker({
             dateFormat: 'yy-mm-dd',
             });
 

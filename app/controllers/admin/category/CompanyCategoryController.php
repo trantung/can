@@ -181,6 +181,35 @@ class CompanyCategoryController extends BaseCategoryController {
         return $this->redirectBackAction();
     }
 
+    /**
+   * [update update once model]
+   * @param  [int] $id [id of model need update]
+   * @return [object]     [$model]
+   */
+    public function update($id){
+        try{
+            $input = $this->getInputFieldUpdate();
+            $validator = $this->updateValidater($input);
+            $input[self::UPDATED_BY] = Auth::admin()->get()->id;
+            if($validator->fails()) {
+                return Redirect::back()->withErrors($validator)->withInput($input);
+            }
+            $parent_node = $this->model->where(self::ID, $input[self::PARENT_ID])->first();
+            // dd($parent_node->toArray());
+            // $result = $this->model->where(self::ID, $id)->first();
+            if ($parent_node->parent_id != $id) {
+                $result = $this->model->where(self::ID, $id)->update($input);
+                if(!$result) {
+                    dd('Error');
+                }
+            }
+        } catch(Exception $e){
+            return $this->returnError($e);
+        }
+
+        return $this->redirectBackAction();
+    }
+
     protected function viewOfActionIndex(){
         return 'admin.system.company.index';
     }

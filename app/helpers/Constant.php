@@ -16,11 +16,13 @@ define('PAGINATE', 20);
 define('FRONENDPAGINATE', 15);
 //url upload img
 define('UPLOADIMG', '/images');
+define('UPLOADFILE', '/files');
 
 //url upload news
 define('UPLOAD_NEWS', '/news');
 define('UPLOAD_SLIDE', '/slide');
 define('UPLOAD_EMPLOYEES', '/employees');
+define('UPLOAD_FILE', '/employees/');
 //folder upload image facebook
 define('FOLDER_SEO_NEWS', 'fb_news');
 define('FOLDER_SEO', 'seo');

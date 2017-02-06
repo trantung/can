@@ -175,7 +175,11 @@ class AdminController extends BaseController {
         // }else{
             // dd($data->toArray());
             foreach ($data as $key => $value) {
-                $result[$value->id] = $value->name;
+                if ($subTable) {
+                    $result[$value->$subTable] = $value->name;
+                }else{
+                    $result[$value->id] = $value->name;
+                }
             }
         // }
 

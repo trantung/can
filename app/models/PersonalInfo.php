@@ -50,6 +50,17 @@ class PersonalInfo extends Eloquent implements UserInterface, RemindableInterfac
             'so_tai_khoan',
             'ngan_hang',
             'nguyen_quan',
+
+            'loai_nhan_vien',
+            'ngay_vao_cong_ty',
+            'thoi_gian_thu_viec',
+            'don_vi',
+            'chuc_danh',
+            'chuc_vu',
+            'phong_ban',
+            'bo_phan',
+            'dia_diem_lam_viec',
+
             'created_by',
             'updated_by'
         );
@@ -63,6 +74,16 @@ class PersonalInfo extends Eloquent implements UserInterface, RemindableInterfac
     public function employmentHistory()
     {
         return $this->hasMany('EmploymentHistory', 'personal_id');
+    }
+
+    public function employmentFiles()
+    {
+        return $this->hasMany('Files', 'personal_id');
+    }
+
+    public function employmentBonusHistory()
+    {
+        return $this->hasMany('BonusHistory', 'personal_id');
     }
 
 }

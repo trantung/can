@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCompanyCategoryLevelTable extends Migration {
+class CreateFileTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,12 +12,12 @@ class CreateCompanyCategoryLevelTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('company_category_level', function(Blueprint $table) {
+		Schema::create('files', function(Blueprint $table) {
             $table->increments('id');
             $table->string('name', 255)->nullable();
-            $table->string('slug', 255)->nullable();
-
+            $table->string('link', 255)->nullable();
             $table->integer('created_by')->nullable()->unsigned();
+            $table->integer('personal_id')->nullable()->unsigned();
             $table->integer('updated_by')->nullable()->unsigned();
             $table->softDeletes();
             $table->timestamps();
@@ -31,7 +31,7 @@ class CreateCompanyCategoryLevelTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('company_category_level');
+		Schema::drop('files');
 	}
 
 }

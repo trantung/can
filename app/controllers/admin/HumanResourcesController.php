@@ -54,7 +54,8 @@ class HumanResourcesController extends AdminController {
             'danh_sach_dan_toc'           =>$this->buildArrayData(Ethnic::orderBy('id', 'asc')->get() ),
             'danh_sach_ton_giao'          =>$this->buildArrayData(Religion::orderBy('id', 'asc')->get() ),
             // self::CONTRACT_CATEGORY_ID      =>$this->buildArrayData(Contract::orderBy('id', 'asc')->get() ),
-            // self::COMPANY_CATEGORY_ID       =>$this->buildArrayData(Company::orderBy('id', 'asc')->get() ),
+            self::COMPANY_CATEGORY_ID       =>$this->buildArrayData(Company::orderBy('id', 'asc')->get() ),
+            self::POSITION_ID               =>$this->buildArrayData(Position::orderBy('id', 'asc')->get() ),
             // self::BRANCH_ID                 =>$this->buildArrayData(Branch::orderBy('id', 'asc')->get() ),
             // self::BRANCH_ID                 =>$branch,
             'vi_tri'               =>$this->buildArrayData(Position::orderBy('id', 'asc')->get() ),
@@ -63,6 +64,16 @@ class HumanResourcesController extends AdminController {
             'danh_sach_quoc_gia'            =>$this->buildArrayData(Nationality::orderBy('id', 'asc')->get() ),
             'quoc_gia'      =>$this->buildArrayData(Industry::orderBy('id', 'asc')->get() ),
             'bang_cap'   =>$this->buildArrayData(Certificate::orderBy('id', 'asc')->get() ),
+            // 'danh_sach_don_vi' => $this->buildArrayData(::orderBy('id', 'asc')),
+            // 'danh_sach_chuc_danh' => $this->buildArrayData(::orderBy('id', 'asc')),
+            // 'danh_sach_phong_ban' => $this->buildArrayData(::orderBy('id', 'asc')),
+            // 'danh_sach_chuc_vu' => $this->buildArrayData(::orderBy('id', 'asc')),
+            // 'danh_sach_bo_phan' => $this->buildArrayData(::orderBy('id', 'asc')),
+            // 'danh_sach_dia_diem_lam_viec' => $this->buildArrayData(::orderBy('id', 'asc')),
+            // 'danh_sach_thoi_gian_thu_viec' => $this->buildArrayData(::orderBy('id', 'asc')),
+            'danh_sach_loai_nhan_vien' => $this->buildArrayData(Employees::orderBy('id', 'asc')),
+            self::INDUSTRY_CATEGORY_ID      =>$this->buildArrayData(Industry::orderBy('id', 'asc')->get() ),
+            self::CERTIFICATE_CATEGORY_ID   =>$this->buildArrayData(Certificate::orderBy('id', 'asc')->get() ),
             $key => $value,
         ];
     }
@@ -277,7 +288,15 @@ class HumanResourcesController extends AdminController {
         try {
             // dd('vao');
             $rules = array(
-                self::IDCARD   => 'required|unique:admins,deleted_at,NULL|unique_delete',
+                'ma_nv'=>'required|unique:personal_info,ma_nv,'.$id.'|unique_delete',
+                'mobile'=>'required|unique:personal_info,mobile,'.$id.'|unique_delete',
+                'ho_ten'=>'required',
+                'gioi_tinh'=>'required',
+                'nam_sinh'=>'required',
+                'cmt'=>'required',
+                'ngay_cap'=>'required',
+                'noi_cap'=>'required',
+                // self::IDCARD   => 'required|unique:admins,deleted_at,NULL|unique_delete',
                 // self::DATE_OF_ISSUE   => 'required|unique:admins,deleted_at,NULL|unique_delete',
                 // self::IMAGE   => 'required|unique:admins,deleted_at,NULL|unique_delete',
                 // self::CV   => 'required|unique:admins,deleted_at,NULL|unique_delete',
@@ -313,9 +332,9 @@ class HumanResourcesController extends AdminController {
             if($input[self::IMAGE]){
                 $input[self::IMAGE] = CommonUpload::uploadImage('', UPLOADIMG, self::IMAGE, UPLOAD_EMPLOYEES);
             }
-            if($input[self::CV]){
-                $input[self::CV] = CommonUpload::uploadImage('', UPLOADIMG, self::CV, UPLOAD_EMPLOYEES);
-            }
+            // if($input[self::CV]){
+            //     $input[self::CV] = CommonUpload::uploadImage('', UPLOADIMG, self::CV, UPLOAD_EMPLOYEES);
+            // }
 
             $input[self::CREATED_BY] = Auth::admin()->get()->id;
             $input[self::UPDATED_BY] = Auth::admin()->get()->id;

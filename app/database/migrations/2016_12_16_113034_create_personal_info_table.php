@@ -50,6 +50,17 @@ class CreatePersonalInfoTable extends Migration {
             $table->string('ngan_hang', 255)->nullable();
             $table->string('nguyen_quan', 255)->nullable();
 
+            $table->integer('loai_nhan_vien')->nullable()->unsigned();
+            $table->date('ngay_vao_cong_ty')->nullable();
+            $table->integer('thoi_gian_thu_viec')->nullable()->unsigned();
+
+            $table->integer('don_vi')->nullable()->unsigned();
+            $table->integer('chuc_danh')->nullable()->unsigned();
+            $table->integer('chuc_vu')->nullable()->unsigned();
+            $table->integer('phong_ban')->nullable()->unsigned();
+            $table->integer('bo_phan')->nullable()->unsigned();
+            $table->integer('dia_diem_lam_viec')->nullable()->unsigned();
+
             $table->integer('created_by')->nullable()->unsigned();
             $table->integer('updated_by')->nullable()->unsigned();
             $table->softDeletes();

@@ -75,8 +75,13 @@
                 </a>
             </li>
             <li>
-                <a href="/admin/nhap-luong">
-                    <span>Nhập lương nhân viên</span>
+                <a href="{{ action('SalariesController@index') }}">
+                    <span>Lương nhân viên</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ action('InsuranceController@index') }}">
+                    <span>Bảo hiểm nhân viên</span>
                 </a>
             </li>
         </ol>

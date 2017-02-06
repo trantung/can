@@ -36,8 +36,11 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('/industry', 'IndustryCategoryController');//
     Route::resource('/certificate', 'CertificateCategoryController');//
     Route::resource('/department', 'DepartmentCategoryController');//
+    // Route::post('/vocabulary', 'Admin2Controller@store');
 
-    //
+    Route::resource('/salaries', 'SalariesController');
+    Route::resource('/insurance', 'InsuranceController');
+
     Route::post('/{employment}/employment-education', array('uses' => 'EmploymentEducationalController@storeSchool', 'as' => 'employment.newEducation'));
     Route::put('/{employment}/employment-education/{id}', 'EmploymentEducationalController@updateSchool');
     Route::delete('/{employment}/employment-education/{id}', array('uses' => 'EmploymentEducationalController@destroySchool', 'as' => 'employment.destroy'));
@@ -48,6 +51,12 @@ Route::group(['prefix' => 'admin'], function () {
     Route::put('/{employment}/employment-history/{id}', 'EmploymentHistoryController@updateHistory');
     Route::delete('/{employment}/employment-history/{id}', array('uses' => 'EmploymentHistoryController@destroyHistory', 'as' => 'employment.destroyHistory'));
     Route::get('/employment-history/{id}/edit', array('uses' => 'EmploymentHistoryController@editHistory', 'as' => 'employment.editHistory'));
+
+    Route::post('/{employment}/employment-files', array('uses' => 'EmploymentFilesController@storeFile', 'as' => 'employment.newFiles'));
+    Route::delete('/{employment}/employment-files/{id}', array('uses' => 'EmploymentFilesController@destroyFile', 'as' => 'employment.destroyFile'));
+
+    Route::post('/{employment}/employment-bonus-history', array('uses' => 'EmploymentBonusHistoryController@storeBonusHistory', 'as' => 'employment.newBonusHistory'));
+    Route::delete('/{employment}/employment-bonus-history/{id}', array('uses' => 'EmploymentBonusHistoryController@destroyBonusHistory', 'as' => 'employment.destroyBonusHistory'));
 
     Route::get('/nhap-luong', function (){
         return View::make('admin.demo.luong');
