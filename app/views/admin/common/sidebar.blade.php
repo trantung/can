@@ -59,11 +59,11 @@
                     <span>Danh sách Dân tộc</span>
                 </a>
             </li>
-            <li>
+            {{-- <li>
                 <a href="{{ action('NationalityCategoryController@index') }}">
                     <span>Danh sách Quốc gia vùng lãnh thổ</span>
                 </a>
-            </li>
+            </li> --}}
             <li>
                 <a href="{{ action('IndustryCategoryController@index') }}">
                     <span>Danh sách Ngành nghề</span>
