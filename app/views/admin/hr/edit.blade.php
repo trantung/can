@@ -26,6 +26,8 @@
     {{ Form::close() }}
 </div>
 <hr>
+@include('admin.hr.template.create.employment_positions')
+<hr>
 @include('admin.hr.template.create.employment_educational')
 <hr>
 @include('admin.hr.template.create.employment_history')
@@ -33,6 +35,7 @@
 @include('admin.hr.template.create.employment_files')
 <hr>
 @include('admin.hr.template.create.employment_bonus_history')
+
 
 <style type="text/css">
     hr {

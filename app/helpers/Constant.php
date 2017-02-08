@@ -87,3 +87,5 @@ define('IMAGE_BOTTOM', 3);
 //language
 define('LANG_VI', 'vi');
 define('LANG_EN', 'en');
+define('HISTORY', 0);
+define('BONUSHISTORY', 1);

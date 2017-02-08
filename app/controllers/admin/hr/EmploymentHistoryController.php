@@ -14,10 +14,12 @@ class EmploymentHistoryController extends AdminController {
     const UPDATED_BY        = 'updated_by';
     const START_DATE        = 'start_date';
     const END_DATE          = 'end_date';
+    const STATUS            = 'status';
     const BRANCH_ID         = 'branch_category_id';
     const POSITION_ID       = 'position_category_id';
 
     const COMPANY_CATEGORY_ID = 'company_category_id';
+    const POSITION_TO_HISTORY = 'Nghỉ kiêm nhiệm';
     /**
      * Store a newly created resource in storage.
      *
@@ -50,6 +52,44 @@ class EmploymentHistoryController extends AdminController {
                 return Redirect::action('HumanResourcesController@edit', array('id' => $employment))
                     ->withErrors($validator)->withAddNewEmployerHistory(TRUE)->withInput();
             }
+            $input[self::CREATED_BY] = Auth::admin()->get()->id;
+            $input[self::UPDATED_BY] = Auth::admin()->get()->id;
+            $input[self::PERSONAL_ID] = $employment;
+
+            $id = EmploymentHistory::create($input)->id;
+
+        } catch (Exception $e) {
+
+            return $this->returnError($e);
+        }
+
+        return Redirect::action('HumanResourcesController@edit', array('id' => $employment));
+    }
+/**
+     * Store a newly created resource in storage.
+     *
+     * @return Response
+     */
+    public function newPosition($employment)
+    {
+        try {
+            $rules = array(
+                self::COMPANY_NAME   => 'required',
+                self::POSITION   => 'required|integer',
+                self::START_DATE   => 'required|date',
+            );
+            $input = Input::only(
+                self::COMPANY_NAME,
+                self::POSITION,
+                self::START_DATE
+            );
+
+            $validator = Validator::make($input,$rules);
+            if($validator->fails()) {
+                return Redirect::action('HumanResourcesController@edit', array('id' => $employment))
+                    ->withErrors($validator)->withAddNewEmployerHistory(TRUE)->withInput();
+            }
+            $input[self::STATUS] = BONUSHISTORY;
             $input[self::CREATED_BY] = Auth::admin()->get()->id;
             $input[self::UPDATED_BY] = Auth::admin()->get()->id;
             $input[self::PERSONAL_ID] = $employment;
@@ -146,6 +186,22 @@ class EmploymentHistoryController extends AdminController {
     {
         try {
             EmploymentHistory::find($id)->delete();
+        } catch (Exception $e) {
+            return $this->returnError($e);
+        }
+
+        return Redirect::action('HumanResourcesController@edit', array('id' => $employment));
+    }
+    /**
+     * change status of history.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function moveHistory($employment, $id)
+    {
+        try {
+            EmploymentHistory::where(self::ID, $id)->update([self::STATUS=> HISTORY, self::WHY_OUT => self::POSITION_TO_HISTORY, self::DESCRIPTION => self::POSITION_TO_HISTORY]);
         } catch (Exception $e) {
             return $this->returnError($e);
         }

@@ -24,7 +24,7 @@ class PersonalInfo extends Eloquent implements UserInterface, RemindableInterfac
      * @var array
      */
     protected $fillable = array(
-            'ma_nv',
+            // 'ma_nv',
             'ho_ten',
             'ten_thuong_goi',
             'image',
@@ -60,6 +60,7 @@ class PersonalInfo extends Eloquent implements UserInterface, RemindableInterfac
             'phong_ban',
             'bo_phan',
             'dia_diem_lam_viec',
+            'status',
 
             'created_by',
             'updated_by'
@@ -73,7 +74,11 @@ class PersonalInfo extends Eloquent implements UserInterface, RemindableInterfac
 
     public function employmentHistory()
     {
-        return $this->hasMany('EmploymentHistory', 'personal_id');
+        return $this->hasMany('EmploymentHistory', 'personal_id')->where('status',HISTORY);
+    }
+    public function EmploymentPositions()
+    {
+        return $this->hasMany('EmploymentHistory', 'personal_id')->where('status',BONUSHISTORY);
     }
 
     public function employmentFiles()

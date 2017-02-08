@@ -19,6 +19,7 @@ class CreateEmploymentHistoryTable extends Migration {
             $table->integer('company_name')->nullable()->unsigned();
             $table->integer('branch')->nullable()->unsigned();
             $table->integer('position')->nullable()->unsigned();
+            $table->tinyInteger('status')->default(0);
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
             $table->integer('created_by')->nullable()->unsigned();

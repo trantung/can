@@ -58,6 +58,9 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/{employment}/employment-bonus-history', array('uses' => 'EmploymentBonusHistoryController@storeBonusHistory', 'as' => 'employment.newBonusHistory'));
     Route::delete('/{employment}/employment-bonus-history/{id}', array('uses' => 'EmploymentBonusHistoryController@destroyBonusHistory', 'as' => 'employment.destroyBonusHistory'));
 
+    Route::post('/{employment}/employment-position', array('uses' => 'EmploymentHistoryController@newPosition', 'as' => 'employment.newPosition'));
+    Route::delete('/{employment}/employment-position/{id}', array('uses' => 'EmploymentHistoryController@moveHistory', 'as' => 'employment.moveHistory'));
+
     Route::get('/nhap-luong', function (){
         return View::make('admin.demo.luong');
     });

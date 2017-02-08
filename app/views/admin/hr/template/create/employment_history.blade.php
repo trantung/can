@@ -4,7 +4,7 @@
 
         <div class="row">
             @foreach($personal->employmentHistory as $value)
-            <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="well well-lg">
                 <h4><b>{{isset($company_category_id[$value->company_name])? $company_category_id[$value->company_name]: '' }} </b></h4>
                 {{-- <h4><b>{{isset($company_category_id[$value->company_name])? $company_category_id[$value->company_name]: '' }} - {{isset($branch_category_id[$value->branch])? $branch_category_id[$value->branch]: "" }}</b></h4> --}}

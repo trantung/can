@@ -3,22 +3,31 @@
     <h3>Lịch sử khen thưởng kỉ luật <span><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addNewEmployerBonusHistory">Thêm mới</button></span></h3>
 
         <div class="row">
-            @foreach($personal->employmentBonusHistory as $value)
-            <div class="col-md-4 col-sm-6 col-xs-12">
-                <div class="well well-lg">
-                <h4><b>{{$value->why_bonus}} </b></h4>
-                <dd><b>{{$value->date}}</b></dd>
-                <dd>{{$value->description}}</dd>
-
-                    <div class="admin-action">
-                        {{-- <a href="{{ route('employment.editFIle', $value->id) }}" style=" display: inline-block;">Sửa</a> --}}
-                        {{ Form::open(array('method' => 'DELETE', 'route' => ['employment.destroyBonusHistory', $personal->id, $value->id], 'style'=>" display: inline-block;")) }}
+            <div class="box-body table-responsive no-padding">
+              <table class="table table-hover">
+                <tr>
+                  <th>Ngày tháng</th>
+                  <th>Lý do</th>
+                  <th>Ghi chú</th>
+                  <th>Chỉnh sửa lần cuối</th>
+                  <th style="width:200px;">Action</th>
+                </tr>
+                @foreach($personal->employmentBonusHistory as $key => $value)
+                <tr>
+                  <td>{{ date('d-m-Y',strtotime($value->date) )  }}</td>
+                  <td>{{ $value->why_bonus }}</td>
+                  <td>{{ $value->description }}</td>
+                  <td>{{  date('h:m d-m-Y',strtotime($value->updated_at) ) }}</td>
+                  <td>
+                   {{ Form::open(array('method' => 'DELETE', 'route' => ['employment.destroyBonusHistory', $personal->id, $value->id], 'style'=>" display: inline-block;")) }}
                         <input href="#" type ="submit" class="text-danger input-delete" aria-hidden="true" onclick="return confirm('Bạn có chắc chắn muốn xóa?');" value="Xóa" />
                         {{ Form::close() }}
-                    </div>
-                </div>
+                  </td>
+                </tr>
+                @endforeach
+              </table>
             </div>
-            @endforeach
+            <!-- /.box-body -->
         </div>
 
     </div>

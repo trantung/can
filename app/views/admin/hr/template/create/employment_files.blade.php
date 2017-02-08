@@ -10,7 +10,6 @@
                 <a href="{{ url($value->link) }}">tải về</a>
 
                     <div class="admin-action">
-                        {{-- <a href="{{ route('employment.editFIle', $value->id) }}" style=" display: inline-block;">Sửa</a> --}}
                         {{ Form::open(array('method' => 'DELETE', 'route' => ['employment.destroyFile', $personal->id, $value->id], 'style'=>" display: inline-block;")) }}
                         <input href="#" type ="submit" class="text-danger input-delete" aria-hidden="true" onclick="return confirm('Bạn có chắc chắn muốn xóa?');" value="Xóa" />
                         {{ Form::close() }}

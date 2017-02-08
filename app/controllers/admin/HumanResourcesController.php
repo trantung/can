@@ -167,7 +167,7 @@ class HumanResourcesController extends AdminController {
     public function getInput()
     {
         return Input::only(
-            'ma_nv',
+            // 'ma_nv',
             'ho_ten',
             'ten_thuong_goi',
             'image',
@@ -205,7 +205,7 @@ class HumanResourcesController extends AdminController {
     {
         try {
             $rules = array(
-            'ma_nv'=>'required|unique:personal_info,ma_nv,NULL|unique_delete',
+            // 'ma_nv'=>'required|unique:personal_info,ma_nv,NULL|unique_delete',
             'mobile'=>'required|unique:personal_info,mobile,NULL|unique_delete',
             'ho_ten'=>'required',
             'gioi_tinh'=>'required',
@@ -288,7 +288,7 @@ class HumanResourcesController extends AdminController {
         try {
             // dd('vao');
             $rules = array(
-                'ma_nv'=>'required|unique:personal_info,ma_nv,'.$id.'|unique_delete',
+                // 'ma_nv'=>'required|unique:personal_info,ma_nv,'.$id.'|unique_delete',
                 'mobile'=>'required|unique:personal_info,mobile,'.$id.'|unique_delete',
                 'ho_ten'=>'required',
                 'gioi_tinh'=>'required',

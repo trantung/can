@@ -3,7 +3,7 @@
     <div class="col-md-6 col-sm-6 col-xs-12 personal-info">
         <div class="form-group form-group-sm">
             <label class="control-label">Mã nhân viên</label>
-            <input value="{{Input::old('ma_nv')}}"  class="form-control input-sm" type="text" name="ma_nv" placeholder="Mã nhân viên">
+            <input value="NV{{Input::old('ma_nv')}}"  class="form-control input-sm" type="text" disabled>
         </div>
         {{-- ma_nv --}}
         <div class="form-group form-group-sm ">
