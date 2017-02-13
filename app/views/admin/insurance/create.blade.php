@@ -45,20 +45,21 @@
             </div>
 
             <div class="form-group">
-              <label for="description">Ghi chú</label>
-              <div class="row">
-              	<div class="col-sm-6">
-              		<input type="text" class="form-control" id="description" placeholder="Ghi chú" name="description" value="{{Input::old('description')}}">
-              	</div>
-              </div>
-            </div>
-            <div class="form-group">
               <label for="pay_time">Thời gian đóng</label>
               	<div class="row">
                 	<div class="col-sm-6">
                 		<input type="text" class="form-control" id="pay_time" placeholder="Thời gian đóng" name="pay_time" value="{{Input::old('pay_time')}}">
             		</div>
       			</div>
+            </div>
+
+            <div class="form-group">
+              <label for="description">Ghi chú</label>
+              <div class="row">
+                <div class="col-sm-6">
+                    <textarea  class="form-control" id="description" placeholder="Ghi chú" name="description">{{Input::old('description')}}</textarea>
+                </div>
+              </div>
             </div>
 
 

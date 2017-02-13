@@ -12,17 +12,21 @@
 </div>
 <div class="row">
     {{ Form::open(array('action' => array('HumanResourcesController@update', $personal->id), 'method' => 'PUT', 'files' => true)) }}
+     <fieldset>
+            <legend>Thông tin cá nhân</legend>
         <div class="col-md-6 col-sm-12 col-xs-12">
             @include('admin.hr.template.edit_employment_left_infomation')
         </div>
         <div class="col-md-6 col-sm-12 col-xs-12">
             @include('admin.hr.template.edit_employment_right_infomation')
-        </div>
-        <div class="pull-right" style="margin-top:40px">
-            <div class="form-group form-group-sm ">
-                <input type="submit" class="btn btn-primary" value="Thêm mới">
+
+            <div class="pull-right" style="margin-top:40px">
+                <div class="form-group form-group-sm ">
+                    <input type="submit" class="btn btn-primary" value="Cập nhật">
+                </div>
             </div>
         </div>
+    </fieldset>
     {{ Form::close() }}
 </div>
 <hr>

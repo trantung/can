@@ -1,26 +1,34 @@
 <div class="row">
     <div class="col-xs-12">
-    <h3>Chức vụ kiêm nhiệm <span><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addNewEmployerPosition">Thêm mới</button></span></h3>
-
-        <div class="row">
-            @foreach($personal->EmploymentPositions as $value)
-            <div class="col-md-3 col-sm-6 col-xs-12">
-                <div class="well well-lg">
-
-                <h4><b>{{isset($company_category_id[$value->company_name])? $company_category_id[$value->company_name]: '' }} </b></h4>
-                Vị trí: {{isset($position_category_id[$value->position])? $position_category_id[$value->position] : '' }}</br>
-                Ngày bắt đầu:<b> {{$value->start_date}}  </b></br>
-
-                    <div class="admin-action">
-                        {{ Form::open(array('method' => 'DELETE', 'route' => ['employment.moveHistory', $personal->id, $value->id], 'style'=>" display: inline-block;")) }}
-                        <input href="#" type ="submit" class="text-danger input-delete" aria-hidden="true" onclick="return confirm('Bạn có chắc chắn muốn xóa?');" value="Xóa" />
+    <h3>Nơi làm việc <span><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addNewEmployerPosition">Thêm mới</button></span></h3>
+@if($personal->EmploymentPositions->count() > 0)
+        <div class="">
+            <div class="box-body table-responsive no-padding">
+              <table class="table table-striped">
+                <tr>
+                  <th>Tên file</th>
+                  <th> Vị trí</th>
+                  <th> Ngày bắt đầu </th>
+                  <th style="width:200px;">Action</th>
+                </tr>
+                @foreach($personal->EmploymentPositions as $key => $value)
+                <tr>
+                  <td>{{isset($company_category_id[$value->company_name])? $company_category_id[$value->company_name]: '' }}</td>
+                  <td>{{isset($position_category_id[$value->position])? $position_category_id[$value->position] : '' }}</td>
+                  <td>{{date('d-m-Y',strtotime($value->start_date) )}}</td>
+                  <td>
+                         {{ Form::open(array('method' => 'DELETE', 'route' => ['employment.moveHistory', $personal->id, $value->id], 'style'=>" display: inline-block;")) }}
+                        <input href="#" type ="submit" class="btn btn-danger btn-xs" aria-hidden="true" onclick="return confirm('Bạn có chắc chắn muốn bỏ kiêm nhiệm?');" value="Bỏ kiêm nhiệm" />
                         {{ Form::close() }}
-                    </div>
-                </div>
+                    {{-- </div> --}}
+                  </td>
+                </tr>
+                @endforeach
+              </table>
             </div>
-            @endforeach
-        </div>
 
+        </div>
+@endif
     </div>
 </div>
 <!-- Modal -->
@@ -36,7 +44,7 @@
     }}
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="addNewEmployerPosition">Thêm mới Chức vụ kiêm nhiệm </h4>
+        <h4 class="modal-title" id="addNewEmployerPosition">Thêm mới Nơi làm việc</h4>
       </div>
         <div class="modal-body">
                 <div class="well well-lg">

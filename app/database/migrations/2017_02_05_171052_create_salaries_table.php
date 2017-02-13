@@ -17,7 +17,11 @@ class CreateSalariesTable extends Migration {
             $table->double('total')->nullable();
             $table->string('description', 255)->nullable();
             $table->date('pay_time');
-            $table->tinyInteger('month');
+            $table->tinyInteger('ngay_cong');
+            $table->tinyInteger('ngay_di_lam');
+            $table->double('luong_trach_nhiem');
+            $table->double('phu_cap');
+            $table->tinyInteger('kieu_luong');
             $table->integer('created_by')->nullable()->unsigned();
             $table->integer('personal_id')->nullable()->unsigned();
             $table->integer('updated_by')->nullable()->unsigned();

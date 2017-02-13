@@ -1,6 +1,6 @@
 <?php
 
-class PositionCategoryController extends BaseCategoryController {
+class OfficerCategoryController extends BaseCategoryController {
 
 
     protected $model;
@@ -8,18 +8,13 @@ class PositionCategoryController extends BaseCategoryController {
 
     const ZERO       = 0;
     const ONE        = 1;
-    // field of branch table.
+    // field of contract table.
     const ID              = 'id';
     const NAME            = 'name';
-    const CREATED_BY      = 'created_by';
+    const CRETED_BY       = 'created_by';
     const UPDATED_BY      = 'created_by';
     const DELETED         = 'deleted';
     const DESCRIPTION     = 'description';
-    const COMPANY_ID      = 'company_id';
-
-    const DEPARTMENT_ID   = 'department_id';
-    const OFICER_ID       = 'oficer_id';
-    const BRANCH_ID       = 'branch_category_id';
 
 
 
@@ -31,7 +26,7 @@ class PositionCategoryController extends BaseCategoryController {
     */
     protected function getModel()
     {
-        return new Position;
+        return new Officer;
     }
 
     /**
@@ -40,7 +35,7 @@ class PositionCategoryController extends BaseCategoryController {
     * @return array
     */
     protected function getInputFieldStore(){
-        return Input::only(self::NAME, self::BRANCH_ID, self::DESCRIPTION, self::OFICER_ID);
+        return Input::only(self::NAME);
     }
 
     /**
@@ -49,7 +44,7 @@ class PositionCategoryController extends BaseCategoryController {
     * @return array
     */
     protected function getInputFieldUpdate(){
-        return Input::only(self::NAME, self::BRANCH_ID, self::DESCRIPTION,  self::OFICER_ID);
+        return Input::only(self::NAME);
     }
 
     /**
@@ -85,10 +80,7 @@ class PositionCategoryController extends BaseCategoryController {
     * @return model
     */
     protected function getSubTable(){
-        // if (debug_backtrace()[1]['function'] == 'index') {
-            return $this->buildArrayData( Company::orderBy('id', 'asc')->get());
-        // }
-        // return $this->buildArrayData( Company::orderBy('id', 'asc')->with('branchs')->get(),'branchs' );
+        return NULL;
     }
 
     /**
@@ -99,7 +91,6 @@ class PositionCategoryController extends BaseCategoryController {
     protected function storeValidater(array $array){
         return Validator::make($array,[
             self::NAME => 'required',
-            self::BRANCH_ID => 'required',
         ]);
     }
 
@@ -111,30 +102,25 @@ class PositionCategoryController extends BaseCategoryController {
     protected function updateValidater(array $array){
         return Validator::make($array,[
             self::NAME => 'required',
-            self::BRANCH_ID => 'required',
         ]);
     }
 
     protected function redirectBackAction(){
-        return Redirect::action('PositionCategoryController@index');
+        return Redirect::action('OfficerCategoryController@index');
     }
 
 
     protected function viewOfActionIndex(){
-        return 'admin.system.position.index';
+        return 'admin.system.officer.index';
     }
     protected function viewOfActionCreate(){
-        return 'admin.system.position.create';
+        return 'admin.system.officer.create';
     }
     protected function viewOfActionShow(){
-        return 'admin.system.position.detail';
+        return 'admin.system.officer.detail';
     }
     protected function viewOfActionEdit(){
-        return 'admin.system.position.edit';
+        return 'admin.system.officer.edit';
     }
-    public function getPositionWithBranch()
-    {
-        $partern = Input::only(self::BRANCH_ID);
-        return $this->buildArrayData(Position::where($partern)->get());
-    }
+
 }

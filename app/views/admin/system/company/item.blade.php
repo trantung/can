@@ -1,14 +1,12 @@
 @foreach($items as $key => $value)
 <div style="padding-left:15px; border-top: 1px solid #ddd; padding-top:15px; margin-top:10px">
 <div class="row">
-    {{-- <div class="col-xs-1">{{ $key+1 }}</div> --}}
-    <div class="col-xs-2">{{ $value['name'] }}</div>
-    <div class="col-xs-2">{{ $value['code'] }}</div>
-    <div class="col-xs-4">{{ $value['description'] }}</div>
-    <div class="col-xs-1">
-    <a href="{{ action('CompanyCategoryController@edit', $value['id']) }}" >Sửa</a>
+    <div class="col-xs-10">{{ $value['code'] }} - {{ $value['name'] }}</div>
+    <div class="col-xs-2" style="text-align: right">
+    <a href="{{ action('CompanyCategoryController@show', $value['id']) }}" class="btn btn-info" >Xem</a>
+    <a href="{{ action('CompanyCategoryController@edit', $value['id']) }}" class="btn btn-primary" >Sửa</a>
     {{ Form::open(array('method'=>'DELETE', 'action' => array('CompanyCategoryController@destroy', $value['id']), 'style' => 'display: inline-block;')) }}
-    <button onclick="return confirm('Bạn có chắc chắn muốn xóa?');">Xóa</button>
+    <button class="btn btn-danger"  onclick="return confirm('Bạn có chắc chắn muốn xóa?');">Xóa</button>
     {{ Form::close() }}
 
     </div>

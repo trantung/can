@@ -131,6 +131,12 @@
            $('#datepicker4').datepicker({
             dateFormat: 'yy-mm-dd',
             });
+            $('#datepicker5').datepicker({
+            dateFormat: 'yy-mm-dd',
+            });
+            $('#datepicker6').datepicker({
+            dateFormat: 'yy-mm-dd',
+            });
             $('#date_bonus').datepicker({
             dateFormat: 'yy-mm-dd',
             });

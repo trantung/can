@@ -27,7 +27,11 @@
 				<tr>
 				  <th>#</th>
 				  <th>Username</th>
-                  <th>Lương</th>
+                  <th>Ngày công</th>
+                  <th>Ngày đi làm  </th>
+                  <th>Lương trách nhiệm</th>
+                  <th>Phụ cấp</th>
+                  <th>Kiểu lương</th>
                   <th>Tháng</th>
                   <th>Ghi chú</th>
 				  <th>Ngày trả</th>
@@ -37,6 +41,11 @@
 				<tr>
 				  <td>{{ $key+1 }}</td>
 				  <td>{{ $value->personal_id }}</td>
+                  <td>{{ $value->ngay_cong }}</td>
+                  <td>{{ $value->ngay_di_lam }}</td>
+                  <td>{{ $value->luong_trach_nhiem }}</td>
+                  <td>{{ $value->phu_cap }}</td>
+                  <td>{{ $value->kieu_luong }}</td>
                   <td>{{ $value->total }}</td>
                   <td>{{ $value->month }}</td>
                   <td>{{ $value->description }}</td>

@@ -22,10 +22,10 @@
         </div>
          </fieldset>
 
-        <fieldset>
+        {{-- <fieldset>
             <legend>Nơi làm việc</legend>
-            {{-- @include('admin.hr.template.create.office') --}}
-        </fieldset>
+            @include('admin.hr.template.create.office')
+        </fieldset> --}}
         <div class="pull-right" style="margin-top:40px">
             <div class="form-group form-group-sm ">
                 <input type="submit" class="btn btn-primary" value="Thêm mới">

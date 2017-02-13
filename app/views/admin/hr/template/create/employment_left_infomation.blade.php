@@ -76,6 +76,11 @@
             <input value="{{Input::old('so_tai_khoan')}}"  class="form-control input-sm" type="text" name="so_tai_khoan" placeholder="Số tài khoản">
         </div>
         {{-- so_tai_khoan --}}
+        <div class="form-group form-group-sm ">
+            <label class="control-label">Ngày vào làm</label>
+            <input class="form-control input-sm" type="text" name="ngay_vao_cong_ty" id="datepicker5" placeholder="Ngày vào làm" value="{{Input::old('ngay_vao_cong_ty')}}">
+        </div>
+        {{-- ngay_vao_cong_ty --}}
 
     </div>
      <div class="col-md-6 col-sm-6 col-xs-12 personal-info">
@@ -99,6 +104,12 @@
             <input value="{{Input::old('ngan_hang')}}"  class="form-control input-sm" type="text" name="ngan_hang" placeholder="Ngân hàng">
         </div>
         {{-- ngan_hang --}}
+
+         <div class="form-group form-group-sm ">
+            <label class="control-label">Ngày kết thúc thử việc</label>
+            <input class="form-control input-sm" type="text" name="ngay_ket_thuc_thu_viec" id="datepicker6" placeholder="Ngày kết thúc thử việc" value="{{Input::old('ngay_ket_thuc_thu_viec')}}">
+        </div>
+        {{-- ngay_ket_thuc_thu_viec --}}
 
     </div>
 </div>

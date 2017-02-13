@@ -47,6 +47,11 @@
             <input value="{{$personal->nguyen_quan}}"  class="form-control input-sm" type="text" name="nguyen_quan" placeholder="Nguyên quán">
         </div>
         {{-- nguyen_quan --}}
+         <div class="form-group form-group-sm">
+            <label class="control-label">Lương cơ bản</label>
+            <input value="{{$personal->luong_co_ban}}"  class="form-control input-sm" type="text" name="luong_co_ban" placeholder="lương cơ bản">
+        </div>
+        {{-- luong_co_ban --}}
     </div>
     <div class="col-md-4 col-sm-6 col-xs-12">
         <div class="text-center">

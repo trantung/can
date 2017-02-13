@@ -98,7 +98,7 @@ class CompanyCategoryController extends BaseCategoryController {
         return [
             'select'=> $this->buildArrayData($category),
             'typeName'=>$type->name,
-            'companyName' => $this->buildArrayData($result,1),
+            'companyName' => $this->buildArrayData($result),
         ];
     }
 
@@ -161,7 +161,7 @@ class CompanyCategoryController extends BaseCategoryController {
             $input[self::CREATED_BY] = Auth::admin()->get()->id;
             $input[self::UPDATED_BY] = Auth::admin()->get()->id;
             if($validator->fails()) {
-                return Redirect::back()->withErrors($validator)->withInput($input);
+                return Redirect::back()->withErrors($validator)->withInput();
             }
             if (! $input[self::PARENT_ID]) {
                 $input[self::PARENT_ID] = 0;
@@ -179,6 +179,15 @@ class CompanyCategoryController extends BaseCategoryController {
         }
 
         return $this->redirectBackAction();
+    }
+
+    public function show($id)
+    {
+        $data = $this->model->find($id);
+        $subTable = $this->getSubTable();
+        // dd($subTable);
+
+        return View::make($this->viewOfActionShow(), ['data'=>$data, 'subTable'=>$subTable] );
     }
 
     /**

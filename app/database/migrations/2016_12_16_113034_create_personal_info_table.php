@@ -31,9 +31,9 @@ class CreatePersonalInfoTable extends Migration {
             $table->string('dia_chi_thuong_tru', 255)->nullable();
             $table->string('dia_chi_tam_tru', 255)->nullable();
 
-            $table->integer('mobile')->nullable()->unique();
+            $table->integer('mobile')->nullable();
 
-            $table->string('email', 255)->nullable()->unique();
+            $table->string('email', 255)->nullable();
 
             $table->integer('dan_toc')->nullable()->unsigned();
             $table->integer('ton_giao')->nullable()->unsigned();
@@ -44,7 +44,8 @@ class CreatePersonalInfoTable extends Migration {
 
 
             $table->enum('tinh_trang_hon_nhan',  array('Y', 'N', 'O'))->default('O');
-            $table->integer('ma_so_thue')->nullable()->unique()->unsigned();
+            // $table->integer('ma_so_thue')->nullable();
+            $table->string('ma_so_thue', 13)->nullable();
             $table->date('ngay_cap_mst')->nullable();
             $table->string('so_tai_khoan', 255)->nullable();
             $table->string('ngan_hang', 255)->nullable();
@@ -59,7 +60,9 @@ class CreatePersonalInfoTable extends Migration {
             $table->integer('chuc_vu')->nullable()->unsigned();
             $table->integer('phong_ban')->nullable()->unsigned();
             $table->integer('bo_phan')->nullable()->unsigned();
-            $table->integer('dia_diem_lam_viec')->nullable()->unsigned();
+            // $table->integer('dia_diem_lam_viec')->nullable()->unsigned();
+            $table->date('ngay_ket_thuc_thu_viec')->nullable();
+            $table->double('luong_co_ban')->nullable();
 
             $table->integer('created_by')->nullable()->unsigned();
             $table->integer('updated_by')->nullable()->unsigned();

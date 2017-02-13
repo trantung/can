@@ -38,8 +38,53 @@
             <div class="form-group">
               <label for="total"> Tổng tiền lương</label>
               <div class="row">
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="total" placeholder="Tổng tiền lương" name="total" value="{{Input::old('total')}}">
+                </div>
+              </div>
+            </div>
+
+ <div class="form-group">
+              <label for="ngay_cong"> Ngày công</label>
+              <div class="row">
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="ngay_cong" placeholder="Ngày công" name="ngay_cong" value="{{Input::old('ngay_cong')}}">
+                </div>
+              </div>
+            </div>
+
+ <div class="form-group">
+              <label for="ngay_di_lam"> Ngày đi làm</label>
+              <div class="row">
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="ngay_di_lam" placeholder="Ngày đi làm" name="ngay_di_lam" value="{{Input::old('ngay_di_lam')}}">
+                </div>
+              </div>
+            </div>
+
+ <div class="form-group">
+              <label for="luong_trach_nhiem"> Lương trách nhiệm</label>
+              <div class="row">
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="luong_trach_nhiem" placeholder="Lương trách nhiệm" name="luong_trach_nhiem" value="{{Input::old('luong_trach_nhiem')}}">
+                </div>
+              </div>
+            </div>
+
+ <div class="form-group">
+              <label for="phu_cap"> Phụ cấp</label>
+              <div class="row">
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="phu_cap" placeholder="Phụ cấp" name="phu_cap" value="{{Input::old('phu_cap')}}">
+                </div>
+              </div>
+            </div>
+
+ <div class="form-group">
+              <label for="kieu_luong"> Kiểu lương</label>
+              <div class="row">
               	<div class="col-sm-6">
-                	<input type="text" class="form-control" id="total" placeholder="Tổng tiền lương" name="total" value="{{Input::old('total')}}">
+                	<input type="text" class="form-control" id="kieu_luong" placeholder="Kiểu lương" name="kieu_luong" value="{{Input::old('kieu_luong')}}">
                 </div>
               </div>
             </div>

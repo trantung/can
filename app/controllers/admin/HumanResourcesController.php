@@ -71,7 +71,8 @@ class HumanResourcesController extends AdminController {
             // 'danh_sach_bo_phan' => $this->buildArrayData(::orderBy('id', 'asc')),
             // 'danh_sach_dia_diem_lam_viec' => $this->buildArrayData(::orderBy('id', 'asc')),
             // 'danh_sach_thoi_gian_thu_viec' => $this->buildArrayData(::orderBy('id', 'asc')),
-            'danh_sach_loai_nhan_vien' => $this->buildArrayData(Employees::orderBy('id', 'asc')),
+            'danh_sach_loai_nhan_vien' => $this->buildArrayData(Employees::orderBy('id', 'asc')->get()),
+            'officer_category_id' => $this->buildArrayData(Officer::orderBy('id', 'asc')->get()),
             self::INDUSTRY_CATEGORY_ID      =>$this->buildArrayData(Industry::orderBy('id', 'asc')->get() ),
             self::CERTIFICATE_CATEGORY_ID   =>$this->buildArrayData(Certificate::orderBy('id', 'asc')->get() ),
             $key => $value,
@@ -192,7 +193,10 @@ class HumanResourcesController extends AdminController {
             'ngay_cap_mst',
             'so_tai_khoan',
             'ngan_hang',
-            'nguyen_quan'
+            'nguyen_quan',
+            'ngay_vao_cong_ty',
+            'ngay_ket_thuc_thu_viec',
+            'luong_co_ban'
             );
     }
 
@@ -219,7 +223,7 @@ class HumanResourcesController extends AdminController {
             $validator =  Validator::make($input,$rules);
             if($validator->fails()) {
                 return Redirect::action('HumanResourcesController@create')
-                    ->withErrors($validator);
+                    ->withErrors($validator)->withInput();
             }
             if(!$input[self::IMAGE]) {
                 $input[self::IMAGE] = DEFAULT_PICTURE;
@@ -269,6 +273,10 @@ class HumanResourcesController extends AdminController {
         try {
             $personal = PersonalInfo::find($id);
             $result = $this->getAllCategory('personal', $personal);
+            // dd(Officer::orderBy('id', 'asc')->get()->toJson());
+            $employmentHistory = EmploymentHistory::where('personal_id', $id)->where('status',HISTORY)->with('positionHistory')->with('officerHistory')->get();
+            // $officerHistory
+            $result['employmentHistory'] =  $employmentHistory;
 
         } catch (Exception $e) {
             return $this->returnError($e);

@@ -36,6 +36,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('/industry', 'IndustryCategoryController');//
     Route::resource('/certificate', 'CertificateCategoryController');//
     Route::resource('/department', 'DepartmentCategoryController');//
+    Route::resource('/officer', 'OfficerCategoryController');//
     // Route::post('/vocabulary', 'Admin2Controller@store');
 
     Route::resource('/salaries', 'SalariesController');

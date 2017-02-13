@@ -1,29 +1,43 @@
 <div class="row">
     <div class="col-xs-12">
     <h3>Lịch sử công tác <span><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addNewEmployerHistory">Thêm mới</button></span></h3>
-
-        <div class="row">
-            @foreach($personal->employmentHistory as $value)
-            <div class="col-md-4 col-sm-6 col-xs-12">
-                <div class="well well-lg">
-                <h4><b>{{isset($company_category_id[$value->company_name])? $company_category_id[$value->company_name]: '' }} </b></h4>
-                {{-- <h4><b>{{isset($company_category_id[$value->company_name])? $company_category_id[$value->company_name]: '' }} - {{isset($branch_category_id[$value->branch])? $branch_category_id[$value->branch]: "" }}</b></h4> --}}
-                {{$value->start_date}}  <b>-</b> {{$value->end_date != '0000-00-00'? $value->end_date: 'Đến nay'}} </br>
-                Vị trí: {{isset($position_category_id[$value->position])? $position_category_id[$value->position] : '' }}</br>
-                Lý do chuyển công tác: {{$value->why_out}} </br>
-                Ghi chú: {{$value->description}}
-                    <div class="admin-action">
-                        {{-- <a href="/admin/{{$personal->id}}/employment-education/{{$value->id}}/edit" aria-hidden="true" style=" display: inline-block;">sửa</a> --}}
-                        <a href="{{ route('employment.editHistory', $value->id) }}" style=" display: inline-block;">Sửa</a>
+@if($employmentHistory->count() > 0)
+        <div class="">
+         <div class="box-body table-responsive no-padding">
+              <table class="table table-hover">
+                <tr>
+                  <th>Công ty</th>
+                  <th>Thời gian</th>
+                  <th>Vị trí</th>
+                  <th>Lý do chuyển công tác</th>
+                  <th>Ghi chú</th>
+                  <th style="width:200px;">Action</th>
+                </tr>
+                @foreach($employmentHistory as $key => $value)
+                {{-- {{dd($employmentHistory->toJson())}} --}}
+                <tr>
+                  <td>{{isset($company_category_id[$value->company_name])? $company_category_id[$value->company_name]: '' }}</td>
+                  <td>
+                    {{date('d-m-Y',strtotime($value->start_date ) )}} <b>-</b> {{$value->end_date != NULL ? date('d-m-Y',strtotime($value->end_date ) ): 'Đến nay'}}
+                  </td>
+                  <td>{{$value->positionHistory->name }}</td>
+                  <td>{{$value->why_out}}</td>
+                  <td>{{$value->description}}</td>
+                  <td>
+                        <a href="{{ route('employment.editHistory', $value->id) }}" class="btn btn-info btn-xs">Sửa</a>
                         {{ Form::open(array('method' => 'DELETE', 'route' => ['employment.destroyHistory', $personal->id, $value->id], 'style'=>" display: inline-block;")) }}
-                        <input href="#" type ="submit" class="text-danger input-delete" aria-hidden="true" onclick="return confirm('Bạn có chắc chắn muốn xóa?');" value="Xóa" />
+                        <input href="#" type ="submit" class="btn btn-danger btn-xs" aria-hidden="true" onclick="return confirm('Bạn có chắc chắn muốn xóa?');" value="Xóa" />
                         {{ Form::close() }}
-                    </div>
-                </div>
+                  </td>
+                </tr>
+                @endforeach
+              </table>
             </div>
-            @endforeach
-        </div>
+            <!-- /.box-body -->
 
+
+        </div>
+@endif
     </div>
 </div>
 <!-- Modal -->
@@ -63,12 +77,19 @@
                         </div>
                     </div> --}}
                     <div class="form-group form-group-sm row">
-                        <label class="col-lg-3 control-label">Vị trí<span class="text-danger">*</span></label>
+                        <label class="col-lg-3 control-label">Chức danh<span class="text-danger">*</span></label>
                         <div class="col-lg-8">
                         {{ Form::select('position', $position_category_id, Input::old('position'), array('class'=>'form-control input-sm',  'id'=>'section_position_model')) }}
                         </div>
                     </div>
                     {{-- position--}}
+                    <div class="form-group form-group-sm row">
+                        <label class="col-lg-3 control-label">Chức vụ<span class="text-danger">*</span></label>
+                        <div class="col-lg-8">
+                        {{ Form::select('officer', $officer_category_id, Input::old('officer'), array('class'=>'form-control input-sm',  'id'=>'section_officer_model')) }}
+                        </div>
+                    </div>
+                    {{-- officer--}}
                     <div class="form-group form-group-sm row">
                         <label class="col-lg-3 control-label">Ngày bắt đầu<span class="text-danger">*</span></label>
                         <div class="col-lg-8">

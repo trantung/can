@@ -19,11 +19,11 @@
                 </ul> --}}
             </li>
             @endif
-            <li>
+            {{-- <li>
                 <a href="{{ action('HumanResourcesController@index') }}">
                     <i class="fa fa-users"></i> <span>Quản lý nhân sự</span>
                 </a>
-            </li>
+            </li> --}}
             {{-- <li>
                 <a href="{{ action('CompanyCategoryController@index') }}">
                     <span>Danh sách Công ty</span>
@@ -36,7 +36,12 @@
             </li>
             <li>
                 <a href="{{ action('PositionCategoryController@index') }}">
-                    <span>Vị trí công tác</span>
+                    <span>Chức danh</span>
+                </a>
+            </li>
+             <li>
+                <a href="{{ action('OfficerCategoryController@index') }}">
+                    <span>Chức vụ</span>
                 </a>
             </li>
             {{-- <li>
@@ -74,7 +79,7 @@
                     <span>Danh sách Bằng cấp & chứng chỉ</span>
                 </a>
             </li>
-            <li>
+           {{--  <li>
                 <a href="{{ action('SalariesController@index') }}">
                     <span>Lương nhân viên</span>
                 </a>
@@ -83,7 +88,7 @@
                 <a href="{{ action('InsuranceController@index') }}">
                     <span>Bảo hiểm nhân viên</span>
                 </a>
-            </li>
+            </li> --}}
         </ol>
     </section>
     <!-- /.sidebar -->

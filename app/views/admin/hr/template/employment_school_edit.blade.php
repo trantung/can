@@ -40,7 +40,7 @@
             <div class="form-group form-group-sm row">
                 <label class="col-lg-3 control-label">Năm tốt nghiệp<span class="text-danger">*</span></label>
                 <div class="col-lg-8">
-                    <input type="text" name="graduation_year" class="form-control" id="datepickerGraduation" placeholder="yyyy-mm-dd" value="{{$school->graduation_year}}" />
+                    <input type="text" name="graduation_year" class="form-control" id="datepicker1" placeholder="yyyy-mm-dd" value="{{$school->graduation_year}}" />
                 </div>
             </div>
             {{-- graduation year--}}

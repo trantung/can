@@ -1,8 +1,8 @@
 <div class="row">
     <div class="col-xs-12">
     <h3>Lịch sử khen thưởng kỉ luật <span><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addNewEmployerBonusHistory">Thêm mới</button></span></h3>
-
-        <div class="row">
+@if($personal->employmentBonusHistory->count() > 0)
+        <div class="">
             <div class="box-body table-responsive no-padding">
               <table class="table table-hover">
                 <tr>
@@ -20,7 +20,7 @@
                   <td>{{  date('h:m d-m-Y',strtotime($value->updated_at) ) }}</td>
                   <td>
                    {{ Form::open(array('method' => 'DELETE', 'route' => ['employment.destroyBonusHistory', $personal->id, $value->id], 'style'=>" display: inline-block;")) }}
-                        <input href="#" type ="submit" class="text-danger input-delete" aria-hidden="true" onclick="return confirm('Bạn có chắc chắn muốn xóa?');" value="Xóa" />
+                        <input href="#" type ="submit"  class="btn btn-danger btn-xs"  aria-hidden="true" onclick="return confirm('Bạn có chắc chắn muốn xóa?');" value="Xóa" />
                         {{ Form::close() }}
                   </td>
                 </tr>
@@ -29,7 +29,7 @@
             </div>
             <!-- /.box-body -->
         </div>
-
+@endif
     </div>
 </div>
 <!-- Modal -->

@@ -50,14 +50,6 @@
             </div>
 
             <div class="form-group">
-              <label for="description">Ghi chú</label>
-              <div class="row">
-                <div class="col-sm-6">
-                    <input type="text" class="form-control" id="description" placeholder="Ghi chú" name="description" value="{{$data->description}}">
-                </div>
-              </div>
-            </div>
-            <div class="form-group">
               <label for="pay_time">Thời gian đóng</label>
                 <div class="row">
                     <div class="col-sm-6">
@@ -65,7 +57,14 @@
                     </div>
                 </div>
             </div>
-
+            <div class="form-group">
+              <label for="description">Ghi chú</label>
+              <div class="row">
+                <div class="col-sm-6">
+                    <textarea  class="form-control" id="description" placeholder="Ghi chú" name="description">{{$data->description}}</textarea>
+                </div>
+              </div>
+            </div>
 
           </div>
 				<!-- /.box-body -->

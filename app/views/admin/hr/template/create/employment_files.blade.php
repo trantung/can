@@ -1,24 +1,34 @@
 <div class="row">
     <div class="col-xs-12">
-    <h3>File đính kèm <span><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addNewEmployerFiles">Thêm mới</button></span></h3>
+    <h3>File đính kèm <span><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addNewEmployerFiles">Thêm mới</button></span></h3>
+    @if($personal->employmentFiles->count()>0)
+        <div>
+         <div class="box-body table-responsive no-padding">
+              <table class="table table-striped">
+                <tr>
+                  <th>Tên file</th>
+                  <th style="width:200px;">Action</th>
+                </tr>
+                @foreach($personal->employmentFiles as $key => $value)
+                <tr>
+                  <td>{{$value->name}}</td>
+                  <td>
+                    <a href="{{ url($value->link) }}"  class="btn btn-info btn-xs">Xem</a>
+                    <a href="{{ url($value->link) }}"  class="btn btn-primary btn-xs">Tải về</a>
 
-        <div class="row">
-            @foreach($personal->employmentFiles as $value)
-            <div class="col-md-4 col-sm-6 col-xs-12">
-                <div class="well well-lg">
-                <h4><b>{{$value->name}} </b></h4>
-                <a href="{{ url($value->link) }}">tải về</a>
-
-                    <div class="admin-action">
+                    {{-- <div class="admin-action"> --}}
                         {{ Form::open(array('method' => 'DELETE', 'route' => ['employment.destroyFile', $personal->id, $value->id], 'style'=>" display: inline-block;")) }}
-                        <input href="#" type ="submit" class="text-danger input-delete" aria-hidden="true" onclick="return confirm('Bạn có chắc chắn muốn xóa?');" value="Xóa" />
+                        <input href="#" type ="submit" class="btn btn-danger  btn-xs" aria-hidden="true" onclick="return confirm('Bạn có chắc chắn muốn xóa?');" value="Xóa"/>
                         {{ Form::close() }}
-                    </div>
-                </div>
+                    {{-- </div> --}}
+                  </td>
+                </tr>
+                @endforeach
+              </table>
             </div>
-            @endforeach
+            <!-- /.box-body -->
         </div>
-
+@endif
     </div>
 </div>
 <!-- Modal -->

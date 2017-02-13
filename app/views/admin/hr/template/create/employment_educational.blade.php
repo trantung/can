@@ -2,25 +2,38 @@
     <div class="col-xs-12">
     <h3>Trình độ học vấn <span><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addNewSchool">Thêm mới</button></span></h3>
 
-        <div class="row">
-            @foreach($personal->employmentEducational as $value)
-            <div class="col-md-6 col-sm-6 col-xs-12">
-                <div class="well well-lg">
-                    <h4><b>Trường : {{$value->school_name}} </b></h4>
-                    Ngành học: {{$value->industry_id}} </br>
-                    Bằng cấp & chứng chỉ: {{$value->certificate_id}} </br>
-                    Năm tốt nghiệp: {{$value->graduation_year}} </br>
-                    <div class="admin-action">
-                        {{-- <a href="/admin/{{$personal->id}}/employment-education/{{$value->id}}/edit" aria-hidden="true" style=" display: inline-block;">sửa</a> --}}
-                        <a href="{{ route('employment.edit', $value->id) }}" style=" display: inline-block;">Sửa</a>
+@if($personal->employmentEducational->count() > 0)
+        <div >
+            <div class="box-body table-responsive no-padding">
+              <table class="table table-hover">
+                <tr>
+                  <th>Trường</th>
+                  <th>Ngành học</th>
+                  <th>Bằng cấp & chứng chỉ</th>
+                  <th>Năm tốt nghiệp</th>
+                  <th>Chỉnh sửa lần cuối</th>
+                  <th style="width:200px;">Action</th>
+                </tr>
+                @foreach($personal->employmentEducational as $key => $value)
+                <tr>
+                  <td>{{$value->school_name}}</td>
+                  <td>{{$industry_category_id[$value->industry_id]}}</td>
+                  <td>{{$bang_cap[$value->certificate_id]}}</td>
+                  <td>{{date('d-m-Y',strtotime($value->graduation_year) ) }}</td>
+                  <td>{{  date('h:m d-m-Y',strtotime($value->updated_at) ) }}</td>
+                  <td>
+                    <a href="{{ route('employment.edit', $value->id) }}" class="btn btn-info  btn-xs">Sửa</a>
                         {{ Form::open(array('method'=>'DELETE', 'route' => ['employment.destroy', $personal->id, $value->id], 'style'=>" display: inline-block;")) }}
-                        <input href="#" type ="submit" class="text-danger input-delete" aria-hidden="true" onclick="return confirm('Bạn có chắc chắn muốn xóa?');" value="Xóa" />
+                        <input href="#" type ="submit" class="btn btn-danger  btn-xs" aria-hidden="true" onclick="return confirm('Bạn có chắc chắn muốn xóa?');" value="Xóa" />
                         {{ Form::close() }}
-                    </div>
-                </div>
+                  </td>
+                </tr>
+                @endforeach
+              </table>
             </div>
-            @endforeach
+            <!-- /.box-body -->
         </div>
+@endif
 
     </div>
 </div>

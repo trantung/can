@@ -21,12 +21,9 @@
             <!-- /.box-header -->
             <div class="box-body">
             <div class="row">
-                {{-- <div class="col-xs-1">{{ $key+1 }}</div> --}}
-                <div class="col-xs-2">Tên</div>
-                <div class="col-xs-2">Mã</div>
-                <div class="col-xs-4">Mô tả</div>
-                <div class="col-xs-1">
-                 Action
+                <div class="col-xs-10"  style="padding-left:30px;"><b>Tên</b></div>
+                <div class="col-xs-2" style="text-align: right">
+                <b>Action</b>
 
                 </div>
             </div>

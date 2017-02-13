@@ -9,7 +9,25 @@
   <!-- Header Navbar: style can be found in header.less -->
   <nav class="navbar navbar-static-top" role="navigation">
     <!-- Sidebar toggle button-->
+     <ul class="nav navbar-nav">
 
+        <li>
+            <a href="{{ action('HumanResourcesController@index') }}">
+                <i class="fa fa-users"></i> <span>Quản lý nhân sự</span>
+            </a>
+        </li>
+        <li>
+            <a href="{{ action('SalariesController@index') }}">
+                <span>Lương nhân viên</span>
+            </a>
+        </li>
+        <li>
+            <a href="{{ action('InsuranceController@index') }}">
+                <span>Bảo hiểm nhân viên</span>
+            </a>
+        </li>
+
+      </ul>
 
     <div class="navbar-custom-menu">
       <ul class="nav navbar-nav">
