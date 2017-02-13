@@ -65,6 +65,24 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/nhap-luong', function (){
         return View::make('admin.demo.luong');
     });
+    Route::group(['prefix' => 'permission'], function(){
+        //create, view, edit, view_list, delete by user, delete by root-->permission admin
+        Route::resource('/system', 'SystemController');
+
+        //CRUD --> có 4 quyền cho user(QLNS)
+        Route::resource('/user', 'UserSystemController');
+
+        //CRUD-->có 4 quyền cho lịch sử công tác
+        Route::resource('/log/user', 'UserHistoryController');
+
+        //CRUD
+        Route::resource('/config/user', 'UserConfigController');
+
+
+        // có 2 quyền salary: nhập lương = tay và nhập lương = import excel
+        Route::resource('/salary', 'SalaryConfigController');
+    });
 
 });
+
 

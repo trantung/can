@@ -2,12 +2,19 @@
 class AdminController extends BaseController {
     public function __construct() {
         $this->beforeFilter('admin', array('except'=>array('login','doLogin')));
+        // $this->beforeFilter('@checkPermission', array('except'=>array('login','doLogin')));
     }
     /**
      * Display a listing of the resource.
      *
      * @return Response
      */
+    public function checkPermission()
+    {
+        // dd(Auth::admin()->get()->id);
+        dd(URL::current());
+    }
+
     public function index()
     {
         $checkLogin = Auth::admin()->check();
