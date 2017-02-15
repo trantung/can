@@ -15,10 +15,11 @@ class CreateSalariesTable extends Migration {
 		Schema::create('salaries', function(Blueprint $table) {
             $table->increments('id');
             $table->double('total')->nullable();
-            $table->string('description', 255)->nullable();
+            $table->mediumText('description')->nullable();
             $table->date('pay_time');
             $table->tinyInteger('ngay_cong');
             $table->tinyInteger('ngay_di_lam');
+            $table->tinyInteger('month');
             $table->double('luong_trach_nhiem');
             $table->double('phu_cap');
             $table->tinyInteger('kieu_luong');

@@ -15,7 +15,7 @@ class CreateHistoryBunusTable extends Migration {
 		Schema::create('bonus_history', function(Blueprint $table) {
             $table->increments('id');
             $table->string('why_bonus', 255)->nullable();
-            $table->string('description', 255)->nullable();
+            $table->mediumText('description')->nullable();
             $table->date('date')->nullable();
             $table->integer('created_by')->nullable()->unsigned();
             $table->integer('personal_id')->nullable()->unsigned();

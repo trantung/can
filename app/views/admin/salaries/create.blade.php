@@ -44,7 +44,7 @@
               </div>
             </div>
 
- <div class="form-group">
+            <div class="form-group">
               <label for="ngay_cong"> Ngày công</label>
               <div class="row">
                 <div class="col-sm-6">
@@ -53,7 +53,7 @@
               </div>
             </div>
 
- <div class="form-group">
+            <div class="form-group">
               <label for="ngay_di_lam"> Ngày đi làm</label>
               <div class="row">
                 <div class="col-sm-6">
@@ -62,7 +62,7 @@
               </div>
             </div>
 
- <div class="form-group">
+            <div class="form-group">
               <label for="luong_trach_nhiem"> Lương trách nhiệm</label>
               <div class="row">
                 <div class="col-sm-6">
@@ -71,7 +71,7 @@
               </div>
             </div>
 
- <div class="form-group">
+            <div class="form-group">
               <label for="phu_cap"> Phụ cấp</label>
               <div class="row">
                 <div class="col-sm-6">
@@ -80,23 +80,15 @@
               </div>
             </div>
 
- <div class="form-group">
+            <div class="form-group">
               <label for="kieu_luong"> Kiểu lương</label>
               <div class="row">
               	<div class="col-sm-6">
-                	<input type="text" class="form-control" id="kieu_luong" placeholder="Kiểu lương" name="kieu_luong" value="{{Input::old('kieu_luong')}}">
+                    {{ Form::select('kieu_luong', $salaries_category, Input::old('kieu_luong'), array('class' =>'form-control')) }}
                 </div>
               </div>
             </div>
 
-            <div class="form-group">
-              <label for="description">Ghi chú</label>
-              <div class="row">
-              	<div class="col-sm-6">
-              		<input type="text" class="form-control" id="description" placeholder="Ghi chú" name="description" value="{{Input::old('description')}}">
-              	</div>
-              </div>
-            </div>
             <div class="form-group">
               <label for="pay_time">Thời gian trả</label>
               	<div class="row">
@@ -106,6 +98,16 @@
       			</div>
             </div>
 
+
+            <div class="form-group">
+              <label for="description">Ghi chú</label>
+              <div class="row">
+                <div class="col-sm-6">
+                <textarea class="form-control" id="description" placeholder="Ghi chú" name="description">{{Input::old('description')}}</textarea>
+                </div>
+                </div>
+              </div>
+            </div>
 
           </div>
           <!-- /.box-body -->

@@ -15,7 +15,7 @@ class CreateInsuranceTable extends Migration {
 		Schema::create('insurance', function(Blueprint $table) {
             $table->increments('id');
             $table->double('total')->nullable();
-            $table->longText('description', 255)->nullable();
+            $table->mediumText('description')->nullable();
             $table->date('pay_time')->nullable();
             $table->tinyInteger('month');
             $table->integer('created_by')->nullable()->unsigned();

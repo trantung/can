@@ -230,11 +230,6 @@ class HumanResourcesController extends AdminController {
             }else{
                 $input[self::IMAGE] = CommonUpload::uploadImage('', UPLOADIMG, self::IMAGE, UPLOAD_EMPLOYEES);
             }
-            // if(!$input[self::CV]) {
-            //     $input[self::CV] = '';
-            // }else{
-            //     $input[self::CV] = CommonUpload::uploadImage('', UPLOADIMG, self::CV, UPLOAD_EMPLOYEES);
-            // }
             $input[self::CREATED_BY] = Auth::admin()->get()->id;
             $input[self::UPDATED_BY] = Auth::admin()->get()->id;
             $id = PersonalInfo::create($input)->id;
@@ -246,7 +241,8 @@ class HumanResourcesController extends AdminController {
 
             return $this->returnError($e);
         }
-        return Redirect::action('HumanResourcesController@index');
+
+         return Redirect::route('hr.edit', array($id));
     }
 
 

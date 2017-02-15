@@ -41,6 +41,7 @@ Route::group(['prefix' => 'admin'], function () {
 
     Route::resource('/salaries', 'SalariesController');
     Route::resource('/insurance', 'InsuranceController');
+    Route::resource('/salaries-category', 'SalariesCategoryController');
 
     Route::post('/{employment}/employment-education', array('uses' => 'EmploymentEducationalController@storeSchool', 'as' => 'employment.newEducation'));
     Route::put('/{employment}/employment-education/{id}', 'EmploymentEducationalController@updateSchool');

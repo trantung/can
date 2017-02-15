@@ -79,6 +79,11 @@
                     <span>Danh sách Bằng cấp & chứng chỉ</span>
                 </a>
             </li>
+            <li>
+                <a href="{{ action('SalariesCategoryController@index') }}">
+                    <span>Danh sách Kiểu lương</span>
+                </a>
+            </li>
            {{--  <li>
                 <a href="{{ action('SalariesController@index') }}">
                     <span>Lương nhân viên</span>

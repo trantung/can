@@ -24,7 +24,7 @@ class CreatePersonalInfoTable extends Migration {
             $table->date('nam_sinh')->nullable();
             $table->integer('noi_sinh')->nullable()->unsigned();
 
-            $table->integer('cmt')->nullable()->unique()->unsigned();
+            $table->integer('cmt')->nullable()->unsigned();
             $table->date('ngay_cap')->nullable();
             $table->integer('noi_cap')->nullable()->unsigned();
 
@@ -38,9 +38,9 @@ class CreatePersonalInfoTable extends Migration {
             $table->integer('dan_toc')->nullable()->unsigned();
             $table->integer('ton_giao')->nullable()->unsigned();
             $table->integer('quoc_tich')->nullable()->unsigned();
-            $table->integer('ho_chieu')->nullable()->unique()->unsigned();
+            $table->integer('ho_chieu')->nullable()->unsigned();
             $table->date('ngay_cap_ho_chieu')->nullable();
-            $table->string('noi_cap_ho_chieu', 255)->nullable()->unique();
+            $table->string('noi_cap_ho_chieu', 255)->nullable();
 
 
             $table->enum('tinh_trang_hon_nhan',  array('Y', 'N', 'O'))->default('O');

@@ -89,3 +89,5 @@ define('LANG_VI', 'vi');
 define('LANG_EN', 'en');
 define('HISTORY', 0);
 define('BONUSHISTORY', 1);
+define('SALARY_1', 1);
+define('SALARY_2', 2);

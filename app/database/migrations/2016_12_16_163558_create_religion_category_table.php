@@ -15,7 +15,7 @@ class CreateReligionCategoryTable extends Migration {
         Schema::create('religions', function(Blueprint $table) {
             $table->increments('id');
             $table->string('name', 255)->nullable();
-            $table->string('description', 255)->nullable();
+            $table->mediumText('description')->nullable();
             $table->integer('created_by')->nullable()->unsigned();
             $table->integer('updated_by')->nullable()->unsigned();
             $table->softDeletes();

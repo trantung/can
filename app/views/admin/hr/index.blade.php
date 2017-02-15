@@ -1,6 +1,6 @@
 @extends('admin.layout.default')
 @section('title')
-{{ $title='Quản lý thành viên quản trị' }}
+{{ $title='Quản lý nhân sự' }}
 @stop
 
 @section('content')
@@ -39,7 +39,7 @@
                 @foreach($data as $key => $value)
                 <tr>
                   <td>{{ $key+1 }}</td>
-                  <td>{{ $value->ma_nv }}</td>
+                  <td>NV{{ $value->id }}</td>
                   <td>{{ $value->ho_ten }}</td>
                   <td>{{ $value->nam_sinh }}</td>
                   <td>{{ $value->mobile }}</td>

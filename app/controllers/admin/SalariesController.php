@@ -47,6 +47,25 @@ class SalariesController extends AdminController {
 
         return $result;
     }
+
+     protected function buildArrayData2($data, $subTable = null)
+    {
+        $result = [];
+
+        if ($data->count() == 0) {
+           return  $result;
+        }
+
+
+        foreach ($data as $key => $value) {
+
+             $result[$value->id] = $value->name;
+
+        }
+
+        return $result;
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -55,8 +74,9 @@ class SalariesController extends AdminController {
     public function create()
     {
         $personal = $this->buildArrayData( PersonalInfo::select('ho_ten', 'id')->get() );
-
-        return View::make('admin.salaries.create')->with(['personal'=> $personal]);
+        $salaries_category = $this->buildArrayData2( SalariesCategory::select('name', 'id')->get() );
+        // dd( SalariesCategory::select('name', 'id')->get()->count());
+        return View::make('admin.salaries.create')->with(['personal'=> $personal, 'salaries_category'=>$salaries_category]);
     }
 
     /**
@@ -67,13 +87,14 @@ class SalariesController extends AdminController {
     public function store()
     {
         $rules = array(
-            'personal_id'   => 'required',
-            'month'   => 'required',
-            'total'   => 'required',
-            // 'description'      => 'required',
+            'personal_id'   => 'required|exists:personal_info,id',
+            // 'month'   => 'required',
+            'total'   => 'required|fload',
+            'kieu_luong'      => 'required|exists:salaries_category,id',
             'pay_time'    => 'required',
         );
         $input = Input::except('_token');
+        // dd( $input );
         $validator = Validator::make($input,$rules);
         if($validator->fails()) {
             return Redirect::action('SalariesController@create')
@@ -133,8 +154,8 @@ class SalariesController extends AdminController {
     public function update($id)
     {
         $rules = array(
-            // 'personal_id'   => 'required',
-            'month'   => 'required',
+            'personal_id'   => 'required',
+            // 'month'   => 'required',
             'total'   => 'required',
             // 'description'      => 'required',
             'pay_time'    => 'required',
