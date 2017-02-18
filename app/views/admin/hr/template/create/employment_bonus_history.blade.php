@@ -49,7 +49,7 @@
       </div>
         <div class="modal-body">
                 <div class="well well-lg">
-                @if (count($errors->all()) > 0 && Session::get('add_new_employer_history_bonus'))
+                @if (count($errors->all()) > 0 && Session::get('add_new_employer_bonus_history'))
                 <div class="alert alert-danger alert-block">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     {{ HTML::ul($errors->all()) }}

@@ -1,4 +1,4 @@
-@if (count($errors->all()) > 0 && !Session::get('model1') && !Session::get('add_new_employer_history'))
+@if (count($errors->all()) > 0 && !Session::get('model1') && !Session::get('add_new_employer_history')&& !Session::get('add_new_employer_file')&& !Session::get('add_new_employer_bonus_history'))
 <div class="alert alert-danger alert-block">
 	<button type="button" class="close" data-dismiss="alert">&times;</button>
 	{{ HTML::ul($errors->all()) }}
