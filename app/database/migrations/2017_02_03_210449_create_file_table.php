@@ -16,6 +16,8 @@ class CreateFileTable extends Migration {
             $table->increments('id');
             $table->string('name', 255)->nullable();
             $table->string('link', 255)->nullable();
+            $table->string('model', 255)->default('attach');
+            $table->integer('model_id')->default(NULL)->unsigned();
             $table->integer('created_by')->nullable()->unsigned();
             $table->integer('personal_id')->nullable()->unsigned();
             $table->integer('updated_by')->nullable()->unsigned();

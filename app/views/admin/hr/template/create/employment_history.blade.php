@@ -7,7 +7,8 @@
               <table class="table table-hover">
                 <tr>
                   <th>Công ty</th>
-                  <th>Thời gian</th>
+                  <th>Thời gian bắt đầu</th>
+                  <th>Thời gian kết thúc</th>
                   <th>Vị trí</th>
                   <th>Lý do chuyển công tác</th>
                   <th>Ghi chú</th>
@@ -18,7 +19,14 @@
                 <tr>
                   <td>{{isset($company_category_id[$value->company_name])? $company_category_id[$value->company_name]: '' }}</td>
                   <td>
-                    {{date('d-m-Y',strtotime($value->start_date ) )}} <b>-</b> {{$value->end_date != NULL ? date('d-m-Y',strtotime($value->end_date ) ): 'Đến nay'}}
+                    {{date('d-m-Y',strtotime($value->start_date ) )}}
+                  </td>
+                  <td>
+                    @if($value->end_date == NULL || $value->end_date == '0000-00-00')
+                        Đến nay
+                    @else
+                        {{date('d-m-Y',strtotime($value->end_date ) )}}
+                    @endif
                   </td>
                   <td>{{$value->positionHistory->name }}</td>
                   <td>{{$value->why_out}}</td>

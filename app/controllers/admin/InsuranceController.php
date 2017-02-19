@@ -13,7 +13,7 @@ class InsuranceController extends AdminController {
      */
     public function index()
     {
-        $data = Insurance::orderBy('id', 'asc')->paginate(PAGINATE);
+        $data = Insurance::orderBy('id', 'asc')->with('user')->paginate(PAGINATE);
         return View::make('admin.insurance.index')->with(compact('data'));
     }
 
@@ -118,7 +118,7 @@ class InsuranceController extends AdminController {
             }
         }
 
-        $data = Insurance::find($id);
+        $data = Insurance::with('user')->find($id);
         return View::make('admin.insurance.edit', array('data'=>$data));
     }
 

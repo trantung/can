@@ -6,16 +6,20 @@
             <div class="box-body table-responsive no-padding">
               <table class="table table-striped">
                 <tr>
-                  <th>Tên file</th>
+                  <th>Công ty</th>
                   <th> Vị trí</th>
                   <th> Ngày bắt đầu </th>
+                  <th> Công văn bổ nhiệm </th>
                   <th style="width:200px;">Action</th>
                 </tr>
-                @foreach($personal->EmploymentPositions as $key => $value)
+                {{-- @foreach($personal->EmploymentPositions as $key => $value) --}}
+                @foreach($employmentPositions as $key => $value)
                 <tr>
                   <td>{{isset($company_category_id[$value->company_name])? $company_category_id[$value->company_name]: '' }}</td>
                   <td>{{isset($position_category_id[$value->position])? $position_category_id[$value->position] : '' }}</td>
                   <td>{{date('d-m-Y',strtotime($value->start_date) )}}</td>
+                  <td>@if(!empty($value->attachFile2))
+                  <a href="{{ url($value->attachFile2->link) }}" download="{{$position_category_id[$value->position]}}-{{ $value->attachFile2->link }}">Tải về</a>@endif</td>
                   <td>
                          {{ Form::open(array('method' => 'DELETE', 'route' => ['employment.moveHistory', $personal->id, $value->id], 'style'=>" display: inline-block;")) }}
                         <input href="#" type ="submit" class="btn btn-danger btn-xs" aria-hidden="true" onclick="return confirm('Bạn có chắc chắn muốn bỏ kiêm nhiệm?');" value="Bỏ kiêm nhiệm" />
@@ -39,7 +43,8 @@
         Form::open([
             'class' => 'form-horizontal',
             'method' => 'POST',
-            'route' => ['employment.newPosition', $personal->id]
+            'route' => ['employment.newPosition', $personal->id],
+            'files' => true
         ])
     }}
       <div class="modal-header">
@@ -75,6 +80,13 @@
                         </div>
                     </div>
                     {{-- start_date --}}
+                    <div class="form-group form-group-sm row">
+                        <label class="col-lg-3 control-label">Công văn bổ nhiệm</label>
+                        <div class="col-lg-8">
+                            <input class="form-control input-sm" type="file" name="attach_file" value="{{Input::old('attach_file');}}">
+                        </div>
+                    </div>
+                    {{-- file_name --}}
                 </div>
         </div>
       <div class="modal-footer">

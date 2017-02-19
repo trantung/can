@@ -20,6 +20,10 @@ class EmploymentHistoryController extends AdminController {
 
     const COMPANY_CATEGORY_ID = 'company_category_id';
     const POSITION_TO_HISTORY = 'Nghỉ kiêm nhiệm';
+    const LINK              = 'attach_file';
+    const FILE              = 'attach_file';
+    const MODEL              = 'model';
+    const MODEL_ID              = 'model_id';
     /**
      * Store a newly created resource in storage.
      *
@@ -81,7 +85,8 @@ class EmploymentHistoryController extends AdminController {
             $input = Input::only(
                 self::COMPANY_NAME,
                 self::POSITION,
-                self::START_DATE
+                self::START_DATE,
+                self::LINK
             );
 
             $validator = Validator::make($input,$rules);
@@ -93,8 +98,23 @@ class EmploymentHistoryController extends AdminController {
             $input[self::CREATED_BY] = Auth::admin()->get()->id;
             $input[self::UPDATED_BY] = Auth::admin()->get()->id;
             $input[self::PERSONAL_ID] = $employment;
+            if (Input::hasFile(self::LINK)) {
+                $input[self::LINK] = CommonUpload::uploadImage($employment, UPLOADFILE, self::LINK, UPLOAD_FILE);
+            }
 
             $id = EmploymentHistory::create($input)->id;
+
+            if (Input::hasFile(self::LINK)) {
+                // $input[self::LINK] = CommonUpload::uploadImage($employment, UPLOADFILE, self::LINK, UPLOAD_FILE);
+                $file = [
+                    'link' => $input[self::LINK],
+                    self::NAME =>'Công văn bổ nhiệm',
+                    self::MODEL => 'history',
+                    self::MODEL_ID => $id,
+                ];
+                Files::create($file)->id;
+            }
+
 
         } catch (Exception $e) {
 
@@ -115,18 +135,20 @@ class EmploymentHistoryController extends AdminController {
         // dd(1);
         try {
             $company = EmploymentHistory::find($id);
-            $industry_category_id = ['Việt Nam', 'Lào ', 'Anh', 'Mỹ'];
-            $certificate_category_id = ['Việt Nam', 'Lào ', 'Anh', 'Mỹ'];
+             $result = [
+                'company'=>$company,
+                self::COMPANY_CATEGORY_ID       =>$this->buildArrayData(Company::orderBy('id', 'asc')->get() ),
+                self::BRANCH_ID                 =>$this->buildArrayData(Branch::orderBy('id', 'asc')->get() ),
+                self::POSITION_ID               =>$this->buildArrayData(Position::orderBy('id', 'asc')->get() ),
+                'officer_category_id' => $this->buildArrayData(Officer::orderBy('id', 'asc')->get()),
+            ];
         } catch (Exception $e) {
 
             return $this->returnError($e);
         }
-        $result = [
-            'company'=>$company,
-            self::COMPANY_CATEGORY_ID       =>$this->buildArrayData(Company::orderBy('id', 'asc')->get() ),
-            self::BRANCH_ID                 =>$this->buildArrayData(Branch::orderBy('id', 'asc')->get() ),
-            self::POSITION_ID               =>$this->buildArrayData(Position::orderBy('id', 'asc')->get() ),
-        ];
+
+        // dd($result[self::COMPANY_CATEGORY_ID]);
+
         return View::make('admin.hr.template.employment_history_edit', $result);
     }
 

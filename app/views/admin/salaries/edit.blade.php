@@ -26,7 +26,7 @@
                 <div class="row">
                       <div class="col-sm-6">
                         {{-- {{ Form::select('personal_id', $personal, $data->personal_id, array('class' =>'form-control')) }} --}}
-                        <input type="text" class="form-control" id="personal_id" value="{{$data->personal_id}}" disabled>
+                        <input type="text" class="form-control" id="personal_id" value="{{$data->user->ho_ten}}" disabled>
                     </div>
                 </div>
             </div>
@@ -41,10 +41,19 @@
             </div>
 
             <div class="form-group">
+              <label for="month">Năm</label>
+                <div class="row">
+                  <div class="col-sm-6">
+                    {{-- {{ Form::selectRange('month', 1, 12, $data->month, array('class' =>'form-control')) }} --}}
+                    <input type="text" class="form-control" id="month" value="{{$data->year}}" disabled>
+                </div>
+            </div>
+
+            <div class="form-group">
               <label for="total"> Tổng tiền lương</label>
               <div class="row">
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" id="total" placeholder="Tổng tiền lương" name="total" value="{{$data->total}} ">
+                    <input type="text" class="form-control" id="total" placeholder="Tổng tiền lương" name="total" value="{{ str_replace('.00', '', $data->total)}} ">
                 </div>
               </div>
             </div>

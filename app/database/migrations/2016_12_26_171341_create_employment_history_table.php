@@ -15,6 +15,7 @@ class CreateEmploymentHistoryTable extends Migration {
 		Schema::create('employment_history', function(Blueprint $table) {
             $table->increments('id');
             $table->string('why_out', 255)->nullable();
+            $table->string('attach_file', 255)->nullable();
             $table->mediumText('description')->nullable();
             $table->integer('company_name')->nullable()->unsigned();
             $table->integer('branch')->nullable()->unsigned();

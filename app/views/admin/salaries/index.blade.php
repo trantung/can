@@ -29,26 +29,23 @@
 				  <th>Username</th>
                   <th>Ngày công</th>
                   <th>Ngày đi làm  </th>
-                  <th>Lương trách nhiệm</th>
-                  <th>Phụ cấp</th>
+                  <th>Lương</th>
                   <th>Kiểu lương</th>
                   <th>Tháng</th>
-                  <th>Ghi chú</th>
+                  <th>Năm</th>
 				  <th>Ngày trả</th>
 				  <th style="width:200px;">Action</th>
 				</tr>
 				@foreach($data as $key => $value)
 				<tr>
 				  <td>{{ $key+1 }}</td>
-				  <td>{{ $value->personal_id }}</td>
+				  <td>{{ $value->user->ho_ten }}</td>
                   <td>{{ $value->ngay_cong }}</td>
                   <td>{{ $value->ngay_di_lam }}</td>
-                  <td>{{ $value->luong_trach_nhiem }}</td>
-                  <td>{{ $value->phu_cap }}</td>
-                  <td>{{ $value->kieu_luong }}</td>
                   <td>{{ $value->total }}</td>
+                  <td>{{ $value->kieu_luong }}</td>
                   <td>{{ $value->month }}</td>
-                  <td>{{ $value->description }}</td>
+                  <td>{{ $value->year }}</td>
                   <td>{{ $value->pay_time }}</td>
 				  <td>
 					<a href="{{ action('SalariesController@edit', $value->id) }}" class="btn btn-primary">Sửa</a>

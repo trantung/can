@@ -14,14 +14,15 @@ class CreateSalariesTable extends Migration {
 	{
 		Schema::create('salaries', function(Blueprint $table) {
             $table->increments('id');
-            $table->double('total')->nullable();
+            $table->double('total', 15,4)->nullable()->unsigned();
             $table->mediumText('description')->nullable();
             $table->date('pay_time');
-            $table->tinyInteger('ngay_cong');
-            $table->tinyInteger('ngay_di_lam');
-            $table->tinyInteger('month');
-            $table->double('luong_trach_nhiem');
-            $table->double('phu_cap');
+            $table->double('ngay_cong', 3,1);
+            $table->double('ngay_di_lam', 3,1);
+            $table->double('month');
+            $table->string('year',4);
+            $table->double('luong_trach_nhiem', 3,1);
+            $table->double('phu_cap', 3,1);
             $table->tinyInteger('kieu_luong');
             $table->integer('created_by')->nullable()->unsigned();
             $table->integer('personal_id')->nullable()->unsigned();

@@ -36,6 +36,14 @@
             </div>
 
             <div class="form-group">
+              <label for="month">Năm</label>
+                <div class="row">
+                  <div class="col-sm-6">
+                    {{ Form::selectRange('year', 1999, 2970, Input::old('year'), array('class' =>'form-control')) }}
+                </div>
+            </div>
+
+            <div class="form-group">
               <label for="total"> Tổng tiền bảo hiểm</label>
               <div class="row">
               	<div class="col-sm-6">
