@@ -310,3 +310,33 @@ function getSex()
         'O'=>'Khác',
         );
 }
+
+function checkBoxChecked($roleId, $moduleId, $perId, $model) 
+{
+	$check = $model::where('role_id',$roleId)
+		->where('module_id',$moduleId)
+		->where('permission_id', $perId)
+		->first();
+	if ($check) {
+		return true;
+	}
+}
+
+function getChecked($userId, $roleId = null, $perId = null, $model, $module = null) 
+{
+	$model = $model::where('user_id',$userId);
+	if ($roleId) {
+		$model = $model->where('role_id',$roleId);
+	}
+	if ($perId) {
+		$model = $model->where('permission_id',$perId);
+	}
+	if ($module) {
+		$model = $model->where('module_id',$module);
+	}
+	$model = $model->first();
+	if ($model) {
+		return true;
+	}
+	return false;
+}
