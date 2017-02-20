@@ -7,14 +7,17 @@
               <table class="table table-striped">
                 <tr>
                   <th>Tên file</th>
+                  <th>Ghi chú</th>
                   <th style="width:200px;">Action</th>
                 </tr>
                 @foreach($personal->employmentFiles as $key => $value)
                 <tr>
                   <td>{{$value->name}}</td>
+                  <td>{{$value->description}}</td>
                   <td>
                     <a href="{{ url($value->link) }}"  class="btn btn-info btn-xs">Xem</a>
-                    <a href="{{ url($value->link) }}"  class="btn btn-primary btn-xs">Tải về</a>
+                    {{-- <a href="{{ url($value->link) }}"  class="btn btn-primary btn-xs">Tải về</a> --}}
+                    <a href="{{ url($value->link) }}" download="{{$value->name}}-{{ $value->link}}"  class="btn btn-primary btn-xs">Tải về</a>
 
                     {{-- <div class="admin-action"> --}}
                         {{ Form::open(array('method' => 'DELETE', 'route' => ['employment.destroyFile', $personal->id, $value->id], 'style'=>" display: inline-block;")) }}
@@ -62,6 +65,14 @@
                         </div>
                     </div>
                     {{-- file_name --}}
+
+                    <div class="form-group form-group-sm row">
+                        <label class="col-lg-3 control-label">Ghi chú</label>
+                        <div class="col-lg-8">
+                            {{ Form::textarea('description', Input::old('description'), array('class'=>'form-control input-sm')) }}
+                        </div>
+                    </div>
+                    {{-- description --}}
 
                    <div class="form-group form-group-sm row">
                         <label class="col-lg-3 control-label">File<span class="text-danger">*</span></label>

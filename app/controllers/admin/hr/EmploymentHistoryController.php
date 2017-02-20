@@ -92,7 +92,7 @@ class EmploymentHistoryController extends AdminController {
             $validator = Validator::make($input,$rules);
             if($validator->fails()) {
                 return Redirect::action('HumanResourcesController@edit', array('id' => $employment))
-                    ->withErrors($validator)->withAddNewEmployerHistory(TRUE)->withInput();
+                    ->withErrors($validator)->withAddNewEmployerPosition(TRUE)->withInput();
             }
             $input[self::STATUS] = BONUSHISTORY;
             $input[self::CREATED_BY] = Auth::admin()->get()->id;
