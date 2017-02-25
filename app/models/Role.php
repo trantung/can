@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\SoftDeletingTrait;
 
 class Role extends Eloquent
 {
-	use SoftDeletingTrait;
+ use SoftDeletingTrait;
     protected $table = 'roles';
     protected $fillable = ['name', 'description'];
     protected $dates = ['deleted_at'];
