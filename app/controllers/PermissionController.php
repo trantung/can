@@ -24,11 +24,19 @@ class PermissionController extends \BaseController {
 		$modules = DB::table('modules')->lists('name','id');
 		$permissions = DB::table('permissions')->get();
 		$listRole = [];
-		foreach ($modules as $key => $value) {
-			foreach ($permissions as $k => $val) {
-				$listRole[$key][] = $val;
+		if ($permissions) {
+			foreach ($permissions as $key => $value) {
+				foreach ($modules as $k => $val) {
+					if ($k == $value->module_id) {
+						$data[$k] = new stdClass();
+						$data[$k] = $value;
+						$data[$k]->permision = 1;
+					}
+				}
+				
 			}
 		}
+		dd($data);
 		return View::make('admin.permission.create-role')->with(compact('listRole'));
 	}
 
@@ -79,7 +87,7 @@ class PermissionController extends \BaseController {
 	public function updateRole($id)
 	{
 		$input = Input::except('_token');
-		ModuleRolePermission::where('role_id', $id)->delete();
+		RolePermission::where('role_id', $id)->delete();
 		//saver role
 		Role::find($id)->update(['name' =>$input['name']]);
 		// dd($roleId);
@@ -87,7 +95,7 @@ class PermissionController extends \BaseController {
 		$arrayKey = array_keys($input['permission']);
 		foreach ($arrayKey as $key => $value) {
 			$v = explode('_', $value);
-			$listUser = DB::table('module_role_permission')->insert([
+			$listUser = RolePermission::insert([
 				'module_id' => $v[0],
 				'permission_id' => $v[1],
 				'role_id' => $id,
