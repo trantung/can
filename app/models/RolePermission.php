@@ -4,7 +4,7 @@ use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\Reminders\RemindableInterface;
 use Illuminate\Database\Eloquent\SoftDeletingTrait;
 
-class ModuleRolePermission extends Eloquent
+class RolePermission extends Eloquent
 {
 	// use SoftDeletingTrait;
     protected $table = 'module_role_permission';

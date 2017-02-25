@@ -23,6 +23,7 @@ class PermissionController extends \BaseController {
 	{
 		$modules = DB::table('modules')->lists('name','id');
 		$permissions = DB::table('permissions')->get();
+		$listRole = [];
 		foreach ($modules as $key => $value) {
 			foreach ($permissions as $k => $val) {
 				$listRole[$key][] = $val;
@@ -66,7 +67,7 @@ class PermissionController extends \BaseController {
 		$arrayKey = array_keys($input['permission']);
 		foreach ($arrayKey as $key => $value) {
 			$v = explode('_', $value);
-			$listUser = DB::table('module_role_permission')->insert([
+			$listUser = RolePermission::insert([
 				'module_id' => $v[0],
 				'permission_id' => $v[1],
 				'role_id' => $roleId,
