@@ -17,7 +17,7 @@
                 @foreach($employmentHistory as $key => $value)
                 {{-- {{dd($employmentHistory->toJson())}} --}}
                 <tr>
-                  <td>{{isset($company_category_id[$value->company_name])? $company_category_id[$value->company_name]: '' }}</td>
+                  <td>{{$value->company_name_text }}</td>
                   <td>
                     {{date('d-m-Y',strtotime($value->start_date ) )}}
                   </td>

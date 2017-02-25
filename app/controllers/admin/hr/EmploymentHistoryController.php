@@ -5,6 +5,7 @@ class EmploymentHistoryController extends AdminController {
     const ID                = 'id';
     const NAME              = 'name';
     const COMPANY_NAME      = 'company_name';
+    const COMPANY_NAME_TEXT = 'company_name_text';
     const BRANCH            = 'branch';
     const POSITION          = 'position';
     const WHY_OUT           = 'why_out';
@@ -56,6 +57,7 @@ class EmploymentHistoryController extends AdminController {
                 return Redirect::action('HumanResourcesController@edit', array('id' => $employment))
                     ->withErrors($validator)->withAddNewEmployerHistory(TRUE)->withInput();
             }
+            $input[self::COMPANY_NAME_TEXT]  = $this->buildCompanyText();
             $input[self::CREATED_BY] = Auth::admin()->get()->id;
             $input[self::UPDATED_BY] = Auth::admin()->get()->id;
             $input[self::PERSONAL_ID] = $employment;
@@ -69,7 +71,41 @@ class EmploymentHistoryController extends AdminController {
 
         return Redirect::action('HumanResourcesController@edit', array('id' => $employment));
     }
-/**
+
+    public   function buildCompanyText($object_id)
+    {
+        $arrayCollection = [];
+        $collection = Company::get();
+        foreach ($collection as $key => $value) {
+           $arrayCollection[$value->id]=$value;
+        }
+
+        $resultArray = array('parents_id'=>array(), 'name'=>array());
+        $result = $this-> getParentId($object_id, $arrayCollection, $resultArray );
+        krsort($result['name']);
+
+        return implode(" - ",$result['name']);
+    }
+
+    private function getParentId($object_id, $arrayCollection, $resultArray  )
+    {
+
+        if (isset($arrayCollection[$object_id])) {
+
+            $parent_id = $arrayCollection[$object_id]->parent_id;
+            $resultArray['parents_id'][] =  $arrayCollection[$object_id]->id;
+            $resultArray['name'][] =  $arrayCollection[$object_id]->name;
+
+            if($parent_id != 0 && !in_array( $parent_id, $resultArray['parents_id']) ){
+
+                return $this-> getParentId($parent_id, $arrayCollection, $resultArray);
+            }
+            return $resultArray;
+        }
+        return  $resultArray;
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @return Response
@@ -98,6 +134,7 @@ class EmploymentHistoryController extends AdminController {
             $input[self::CREATED_BY] = Auth::admin()->get()->id;
             $input[self::UPDATED_BY] = Auth::admin()->get()->id;
             $input[self::PERSONAL_ID] = $employment;
+            $input[self::COMPANY_NAME_TEXT] = $this->buildCompanyText($input[self::COMPANY_NAME]);
             if (Input::hasFile(self::LINK)) {
                 $input[self::LINK] = CommonUpload::uploadImage($employment, UPLOADFILE, self::LINK, UPLOAD_FILE);
             }
@@ -187,6 +224,7 @@ class EmploymentHistoryController extends AdminController {
                     ->withErrors($validator)->withModel2(TRUE)->withInput();
             }
             $input[self::UPDATED_BY] = Auth::admin()->get()->id;
+            $input[self::COMPANY_NAME_TEXT] = $this->buildCompanyText($input[self::COMPANY_NAME]);
 
             $result = EmploymentHistory::where(self::ID, $id)->update($input);
             // dd($result);
