@@ -15,7 +15,7 @@
                 {{-- @foreach($personal->EmploymentPositions as $key => $value) --}}
                 @foreach($employmentPositions as $key => $value)
                 <tr>
-                  <td>{{isset($company_category_id[$value->company_name])? $company_category_id[$value->company_name]: '' }}</td>
+                  <td>{{ $value->company_name_text }}</td>
                   <td>{{isset($position_category_id[$value->position])? $position_category_id[$value->position] : '' }}</td>
                   <td>{{date('d-m-Y',strtotime($value->start_date) )}}</td>
                   <td>@if(!empty($value->attachFile2))
