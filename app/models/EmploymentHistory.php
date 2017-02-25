@@ -6,7 +6,7 @@ class EmploymentHistory extends Eloquent
 {
     use SoftDeletingTrait;
     protected $table = 'employment_history';
-    protected $fillable = ['company_name', 'why_out', 'description', 'position','status', 'start_date', 'end_date', 'created_by', 'updated_by', 'personal_id', 'branch', 'officer'];
+    protected $fillable = ['company_name', 'why_out', 'description', 'position','status', 'start_date', 'end_date', 'created_by', 'updated_by', 'personal_id', 'branch', 'officer', 'attach_file', 'company_name_text'];
 
     public function positionHistory()
     {
@@ -16,6 +16,11 @@ class EmploymentHistory extends Eloquent
     public function officerHistory()
     {
         return $this->hasOne('Officer', 'id', 'officer');
+    }
+
+    public function attachFile2()
+    {
+        return $this->hasOne('Files', 'model_id', 'id');
     }
 
 }

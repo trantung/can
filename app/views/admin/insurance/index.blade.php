@@ -29,6 +29,7 @@
 				  <th>Tên</th>
                   <th>Số tiền</th>
                   <th>Tháng</th>
+                  <th>Năm</th>
                   <th>Ghi chú</th>
 				  <th>Ngày đóng</th>
 				  <th style="width:200px;">Action</th>
@@ -36,9 +37,10 @@
 				@foreach($data as $key => $value)
 				<tr>
 				  <td>{{ $key+1 }}</td>
-				  <td>{{ $value->personal_id }}</td>
+				  <td>{{  $value->user->ho_ten }}</td>
                   <td>{{ $value->total }}</td>
                   <td>{{ $value->month }}</td>
+                  <td>{{ $value->year }}</td>
                   <td>{{ $value->description }}</td>
                   <td>{{ $value->pay_time }}</td>
 				  <td>

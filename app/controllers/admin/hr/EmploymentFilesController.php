@@ -6,6 +6,7 @@ class EmploymentFilesController extends AdminController {
     const NAME              = 'name';
     const LINK_NAME              = 'file_name';
     const LINK              = 'link';
+    const DESCRIPTION              = 'description';
     const FILE              = 'file';
     const PERSONAL_ID       = 'personal_id';
     const CREATED_BY        = 'created_by';
@@ -24,6 +25,7 @@ class EmploymentFilesController extends AdminController {
             );
             $input = Input::only(
                 self::LINK_NAME,
+                self::DESCRIPTION,
                 self::FILE
             );
             $validator = Validator::make($input,$rules);

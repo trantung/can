@@ -14,7 +14,7 @@ class SalariesController extends AdminController {
      */
     public function index()
     {
-        $data = Salaries::orderBy('id', 'asc')->paginate(PAGINATE);
+        $data = Salaries::orderBy('id', 'asc')->with('user')->paginate(PAGINATE);
         return View::make('admin.salaries.index')->with(compact('data'));
     }
 
@@ -89,7 +89,7 @@ class SalariesController extends AdminController {
         $rules = array(
             'personal_id'   => 'required|exists:personal_info,id',
             // 'month'   => 'required',
-            'total'   => 'required|fload',
+            'total'   => 'required|regex:/^\d*(\.\d{2})?$/',
             'kieu_luong'      => 'required|exists:salaries_category,id',
             'pay_time'    => 'required',
         );
@@ -140,8 +140,11 @@ class SalariesController extends AdminController {
             }
         }
 
-        $data = Salaries::find($id);
-        return View::make('admin.salaries.edit', array('data'=>$data));
+        $data = Salaries::with('user')->find($id);
+        $personal = $this->buildArrayData( PersonalInfo::select('ho_ten', 'id')->get() );
+        $salaries_category = $this->buildArrayData2( SalariesCategory::select('name', 'id')->get() );
+
+        return View::make('admin.salaries.edit', array('data'=>$data, 'salaries_category'=>$salaries_category, 'personal'=>$personal));
     }
 
 
@@ -154,13 +157,16 @@ class SalariesController extends AdminController {
     public function update($id)
     {
         $rules = array(
-            'personal_id'   => 'required',
-            // 'month'   => 'required',
             'total'   => 'required',
-            // 'description'      => 'required',
             'pay_time'    => 'required',
+            // 'ngay_cong'=> 'required|regex:/^\d*(\.\d{1})?$/',
+            // 'ngay_di_lam'=> 'required|regex:/^\d*(\.\d{1})?$/',
+            // 'luong_trach_nhiem'=> 'required|regex:/^\d*(\.\d{1})?$/',
+            // 'phu_cap'=> 'required|regex:/^\d*(\.\d{1})?$/',
+            'kieu_luong'=> 'required|integer',
+            'description'=>'required',
         );
-        $input = Input::only('total', 'month', 'description');
+        $input = Input::only('total', 'pay_time', 'description', 'ngay_cong', 'ngay_di_lam', 'luong_trach_nhiem', 'phu_cap', 'kieu_luong');
         $validator =  Validator::make($input,$rules);
         if($validator->fails()) {
             return Redirect::action('SalariesController@edit',['id'=>$id])

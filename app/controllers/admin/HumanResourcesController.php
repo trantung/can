@@ -271,8 +271,11 @@ class HumanResourcesController extends AdminController {
             $result = $this->getAllCategory('personal', $personal);
             // dd(Officer::orderBy('id', 'asc')->get()->toJson());
             $employmentHistory = EmploymentHistory::where('personal_id', $id)->where('status',HISTORY)->with('positionHistory')->with('officerHistory')->get();
+            $employmentPositions = EmploymentHistory::where('personal_id', $id)->where('status',BONUSHISTORY)->with('positionHistory')->with('officerHistory')->with('attachFile2')->get();
             // $officerHistory
             $result['employmentHistory'] =  $employmentHistory;
+            $result['employmentPositions'] =  $employmentPositions;
+            // dd($employmentPositions->toJson());
 
         } catch (Exception $e) {
             return $this->returnError($e);

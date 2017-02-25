@@ -1,14 +1,14 @@
 @extends('admin.layout.default')
 @if(Admin::isAdmin())
 @section('title')
-{{ $title='Danh sách vị trí' }}
+{{ $title='Danh sách Chức danh' }}
 @stop
 
 @section('content')
 
     <div class="row margin-bottom">
         <div class="col-xs-12">
-            <a href="{{ action('PositionCategoryController@create') }}" class="btn btn-primary">Thêm mới vị trí</a>
+            <a href="{{ action('PositionCategoryController@create') }}" class="btn btn-primary">Thêm mới Chức danh</a>
         </div>
     </div>
 

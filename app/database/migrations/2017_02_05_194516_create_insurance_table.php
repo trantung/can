@@ -18,6 +18,7 @@ class CreateInsuranceTable extends Migration {
             $table->mediumText('description')->nullable();
             $table->date('pay_time')->nullable();
             $table->tinyInteger('month');
+            $table->string('year',4);
             $table->integer('created_by')->nullable()->unsigned();
             $table->integer('personal_id')->nullable()->unsigned();
             $table->integer('updated_by')->nullable()->unsigned();
