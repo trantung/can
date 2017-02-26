@@ -2,18 +2,36 @@
 class AdminController extends BaseController {
     public function __construct() {
         $this->beforeFilter('admin', array('except'=>array('login','doLogin')));
-        $this->beforeFilter('@checkPermission', array('except'=>array('login','doLogin')));
+        $this->beforeFilter('checkPermission', array('except'=>array('login','doLogin')));
     }
     /**
      * Display a listing of the resource.
      *
      * @return Response
      */
-    public function checkPermission()
-    {
-        // dd(Auth::admin()->get()->id);
-        dd(URL::current());
-    }
+   // public function checkPermission()
+   //  {
+   //      $userid = Auth::admin()->get()->id;
+   //      $listRole = RoleUser::where('user_id', $userid)->lists('role_id');
+   //      $listPermission = RolePermission::whereIn('role_id', $listRole)->lists('permission_id');
+   //      $listPermissionPrivate = PermissionUser::where('user_id', $userid)->lists('permission_id');
+   //      $approvePermission = array_merge($listPermission, $listPermissionPrivate);
+   //      $permissions = Permission::whereIn('id', $approvePermission)->lists('controller_action', 'action');
+   //      $route = Route::getCurrentRoute()->getActionName();
+   //      $controller_action = explode('@', $route)[0];
+   //      $action = explode('@', $route)[1];
+   //      $listController = array_values($permissions);
+   //      $listAction = array_keys($permissions);
+   //      if (!in_array($controller_action, $listController)) {
+   //          dd('Khong co quyen');
+   //      }
+   //      $test = implode(',', $listAction);
+   //      $arrTest = explode(',', $test);
+   //      if (!in_array($action, $arrTest)) {
+   //          return 'sai cmnr';
+   //      }
+
+   //  }
 
     public function index()
     {

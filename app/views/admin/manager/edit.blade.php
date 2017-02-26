@@ -45,16 +45,6 @@
 							</div>
 						</div>
 					</div>
-					@if(Admin::isAdmin())
-						<div class="form-group">
-							<label for="email">Quyền hạn</label>
-								<div class="row">
-									<div class="col-sm-6">
-										{{ Form::select('role_id', selectRoleId(), $data->role_id, array('class' =>'form-control')) }}
-								</div>
-							</div>
-						</div>
-					@endif
 				</div>
 				<!-- /.box-body -->
 

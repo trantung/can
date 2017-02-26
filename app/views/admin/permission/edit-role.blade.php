@@ -16,25 +16,26 @@
     <div class="col-xs-12">
         <div class="box box-primary">
         <!-- form start -->
-        {{ Form::open(array('action' => ['PermissionController@updateRole', $id])) }}
+        {{ Form::open(array('action' => ['PermissionController@updateRole', $role->id])) }}
           <div class="box-body">
             <div class="form-group">
               <label for="username">Tên nhóm quyền</label>
               <div class="row">
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" id="name" placeholder="Tên nhóm quyền" name="name" value="{{Input::old('name')}}">
+                    <input type="text" class="form-control" id="name" placeholder="Tên nhóm quyền" name="name" value="{{ $role->name }}">
                 </div>
               </div>
             </div>
-            @foreach($listRole as $key => $value)
+            @foreach($modules as $key => $value)
             <div class="form-group">
-              {{ Module::find($key)->name }} <span class="caret"></span>
-                @foreach($value as $k => $val)
+              {{ $value }} <span class="caret"></span>
+                @foreach(Common::getPermissionByModule($key) as $k => $val)
                 <div class="checkbox">
                   <label>
-                  <?php $moduleId_permissionId = $key.'_'.$val->id; ?>
-                    {{ Form::checkbox("permission[$moduleId_permissionId]", '1', checkBoxChecked($id, $key, $val->id, 'ModuleRolePermission') ) }}
-                    {{ $val->name }}
+
+                    {{ Form::checkbox("permission[$k]", '1', checkBoxChecked($role->id, $k, 'RolePermission', 'role_id') ) }}
+                    {{ $val }}
+
                   </label>
                 </div>
                 @endforeach

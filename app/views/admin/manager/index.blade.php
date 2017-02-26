@@ -27,7 +27,6 @@
 				<tr>
 				  <th>ID</th>
 				  <th>Username</th>
-				  <th>Quyền hạn</th>
 				  <th>Đăng nhập cuối</th>
 				  <th style="width:200px;">Action</th>
 				</tr>
@@ -35,7 +34,6 @@
 				<tr>
 				  <td>{{ $value->id }}</td>
 				  <td>{{ $value->username }}</td>
-				  <td>{{ getRole($value->role_id) }}</td>
 				  <td>{{ $value->updated_at }}</td>
 				  <td>
 					{{-- <a href="#" class="btn btn-success">Xem</a> --}}
