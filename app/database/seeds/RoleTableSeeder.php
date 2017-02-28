@@ -5,17 +5,17 @@ class RoleTableSeeder extends Seeder {
 	public function run()
 	{
 		Role::create([
-					'name' => 'Admin',
-					'description'=> 'Role is Admin',
-			]);
+			'name' => 'Admin',
+			'description'=> 'Role is Admin',
+		]);
 		Role::create([
-					'name' => 'Editor',
-					'description'=> 'Role is Editor',
-			]);
+			'name' => 'Mod',
+			'description'=> 'Role is Editor',
+		]);
 		Role::create([
-					'name' => 'Seo',
-					'description'=> 'Role is Seo',
-			]);
+			'name' => 'Member',
+			'description'=> 'Role is Seo',
+		]);
 	}
 
 }

@@ -68,6 +68,15 @@ Route::group(['prefix' => 'admin'], function () {
 
      Route::get('/nhap-luong/{object_id}', 'EmploymentHistoryController@buildCompanyText');
     Route::group(['prefix' => 'permission'], function(){
+        Route::get('/setup/role/', 'PermissionController@createRole');
+        Route::get('/setup/role/{id}', 'PermissionController@editRole');
+        Route::post('/setup/role/{id}', 'PermissionController@updateRole');
+        Route::post('/setup/user', 'PermissionController@storeUser');
+
+        Route::get('/setup/user', 'PermissionController@createUser');
+        Route::get('/setup/user/{id}', 'PermissionController@editUser');
+        Route::post('/setup/user/{id}', 'PermissionController@updateUser');
+        Route::resource('/setup', 'PermissionController');//
         //create, view, edit, view_list, delete by user, delete by root-->permission admin
         Route::resource('/system', 'SystemController');
 
