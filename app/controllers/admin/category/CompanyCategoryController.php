@@ -204,13 +204,13 @@ class CompanyCategoryController extends BaseCategoryController {
                 return Redirect::back()->withErrors($validator)->withInput($input);
             }
             $parent_node = $this->model->where(self::ID, $input[self::PARENT_ID])->first();
-            // dd($parent_node->toArray());
-            // $result = $this->model->where(self::ID, $id)->first();
-            if ($parent_node->parent_id != $id) {
-                $result = $this->model->where(self::ID, $id)->update($input);
-                if(!$result) {
-                    dd('Error');
-                }
+            if (intval($parent_node->id) === intval($id)) {
+                // return $this->redirectBackAction();
+               dd('Error');
+            }
+            $result = $this->model->where(self::ID, $id)->update($input);
+            if(!$result) {
+                dd('Error');
             }
         } catch(Exception $e){
             return $this->returnError($e);

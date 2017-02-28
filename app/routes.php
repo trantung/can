@@ -62,10 +62,11 @@ Route::group(['prefix' => 'admin'], function () {
 
     Route::post('/{employment}/employment-position', array('uses' => 'EmploymentHistoryController@newPosition', 'as' => 'employment.newPosition'));
     Route::delete('/{employment}/employment-position/{id}', array('uses' => 'EmploymentHistoryController@moveHistory', 'as' => 'employment.moveHistory'));
+     Route::get('/{employment}/employment-position-main/{id}', array('uses' => 'EmploymentHistoryController@mainPosition', 'as' => 'hr.is_main_position'));
 
-    Route::get('/nhap-luong', function (){
-        return View::make('admin.demo.luong');
-    });
+
+
+     Route::get('/nhap-luong/{object_id}', 'EmploymentHistoryController@buildCompanyText');
     Route::group(['prefix' => 'permission'], function(){
         //create, view, edit, view_list, delete by user, delete by root-->permission admin
         Route::resource('/system', 'SystemController');

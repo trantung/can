@@ -18,6 +18,7 @@ class EmploymentHistoryController extends AdminController {
     const STATUS            = 'status';
     const BRANCH_ID         = 'branch_category_id';
     const POSITION_ID       = 'position_category_id';
+    const IS_TEXT       = 'is_text';
 
     const COMPANY_CATEGORY_ID = 'company_category_id';
     const POSITION_TO_HISTORY = 'Nghỉ kiêm nhiệm';
@@ -49,15 +50,21 @@ class EmploymentHistoryController extends AdminController {
                 self::WHY_OUT,
                 self::DESCRIPTION,
                 self::START_DATE,
-                self::END_DATE
+                self::END_DATE,
+                self::IS_TEXT,
+                self::COMPANY_NAME_TEXT
             );
+
+            dd($input);
+            if ($input[self::IS_TEXT]) {
+                $input[self::COMPANY_NAME_TEXT]  = $this->buildCompanyText();
+            }
 
             $validator = Validator::make($input,$rules);
             if($validator->fails()) {
                 return Redirect::action('HumanResourcesController@edit', array('id' => $employment))
-                    ->withErrors($validator)->withAddNewEmployerHistory(TRUE)->withInput();
+                    ->withErrors($validator)->withAddNewEmployerHistory(TRUE)->withInput($input);
             }
-            $input[self::COMPANY_NAME_TEXT]  = $this->buildCompanyText();
             $input[self::CREATED_BY] = Auth::admin()->get()->id;
             $input[self::UPDATED_BY] = Auth::admin()->get()->id;
             $input[self::PERSONAL_ID] = $employment;
@@ -122,19 +129,25 @@ class EmploymentHistoryController extends AdminController {
                 self::COMPANY_NAME,
                 self::POSITION,
                 self::START_DATE,
-                self::LINK
+                self::LINK,
+                self::IS_TEXT,
+                self::COMPANY_NAME_TEXT
             );
 
             $validator = Validator::make($input,$rules);
+
+            if (!$input[self::IS_TEXT] === 'on') {
+                $input[self::COMPANY_NAME_TEXT]  = $this->buildCompanyText($input[self::COMPANY_NAME]);
+                $input[self::COMPANY_NAME] = 0;
+            }
             if($validator->fails()) {
                 return Redirect::action('HumanResourcesController@edit', array('id' => $employment))
-                    ->withErrors($validator)->withAddNewEmployerPosition(TRUE)->withInput();
+                    ->withErrors($validator)->withAddNewEmployerPosition(TRUE)->withInput($input);
             }
             $input[self::STATUS] = BONUSHISTORY;
             $input[self::CREATED_BY] = Auth::admin()->get()->id;
             $input[self::UPDATED_BY] = Auth::admin()->get()->id;
             $input[self::PERSONAL_ID] = $employment;
-            $input[self::COMPANY_NAME_TEXT] = $this->buildCompanyText($input[self::COMPANY_NAME]);
             if (Input::hasFile(self::LINK)) {
                 $input[self::LINK] = CommonUpload::uploadImage($employment, UPLOADFILE, self::LINK, UPLOAD_FILE);
             }
@@ -157,6 +170,15 @@ class EmploymentHistoryController extends AdminController {
 
             return $this->returnError($e);
         }
+
+        return Redirect::action('HumanResourcesController@edit', array('id' => $employment));
+    }
+
+    public function mainPosition($employment, $id)
+    {
+        EmploymentHistory::where('personal_id', $employment)->where('status', BONUSHISTORY)->update(['is_main_position'=>'N']);
+        EmploymentHistory::where('personal_id', $employment)->where('id', $id)->update(['is_main_position'=>'Y']);
+
 
         return Redirect::action('HumanResourcesController@edit', array('id' => $employment));
     }

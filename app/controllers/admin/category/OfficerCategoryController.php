@@ -14,6 +14,7 @@ class OfficerCategoryController extends BaseCategoryController {
     const CRETED_BY       = 'created_by';
     const UPDATED_BY      = 'created_by';
     const DELETED         = 'deleted';
+    const POSITION_ID     = 'position_id';
     const DESCRIPTION     = 'description';
 
 
@@ -35,7 +36,7 @@ class OfficerCategoryController extends BaseCategoryController {
     * @return array
     */
     protected function getInputFieldStore(){
-        return Input::only(self::NAME);
+        return Input::only(self::NAME, self::POSITION_ID);
     }
 
     /**
@@ -44,7 +45,7 @@ class OfficerCategoryController extends BaseCategoryController {
     * @return array
     */
     protected function getInputFieldUpdate(){
-        return Input::only(self::NAME);
+        return Input::only(self::NAME, self::POSITION_ID);
     }
 
     /**
@@ -80,7 +81,7 @@ class OfficerCategoryController extends BaseCategoryController {
     * @return model
     */
     protected function getSubTable(){
-        return NULL;
+        return $this->buildArrayData( Position::orderBy('id', 'asc')->get());
     }
 
     /**

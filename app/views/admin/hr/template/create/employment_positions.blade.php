@@ -8,6 +8,7 @@
                 <tr>
                   <th>Công ty</th>
                   <th> Vị trí</th>
+                  <th> Trạng thái</th>
                   <th> Ngày bắt đầu </th>
                   <th> Công văn bổ nhiệm </th>
                   <th style="width:200px;">Action</th>
@@ -17,10 +18,12 @@
                 <tr>
                   <td>{{ $value->company_name_text }}</td>
                   <td>{{isset($position_category_id[$value->position])? $position_category_id[$value->position] : '' }}</td>
+                  <td> {{$value->is_main_position =='N'? 'Kiêm nhiệm' : 'Vị trí chính'}}</td>
                   <td>{{date('d-m-Y',strtotime($value->start_date) )}}</td>
                   <td>@if(!empty($value->attachFile2))
                   <a href="{{ url($value->attachFile2->link) }}" download="{{$position_category_id[$value->position]}}-{{ $value->attachFile2->link }}">Tải về</a>@endif</td>
                   <td>
+                        <a class="btn btn-info btn-xs" href="{{ route('hr.is_main_position',[$personal->id, $value->id]  ) }}">Vị trí chính</a>
                          {{ Form::open(array('method' => 'DELETE', 'route' => ['employment.moveHistory', $personal->id, $value->id], 'style'=>" display: inline-block;")) }}
                         <input href="#" type ="submit" class="btn btn-danger btn-xs" aria-hidden="true" onclick="return confirm('Bạn có chắc chắn muốn bỏ kiêm nhiệm?');" value="Bỏ kiêm nhiệm" />
                         {{ Form::close() }}
@@ -62,7 +65,11 @@
                     <div class="form-group form-group-sm row">
                         <label class="col-lg-3 control-label">Công ty<span class="text-danger">*</span></label>
                         <div class="col-lg-8">
-                            {{ Form::select('company_name', $company_category_id, Input::old('company_name'), array('class'=>'form-control input-sm')) }}
+                            {{ Form::select('company_name', $company_category_id, Input::old('company_name'), array('class'=>'form-control input-sm', 'id'=>'company_name_select')) }}
+
+                            <input class="form-control input-sm" type="text" name="company_name_text" placeholder="Lý do chuyển công tác" value="{{Input::old('company_name_text');}}" style="display: none;" , id='company_name_text'>
+
+                            <input type="checkbox" id="hideHistory1" name="is_text"> Công ty không có trong hệ thống
                         </div>
                     </div>
                     {{-- company name --}}
@@ -101,11 +108,24 @@
     $('#p_startdate').datepicker({
         dateFormat: 'yy-mm-dd',
     });
-</script>
+    $('#hideHistory1').click(function(){
+        var e = $('#hideHistory1').is(":checked");
+        if (e) {
+
+            $('#company_name_text').show();
+            $('#company_name_select').hide();
+        }else{
+
+            $('#company_name_select').show();
+            $('#company_name_text').hide();
+        }
+    });
 @if ($model1 = Session::get('add_new_employer_position'))
-    <script type="text/javascript" charset="utf-8" async defer>
-        $(document).ready(function(){
-            $('#addNewEmployerPosition').modal('show');
-        });
-    </script>
+    {{-- <script type="text/javascript" charset="utf-8" async defer> --}}
+    $(document).ready(function(){
+        $('#addNewEmployerPosition').modal('show');
+    });
+    {{-- </script> --}}
 @endif
+
+</script>

@@ -26,6 +26,16 @@
                 </div>
               </div>
             </div>
+
+            <div class="form-group">
+              <label for="branch_id">Chức danh</label>
+              <div class="row">
+                <div class="col-sm-6">
+                    {{ Form::select('position_id', $subTable, Input::old('position_id'), array('class'=>'form-control input-sm')) }}
+                </div>
+              </div>
+            </div>
+
           </div>
           <!-- /.box-body -->
 
