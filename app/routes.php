@@ -76,6 +76,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/setup/user', 'PermissionController@createUser');
         Route::get('/setup/user/{id}', 'PermissionController@editUser');
         Route::post('/setup/user/{id}', 'PermissionController@updateUser');
+        Route::get('/setup/list-user', 'PermissionController@indexUser');
         Route::resource('/setup', 'PermissionController');//
         //create, view, edit, view_list, delete by user, delete by root-->permission admin
         Route::resource('/system', 'SystemController');
@@ -93,7 +94,7 @@ Route::group(['prefix' => 'admin'], function () {
         // có 2 quyền salary: nhập lương = tay và nhập lương = import excel
         Route::resource('/salary', 'SalaryConfigController');
     });
-
+    Route::resource('/config-permission', 'ConfigPermissionController');
 });
 
 

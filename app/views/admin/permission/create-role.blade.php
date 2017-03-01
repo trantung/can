@@ -27,13 +27,13 @@
               </div>
             </div>
 
-            @foreach($listRole as $key => $value)
+            @foreach($modules as $key => $value)
             <div class="form-group">
-              {{ Module::find($key)->name }} <span class="caret"></span>
-                @foreach($value as $k => $val)
+              {{ $value }} <span class="caret"></span>
+                @foreach(Common::getPermissionByModule($key) as $k => $val)
                 <div class="checkbox">
                   <label>
-                    <input type="checkbox" name="permission[{{ $key }}_{{$val->id}}]"> {{ $val->name }}
+                    <input type="checkbox" name="permission[{{ $k }}]"> {{ $val }}
                   </label>
                 </div>
                 @endforeach

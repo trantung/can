@@ -13,9 +13,9 @@ abstract class BaseCategoryController extends AdminController {
     const DELETED         = 'deleted';
 
     function __construct(){
+        parent::__construct();
         $this->model = $this->getModel();
     }
-
     /**
     * return module name. use for check permission.
     *
@@ -98,7 +98,6 @@ abstract class BaseCategoryController extends AdminController {
     {
         $data = $this->model->orderBy('id', 'asc')->paginate(10);
         $subTable = $this->getSubTable();
-
         return View::make($this->viewOfActionIndex(), ['data'=>$data, 'subTable'=>$subTable]);
     }
     /**

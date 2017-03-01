@@ -1,146 +1,28 @@
 <?php
 class Common {
 
-	public static function getObject($modelId, $modelName)
+	public static function getPermissionByModule($moduleId)
 	{
-		$object = AdminLanguage::where('model_name', $modelName)
-			->where('model_id', $modelId)
-			->first();
-		if ($object) {
-			return $object;
-		}
-		return null;
+		return Permission::where('module_id', $moduleId)->lists('name', 'id');
 	}
 
-	public static function getValue($modelId, $modelName, $value)
+	public static function saveOneToMany($modelName, $inputPrimaryKey, $input)
 	{
-		return $modelName::find($modelId)->$value;
-	}
-	public static function getIdEn($id, $modelName)
-	{
-		$en = self::getObject($id, $modelName);
-		if ($en) {
-			$idEn = $en->relate_id;
-			return $idEn;
-		}
-		return null;
-	}
-	public static function deleteLanguage($id, $modelName)
-	{
-		$relateId = self::getIdEn($id, $modelName);
-
-		if ($relateId) {
-			$modelName::find($relateId)->delete();
-			$lang = AdminLanguage::where('model_name', $modelName)
-				->where('model_id', $id);
-			$lang->delete();
-		}
-		$modelName::find($id)->delete();
-	}
-
-	public static function objectLanguage($modelName, $modelId, $lang)
-	{
-		if ($lang == LANG_VI) {
-			return $modelName::find($modelId);
-
-		}
-		if ($lang == LANG_EN) {
-			$objectLanguage = AdminLanguage::where('model_name', $modelName)
-				->where('model_id', $modelId)
-				->first();
-			$relateId = $objectLanguage->relate_id;
-			return $modelName::find($relateId);
-		}
-	}
-
-	public static function getValueLanguage($modelName, $modelId, $value)
-	{
-		$objectLanguage = AdminLanguage::where('model_name', $modelName)
-			->where('model_id', $modelId)
-			->first();
-		return $objectLanguage->$value;
-	}
-	public static function getObjectLanguage($modelName, $lang, $orderBy = null)
-	{
-		if ($lang == LANG_VI) {
-			$listId = AdminLanguage::where('model_name', $modelName)
-				->lists('model_id');
-			if ($orderBy) {
-				$object = $modelName::whereIn('id', $listId)->orderBy($orderBy, 'asc')->get();
-			}
-			else{
-				$object = $modelName::whereIn('id', $listId)->get();
+		if ($input) {
+			foreach ($input as $key => $value) {
+				foreach ($value as $v) {
+					$saveRole = $modelName::create([
+						$key => $v,
+						array_keys($inputPrimaryKey)[0] => array_values($inputPrimaryKey)[0],
+					])->id;
+					if (!$saveRole) {
+						dd(INSERT_HAS_FAIL);
+					}
+				}
+				
 			}
 		}
-		if ($lang == LANG_EN) {
-			$listId = AdminLanguage::where('model_name', $modelName)
-				->lists('relate_id');
-			$object = $modelName::whereIn('id', $listId)->get();
-			if ($orderBy) {
-				$object = $modelName::whereIn('id', $listId)->orderBy($orderBy, 'asc')->get();
-			}
-			else{
-				$object = $modelName::whereIn('id', $listId)->get();
-			}
-		}
-		return $object;
-	}
-
-	public static function getObjectLanguageByStatus($modelName, $lang, $status=1)
-	{
-		if ($lang == LANG_VI) {
-			$listId = AdminLanguage::where('model_name', $modelName)
-				->where('status', $status)
-				->orderBy('position')
-				->lists('model_id');
-			$object = $modelName::whereIn('id', $listId)->get();
-		}
-		if ($lang == LANG_EN) {
-			$listId = AdminLanguage::where('model_name', $modelName)
-				->where('status', $status)
-				->orderBy('position')
-				->lists('relate_id');
-			$object = $modelName::whereIn('id', $listId)->get();
-		}
-		return $object;
-	}
-
-	
-	public static function getIdVi($relateId, $relateName)
-	{
-		$object = AdminLanguage::where('model_name', $relateName)
-			->where('relate_id', $relateId)
-			->first();
-		if ($object) {
-			$idVi = $object->model_id;
-			return $idVi;
-		}
-		return $relateId;
-	}
-
-	public static function getTypeList($modelName)
-	{
-		$listTypeId = AdminLanguage::where('model_name', $modelName)
-			->lists('model_id');
-		return $modelName::whereIn('id', $listTypeId)->lists('name', 'id');
-	}
-
-	public static function objectLanguage2($modelName, $modelId, $lang)
-	{
-		if ($lang == LANG_VI) {
-			$objectLanguage = AdminLanguage::where('model_name', $modelName)
-				->where('model_id', $modelId)
-				->first();
-			$relateId = $objectLanguage->relate_id;
-			return $modelName::find($relateId);
-		}
-		if ($lang == LANG_EN) {
-			$objectLanguage = AdminLanguage::where('model_name', $modelName)
-				->where('relate_id', $modelId)
-				->first();
-			$modelId = $objectLanguage->model_id;
-			return $modelName::find($modelId);
-		}
+		return true;
 	}
 
 }

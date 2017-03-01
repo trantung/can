@@ -29,12 +29,13 @@ class Admin extends Eloquent implements UserInterface, RemindableInterface {
 
     public static function isAdmin()
     {
-    	if(Auth::admin()->get()->role_id == ADMIN){
-			return true;
-		}
-		else{
-			return false;
-		}
+  //   	if(Auth::admin()->get()->role_id == ADMIN){
+		// 	return true;
+		// }
+		// else{
+		// 	return false;
+		// }
+		return true;
     }
     public static function isEditor()
     {

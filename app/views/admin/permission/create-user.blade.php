@@ -33,23 +33,24 @@
             </div>
 
             <div class="form-group">
-              Nhóm quyền<span class="caret"></span>
+              <h2>Danh sách nhóm quyền trong hệ thống</h2>
               @foreach($listRole as $key => $value)
               <div class="checkbox">
                 <label>
-                  <input type="checkbox" name="role[{{$key}}]" value="{{ $key }}"> {{ $value}}
+                  <input type="checkbox" name="role_id[{{$key}}]" value="{{ $key }}"> {{ $value}}
                 </label>
               @endforeach
               </div>
             </div>
-
-            @foreach($listPermission as $key => $value)
+            <hr>
+            <h2>Danh sách chi tiết quyền trong hệ thống</h2>
+            @foreach($modules as $key => $value)
             <div class="form-group">
-              {{ Module::find($key)->name }} <span class="caret"></span>
-                @foreach($value as $k => $val)
+              {{ $value }} <span class="caret"></span>
+                @foreach(Common::getPermissionByModule($key) as $k => $val)
                 <div class="checkbox">
                   <label>
-                    <input type="checkbox" name="permission[{{ $key }}_{{$val->id}}]"> {{ $val->name }}
+                    <input type="checkbox" name="permission[{{ $k }}]"> {{ $val }}
                   </label>
                 </div>
                 @endforeach

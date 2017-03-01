@@ -85,9 +85,9 @@ define('SLIDE_TOP', 1);
 define('SLIDE_BOTTOM', 2);
 define('IMAGE_BOTTOM', 3);
 //language
-define('LANG_VI', 'vi');
-define('LANG_EN', 'en');
 define('HISTORY', 0);
 define('BONUSHISTORY', 1);
 define('SALARY_1', 1);
 define('SALARY_2', 2);
+//Errors message
+define('INSERT_HAS_FAIL', 'Thêm mới bản ghi thất bại');

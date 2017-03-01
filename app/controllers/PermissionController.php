@@ -1,6 +1,6 @@
 <?php
 
-class PermissionController extends \BaseController {
+class PermissionController extends AdminController {
 
 	/**
 	 * Display a listing of the resource.
@@ -9,7 +9,7 @@ class PermissionController extends \BaseController {
 	 */
 	public function index()
 	{
-		$data = [];
+		$data = Role::lists('name', 'id');
 		return View::make('admin.permission.index')->with(compact('data'));
 	}
 
@@ -21,15 +21,9 @@ class PermissionController extends \BaseController {
 	 */
 	public function createRole()
 	{
-		$modules = DB::table('modules')->lists('name','id');
-		$permissions = DB::table('permissions')->get();
-		$listRole = [];
-		foreach ($modules as $key => $value) {
-			foreach ($permissions as $k => $val) {
-				$listRole[$key][] = $val;
-			}
-		}
-		return View::make('admin.permission.create-role')->with(compact('listRole'));
+
+		$modules = Module::lists('name','id');
+		return View::make('admin.permission.create-role')->with(compact('modules'));
 	}
 
 	/**
@@ -39,16 +33,10 @@ class PermissionController extends \BaseController {
 	 */
 	public function createUser()
 	{
-		$modules = DB::table('modules')->lists('name','id');
-		$permissions = DB::table('permissions')->get();
+		$modules = Module::lists('name','id');
 		$listRole = Role::lists('name','id');
-		foreach ($modules as $key => $value) {
-			foreach ($permissions as $k => $val) {
-				$listPermission[$key][] = $val;
-			}
-		}
-		$listUser = DB::table('admins')->get();
-		return View::make('admin.permission.create-user')->with(compact('listPermission','listUser', 'listRole'));
+		$listUser = Admin::all();
+		return View::make('admin.permission.create-user')->with(compact('listUser', 'listRole', 'modules'));
 	}
 
 	/**
@@ -59,53 +47,38 @@ class PermissionController extends \BaseController {
 	public function store()
 	{
 		$input = Input::except('_token');
-		// dd($input['permission']);
-		//saver role
 		$roleId = Role::create(['name' =>$input['name']])->id;
-		// dd($roleId);
-		// save vao bang chung(module_role_permission)
-		$arrayKey = array_keys($input['permission']);
-		foreach ($arrayKey as $key => $value) {
-			$v = explode('_', $value);
-			$listUser = RolePermission::insert([
-				'module_id' => $v[0],
-				'permission_id' => $v[1],
-				'role_id' => $roleId,
-			]);
+		if (isset($input['permission'])) {
+			$inputPrimaryKey = ['role_id' => $roleId];
+			$inputSave = ['permission_id' => array_keys($input['permission'])];
+			Common::saveOneToMany('RolePermission', $inputPrimaryKey, $inputSave);
+			return Redirect::action('PermissionController@index');
 		}
-		dd(123);
+		dd('chua nhap quyen');
+		// return Redirect::action('PermissionController@error');
 	}
 
 	public function updateRole($id)
 	{
 		$input = Input::except('_token');
-		ModuleRolePermission::where('role_id', $id)->delete();
+		RolePermission::where('role_id', $id)->delete();
 		//saver role
 		Role::find($id)->update(['name' =>$input['name']]);
-		// dd($roleId);
 		// save vao bang chung(module_role_permission)
-		$arrayKey = array_keys($input['permission']);
-		foreach ($arrayKey as $key => $value) {
-			$v = explode('_', $value);
-			$listUser = DB::table('module_role_permission')->insert([
-				'module_id' => $v[0],
-				'permission_id' => $v[1],
-				'role_id' => $id,
-			]);
+		if (isset($input['permission'])) {
+			$inputPrimaryKey = ['role_id' => $id];
+			$inputSave = ['permission_id' => array_keys($input['permission'])];
+			Common::saveOneToMany('RolePermission', $inputPrimaryKey, $inputSave);
+			return Redirect::action('PermissionController@index');
 		}
-		dd(44);
+		return Redirect::action('PermissionController@index');
 	}
 
 	public function editRole($id)
 	{
-		$modules = DB::table('modules')->lists('name','id');
-		$permissions = DB::table('permissions')->get();
-		foreach ($modules as $key => $value) {
-			foreach ($permissions as $k => $val) {
-				$listRole[$key][] = $val;
-			}
-		}
-		return View::make('admin.permission.edit-role')->with(compact('id', 'listRole'));
+		$modules = Module::lists('name','id');
+		$role = Role::find($id);
+		return View::make('admin.permission.edit-role')->with(compact('modules', 'role'));
 	}
 
 	/**
@@ -116,24 +89,19 @@ class PermissionController extends \BaseController {
 	public function storeUser()
 	{
 		$input = Input::except('_token');
-		foreach ($input['role'] as $value) {
-			DB::table('role_users')->insert([
-				'user_id' => $input['user_id'],
-				'role_id' => $value,
-			]);
+		if (isset($input['role_id'])) {
+			$inputPrimaryKey = ['user_id' => $input['user_id']];
+			$inputSave = ['role_id' => array_keys($input['role_id'])];
+			Common::saveOneToMany('RoleUser', $inputPrimaryKey, $inputSave);
+			//to do??
 		}
-		//saver role
-		$arrayKey = array_keys($input['permission']);
-
-		foreach ($arrayKey as $key => $value) {
-			$v = explode('_', $value);
-			$listUser = DB::table('permission_users')->insert([
-				'module_id' => $v[0],
-				'permission_id' => $v[1],
-				'user_id' => $input['user_id'],
-			]);
+		if (isset($input['permission'])) {
+			$inputPrimaryKey = ['user_id' => $input['user_id']];
+			$inputSave = ['permission_id' => array_keys($input['permission'])];
+			Common::saveOneToMany('PermissionUser', $inputPrimaryKey, $inputSave);
+			//to do?? 
 		}
-		dd(123);
+		return Redirect::action('PermissionController@index');
 	}
 
 	/**
@@ -143,16 +111,10 @@ class PermissionController extends \BaseController {
 	 */
 	public function editUser($id)
 	{
-		$modules = DB::table('modules')->lists('name','id');
-		$permissions = DB::table('permissions')->get();
+		$modules = Module::lists('name','id');
+		$user = Admin::find($id);
 		$listRole = Role::lists('name','id');
-		foreach ($modules as $key => $value) {
-			foreach ($permissions as $k => $val) {
-				$listPermission[$key][] = $val;
-			}
-		}
-		$listUser = DB::table('admins')->get();
-		return View::make('admin.permission.edit-user')->with(compact('id', 'listPermission','listUser', 'listRole'));
+		return View::make('admin.permission.edit-user')->with(compact('user', 'modules', 'listRole'));
 	}
 
 	public function updateUser($id)
@@ -160,59 +122,20 @@ class PermissionController extends \BaseController {
 		$input = Input::except('_token');
 		RoleUser::where('user_id', $id)->delete();
 		PermissionUser::where('user_id', $id)->delete();
-		foreach ($input['role'] as $key => $value) {
-			DB::table('role_users')->insert([
-				'user_id' => $input['user_id'],
-				'role_id' => $key,
-			]);
-		}
-		//saver role
-		$arrayKey = array_keys($input['permission']);
 
-		foreach ($arrayKey as $key => $value) {
-			$v = explode('_', $value);
-			$listUser = DB::table('permission_users')->insert([
-				'module_id' => $v[0],
-				'permission_id' => $v[1],
-				'user_id' => $input['user_id'],
-			]);
+		if (isset($input['role_id'])) {
+			$inputPrimaryKey = ['user_id' => $id];
+			$inputSave = ['role_id' => array_keys($input['role_id'])];
+			Common::saveOneToMany('RoleUser', $inputPrimaryKey, $inputSave);
 		}
+		if (isset($input['permission'])) {
+			$inputPrimaryKey = ['user_id' => $id];
+			$inputSave = ['permission_id' => array_keys($input['permission'])];
+			Common::saveOneToMany('PermissionUser', $inputPrimaryKey, $inputSave);
+		}
+		
 		dd(44);
-	}
-
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		//
-	}
-
-
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		//
-	}
-
-
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
-		//
+		return Redirect::action('PermissionController@index');
 	}
 
 
@@ -224,7 +147,32 @@ class PermissionController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		//
+		RolePermission::where('role_id', $id)->delete();
+		Role::find($id)->delete();
+		return Redirect::action('PermissionController@index');
+	}
+
+	/**
+	 * Display a listing of the resource.
+	 *
+	 * @return Response
+	 */
+	public function indexUser()
+	{
+		$data = Admin::lists('username', 'id');
+		return View::make('admin.permission.index-user')->with(compact('data'));
+	}
+	/**
+	 * Remove the specified resource from storage.
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function destroyUser($id)
+	{
+		RoleUser::where('user_id', $id)->delete();
+		PermissionUser::where('user_id', $id)->delete();
+		return Redirect::action('PermissionController@index');
 	}
 
 

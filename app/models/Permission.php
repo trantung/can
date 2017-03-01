@@ -8,7 +8,7 @@ class Permission extends Eloquent
 {
  // use SoftDeletingTrait;
     protected $table = 'permissions';
-    protected $fillable = ['module_id', 'name'];
+    protected $fillable = ['module_id', 'name', 'controller_action', 'action'];
     protected $dates = ['deleted_at'];
 
 }

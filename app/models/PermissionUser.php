@@ -8,7 +8,7 @@ class PermissionUser extends Eloquent
 {
  // use SoftDeletingTrait;
     protected $table = 'permission_users';
-    protected $fillable = ['user_id', 'role_id'];
+    protected $fillable = ['user_id', 'permission_id'];
     protected $dates = ['deleted_at'];
 
 }

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\SoftDeletingTrait;
 
 class RolePermission extends Eloquent
 {
-	// use SoftDeletingTrait;
+ // use SoftDeletingTrait;
     protected $table = 'module_role_permission';
     protected $fillable = ['module_id', 'role_id', 'permission_id'];
     protected $dates = ['deleted_at'];
