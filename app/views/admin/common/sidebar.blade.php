@@ -84,6 +84,21 @@
                     <span>Danh sách Kiểu lương</span>
                 </a>
             </li>
+            <li>
+                <a href="{{ action('PermissionController@index') }}">
+                    <span>Cài đặt quyền</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ action('PermissionController@indexUser') }}">
+                    <span>Cài đặt quyền cho user</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ action('ConfigUserController@index') }}">
+                    <span>Cài đặt user với hồ sơ</span>
+                </a>
+            </li>
            {{--  <li>
                 <a href="{{ action('SalariesController@index') }}">
                     <span>Lương nhân viên</span>
