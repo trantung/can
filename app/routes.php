@@ -95,6 +95,8 @@ Route::group(['prefix' => 'admin'], function () {
         Route::resource('/salary', 'SalaryConfigController');
     });
     Route::resource('/config-permission', 'ConfigPermissionController');
+    Route::resource('/config-user', 'ConfigUserController');
+    Route::put('/config-user/update/{id}', 'ConfigUserController@update');
 });
 
 

@@ -80,11 +80,11 @@ Route::filter('checkPermission', function()
     $controller_action = explode('@', $route)[0];
     $action = explode('@', $route)[1];
 	if (!isset($arrayPermission[$controller_action])) {
-		dd('Khong co quyen');
+        return View::make('errors.404');
 	}
 	$arrPer = explode(',', $arrayPermission[$controller_action]);
 	if (!in_array($action, $arrPer)) {
-        dd('Khong co quyen');
+        return View::make('errors.404');
     }
 	// dd($ab2);
  //    $listController = array_values($permissions);

@@ -94,7 +94,6 @@ class CompanyCategoryController extends BaseCategoryController {
         // dd($category->toArray());
         $type = CompanyCategoryLevel::where(self::SLUG, $level)->first();
         $result = $this->model->get();
-
         return [
             'select'=> $this->buildArrayData($category),
             'typeName'=>$type->name,
@@ -230,6 +229,27 @@ class CompanyCategoryController extends BaseCategoryController {
     }
     protected function viewOfActionEdit(){
         return 'admin.system.company.edit';
+    }
+
+
+    //haind
+    public function destroy($id)
+    {
+        try {
+            if ($this->model->where(self::PARENT_ID, $id)->exists()) {
+                dd('Không thể xóa khi có cấp con');
+            } else {
+                $result = $this->model->find($id)->delete();
+            }
+            if(!$result) {
+                dd('Error');
+            }
+        } catch(Exception $e){
+            return $this->returnError($e);
+        }
+
+        return $this->redirectBackAction();
+        
     }
 
 }

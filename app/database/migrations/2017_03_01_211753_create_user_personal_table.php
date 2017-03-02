@@ -1,0 +1,34 @@
+<?php
+
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class CreateUserPersonalTable extends Migration {
+
+	/**
+	 * Run the migrations.
+	 *
+	 * @return void
+	 */
+	public function up()
+	{
+		Schema::create('user_personal', function(Blueprint $table) {
+            $table->increments('id');
+            $table->integer('user_id')->nullable();
+            $table->integer('personal_id')->nullable();
+            $table->softDeletes();
+            $table->timestamps();
+        });
+	}
+
+	/**
+	 * Reverse the migrations.
+	 *
+	 * @return void
+	 */
+	public function down()
+	{
+		Schema::drop('user_personal');
+	}
+
+}

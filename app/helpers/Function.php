@@ -331,3 +331,11 @@ function getChecked($userId, $roleId, $model)
 		return true;
 	}
 }
+//haind
+function isChecked($model, $field1, $value1, $field2, $value2)
+{
+	if ($model::where($field1,$value1)->where($field2, $value2)->exists()) {
+		return true;
+	}
+	return false;
+}
