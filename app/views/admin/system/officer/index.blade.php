@@ -23,13 +23,15 @@
               <table class="table table-hover">
                 <tr>
                   <th>STT</th>
-                  <th>chức vụ</th>
+                  <th>Chức vụ</th>
+                  <th>Chức danh</th>
                   <th style="width:200px;">Action</th>
                 </tr>
                 @foreach($data as $key => $value)
                 <tr>
                   <td>{{ $key+1 }}</td>
                   <td>{{ $value->name }}</td>
+                   <td>{{ $value->categoryName <> null ?  $value->categoryName->name : ''}}</td>
                   <td>
                     <a href="{{ action('OfficerCategoryController@edit', $value->id) }}" class="btn btn-primary">Sửa</a>
                     {{ Form::open(array('method'=>'DELETE', 'action' => array('OfficerCategoryController@destroy', $value->id), 'style' => 'display: inline-block;')) }}

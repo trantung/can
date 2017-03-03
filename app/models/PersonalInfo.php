@@ -83,6 +83,13 @@ class PersonalInfo extends Eloquent implements UserInterface, RemindableInterfac
         return $this->hasMany('EmploymentHistory', 'personal_id')->where('status',BONUSHISTORY);
     }
 
+    public function EmploymentMainPosition()
+    {
+        // return $this->belongsToMany('Position', 'user_roles', 'user_id', 'foo_id');
+        // return $this->hasManyThrough('Post', 'User', 'country_id', 'user_id');
+        return $this->hasMany('EmploymentHistory', 'personal_id')->where('status',BONUSHISTORY)->where('is_main_position', 'Y');
+    }
+
     public function employmentFiles()
     {
         return $this->hasMany('Files', 'personal_id');

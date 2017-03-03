@@ -12,10 +12,10 @@
                   <th>Chỉnh sửa lần cuối</th>
                   <th style="width:200px;">Action</th>
                 </tr>
-                @foreach($personal->employmentBonusHistory as $key => $value)
+                @foreach($employmentBonusHistory as $key => $value)
                 <tr>
                   <td>{{ date('d-m-Y',strtotime($value->date) )  }}</td>
-                  <td>{{ $value->why_bonus }}</td>
+                  <td>{{ $value->categoryName <> null ?  $value->categoryName->name : ''}}</td>
                   <td>{{ $value->description }}</td>
                   <td>{{  date('h:m d-m-Y',strtotime($value->updated_at) ) }}</td>
                   <td>
@@ -65,7 +65,8 @@
                     <div class="form-group form-group-sm row">
                         <label class="col-lg-3 control-label">Lý do<span class="text-danger">*</span></label>
                         <div class="col-lg-8">
-                            <input class="form-control input-sm" type="text" name="why_bonus" placeholder="Lý do" value="{{Input::old('why_bonus');}}">
+                            {{-- <input class="form-control input-sm" type="text" name="category" placeholder="Lý do" value="{{Input::old('why_bonus');}}"> --}}
+                            {{ Form::select('category', $bonus_category_id, null, array('class'=>'form-control input-sm', 'id'=>'company_name_select1')) }}
                         </div>
                     </div>
                     {{--why bonus --}}

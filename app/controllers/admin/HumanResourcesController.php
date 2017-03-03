@@ -73,6 +73,7 @@ class HumanResourcesController extends AdminController {
             // 'danh_sach_thoi_gian_thu_viec' => $this->buildArrayData(::orderBy('id', 'asc')),
             'danh_sach_loai_nhan_vien' => $this->buildArrayData(Employees::orderBy('id', 'asc')->get()),
             'officer_category_id' => $this->buildArrayData(Officer::orderBy('id', 'asc')->get()),
+            'bonus_category_id' => $this->buildArrayData(BonusCategory::orderBy('id', 'asc')->get()),
             self::INDUSTRY_CATEGORY_ID      =>$this->buildArrayData(Industry::orderBy('id', 'asc')->get() ),
             self::CERTIFICATE_CATEGORY_ID   =>$this->buildArrayData(Certificate::orderBy('id', 'asc')->get() ),
             $key => $value,
@@ -144,10 +145,10 @@ class HumanResourcesController extends AdminController {
         //         $query = $query->where(self::CERTIFICATE_CATEGORY_ID, $input[self::CERTIFICATE_CATEGORY_ID]);
         //     }
         // })->orderBy(self::ID, 'desc')->paginate(PAGINATE);
-        $data = PersonalInfo::orderBy(self::ID, 'desc')->paginate(PAGINATE);
+        $data = PersonalInfo::orderBy(self::ID, 'desc')->with('EmploymentMainPosition')->paginate(PAGINATE);
         $result = $this->getAllCategory('data', $data);
 
-        // dd($result);
+        // dd($data->toJson());
         return View::make('admin.hr.index', $result);
     }
 
@@ -272,9 +273,12 @@ class HumanResourcesController extends AdminController {
             // dd(Officer::orderBy('id', 'asc')->get()->toJson());
             $employmentHistory = EmploymentHistory::where('personal_id', $id)->where('status',HISTORY)->with('positionHistory')->with('officerHistory')->get();
             $employmentPositions = EmploymentHistory::where('personal_id', $id)->where('status',BONUSHISTORY)->with('positionHistory')->with('officerHistory')->with('attachFile2')->get();
+            $employmentBonusHistory = BonusHistory::where('personal_id', $id)->with('categoryName')->get();
             // $officerHistory
+            // dd($employmentBonusHistory->toJson());
             $result['employmentHistory'] =  $employmentHistory;
             $result['employmentPositions'] =  $employmentPositions;
+            $result['employmentBonusHistory'] =  $employmentBonusHistory;
             // dd($employmentPositions->toJson());
 
         } catch (Exception $e) {

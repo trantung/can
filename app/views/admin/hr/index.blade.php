@@ -28,8 +28,8 @@
                   <th>Mã nhân viên</th>
                   <th>Tên nhân viên</th>
                   <th>Ngày sinh</th>
-                  <th>Điện thoại</th>
-                  <th>Email</th>
+                  {{-- <th>Điện thoại</th> --}}
+                  {{-- <th>Email</th> --}}
                   {{-- <th>Chi nhánh</th> --}}
                   {{-- <th>Vị trí</th> --}}
                   {{-- <th>Loại hợp đồng</th> --}}
@@ -42,8 +42,8 @@
                   <td>NV{{ $value->id }}</td>
                   <td>{{ $value->ho_ten }}</td>
                   <td>{{ $value->nam_sinh }}</td>
-                  <td>{{ $value->mobile }}</td>
-                  <td>{{ $value->email }}</td>
+                  {{-- <td>{{ $value->mobile }}</td> --}}
+                  {{-- <td>{{ $value->email }}</td> --}}
                   {{-- <td>{{ $company_category_id[$value->branch_category_id] }}</td> --}}
                   {{-- <td>{{ isset($position_category_id[$value->position_category_id]) ? $position_category_id[$value->position_category_id] : '';}}</td> --}}
                   {{-- <td>{{ isset($employees_category_id[$value->employees_category_id]) ? $employees_category_id[$value->employees_category_id] : '';}}</td> --}}

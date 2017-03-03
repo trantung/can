@@ -37,6 +37,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('/certificate', 'CertificateCategoryController');//
     Route::resource('/department', 'DepartmentCategoryController');//
     Route::resource('/officer', 'OfficerCategoryController');//
+    Route::resource('/bonus-category', 'BonusCategoryController');//
     // Route::post('/vocabulary', 'Admin2Controller@store');
 
     Route::resource('/salaries', 'SalariesController');
@@ -51,8 +52,11 @@ Route::group(['prefix' => 'admin'], function () {
 
      Route::post('/{employment}/employment-history', array('uses' => 'EmploymentHistoryController@storeHistory', 'as' => 'employment.newHistory'));
     Route::put('/{employment}/employment-history/{id}', 'EmploymentHistoryController@updateHistory');
+    Route::put('/{employment}/employment-position-history/{id}', 'EmploymentHistoryController@updatePsHistory');
     Route::delete('/{employment}/employment-history/{id}', array('uses' => 'EmploymentHistoryController@destroyHistory', 'as' => 'employment.destroyHistory'));
     Route::get('/employment-history/{id}/edit', array('uses' => 'EmploymentHistoryController@editHistory', 'as' => 'employment.editHistory'));
+
+    Route::get('/employment-position-history/{id}/edit', array('uses' => 'EmploymentHistoryController@editPositionHistory', 'as' => 'employment.editPositionHistory'));
 
     Route::post('/{employment}/employment-files', array('uses' => 'EmploymentFilesController@storeFile', 'as' => 'employment.newFiles'));
     Route::delete('/{employment}/employment-files/{id}', array('uses' => 'EmploymentFilesController@destroyFile', 'as' => 'employment.destroyFile'));

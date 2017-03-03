@@ -85,6 +85,11 @@
                 </a>
             </li>
             <li>
+                <a href="{{ action('BonusCategoryController@index') }}">
+                    <span>Danh sách kiểu khen thưởng kỷ luật</span>
+                </a>
+            </li>
+            <li>
                 <a href="{{ action('PermissionController@index') }}">
                     <span>Cài đặt quyền</span>
                 </a>

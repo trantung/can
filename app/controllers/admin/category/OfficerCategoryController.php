@@ -124,4 +124,11 @@ class OfficerCategoryController extends BaseCategoryController {
         return 'admin.system.officer.edit';
     }
 
+    public function index()
+    {
+        $data = $this->model->orderBy('id', 'asc')->with('categoryName')->paginate(10);
+        $subTable = $this->getSubTable();
+        return View::make($this->viewOfActionIndex(), ['data'=>$data, 'subTable'=>$subTable]);
+    }
+
 }

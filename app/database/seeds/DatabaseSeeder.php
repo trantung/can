@@ -11,9 +11,9 @@ class DatabaseSeeder extends Seeder {
 	{
 		Eloquent::unguard();
 
-		$this->call('RoleTableSeeder');
-		$this->call('AdminTableSeeder');
-		$this->call('CompanyLevelTableSeeder');
+		// $this->call('RoleTableSeeder');
+		// $this->call('AdminTableSeeder');
+		// $this->call('CompanyLevelTableSeeder');
 		$this->call('ModuleTableSeeder');
 		$this->call('PermissionTableSeeder');
 		// $this->call('NewTableSeeder');

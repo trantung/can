@@ -21,8 +21,8 @@ class CreateSalariesTable extends Migration {
             $table->double('ngay_di_lam', 3,1);
             $table->double('month');
             $table->string('year',4);
-            $table->double('luong_trach_nhiem', 3,1);
-            $table->double('phu_cap', 3,1);
+            $table->double('luong_trach_nhiem', 15,4);
+            $table->double('phu_cap', 15,4);
             $table->tinyInteger('kieu_luong');
             $table->integer('created_by')->nullable()->unsigned();
             $table->integer('personal_id')->nullable()->unsigned();

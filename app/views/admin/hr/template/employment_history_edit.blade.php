@@ -19,7 +19,11 @@
                     <div class="form-group form-group-sm row">
                         <label class="col-lg-3 control-label">Công ty<span class="text-danger">*</span></label>
                         <div class="col-lg-8">
-                            {{ Form::select('company_name', $company_category_id, $company->company_name, array('class'=>'form-control input-sm')) }}
+                            {{ Form::select('company_name', $company_category_id, $company->company_name, array('class'=>'form-control input-sm', 'id'=>'company_name_select1')) }}
+
+                            <input class="form-control input-sm" type="text" name="company_name_text" placeholder="Lý do chuyển công tác" value="{{$company->company_name_text}}" style="display: none;" , id='company_name_text1'>
+
+                            <input type="checkbox" id="hideHistory1" name="is_text" > Công ty không có trong hệ thống
                         </div>
                     </div>
                     {{-- company name --}}
@@ -80,4 +84,29 @@
                 </div>
     {{ Form::close() }}
 </div>
+<script type="text/javascript" charset="utf-8" async defer>
+    // $('#startdate').datepicker({
+    //     dateFormat: 'yy-mm-dd',
+    // });
+    // $('#enddate').datepicker({
+    //     dateFormat: 'yy-mm-dd',
+    // });
+    $('#hideHistory1').click(function(){
+        var e = $('#hideHistory1').is(":checked");
+        if (e) {
+
+            $('#company_name_select1').hide();
+            $('#company_name_text1').show();
+        }else{
+
+            $('#company_name_select1').show();
+            $('#company_name_text1').hide();
+        }
+    });
+    $(document).ready(function(){
+        @if ($company->company_name == 0)
+            $('#hideHistory1').click();
+        @endif
+    })
+</script>
 @stop

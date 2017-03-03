@@ -1,8 +1,8 @@
 <?php
 class AdminController extends BaseController {
     public function __construct() {
-        $this->beforeFilter('admin', array('except'=>array('login','doLogin')));
-        $this->beforeFilter('checkPermission', array('except'=>array('login','doLogin','logout', 'index')));
+        // $this->beforeFilter('admin', array('except'=>array('login','doLogin')));
+        // $this->beforeFilter('checkPermission', array('except'=>array('login','doLogin','logout', 'index')));
     }
 
     public function index()

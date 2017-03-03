@@ -4,7 +4,7 @@ class EmploymentBonusHistoryController extends AdminController {
 
     const ID                = 'id';
     const NAME              = 'name';
-    const WHY_BONUS         = 'why_bonus';
+    const WHY_BONUS         = 'category';
     const DATE              = 'date';
     const DESCRIPTION       = 'description';
     const PERSONAL_ID       = 'personal_id';
@@ -21,7 +21,7 @@ class EmploymentBonusHistoryController extends AdminController {
         try {
             $rules = array(
                 self::WHY_BONUS   => 'required',
-                self::DESCRIPTION   => 'required',
+                // self::DESCRIPTION   => 'required',
                 self::DATE   => 'required|date',
             );
             $input = Input::only(
@@ -33,7 +33,7 @@ class EmploymentBonusHistoryController extends AdminController {
             $validator = Validator::make($input,$rules);
             if($validator->fails()) {
                 return Redirect::action('HumanResourcesController@edit', array('id' => $employment))
-                    ->withErrors($validator)->withAddNewEmployerBonusHistory(TRUE)->withInput();
+                    ->withErrors($validator)->withAddNewEmployerBonusHistory(TRUE)->withInput($input);
             }
             $input[self::CREATED_BY] = Auth::admin()->get()->id;
             $input[self::UPDATED_BY] = Auth::admin()->get()->id;

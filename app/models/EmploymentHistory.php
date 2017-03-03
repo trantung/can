@@ -10,7 +10,7 @@ class EmploymentHistory extends Eloquent
 
     public function positionHistory()
     {
-        return $this->hasOne('Company', 'id', 'position');
+        return $this->hasOne('Position', 'id', 'position');
     }
 
     public function officerHistory()

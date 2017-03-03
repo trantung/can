@@ -55,9 +55,10 @@ class EmploymentHistoryController extends AdminController {
                 self::COMPANY_NAME_TEXT
             );
 
-            dd($input);
-            if ($input[self::IS_TEXT]) {
-                $input[self::COMPANY_NAME_TEXT]  = $this->buildCompanyText();
+            if (!$input[self::IS_TEXT] == 'on') {
+                $input[self::COMPANY_NAME_TEXT]  = $this->buildCompanyText($input[self::COMPANY_NAME]);
+            }else{
+                $input[self::COMPANY_NAME] = 0;
             }
 
             $validator = Validator::make($input,$rules);
@@ -129,17 +130,12 @@ class EmploymentHistoryController extends AdminController {
                 self::COMPANY_NAME,
                 self::POSITION,
                 self::START_DATE,
-                self::LINK,
-                self::IS_TEXT,
-                self::COMPANY_NAME_TEXT
+                self::LINK
             );
 
             $validator = Validator::make($input,$rules);
+            $input[self::COMPANY_NAME_TEXT]  = $this->buildCompanyText($input[self::COMPANY_NAME]);
 
-            if (!$input[self::IS_TEXT] === 'on') {
-                $input[self::COMPANY_NAME_TEXT]  = $this->buildCompanyText($input[self::COMPANY_NAME]);
-                $input[self::COMPANY_NAME] = 0;
-            }
             if($validator->fails()) {
                 return Redirect::action('HumanResourcesController@edit', array('id' => $employment))
                     ->withErrors($validator)->withAddNewEmployerPosition(TRUE)->withInput($input);
@@ -211,6 +207,34 @@ class EmploymentHistoryController extends AdminController {
         return View::make('admin.hr.template.employment_history_edit', $result);
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function editPositionHistory($id)
+    {
+        // dd(1);
+        try {
+            $company = EmploymentHistory::find($id);
+             $result = [
+                'company'=>$company,
+                self::COMPANY_CATEGORY_ID       =>$this->buildArrayData(Company::orderBy('id', 'asc')->get() ),
+                self::BRANCH_ID                 =>$this->buildArrayData(Branch::orderBy('id', 'asc')->get() ),
+                self::POSITION_ID               =>$this->buildArrayData(Position::orderBy('id', 'asc')->get() ),
+                'officer_category_id' => $this->buildArrayData(Officer::orderBy('id', 'asc')->get()),
+            ];
+        } catch (Exception $e) {
+
+            return $this->returnError($e);
+        }
+
+        // dd($result[self::COMPANY_CATEGORY_ID]);
+
+        return View::make('admin.hr.template.employment_ps_history_edit', $result);
+    }
+
 
     /**
      * Update the specified resource in storage.
@@ -237,8 +261,18 @@ class EmploymentHistoryController extends AdminController {
                 self::WHY_OUT,
                 self::DESCRIPTION,
                 self::START_DATE,
-                self::END_DATE
+                self::END_DATE,
+                self::IS_TEXT,
+                self::COMPANY_NAME_TEXT
             );
+
+            if (!$input[self::IS_TEXT] == 'on') {
+                $input[self::COMPANY_NAME_TEXT]  = $this->buildCompanyText($input[self::COMPANY_NAME]);
+            }else{
+                $input[self::COMPANY_NAME] = 0;
+            }
+            unset( $input[self::IS_TEXT] );
+
             $validator = Validator::make($input,$rules);
             if($validator->fails()) {
                 return Redirect::back()->withErrors($validator);
@@ -246,7 +280,65 @@ class EmploymentHistoryController extends AdminController {
                     ->withErrors($validator)->withModel2(TRUE)->withInput();
             }
             $input[self::UPDATED_BY] = Auth::admin()->get()->id;
-            $input[self::COMPANY_NAME_TEXT] = $this->buildCompanyText($input[self::COMPANY_NAME]);
+
+            $result = EmploymentHistory::where(self::ID, $id)->update($input);
+            // dd($result);
+        } catch (Exception $e) {
+            return $this->returnError($e);
+        }
+
+        return Redirect::action('HumanResourcesController@edit', array('id' => $employment));
+    }
+
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function updatePsHistory($employment, $id)
+    {
+        try {
+            $rules = array(
+                self::COMPANY_NAME   => 'required',
+                // self::BRANCH   => 'required|integer',
+                self::POSITION   => 'required|integer',
+                // self::WHY_OUT   => 'required',
+                // self::DESCRIPTION   => 'required',
+                self::START_DATE   => 'required|date',
+                // self::END_DATE   => 'required|date',
+            );
+            $input = Input::only(
+                self::COMPANY_NAME,
+                // self::BRANCH,
+                self::POSITION,
+                self::START_DATE,
+                self::LINK
+            );
+
+
+            $input[self::COMPANY_NAME_TEXT]  = $this->buildCompanyText($input[self::COMPANY_NAME]);
+
+            $validator = Validator::make($input,$rules);
+            if($validator->fails()) {
+                return Redirect::back()->withErrors($validator);
+                return Redirect::action('HumanResourcesController@edit', array('id' => $employment))
+                    ->withErrors($validator)->withModel2(TRUE)->withInput();
+            }
+            $input[self::UPDATED_BY] = Auth::admin()->get()->id;
+
+
+            if (Input::hasFile(self::LINK)) {
+                $input[self::LINK] = CommonUpload::uploadImage($employment, UPLOADFILE, self::LINK, UPLOAD_FILE);
+                $file = [
+                    'link' => $input[self::LINK],
+                    self::NAME =>'Công văn bổ nhiệm',
+                    self::MODEL => 'history',
+                    self::MODEL_ID => $id,
+                ];
+                Files::create($file)->id;
+            }
 
             $result = EmploymentHistory::where(self::ID, $id)->update($input);
             // dd($result);

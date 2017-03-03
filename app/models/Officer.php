@@ -8,4 +8,9 @@ class Officer extends Eloquent
     protected $table = 'officer';
     protected $fillable = ['name', 'position_id', 'created_by', 'updated_by'];
 
+    public function categoryName()
+    {
+        return $this->hasOne('Position', 'id', 'position_id');
+    }
+
 }
