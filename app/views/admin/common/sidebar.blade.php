@@ -5,11 +5,11 @@
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ol class="sidebar-menu child-menu" id="child-hr">
 
-            <li>
+           {{--  <li>
                 <a href="{{ action('HumanResourcesController@index') }}">
                     <i class="fa fa-users"></i> <span>Danh sách nhân viên</span>
                 </a>
-            </li>
+            </li> --}}
             <li>
                 <a href="{{ action('CompanyCategoryController@index') }}">
                     <span>Cơ cấu tổ chức</span>
@@ -75,18 +75,18 @@
         </ol>
         <ol class="child-menu sidebar-menu" id="child-system" style="display: none">
             @if(Admin::isAdmin())
-            <li>
+           {{--  <li>
                 <a href="{{ action('ManagerController@index') }}">
                     <i class="fa fa-users"></i> <span>Quản lý thành viên</span>
                 </a>
-               {{--  <ul>
+                <ul>
                     <li>
                         <a href="{{ action('ManagerController@index') }}">
                             <i class="fa fa-users"></i> <span>Quản lý  thành viên</span>
                         </a>
                     </li>
-                </ul> --}}
-            </li>
+                </ul>
+            </li> --}}
             @endif
              <li>
                 <a href="{{ action('PermissionController@index') }}">
@@ -106,11 +106,11 @@
         </ol>
 
         <ol class="child-menu sidebar-menu" id="child-salary"  style="display: none">
-            <li>
+            {{-- <li>
                 <a href="{{ action('SalariesController@index') }}" >
                     <span>Lương nhân viên</span>
                 </a>
-            </li>
+            </li> --}}
             <li>
                 <a href="{{ action('SalariesCategoryController@index') }}">
                     <span>Danh sách Kiểu lương</span>
@@ -118,11 +118,11 @@
             </li>
         </ol>
         <ol class="child-menu sidebar-menu" id="child-insuance"  style="display: none">
-            <li>
+            {{-- <li>
                 <a href="{{ action('InsuranceController@index') }}" >
                     <span>Bảo hiểm nhân viên</span>
                 </a>
-            </li>
+            </li> --}}
         </ol>
     </section>
     <!-- /.sidebar -->

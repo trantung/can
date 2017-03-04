@@ -150,24 +150,45 @@
 	  });
 
       $(document).ready(function(){
+
+        function readCookie(name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            for(var i=0;i < ca.length;i++) {
+                var c = ca[i];
+                while (c.charAt(0)==' ') c = c.substring(1,c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+            }
+            return null;
+        }
+        var activeMenu = readCookie('activeMenu');
+        console.log(activeMenu);
+        $('.child-menu').hide();
+        if (activeMenu == 'child-hr' ) { $('#child-hr').show(); }
+        if (activeMenu == 'child-salary' ) { $('#child-salary').show(); }
+        if (activeMenu == 'child-insuance' ) {$('#child-insuance').show(); }
+        if (activeMenu == 'child-system' ) { $('#child-system').show(); }
         // change menu
         $('#hr-menu').click(function(){
-            $('.child-menu').hide();
-            $('#child-hr').show();
+            document.cookie = "activeMenu=child-hr";
+            window.location.href = "{{ action('HumanResourcesController@index')  }}";
         });
         $('#salary-menu').click(function(){
-            console.log('ffsd');
-            $('.child-menu').hide();
-            $('#child-salary').show();
+             document.cookie = "activeMenu=child-salary";
+             window.location.href = "{{ action('SalariesController@index')  }}";
+
         });
         $('#insuance-menu').click(function(){
-            $('.child-menu').hide();
-            $('#child-insuance').show();
+             document.cookie = "activeMenu=child-insuance";
+             window.location.href = "{{ action('InsuranceController@index')  }}";
+
         });
          $('#system-menu').click(function(){
-            $('.child-menu').hide();
-            $('#child-system').show();
+            document.cookie = "activeMenu=child-system";
+            window.location.href = "{{ action('ManagerController@index')  }}";
+
         });
+
          $('#section_branch_model').change( function($this){
             // var token =  $("input[name=_token]").val();
             // var data = {'branch_category_id':$('#section_branch').val()};
