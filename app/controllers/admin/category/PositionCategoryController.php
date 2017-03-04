@@ -40,7 +40,7 @@ class PositionCategoryController extends BaseCategoryController {
     * @return array
     */
     protected function getInputFieldStore(){
-        return Input::only(self::NAME, self::BRANCH_ID, self::DESCRIPTION, self::OFICER_ID);
+        return Input::only(self::NAME, self::DESCRIPTION);
     }
 
     /**
@@ -49,7 +49,7 @@ class PositionCategoryController extends BaseCategoryController {
     * @return array
     */
     protected function getInputFieldUpdate(){
-        return Input::only(self::NAME, self::BRANCH_ID, self::DESCRIPTION,  self::OFICER_ID);
+        return Input::only(self::NAME, self::DESCRIPTION);
     }
 
     /**

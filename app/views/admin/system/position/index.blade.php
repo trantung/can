@@ -24,7 +24,6 @@
                 <tr>
                   <th>STT</th>
                   <th>Tên Chức danh</th>
-                  <th>Cơ cấu tổ chức</th>
                   <th>Chỉnh sửa lần cuối</th>
                   <th style="width:200px;">Action</th>
                 </tr>
@@ -32,7 +31,6 @@
                 <tr>
                   <td>{{ $key+1 }}</td>
                   <td>{{ $value->name }}</td>
-                  <td>{{ isset( $subTable[$value->branch_category_id]) ?  $subTable[$value->branch_category_id] : '' }}</td>
                   <td>{{ $value->updated_at }}</td>
                   <td>
                     <a href="{{ action('PositionCategoryController@edit', $value->id) }}" class="btn btn-primary">Sửa</a>
