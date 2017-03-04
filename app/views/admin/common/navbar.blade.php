@@ -12,18 +12,23 @@
      <ul class="nav navbar-nav">
 
         <li>
-            <a href="{{ action('HumanResourcesController@index') }}">
+            <a href="javascript: void(0)" id="hr-menu">
                 <i class="fa fa-users"></i> <span>Quản lý nhân sự</span>
             </a>
         </li>
         <li>
-            <a href="{{ action('SalariesController@index') }}">
-                <span>Lương nhân viên</span>
+            <a href="javascript: void(0)" id="salary-menu">
+                <span>Lương </span>
             </a>
         </li>
         <li>
-            <a href="{{ action('InsuranceController@index') }}">
-                <span>Bảo hiểm nhân viên</span>
+            <a href="javascript: void(0)" id="insuance-menu">
+                <span>Bảo hiểm</span>
+            </a>
+        </li>
+        <li>
+            <a href="javascript: void(0)" id="system-menu">
+                <span>Cài đặt hệ thống</span>
             </a>
         </li>
 

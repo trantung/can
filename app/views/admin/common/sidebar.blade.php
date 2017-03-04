@@ -3,32 +3,13 @@
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
         <!-- sidebar menu: : style can be found in sidebar.less -->
-        <ol class="sidebar-menu">
+        <ol class="sidebar-menu child-menu" id="child-hr">
 
-            @if(Admin::isAdmin())
             <li>
-                <a href="{{ action('ManagerController@index') }}">
-                    <i class="fa fa-users"></i> <span>Quản lý thành viên</span>
-                </a>
-               {{--  <ul>
-                    <li>
-                        <a href="{{ action('ManagerController@index') }}">
-                            <i class="fa fa-users"></i> <span>Quản lý  thành viên</span>
-                        </a>
-                    </li>
-                </ul> --}}
-            </li>
-            @endif
-            {{-- <li>
                 <a href="{{ action('HumanResourcesController@index') }}">
-                    <i class="fa fa-users"></i> <span>Quản lý nhân sự</span>
+                    <i class="fa fa-users"></i> <span>Danh sách nhân viên</span>
                 </a>
-            </li> --}}
-            {{-- <li>
-                <a href="{{ action('CompanyCategoryController@index') }}">
-                    <span>Danh sách Công ty</span>
-                </a>
-            </li> --}}
+            </li>
             <li>
                 <a href="{{ action('CompanyCategoryController@index') }}">
                     <span>Cơ cấu tổ chức</span>
@@ -44,11 +25,6 @@
                     <span>Chức vụ</span>
                 </a>
             </li>
-            {{-- <li>
-                <a href="{{ action('DepartmentCategoryController@index') }}">
-                    <span>Danh sách Bộ phận</span>
-                </a>
-            </li> --}}
             <li>
                 <a href="{{ action('ContractCategoryController@index') }}">
                     <span>Danh sách Hợp đồng lao động</span>
@@ -79,17 +55,40 @@
                     <span>Danh sách Bằng cấp & chứng chỉ</span>
                 </a>
             </li>
-            <li>
-                <a href="{{ action('SalariesCategoryController@index') }}">
-                    <span>Danh sách Kiểu lương</span>
-                </a>
-            </li>
+
             <li>
                 <a href="{{ action('BonusCategoryController@index') }}">
                     <span>Danh sách kiểu khen thưởng kỷ luật</span>
                 </a>
             </li>
+
+           {{--  <li>
+                <a href="{{ action('SalariesController@index') }}">
+                    <span>Lương nhân viên</span>
+                </a>
+            </li>
             <li>
+                <a href="{{ action('InsuranceController@index') }}">
+                    <span>Bảo hiểm nhân viên</span>
+                </a>
+            </li> --}}
+        </ol>
+        <ol class="child-menu sidebar-menu" id="child-system" style="display: none">
+            @if(Admin::isAdmin())
+            <li>
+                <a href="{{ action('ManagerController@index') }}">
+                    <i class="fa fa-users"></i> <span>Quản lý thành viên</span>
+                </a>
+               {{--  <ul>
+                    <li>
+                        <a href="{{ action('ManagerController@index') }}">
+                            <i class="fa fa-users"></i> <span>Quản lý  thành viên</span>
+                        </a>
+                    </li>
+                </ul> --}}
+            </li>
+            @endif
+             <li>
                 <a href="{{ action('PermissionController@index') }}">
                     <span>Cài đặt quyền</span>
                 </a>
@@ -104,16 +103,26 @@
                     <span>Cài đặt user với hồ sơ</span>
                 </a>
             </li>
-           {{--  <li>
-                <a href="{{ action('SalariesController@index') }}">
+        </ol>
+
+        <ol class="child-menu sidebar-menu" id="child-salary"  style="display: none">
+            <li>
+                <a href="{{ action('SalariesController@index') }}" >
                     <span>Lương nhân viên</span>
                 </a>
             </li>
             <li>
-                <a href="{{ action('InsuranceController@index') }}">
+                <a href="{{ action('SalariesCategoryController@index') }}">
+                    <span>Danh sách Kiểu lương</span>
+                </a>
+            </li>
+        </ol>
+        <ol class="child-menu sidebar-menu" id="child-insuance"  style="display: none">
+            <li>
+                <a href="{{ action('InsuranceController@index') }}" >
                     <span>Bảo hiểm nhân viên</span>
                 </a>
-            </li> --}}
+            </li>
         </ol>
     </section>
     <!-- /.sidebar -->

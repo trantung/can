@@ -150,6 +150,24 @@
 	  });
 
       $(document).ready(function(){
+        // change menu
+        $('#hr-menu').click(function(){
+            $('.child-menu').hide();
+            $('#child-hr').show();
+        });
+        $('#salary-menu').click(function(){
+            console.log('ffsd');
+            $('.child-menu').hide();
+            $('#child-salary').show();
+        });
+        $('#insuance-menu').click(function(){
+            $('.child-menu').hide();
+            $('#child-insuance').show();
+        });
+         $('#system-menu').click(function(){
+            $('.child-menu').hide();
+            $('#child-system').show();
+        });
          $('#section_branch_model').change( function($this){
             // var token =  $("input[name=_token]").val();
             // var data = {'branch_category_id':$('#section_branch').val()};
