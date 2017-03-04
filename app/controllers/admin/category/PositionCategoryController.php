@@ -99,7 +99,6 @@ class PositionCategoryController extends BaseCategoryController {
     protected function storeValidater(array $array){
         return Validator::make($array,[
             self::NAME => 'required',
-            self::BRANCH_ID => 'required',
         ]);
     }
 
@@ -111,7 +110,6 @@ class PositionCategoryController extends BaseCategoryController {
     protected function updateValidater(array $array){
         return Validator::make($array,[
             self::NAME => 'required',
-            self::BRANCH_ID => 'required',
         ]);
     }
 
