@@ -357,7 +357,7 @@ class HumanResourcesController extends AdminController {
         } catch (Exception $e) {
             return $this->returnError($e);
         }
-        return Redirect::action('HumanResourcesController@index');
+        return Redirect::action('HumanResourcesController@edit',['id'=>$id]);
     }
 
 
