@@ -32,7 +32,7 @@
                 <tr>
                   <td>{{ $key+1 }}</td>
                   <td>{{ $value->name }}</td>
-                  <td>{{ $subTable[$value->branch_category_id] }}</td>
+                  <td>{{ isset( $subTable[$value->branch_category_id]) ?  $subTable[$value->branch_category_id] : '' }}</td>
                   <td>{{ $value->updated_at }}</td>
                   <td>
                     <a href="{{ action('PositionCategoryController@edit', $value->id) }}" class="btn btn-primary">Sửa</a>
