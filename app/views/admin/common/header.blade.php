@@ -17,6 +17,7 @@
 	<!-- AdminLTE Skins. Choose a skin from the css/skins
 			 folder instead of downloading all of them to reduce the load. -->
 	{{HTML::style('adminlte/dist/css/skins/_all-skins.min.css') }}
+    {{ HTML::style('assets/css/select2.css') }}
 	<!-- Date Picker -->
 	{{-- {{HTML::style('adminlte/plugins/datepicker/datepicker3.css') }} --}}
 	<!-- Daterange picker -->
@@ -45,6 +46,7 @@
             margin: 0 2px;
             border: 1px solid silver;
         }
+        .select2-container { padding: 0 !important}
     </style>
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -75,6 +77,7 @@
 	{{ HTML::script('adminlte/plugins/datetimepicker/bootstrap-datetimepicker.min.js') }}
 	<!-- FastClick -->
 	{{ HTML::script('adminlte/plugins/fastclick/fastclick.js') }}
+    {{ HTML::script('assets/js/select2.js') }}
 	<!-- AdminLTE App -->
 	{{ HTML::script('adminlte/dist/js/app.min.js') }}
 

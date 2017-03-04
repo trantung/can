@@ -22,7 +22,7 @@
               <label for="email">Nhân viên</label>
                 <div class="row">
                       <div class="col-sm-6">
-                        {{ Form::select('personal_id', $personal, Input::old('personal_id'), array('class' =>'form-control', 'id'=>'birds')) }}
+                        {{ Form::select('personal_id', $personal, Input::old('personal_id'), array('class' =>'form-control', 'id'=>'states')) }}
                     </div>
                 </div>
             </div>
@@ -167,76 +167,9 @@
 
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript" charset="utf-8" async defer>
-  $(document).ready(function(){
-
-    $( function() {
-        function split( val ) {
-          return val.split( /,\s*/ );
-        }
-        function extractLast( term ) {
-          return split( term ).pop();
-        }
-
-        function getStoreId(){
-          return 1;
-        }
-
-
-        $( "#birds" )
-          // don't navigate away from the field on tab when selecting an item
-          .on( "keydown", function( event ) {
-            console.log('vao');
-            if ( event.keyCode === $.ui.keyCode.TAB &&
-                $( this ).autocomplete( "instance" ).menu.active ) {
-              event.preventDefault();
-            }
-          })
-          .autocomplete({
-            source: function( request, response ) {
-
-              $.getJSON( "search", {
-                term: extractLast( request.term ),
-                store: getStoreId()
-              }, response );
-            },
-            search: function() {
-              // custom minLength
-              var term = extractLast( this.value );
-              if ( term.length < 2 ) {
-                return false;
-              }
-            },
-            focus: function() {
-              // prevent value inserted on focus
-              return false;
-            },
-            select: function( event, ui ) {
-              // console.log(ui);
-              var terms = split( this.value );
-              // remove the current input
-              terms.pop();
-              // add the selected item
-              terms.push( ui.item.value );
-              // add placeholder to get the comma-and-space at the end
-              terms.push( "" );
-              this.value = "";
-
-              var count = $('#countLine').val();
-              appendNewLine(ui.item, count);
-              $('#countLine').val(parseInt(count) + 1);
-              // this.value = terms.join( ", " );
-              return false;
-            }
-          })
-          .autocomplete( "instance" )._renderItem = function( ul, item ) {
-          return $( "<li>" )
-            .append( "<div> Mã sp: " + item.code + "<br>Tên sp: " + item.label + "</div>" )
-            .appendTo( ul );
-        };;
-      } );
-
-
-  });
+  $(document).ready(function() {
+        $("#states").select2();
+    });
 </script>
 
 
