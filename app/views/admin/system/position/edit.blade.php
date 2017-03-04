@@ -30,14 +30,6 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="branch_id">Cơ cấu tổ chức</label>
-                  <div class="row">
-                    <div class="col-sm-6">
-                        {{ Form::select('branch_category_id', $subTable, null, array('class'=>'form-control input-sm')) }}
-                    </div>
-                  </div>
-                </div>
-                <div class="form-group">
                    <label for="description">Diễn giải</label>
                   <div class="row">
                     <div class="col-sm-6">
