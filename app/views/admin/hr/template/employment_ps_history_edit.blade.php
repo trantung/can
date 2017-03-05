@@ -23,28 +23,6 @@
                         </div>
                     </div>
                     {{-- company name --}}
-                    <div class="form-group form-group-sm row">
-                        <label class="col-lg-3 control-label">Vị trí<span class="text-danger">*</span></label>
-                        <div class="col-lg-8">
-                        {{ Form::select('position', $position_category_id, $company->position, array('class'=>'form-control input-sm', 'id'=>'section_position_model')) }}
-                        </div>
-                    </div>
-                    {{-- position--}}
-
-                    {{-- <div class="form-group form-group-sm row">
-                        <label class="col-lg-3 control-label">Chức danh<span class="text-danger">*</span></label>
-                        <div class="col-lg-8">
-                        {{ Form::select('position', $position_category_id, $company->position, array('class'=>'form-control input-sm',  'id'=>'section_position_model')) }}
-                        </div>
-                    </div> --}}
-                    {{-- position--}}
-                   {{--  <div class="form-group form-group-sm row">
-                        <label class="col-lg-3 control-label">Chức vụ<span class="text-danger">*</span></label>
-                        <div class="col-lg-8">
-                        {{ Form::select('officer', $officer_category_id, Input::old('officer'), array('class'=>'form-control input-sm',  'id'=>'section_officer_model')) }}
-                        </div>
-                    </div> --}}
-                    {{-- officer--}}
 
                     <div class="form-group form-group-sm row">
                         <label class="col-lg-3 control-label">Chức vụ<span class="text-danger">*</span></label>
