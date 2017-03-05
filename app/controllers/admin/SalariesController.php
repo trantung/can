@@ -38,10 +38,14 @@ class SalariesController extends AdminController {
 
 
         foreach ($data as $key => $value) {
+            $vt = '';
+            if ($value->employment_main_position != null) {
+               $vt = $value->employment_main_position->company_name_text;
+            }
             if ($subTable) {
-                $result[$value->$subTable] = $value->ho_ten;
+                $result[$value->$subTable] = 'NV'. $value->id.'-'.$value->ho_ten .'-'.$vt;
             }else{
-                $result[$value->id] = $value->ho_ten;
+                $result[$value->id] = 'NV'. $value->id.'-'.$value->ho_ten.'-'.$vt;
             }
         }
 
@@ -73,7 +77,7 @@ class SalariesController extends AdminController {
      */
     public function create()
     {
-        $personal = $this->buildArrayData( PersonalInfo::select('ho_ten', 'id')->get() );
+        $personal = $this->buildArrayData( PersonalInfo::select('ho_ten', 'id')->with('EmploymentMainPosition')->get() );
         $salaries_category = $this->buildArrayData2( SalariesCategory::select('name', 'id')->get() );
         // dd( SalariesCategory::select('name', 'id')->get()->count());
         return View::make('admin.salaries.create')->with(['personal'=> $personal, 'salaries_category'=>$salaries_category]);
