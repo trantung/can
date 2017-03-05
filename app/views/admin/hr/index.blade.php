@@ -28,8 +28,8 @@
                   <th>Mã nhân viên</th>
                   <th>Tên nhân viên</th>
                   <th>Ngày sinh</th>
-                  {{-- <th>Điện thoại</th> --}}
-                  {{-- <th>Email</th> --}}
+                  <th>Vị trí công tác chính</th>
+                  <th>Chức vụ</th>
                   {{-- <th>Chi nhánh</th> --}}
                   {{-- <th>Vị trí</th> --}}
                   {{-- <th>Loại hợp đồng</th> --}}
@@ -42,8 +42,16 @@
                   <td>NV{{ $value->id }}</td>
                   <td>{{ $value->ho_ten }}</td>
                   <td>{{ $value->nam_sinh }}</td>
-                  {{-- <td>{{ $value->mobile }}</td> --}}
-                  {{-- <td>{{ $value->email }}</td> --}}
+                  <td>{{ $value->employment_main_position != null ? $value->employment_main_position->company_name_text : '' }}</td>
+                  <td>
+                  @if($value->employment_main_position <> null)
+                  {{-- {{ $value->employment_main_position }} --}}
+                  @if(isset($position_category_id[$value->employment_main_position->position]))
+                  {{-- @if(isset($position_category_id[$value->employment_main_position])) --}}
+                    {{$position_category_id[$value->employment_main_position->position]}}
+                  @endif
+                  @endif</td>
+                  {{-- <td>{{ isset($position_category_id[$value->employment_main_position]) ? $position_category_id[$value->employment_main_position] : '' }}</td> --}}
                   {{-- <td>{{ $company_category_id[$value->branch_category_id] }}</td> --}}
                   {{-- <td>{{ isset($position_category_id[$value->position_category_id]) ? $position_category_id[$value->position_category_id] : '';}}</td> --}}
                   {{-- <td>{{ isset($employees_category_id[$value->employees_category_id]) ? $employees_category_id[$value->employees_category_id] : '';}}</td> --}}

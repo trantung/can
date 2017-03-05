@@ -23,4 +23,10 @@ class EmploymentHistory extends Eloquent
         return $this->hasOne('Files', 'model_id', 'id');
     }
 
+    public function personalInfo()
+    {
+        return $this->hasOne('PersonalInfo', 'id', 'personal_id');
+    }
+
+
 }

@@ -145,7 +145,29 @@ class HumanResourcesController extends AdminController {
         //         $query = $query->where(self::CERTIFICATE_CATEGORY_ID, $input[self::CERTIFICATE_CATEGORY_ID]);
         //     }
         // })->orderBy(self::ID, 'desc')->paginate(PAGINATE);
+        // $data = PersonalInfo::orderBy(self::ID, 'desc')->with('EmploymentMainPosition')->paginate(PAGINATE);
         $data = PersonalInfo::orderBy(self::ID, 'desc')->with('EmploymentMainPosition')->paginate(PAGINATE);
+        // $data = PersonalInfo::join('employment_history', function($join)
+        // {
+        //     $join->on('employment_history.personal_id', '=', 'personal_info.id');
+        //          // ->where('employment_history.status','=',BONUSHISTORY)
+        //          // ->orWhere('employment_history.status','=',NULL);
+        //          // ->where('employment_history.is_main_position','=', 'Y');
+        // })
+        // ->join('positions', 'positions.id', '=', 'employment_history.position')
+        // // ->select(
+        // //     // 'employment_history.personal_id as personal_id',
+        // //     // 'employment_history.position as position',
+        // //     // 'employment_history.is_main_position as is_main_position',
+        // //     'employment_history.company_name_text as company_name_text',
+        // //     'personal_info.id as id',
+        // //     'personal_info.ho_ten as ho_ten',
+        // //     'personal_info.nam_sinh as nam_sinh',
+        // //     // 'positions.id as positions_id',
+        // //     'positions.name as positions_name'
+        // //     )
+        // ->paginate(PAGINATE);
+        // $data = EmploymentHistory::with('personalInfo')->with('positionHistory')->where('is_main_position', 'Y')->paginate(PAGINATE);
         $result = $this->getAllCategory('data', $data);
 
         // dd($data->toJson());

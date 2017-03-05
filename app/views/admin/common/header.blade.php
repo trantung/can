@@ -162,7 +162,6 @@
             return null;
         }
         var activeMenu = readCookie('activeMenu');
-        console.log(activeMenu);
         $('.child-menu').hide();
         if (activeMenu == 'child-hr' ) { $('#child-hr').show(); }
         if (activeMenu == 'child-salary' ) { $('#child-salary').show(); }
