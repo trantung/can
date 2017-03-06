@@ -4,10 +4,10 @@
 @stop
 
 @section('content')
-
+<hr>
     <!-- inclue Search form -->
-    {{-- @include('admin.hr.template.search') --}}
-
+    @include('admin.hr.template.search')
+<hr>
     <div class="row margin-bottom">
         <div class="col-xs-12">
             <a href="{{ action('HumanResourcesController@create') }}" class="btn btn-primary">Thêm thành viên</a>

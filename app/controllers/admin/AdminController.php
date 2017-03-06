@@ -1,7 +1,7 @@
 <?php
 class AdminController extends BaseController {
     public function __construct() {
-        // $this->beforeFilter('admin', array('except'=>array('login','doLogin')));
+        $this->beforeFilter('admin', array('except'=>array('login','doLogin')));
         // $this->beforeFilter('checkPermission', array('except'=>array('login','doLogin','logout', 'index')));
     }
 
@@ -77,7 +77,7 @@ class AdminController extends BaseController {
         $checkLogin = Auth::admin()->check();
         if($checkLogin) {
             if (Auth::admin()->get()->status == ACTIVE) {
-                return Redirect::action('ManagerController@edit', Auth::admin()->get()->id);
+                return Redirect::action('HumanResourcesController@index', Auth::admin()->get()->id);
             }else{
                 return View::make('admin.layout.login')->with(compact('message','chưa kich hoat'));
             }
@@ -151,7 +151,9 @@ class AdminController extends BaseController {
 
     protected function buildArrayData($data, $subTable = null)
     {
-        $result = [];
+        $result = [
+        '' => '--',
+        ];
 
         if ($data->count() == 0) {
            return  $result;

@@ -3,24 +3,28 @@
 class HumanResourcesController extends AdminController {
 
     const ID                = 'id';
-    const NAME                = 'name';
-    const IDCARD            = 'idcard';
+    const MA_NHAN_VIEN      = 'ma_nhan_vien';
+    const VI_TRI      = 'vi_tri';
+    const NAME              = 'ten';
+    const IDCARD            = 'cmt';
     const DATE_OF_ISSUE     =  'date_of_issue';
     const IMAGE             = 'image';
+    const NOI_SINH             = 'noi_sinh';
     const CV             = 'cv';
     const PLACE_OF_ISSUE    = 'place_of_issue';
     const SEX               = 'sex';
-    const TAX_CODE          = 'tax_code';
+    const TAX_CODE          = 'ma_so_thue';
     const INSURANCE_ID      = 'insurance_id';
-    const BANK_ID           = 'bank_id';
-    const BANK_NAME         = 'bank_name';
+    const BANK_ID           = 'so_tai_khoan';
+    const BANK_NAME         = 'ngan_hang';
     const COMPANY_ID        = 'company_id';
-    const FULLNAME          = 'fullname';
+    const FULLNAME          = 'ho_ten';
     const ID_EMPLOYEES       = 'id_employees';
     const EMPLOYEES         = 'employees';
     const NICKNAME          = 'nickname';
     const BIRTHDAY          = 'birthday';
-    const ADDRESS           = 'address';
+    const ADDRESS           = 'dia_chi_thuong_tru';
+    const ADDRESS2           = 'dia_chi_tam_tru';
     const MARRY             = 'marry';
     const MOBILE            = 'mobile';
     const EMAIL             = 'email';
@@ -86,19 +90,22 @@ class HumanResourcesController extends AdminController {
      */
     public function index()
     {
-        // $input =  Input::only(
-            // self::KEYWORD,
-            // self::ETHNIC_GROUP_ID,
-            // self::RELIGION_CATEGORY_ID,
-            // self::EMPLOYEES_CATEGORY_ID,
-            // self::ID_EMPLOYEES,
-            // self::BRANCH_ID,
-            // self::POSITION_ID,
-            // self::NATIONALITY_ID,
-            // self::CONTRACT_CATEGORY_ID,
-            // self::INDUSTRY_CATEGORY_ID,
-            // self::CERTIFICATE_CATEGORY_ID
-            // );
+        $input =  Input::only(
+            self::KEYWORD,
+            self::MA_NHAN_VIEN,
+            self::NOI_SINH,
+            self::VI_TRI,
+            self::ETHNIC_GROUP_ID,
+            self::RELIGION_CATEGORY_ID,
+            self::EMPLOYEES_CATEGORY_ID,
+            self::ID_EMPLOYEES,
+            self::BRANCH_ID,
+            self::POSITION_ID,
+            self::NATIONALITY_ID,
+            self::CONTRACT_CATEGORY_ID,
+            self::INDUSTRY_CATEGORY_ID,
+            self::CERTIFICATE_CATEGORY_ID
+            );
         // $data = PersonalInfo::where(function ($query) use ($input){
         //     if ($input[self::KEYWORD]) {
         //         $query = $query->where(self::EMAIL, 'like', '%'.$input[self::KEYWORD].'%')
@@ -146,7 +153,34 @@ class HumanResourcesController extends AdminController {
         //     }
         // })->orderBy(self::ID, 'desc')->paginate(PAGINATE);
         // $data = PersonalInfo::orderBy(self::ID, 'desc')->with('EmploymentMainPosition')->paginate(PAGINATE);
-        $data = PersonalInfo::orderBy(self::ID, 'desc')->with('EmploymentMainPosition')->paginate(PAGINATE);
+        $data = PersonalInfo::where(function ($query) use ($input){
+                if ($input[self::KEYWORD]) {
+                    $query = $query->orWhere( self::FULLNAME, 'like', '%'.$input[self::KEYWORD].'%')
+                                    // ->orWhere( self::IDCARD, 'like', '%'.$input[self::KEYWORD].'%')
+                                    // ->orWhere( self::BANK_NAME, 'like', '%'.$input[self::KEYWORD].'%')
+                                    // ->orWhere( self::FULLNAME, 'like', '%'.$input[self::KEYWORD].'%')
+                                    ->orWhere( self::ADDRESS, 'like', '%'.$input[self::KEYWORD].'%')
+                                    ->orWhere( self::ADDRESS2, 'like', '%'.$input[self::KEYWORD].'%')
+                                    // ->orWhere( self::MOBILE, 'like', '%'.$input[self::KEYWORD].'%')
+                                    ->orWhere( self::EMAIL, 'like', '%'.$input[self::KEYWORD].'%')
+                                    ->orWhere(self::ID, '=', intval( str_replace('NV', ' ', $input[self::KEYWORD])) );
+                }
+
+                if ($input[self::NOI_SINH]) {
+                    $query = $query->where(self::NOI_SINH, $input[self::NOI_SINH]);
+                }
+            })
+            ->with('EmploymentMainPosition')
+            ->whereWithPosition($input[self::VI_TRI])
+
+        // ->with(array('EmploymentMainPosition' => function($query) use ($input) {
+        //             $query->where('employment_history.position', $input[self::VI_TRI] );
+        //             dd($query);
+        //         }))
+        ->orderBy(self::ID, 'desc')
+        // ->toSql();
+        // dd($data);
+        ->paginate(PAGINATE);
         // $data = PersonalInfo::join('employment_history', function($join)
         // {
         //     $join->on('employment_history.personal_id', '=', 'personal_info.id');

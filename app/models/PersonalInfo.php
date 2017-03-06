@@ -101,4 +101,14 @@ class PersonalInfo extends Eloquent implements UserInterface, RemindableInterfac
         return $this->hasMany('BonusHistory', 'personal_id');
     }
 
+    public function scopeWhereWithPosition($query, $input)
+    {
+        if ($input) {
+           return $query->whereHas('EmploymentMainPosition', function($query) use ($input) {
+                $query = $query->where('employment_history.position', $input );
+            });
+        }
+
+        return $query;
+    }
 }
