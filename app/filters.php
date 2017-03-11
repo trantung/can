@@ -74,7 +74,7 @@ Route::filter('checkPermission', function()
 				$arrayPermission[$value->controller_action] = $list;
     		}
 		}
-		
+
 	}
     $route = Route::getCurrentRoute()->getActionName();
     $controller_action = explode('@', $route)[0];

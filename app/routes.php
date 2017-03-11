@@ -16,7 +16,7 @@ Route::group(['prefix' => 'admin'], function () {
 	Route::get('/login', array('uses' => 'AdminController@login', 'as' => 'admin.login'));
 	Route::post('/login', array('uses' => 'AdminController@doLogin'));
 	Route::get('/logout', array('uses' => 'AdminController@logout', 'as' => 'admin.logout'));
-	Route::resource('/', 'AdminController');
+	// Route::resource('/', 'AdminController');
 
 	Route::get('/manager/changepassword/{id}', array('uses' => 'ManagerController@changePassword', 'as' => 'admin.manager.chanpassword'));
 	Route::post('/manager/updatePassword/{id}', array('uses' => 'ManagerController@updatePassword'));

@@ -186,8 +186,8 @@ class HumanResourcesController extends AdminController {
         ->orderBy(self::ID, 'desc')
         // ->toSql();
 
-        ->paginate(1);
-        // ->paginate(PAGINATE);
+        // ->paginate(1);
+        ->paginate(PAGINATE);
                 // dd($input);
         // $data = PersonalInfo::join('employment_history', function($join)
         // {

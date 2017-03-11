@@ -74,10 +74,12 @@
         </div>
     </div>
 
-    <div class="row">
+    @include('admin.common.paginate',['input'=>$data])
+
+    {{-- <div class="row">
         <div class="col-xs-12">
             {{ $data->appends(Request::except('page'))->links() }}
         </div>
-    </div>
+    </div> --}}
 
 @stop
