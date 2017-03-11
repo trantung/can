@@ -60,7 +60,6 @@ class PersonalInfo extends Eloquent implements UserInterface, RemindableInterfac
             'phong_ban',
             'bo_phan',
             'dia_diem_lam_viec',
-            'status',
             'ngay_ket_thuc_thu_viec',
             'luong_co_ban',
 
@@ -101,11 +100,30 @@ class PersonalInfo extends Eloquent implements UserInterface, RemindableInterfac
         return $this->hasMany('BonusHistory', 'personal_id');
     }
 
+    public function scopeWhereEmploymentOff($query, $input)
+    {
+        if ($input== 'off') {
+           return $query->where('loai_nhan_vien', EMPLOYMENT_OFF);
+        }
+
+        return $query;
+    }
+
     public function scopeWhereWithPosition($query, $input)
     {
         if ($input) {
            return $query->whereHas('EmploymentMainPosition', function($query) use ($input) {
                 $query = $query->where('employment_history.position', $input );
+            });
+        }
+
+        return $query;
+    }
+    public function scopeWhereWithIncorporation($query, $input)
+    {
+        if ($input) {
+           return $query->whereHas('EmploymentMainPosition', function($query) use ($input) {
+                $query = $query->where('employment_history.company_name', $input );
             });
         }
 

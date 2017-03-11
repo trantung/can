@@ -84,7 +84,8 @@ define('CACHETIME', 2);
 define('SLIDE_TOP', 1);
 define('SLIDE_BOTTOM', 2);
 define('IMAGE_BOTTOM', 3);
-//language
+//Employment
+define('EMPLOYMENT_OFF', 1);
 define('HISTORY', 0);
 define('BONUSHISTORY', 1);
 define('SALARY_1', 1);

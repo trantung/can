@@ -1,5 +1,5 @@
 <div class="margin-bottom margin-top">
-    {{ Form::open(array('action' => 'HumanResourcesController@index', 'method' => 'GET')) }}
+    {{ Form::open(array('action' => 'HumanResourcesController@index', 'method' => 'GET', 'id'=>'searchForm')) }}
     <div class="row">
         <div class="col-md-4">
             <div class="row">
@@ -8,7 +8,7 @@
                 </div>
                 <div class="col-md-9">
                     <div class="form-group">
-                        <input type="text" name="keyword" class="form-control" placeholder="Search" value="{{Input::old('keyword')}}" />
+                        <input type="text" name="keyword" class="form-control" placeholder="Search" value="{{$search['keyword']}}" />
                     </div>
                 </div>
             </div>
@@ -21,7 +21,24 @@
                 </div>
                 <div class="col-md-9">
                     <div class="form-group">
-                        {{ Form::select('noi_sinh', $thanh_pho, Input::old('noi_sinh'), array('class' =>'form-control')) }}
+                        {{ Form::select('noi_sinh', $thanh_pho,$search['noi_sinh'] , array('class' =>'form-control')) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="row">
+
+        <div class="col-md-4">
+            <div class="row">
+                <div class="col-md-3">
+                    <label>Tổ chức</label>
+                </div>
+                <div class="col-md-9">
+                    <div class="form-group">
+                        {{ Form::select('incorporation', $company_category_id,$search['incorporation'] , array('class' =>'form-control')) }}
                     </div>
                 </div>
             </div>
@@ -34,12 +51,17 @@
                 </div>
                 <div class="col-md-9">
                     <div class="form-group">
-                        {{ Form::select('vi_tri', $vi_tri, Input::old('vi_tri'), array('class' =>'form-control')) }}
+                        {{ Form::select('vi_tri', $vi_tri,$search['vi_tri'] , array('class' =>'form-control')) }}
                     </div>
                 </div>
             </div>
         </div>
 
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <input type="checkbox" name="employment_off" value="off" {{$search['employment_off'] =='off' ? 'checked="checked"' : '' }}> nhân viên đã nghỉ việc
+        </div>
     </div>
 
 
@@ -85,12 +107,21 @@
             <input type="text" name="created_at" class="form-control" id="datepickerStartdate" placeholder="Từ ngày" />
         </div> --}}
         <div class="row">
-            <div class="col-md-12" style=" text-align: right;">
+            <div class="col-md-12" style=" text-align: center;">
                 <div class="form-group">
-                    <input type="submit" value="Search" class="btn btn-primary" />
+                <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>   Tìm kiếm nhân viên</button>
+                <button type="button" class="btn btn-default" id="clear-search">Xóa bỏ</button>
                 </div>
             </div>
         </div>
 
     {{ Form::close() }}
 </div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#clear-search').click(function(){
+            document.getElementById("searchForm").reset();
+            $('.form-group :input').val('');
+        });
+    });
+</script>

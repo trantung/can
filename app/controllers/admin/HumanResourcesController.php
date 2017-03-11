@@ -4,13 +4,15 @@ class HumanResourcesController extends AdminController {
 
     const ID                = 'id';
     const MA_NHAN_VIEN      = 'ma_nhan_vien';
-    const VI_TRI      = 'vi_tri';
+    const VI_TRI            = 'vi_tri';
     const NAME              = 'ten';
     const IDCARD            = 'cmt';
     const DATE_OF_ISSUE     =  'date_of_issue';
     const IMAGE             = 'image';
-    const NOI_SINH             = 'noi_sinh';
-    const CV             = 'cv';
+    const NOI_SINH          = 'noi_sinh';
+    const EMPLOYMENT_OFF          = 'employment_off';
+    const CV                = 'cv';
+    const INCORPORATION     = 'incorporation';
     const PLACE_OF_ISSUE    = 'place_of_issue';
     const SEX               = 'sex';
     const TAX_CODE          = 'ma_so_thue';
@@ -95,6 +97,7 @@ class HumanResourcesController extends AdminController {
             self::MA_NHAN_VIEN,
             self::NOI_SINH,
             self::VI_TRI,
+            self::EMPLOYMENT_OFF,
             self::ETHNIC_GROUP_ID,
             self::RELIGION_CATEGORY_ID,
             self::EMPLOYEES_CATEGORY_ID,
@@ -104,6 +107,7 @@ class HumanResourcesController extends AdminController {
             self::NATIONALITY_ID,
             self::CONTRACT_CATEGORY_ID,
             self::INDUSTRY_CATEGORY_ID,
+            self::INCORPORATION,
             self::CERTIFICATE_CATEGORY_ID
             );
         // $data = PersonalInfo::where(function ($query) use ($input){
@@ -161,7 +165,7 @@ class HumanResourcesController extends AdminController {
                                     // ->orWhere( self::FULLNAME, 'like', '%'.$input[self::KEYWORD].'%')
                                     ->orWhere( self::ADDRESS, 'like', '%'.$input[self::KEYWORD].'%')
                                     ->orWhere( self::ADDRESS2, 'like', '%'.$input[self::KEYWORD].'%')
-                                    // ->orWhere( self::MOBILE, 'like', '%'.$input[self::KEYWORD].'%')
+                                    ->orWhere( self::MOBILE, 'like', '%'.$input[self::KEYWORD].'%')
                                     ->orWhere( self::EMAIL, 'like', '%'.$input[self::KEYWORD].'%')
                                     ->orWhere(self::ID, '=', intval( str_replace('NV', ' ', $input[self::KEYWORD])) );
                 }
@@ -171,7 +175,9 @@ class HumanResourcesController extends AdminController {
                 }
             })
             ->with('EmploymentMainPosition')
+            ->whereEmploymentOff($input[self::EMPLOYMENT_OFF])
             ->whereWithPosition($input[self::VI_TRI])
+            ->whereWithIncorporation($input[self::INCORPORATION])
 
         // ->with(array('EmploymentMainPosition' => function($query) use ($input) {
         //             $query->where('employment_history.position', $input[self::VI_TRI] );
@@ -179,8 +185,10 @@ class HumanResourcesController extends AdminController {
         //         }))
         ->orderBy(self::ID, 'desc')
         // ->toSql();
-        // dd($data);
-        ->paginate(PAGINATE);
+
+        ->paginate(1);
+        // ->paginate(PAGINATE);
+                // dd($input);
         // $data = PersonalInfo::join('employment_history', function($join)
         // {
         //     $join->on('employment_history.personal_id', '=', 'personal_info.id');
@@ -203,7 +211,7 @@ class HumanResourcesController extends AdminController {
         // ->paginate(PAGINATE);
         // $data = EmploymentHistory::with('personalInfo')->with('positionHistory')->where('is_main_position', 'Y')->paginate(PAGINATE);
         $result = $this->getAllCategory('data', $data);
-
+        $result['search'] = $input;
         // dd($data->toJson());
         return View::make('admin.hr.index', $result);
     }
