@@ -28,7 +28,8 @@
         {{-- email --}}
         <div class="form-group form-group-sm">
             <label class="control-label">Quốc tịch</label>
-            <input value="{{Input::old('quoc_tich')!=NULL? Input::old('quoc_tich'):'Việt Nam'}}"  class="form-control input-sm" type="text" name="quoc_tich" placeholder="Việt Nam">
+            {{-- <input value="{{Input::old('quoc_tich')!=NULL? Input::old('quoc_tich'):'Việt Nam'}}"  class="form-control input-sm" type="text" name="quoc_tich" placeholder="Việt Nam"> --}}
+            {{ Form::select('quoc_tich', $quoc_gia, Input::old('quoc_tich'), array('class'=>'form-control input-sm')) }}
 
         </div>
         {{-- quoc_tich --}}
@@ -42,16 +43,7 @@
             <input class="form-control input-sm" type="text" name="ngay_cap_mst" id="datepicker4" placeholder="Ngày cấp MST" {{Input::old('ngay_cap_mst')}}>
         </div>
         {{-- ngay_cap_mst --}}
-        <div class="form-group form-group-sm">
-            <label class="control-label">Nguyên quán</label>
-            <input value="{{Input::old('nguyen_quan')}}"  class="form-control input-sm" type="text" name="nguyen_quan" placeholder="Nguyên quán">
-        </div>
-        {{-- nguyen_quan --}}
-         <div class="form-group form-group-sm">
-            <label class="control-label">Lương cơ bản</label>
-            <input value="{{Input::old('luong_co_ban')}}"  class="form-control input-sm" type="text" name="luong_co_ban" placeholder="lương cơ bản">
-        </div>
-        {{-- luong_co_ban --}}
+
     </div>
     <div class="col-md-4 col-sm-6 col-xs-12">
         <div class="text-center">

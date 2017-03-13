@@ -28,7 +28,9 @@
         {{-- email --}}
         <div class="form-group form-group-sm">
             <label class="control-label">Quốc tịch</label>
-            <input value="{{$personal->quoc_tich}}"  class="form-control input-sm" type="text" name="quoc_tich" placeholder="Việt Nam">
+            {{-- <input value="{{$personal->quoc_tich}}"  class="form-control input-sm" type="text" name="quoc_tich" placeholder="Việt Nam"> --}}
+            {{ Form::select('quoc_tich', $quoc_gia, $personal->quoc_tich, array('class'=>'form-control input-sm')) }}
+
 
         </div>
         {{-- quoc_tich --}}
@@ -42,16 +44,7 @@
             <input class="form-control input-sm" type="text" name="ngay_cap_mst" id="datepicker4" placeholder="Ngày cấp MST" value="{{$personal->ngay_cap_mst}}">
         </div>
         {{-- ngay_cap_mst --}}
-        <div class="form-group form-group-sm">
-            <label class="control-label">Nguyên quán</label>
-            <input value="{{$personal->nguyen_quan}}"  class="form-control input-sm" type="text" name="nguyen_quan" placeholder="Nguyên quán">
-        </div>
-        {{-- nguyen_quan --}}
-         <div class="form-group form-group-sm">
-            <label class="control-label">Lương cơ bản</label>
-            <input value="{{$personal->luong_co_ban}}"  class="form-control input-sm" type="text" name="luong_co_ban" placeholder="lương cơ bản">
-        </div>
-        {{-- luong_co_ban --}}
+
     </div>
     <div class="col-md-4 col-sm-6 col-xs-12">
         <div class="text-center">
@@ -60,6 +53,12 @@
         <h6>Upload a photo...</h6>
         <input type="file" class="text-center center-block well well-sm" style="width: 100%" id="image" name="image">
       </div>
+       <div class="form-group form-group-sm">
+       <div class="checkbox">
+           <label> <input type="checkbox" name="employment_off" value="off" {{$personal->loai_nhan_vien == 1 ? 'checked="checked"': ''}}> <b>Đã nghỉ việc</b></label>
+       </div>
+
+        </div>
     </div>
 </div>
 

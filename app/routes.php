@@ -38,6 +38,8 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('/department', 'DepartmentCategoryController');//
     Route::resource('/officer', 'OfficerCategoryController');//
     Route::resource('/bonus-category', 'BonusCategoryController');//
+    Route::resource('/bank-category', 'BankCategoryController');//
+    Route::resource('/currency-category', 'CurrencyCategoryController');//
     // Route::post('/vocabulary', 'Admin2Controller@store');
 
     Route::resource('/salaries', 'SalariesController');

@@ -47,7 +47,7 @@
             </li> --}}
             <li>
                 <a href="{{ action('IndustryCategoryController@index') }}">
-                    <span>Danh sách Ngành nghề</span>
+                    <span>Danh sách Quốc gia</span>
                 </a>
             </li>
             <li>
@@ -59,6 +59,16 @@
             <li>
                 <a href="{{ action('BonusCategoryController@index') }}">
                     <span>Danh sách kiểu khen thưởng kỷ luật</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ action('BankCategoryController@index') }}">
+                    <span>Danh sách Ngân hàng</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ action('CurrencyCategoryController@index') }}">
+                    <span>Danh sách tiền tệ</span>
                 </a>
             </li>
 

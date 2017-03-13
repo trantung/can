@@ -19,6 +19,8 @@
           <div class="box">
             <div class="box-header">
               <h3 class="box-title">Danh sách thành viên</h3>
+              <span class="pull-right"><b>{{$data->getTotal()}}</b> kết quả được tìm thấy</span>
+
             </div>
             <!-- /.box-header -->
             <div class="box-body table-responsive no-padding">

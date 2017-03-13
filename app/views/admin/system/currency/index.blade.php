@@ -1,14 +1,14 @@
 @extends('admin.layout.default')
 @if(Admin::isAdmin())
 @section('title')
-{{ $title='Danh sách Quốc gia' }}
+{{ $title='Danh sách loại tiền' }}
 @stop
 
 @section('content')
 
     <div class="row margin-bottom">
         <div class="col-xs-12">
-            <a href="{{ action('IndustryCategoryController@create') }}" class="btn btn-primary">Thêm mới Quốc gia</a>
+            <a href="{{ action('CurrencyCategoryController@create') }}" class="btn btn-primary">Thêm mới loại tiền</a>
         </div>
     </div>
 
@@ -16,27 +16,27 @@
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Danh sách Quốc gia</h3>
+              <h3 class="box-title">Danh sách loại tiền</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body table-responsive no-padding">
               <table class="table table-hover">
                 <tr>
                   <th>STT</th>
-                  <th>Quốc gia</th>
-                  <th>Diễn giải</th>
-                  <th>Chỉnh sửa lần cuối</th>
+                  <th>Tên loại tiền</th>
+                  {{-- <th>Chỉnh sửa lần cuối</th> --}}
                   <th style="width:200px;">Action</th>
                 </tr>
                 @foreach($data as $key => $value)
                 <tr>
                   <td>{{ $key+1 }}</td>
                   <td>{{ $value->name }}</td>
-                  <td>{{ $value->description }}</td>
-                  <td>{{ $value->updated_at }}</td>
+                  {{-- <td>{{ $value->updated_at }}</td> --}}
                   <td>
-                    <a href="{{ action('IndustryCategoryController@edit', $value->id) }}" class="btn btn-primary">Sửa</a>
-                    {{ Form::open(array('method'=>'DELETE', 'action' => array('IndustryCategoryController@destroy', $value->id), 'style' => 'display: inline-block;')) }}
+                    {{-- <a href="#" class="btn btn-success">Xem</a> --}}
+                    {{-- <a href="{{action('CurrencyCategoryController@changePassword', $value->id) }}" class="btn btn-primary">Change Pass</a> --}}
+                    <a href="{{ action('CurrencyCategoryController@edit', $value->id) }}" class="btn btn-primary">Sửa</a>
+                    {{ Form::open(array('method'=>'DELETE', 'action' => array('CurrencyCategoryController@destroy', $value->id), 'style' => 'display: inline-block;')) }}
                     <button class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa?');">Xóa</button>
                     {{ Form::close() }}
 

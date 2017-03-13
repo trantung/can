@@ -62,6 +62,8 @@ class PersonalInfo extends Eloquent implements UserInterface, RemindableInterfac
             'dia_diem_lam_viec',
             'ngay_ket_thuc_thu_viec',
             'luong_co_ban',
+            'bank_category',
+            'currency_category',
 
             'created_by',
             'updated_by'

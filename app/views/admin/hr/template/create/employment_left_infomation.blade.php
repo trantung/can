@@ -71,16 +71,7 @@
             {{ Form::select('tinh_trang_hon_nhan', getMarryStatus(), 'Y', array('class'=>'form-control')) }}
         </div>
         {{-- ngay_cap_ho_chieu --}}
-        <div class="form-group form-group-sm">
-            <label class="control-label">Số tài khoản</label>
-            <input value="{{Input::old('so_tai_khoan')}}"  class="form-control input-sm" type="text" name="so_tai_khoan" placeholder="Số tài khoản">
-        </div>
-        {{-- so_tai_khoan --}}
-        <div class="form-group form-group-sm ">
-            <label class="control-label">Ngày vào làm</label>
-            <input class="form-control input-sm" type="text" name="ngay_vao_cong_ty" id="datepicker5" placeholder="Ngày vào làm" value="{{Input::old('ngay_vao_cong_ty')}}">
-        </div>
-        {{-- ngay_vao_cong_ty --}}
+
 
     </div>
      <div class="col-md-6 col-sm-6 col-xs-12 personal-info">
@@ -99,16 +90,16 @@
             <input value="{{Input::old('ma_so_thue')}}"  class="form-control input-sm" type="text" name="ma_so_thue" placeholder="Mã số thuế">
         </div>
         {{-- ho_chieu --}}
-        <div class="form-group form-group-sm">
+      {{--   <div class="form-group form-group-sm">
             <label class="control-label">Ngân hàng</label>
             <input value="{{Input::old('ngan_hang')}}"  class="form-control input-sm" type="text" name="ngan_hang" placeholder="Ngân hàng">
-        </div>
+        </div> --}}
         {{-- ngan_hang --}}
 
-         <div class="form-group form-group-sm ">
+        {{--  <div class="form-group form-group-sm ">
             <label class="control-label">Ngày kết thúc thử việc</label>
             <input class="form-control input-sm" type="text" name="ngay_ket_thuc_thu_viec" id="datepicker6" placeholder="Ngày kết thúc thử việc" value="{{Input::old('ngay_ket_thuc_thu_viec')}}">
-        </div>
+        </div> --}}
         {{-- ngay_ket_thuc_thu_viec --}}
 
     </div>

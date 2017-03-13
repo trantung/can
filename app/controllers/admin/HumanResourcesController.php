@@ -11,6 +11,8 @@ class HumanResourcesController extends AdminController {
     const IMAGE             = 'image';
     const NOI_SINH          = 'noi_sinh';
     const EMPLOYMENT_OFF          = 'employment_off';
+    const EMPLOYMENT_KIND          = 'loai_nhan_vien';
+    const CURRENCY_CATEGORY          = 'currency_category';
     const CV                = 'cv';
     const INCORPORATION     = 'incorporation';
     const PLACE_OF_ISSUE    = 'place_of_issue';
@@ -55,7 +57,6 @@ class HumanResourcesController extends AdminController {
         // }
 
         // dd(Province::get()->toArray());
-
        return [
             'danh_sach_dan_toc'           =>$this->buildArrayData(Ethnic::orderBy('id', 'asc')->get() ),
             'danh_sach_ton_giao'          =>$this->buildArrayData(Religion::orderBy('id', 'asc')->get() ),
@@ -76,7 +77,8 @@ class HumanResourcesController extends AdminController {
             // 'danh_sach_chuc_vu' => $this->buildArrayData(::orderBy('id', 'asc')),
             // 'danh_sach_bo_phan' => $this->buildArrayData(::orderBy('id', 'asc')),
             // 'danh_sach_dia_diem_lam_viec' => $this->buildArrayData(::orderBy('id', 'asc')),
-            // 'danh_sach_thoi_gian_thu_viec' => $this->buildArrayData(::orderBy('id', 'asc')),
+            'danh_sach_tien_te' => $this->buildArrayData(CurrencyCategory::orderBy('id', 'asc')->get()),
+            'danh_sach_ngan_hang' => $this->buildArrayData(BankCategory::orderBy('id', 'asc')->get()),
             'danh_sach_loai_nhan_vien' => $this->buildArrayData(Employees::orderBy('id', 'asc')->get()),
             'officer_category_id' => $this->buildArrayData(Officer::orderBy('id', 'asc')->get()),
             'bonus_category_id' => $this->buildArrayData(BonusCategory::orderBy('id', 'asc')->get()),
@@ -261,6 +263,8 @@ class HumanResourcesController extends AdminController {
             'nguyen_quan',
             'ngay_vao_cong_ty',
             'ngay_ket_thuc_thu_viec',
+            'bank_category',
+            'currency_category',
             'luong_co_ban'
             );
     }
@@ -297,6 +301,7 @@ class HumanResourcesController extends AdminController {
             }
             $input[self::CREATED_BY] = Auth::admin()->get()->id;
             $input[self::UPDATED_BY] = Auth::admin()->get()->id;
+
             $id = PersonalInfo::create($input)->id;
             if(!$id) {
                 dd('Error');
@@ -407,6 +412,7 @@ class HumanResourcesController extends AdminController {
             if($input[self::IMAGE]){
                 $input[self::IMAGE] = CommonUpload::uploadImage('', UPLOADIMG, self::IMAGE, UPLOAD_EMPLOYEES);
             }
+            $input = array_filter($input);
             // if($input[self::CV]){
             //     $input[self::CV] = CommonUpload::uploadImage('', UPLOADIMG, self::CV, UPLOAD_EMPLOYEES);
             // }
@@ -414,7 +420,14 @@ class HumanResourcesController extends AdminController {
             $input[self::CREATED_BY] = Auth::admin()->get()->id;
             $input[self::UPDATED_BY] = Auth::admin()->get()->id;
 
-            $result = PersonalInfo::where(self::ID, $id)->update(array_filter($input));
+            if (Input::get('employment_off') == 'off') {
+                $input[self::EMPLOYMENT_KIND] = 1;
+            }else{
+                $input[self::EMPLOYMENT_KIND] = NULL;
+            }
+            // dd($input);
+
+            $result = PersonalInfo::where(self::ID, $id)->update($input);
             if(!$result) {
                 dd('Error');
             }

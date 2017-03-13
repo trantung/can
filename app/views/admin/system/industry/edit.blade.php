@@ -1,7 +1,7 @@
 @extends('admin.layout.default')
 
 @section('title')
-{{ $title='Chỉnh sửa Ngành nghề "'. $data->name .'"' }}
+{{ $title='Chỉnh sửa Quốc gia "'. $data->name .'"' }}
 @stop
 
 @section('content')
@@ -9,8 +9,8 @@
 @if(Admin::isAdmin())
 <div class="row margin-bottom">
     <div class="col-xs-12">
-        <a href="{{ action('IndustryCategoryController@index') }}" class="btn btn-success">Danh sách Ngành nghề</a>
-        <a href="{{ action('IndustryCategoryController@create') }}" class="btn btn-primary">Thêm Ngành nghề</a>
+        <a href="{{ action('IndustryCategoryController@index') }}" class="btn btn-success">Danh sách Quốc gia</a>
+        <a href="{{ action('IndustryCategoryController@create') }}" class="btn btn-primary">Thêm Quốc gia</a>
     </div>
 </div>
 @endif
@@ -22,10 +22,10 @@
             {{ Form::open(array('action' => array('IndustryCategoryController@update', $data->id), 'method' => 'PUT')) }}
                <div class="box-body">
                 <div class="form-group">
-                  <label for="username">Tên Ngành nghề</label>
+                  <label for="username">Tên Quốc gia</label>
                   <div class="row">
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" id="name" placeholder="Tên Ngành nghề" name="name" value="{{$data->name}}">
+                        <input type="text" class="form-control" id="name" placeholder="Tên Quốc gia" name="name" value="{{$data->name}}">
                     </div>
                   </div>
                 </div>
