@@ -151,22 +151,12 @@
 
       $(document).ready(function(){
 
-        function readCookie(name) {
-            var nameEQ = name + "=";
-            var ca = document.cookie.split(';');
-            for(var i=0;i < ca.length;i++) {
-                var c = ca[i];
-                while (c.charAt(0)==' ') c = c.substring(1,c.length);
-                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
-            }
-            return null;
-        }
-        var activeMenu = readCookie('activeMenu');
-        $('.child-menu').hide();
-        if (activeMenu == 'child-hr' ) { $('#child-hr').show(); }
-        if (activeMenu == 'child-salary' ) { $('#child-salary').show(); }
-        if (activeMenu == 'child-insuance' ) {$('#child-insuance').show(); }
-        if (activeMenu == 'child-system' ) { $('#child-system').show(); }
+        // var activeMenu = readCookie('activeMenu');
+        // $('.child-menu').hide();
+        // if (activeMenu == 'child-hr' ) { $('#child-hr').show(); }
+        // if (activeMenu == 'child-salary' ) { $('#child-salary').show(); }
+        // if (activeMenu == 'child-insuance' ) {$('#child-insuance').show(); }
+        // if (activeMenu == 'child-system' ) { $('#child-system').show(); }
         // change menu
         $('#hr-menu').click(function(){
             document.cookie = "activeMenu=child-hr";

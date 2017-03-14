@@ -4,6 +4,11 @@
 @stop
 
 @section('content')
+<script type="text/javascript">
+    $(document).ready(function(){
+        document.cookie = "activeMenu=child-hr";
+    });
+</script>
 <hr>
     <!-- inclue Search form -->
     @include('admin.hr.template.search')
