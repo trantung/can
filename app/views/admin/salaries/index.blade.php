@@ -42,7 +42,7 @@
 				  <td>{{ $value->user->ho_ten }}</td>
                   <td>{{ $value->ngay_cong }}</td>
                   <td>{{ $value->ngay_di_lam }}</td>
-                  <td>{{  number_format ($value->total, 0, '', ' ')}} </td>
+                  <td>{{  number_format ($value->total, 0, '', '.')}} </td>
                   <td>{{ $value->kieu_luong }}</td>
                   <td>{{ $value->month }}</td>
                   <td>{{ $value->year }}</td>

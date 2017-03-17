@@ -39,8 +39,8 @@
 				<tr>
 				  <td>{{ $key+1 }}</td>
 				  <td>{{  $value->user->ho_ten }}</td>
-                  <td>{{  number_format ($value->bhyt, 0, '', ' ')}} </td>
-                  <td>{{  number_format ($value->bhxh, 0, '', ' ')}}</td>
+                  <td>{{  number_format ($value->bhyt, 0, '', '.')}} </td>
+                  <td>{{  number_format ($value->bhxh, 0, '', '.')}}</td>
                   <td>{{ $value->month }}</td>
                   <td>{{ $value->year }}</td>
                   <td>{{ $value->description }}</td>
