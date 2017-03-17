@@ -6,7 +6,7 @@ class Insurance extends Eloquent
 {
     use SoftDeletingTrait;
     protected $table = 'insurance';
-    protected $fillable = ['total', 'month', 'year', 'description', 'pay_time', 'created_by', 'personal_id', 'updated_by'];
+    protected $fillable = ['total', 'month', 'year', 'description', 'pay_time', 'created_by', 'personal_id', 'updated_by', 'bhyt', 'bhxh'];
 
         public function user()
     {

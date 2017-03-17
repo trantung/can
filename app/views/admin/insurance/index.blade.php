@@ -27,7 +27,8 @@
 				<tr>
 				  <th>#</th>
 				  <th>Tên</th>
-                  <th>Số tiền</th>
+                  <th>BHYT</th>
+                  <th>BHXH</th>
                   <th>Tháng</th>
                   <th>Năm</th>
                   <th>Ghi chú</th>
@@ -38,7 +39,8 @@
 				<tr>
 				  <td>{{ $key+1 }}</td>
 				  <td>{{  $value->user->ho_ten }}</td>
-                  <td>{{ $value->total }}</td>
+                  <td>{{ $value->bhyt }}</td>
+                  <td>{{ $value->bhxh }}</td>
                   <td>{{ $value->month }}</td>
                   <td>{{ $value->year }}</td>
                   <td>{{ $value->description }}</td>

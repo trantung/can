@@ -169,7 +169,7 @@ class HumanResourcesController extends AdminController {
                                     ->orWhere( self::ADDRESS2, 'like', '%'.$input[self::KEYWORD].'%')
                                     ->orWhere( self::MOBILE, 'like', '%'.$input[self::KEYWORD].'%')
                                     ->orWhere( self::EMAIL, 'like', '%'.$input[self::KEYWORD].'%')
-                                    ->orWhere(self::ID, '=', intval( str_replace('NV', ' ', $input[self::KEYWORD])) );
+                                    ->orWhere(self::ID, '=', intval( str_replace(['NV','Nv','nV','nv'], [''], $input[self::KEYWORD])) );
                 }
 
                 if ($input[self::NOI_SINH]) {

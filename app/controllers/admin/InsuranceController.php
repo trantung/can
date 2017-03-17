@@ -67,8 +67,10 @@ class InsuranceController extends AdminController {
     {
         $rules = array(
             'personal_id'   => 'required',
-            'month'   => 'required',
-            'total'   => 'required',
+            'month'   => 'required| digits_between:1,12',
+            'bhyt'   => 'required|integer',
+            'bhxh'   => 'required|integer',
+            // 'total'   => 'required',
             // 'description'      => 'required',
             'pay_time'    => 'required',
         );
