@@ -132,20 +132,20 @@ class AdminController extends BaseController {
 
     protected function buildTree($items)
     {
+        
         $map = array(
-            0 => array('childs' => array())
+            0 => array('children' => array())
         );
-
         foreach ($items as &$item) {
-            $item['childs'] = array();
+            
+            $item['children'] = array();
             $map[$item['id']] = &$item;
         }
-
         foreach ($items as &$item) {
-            $map[$item['parent_id']]['childs'][] = &$item;
+            $map[$item['parent_id']]['children'][] = &$item;
         }
 
-        return $map[0]['childs'];
+        return $map[0]['children'];
     }
 
 

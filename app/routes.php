@@ -32,6 +32,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('/employees', 'EmployeesCategoryController');
     Route::resource('/ethnic', 'EthnicCategoryController');
     Route::resource('/company', 'CompanyCategoryController');
+    Route::get('/test', array('uses' => 'CompanyCategoryController@buildCate'));
     Route::resource('/nationality', 'NationalityCategoryController');//
     Route::resource('/industry', 'IndustryCategoryController');//
     Route::resource('/certificate', 'CertificateCategoryController');//
@@ -42,6 +43,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('/currency-category', 'CurrencyCategoryController');//
     // Route::post('/vocabulary', 'Admin2Controller@store');
 
+   
     Route::resource('/salaries', 'SalariesController');
     Route::resource('/insurance', 'InsuranceController');
     Route::resource('/salaries-category', 'SalariesCategoryController');

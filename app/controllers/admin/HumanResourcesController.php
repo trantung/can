@@ -315,6 +315,21 @@ class HumanResourcesController extends AdminController {
          return Redirect::route('hr.edit', array($id));
     }
 
+    public function getInfo($id)
+    {
+        $personal = PersonalInfo::find($id);
+        $result = $this->getAllCategory('personal', $personal);
+        // dd(Officer::orderBy('id', 'asc')->get()->toJson());
+        $employmentHistory = EmploymentHistory::where('personal_id', $id)->where('status',HISTORY)->with('positionHistory')->with('officerHistory')->get();
+        $employmentPositions = EmploymentHistory::where('personal_id', $id)->where('status',BONUSHISTORY)->with('positionHistory')->with('officerHistory')->with('attachFile2')->get();
+        $employmentBonusHistory = BonusHistory::where('personal_id', $id)->with('categoryName')->get();
+        // $officerHistory
+        // dd($employmentBonusHistory->toJson());
+        $result['employmentHistory'] =  $employmentHistory;
+        $result['employmentPositions'] =  $employmentPositions;
+        $result['employmentBonusHistory'] =  $employmentBonusHistory;
+        return $result;
+    }
 
     /**
      * Display the specified resource.
@@ -324,7 +339,8 @@ class HumanResourcesController extends AdminController {
      */
     public function show($id)
     {
-        dd('show333');
+        $data = Self::getInfo($id);
+        return View::make('admin.hr.detail', $data);
     }
 
 
@@ -337,23 +353,13 @@ class HumanResourcesController extends AdminController {
     public function edit($id)
     {
         try {
-            $personal = PersonalInfo::find($id);
-            $result = $this->getAllCategory('personal', $personal);
-            // dd(Officer::orderBy('id', 'asc')->get()->toJson());
-            $employmentHistory = EmploymentHistory::where('personal_id', $id)->where('status',HISTORY)->with('positionHistory')->with('officerHistory')->get();
-            $employmentPositions = EmploymentHistory::where('personal_id', $id)->where('status',BONUSHISTORY)->with('positionHistory')->with('officerHistory')->with('attachFile2')->get();
-            $employmentBonusHistory = BonusHistory::where('personal_id', $id)->with('categoryName')->get();
-            // $officerHistory
-            // dd($employmentBonusHistory->toJson());
-            $result['employmentHistory'] =  $employmentHistory;
-            $result['employmentPositions'] =  $employmentPositions;
-            $result['employmentBonusHistory'] =  $employmentBonusHistory;
+            $data = Self::getInfo($id);
             // dd($employmentPositions->toJson());
 
         } catch (Exception $e) {
             return $this->returnError($e);
         }
-        return View::make('admin.hr.edit', $result);
+        return View::make('admin.hr.edit', $data);
     }
 
 
