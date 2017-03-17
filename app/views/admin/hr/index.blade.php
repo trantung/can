@@ -48,7 +48,7 @@
                   <td>{{ $key+1 }}</td>
                   <td>NV{{ $value->id }}</td>
                   <td>{{ $value->ho_ten }}</td>
-                  <td>{{ $value->nam_sinh }}</td>
+                  <td>{{ date( "d-m-Y", strtotime( $value->nam_sinh ) ) }}</td>
                   <td>{{ $value->employment_main_position != null ? $value->employment_main_position->company_name_text : '' }}</td>
                   <td>
                   @if($value->employment_main_position <> null)

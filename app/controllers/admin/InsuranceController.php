@@ -135,12 +135,14 @@ class InsuranceController extends AdminController {
     {
         $rules = array(
             // 'personal_id'   => 'required',
-            // 'month'   => 'required',
-            'total'   => 'required',
+            // 'month'   => 'required| digits_between:1,12',
+            'bhyt'   => 'required|integer',
+            'bhxh'   => 'required|integer',
+            // 'total'   => 'required',
             // 'description'      => 'required',
             'pay_time'    => 'required',
         );
-        $input = Input::only('total', 'pay_time', 'description');
+        $input = Input::only('bhyt','bhxh', 'pay_time', 'description');
         $validator =  Validator::make($input,$rules);
         if($validator->fails()) {
             return Redirect::action('InsuranceController@edit',['id'=>$id])
