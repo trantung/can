@@ -31,6 +31,11 @@
                 <span>Cài đặt hệ thống</span>
             </a>
         </li>
+        <li>
+            <a href="javascript: void(0)" id="system-statistic" data-toggle="control-sidebar">
+                <span>Thống kê</span>
+            </a>
+        </li>
 
       </ul>
 

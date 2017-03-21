@@ -177,6 +177,13 @@
             window.location.href = "{{ action('ManagerController@index')  }}";
 
         });
+          $('#system-statistic').click(function(){
+            $('.child-menu').hide();
+            $('#child-statistic').show();
+            // document.cookie = "activeMenu=child-statistic";
+            // window.location.href = "{{ action('ManagerController@index')  }}";
+
+        });
 
          $('#section_branch_model').change( function($this){
             // var token =  $("input[name=_token]").val();

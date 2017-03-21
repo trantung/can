@@ -134,6 +134,14 @@
                 </a>
             </li> --}}
         </ol>
+
+         <ol class="child-menu sidebar-menu" id="child-statistic"  style="display: none">
+            <li>
+                <a href="{{ action('InsuranceController@statistics') }}" >
+                    <span>Thống kê Bảo hiểm nhân viên</span>
+                </a>
+            </li>
+        </ol>
     </section>
     <!-- /.sidebar -->
 </aside>

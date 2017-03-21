@@ -43,7 +43,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('/currency-category', 'CurrencyCategoryController');//
     // Route::post('/vocabulary', 'Admin2Controller@store');
 
-   
+
     Route::resource('/salaries', 'SalariesController');
     Route::resource('/insurance', 'InsuranceController');
     Route::resource('/salaries-category', 'SalariesCategoryController');
@@ -70,11 +70,12 @@ Route::group(['prefix' => 'admin'], function () {
 
     Route::post('/{employment}/employment-position', array('uses' => 'EmploymentHistoryController@newPosition', 'as' => 'employment.newPosition'));
     Route::delete('/{employment}/employment-position/{id}', array('uses' => 'EmploymentHistoryController@moveHistory', 'as' => 'employment.moveHistory'));
-     Route::get('/{employment}/employment-position-main/{id}', array('uses' => 'EmploymentHistoryController@mainPosition', 'as' => 'hr.is_main_position'));
+    Route::get('/{employment}/employment-position-main/{id}', array('uses' => 'EmploymentHistoryController@mainPosition', 'as' => 'hr.is_main_position'));
+    Route::get('/statistics/insurance', array('uses' => 'InsuranceController@statistics', 'as' => 'hr.statistics.insurance'));
 
 
 
-     Route::get('/nhap-luong/{object_id}', 'EmploymentHistoryController@buildCompanyText');
+    Route::get('/nhap-luong/{object_id}', 'EmploymentHistoryController@buildCompanyText');
     Route::group(['prefix' => 'permission'], function(){
         Route::get('/setup/role/', 'PermissionController@createRole');
         Route::get('/setup/role/{id}', 'PermissionController@editRole');
