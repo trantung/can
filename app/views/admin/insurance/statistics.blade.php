@@ -21,7 +21,7 @@
         <div class="col-md-4">
             <div class="row">
                 <div class="col-md-3">
-                    <label>Mã hoặc tên nhân viên</label>
+                    <label>Từ khóa</label>
                 </div>
                 <div class="col-md-9">
                     <div class="form-group">
@@ -117,7 +117,8 @@
                   <td>{{ $value->year }}</td>
                   <td>{{ $value->description }}</td> --}}
                   <td>
-                    <a href="{{ action('InsuranceController@edit', $value->id) }}" class="btn btn-primary">Xem</a>
+                    {{-- <a href="{{ action('InsuranceController@detailSearch', $value->user->id) }}" class="btn btn-primary">Xem</a> --}}
+                    <a href="{{ route('hr.statistics-detail.insurance', ['id'=>$value->user->id, 'start_date'=>$search['start_date'], 'end_date'=>$search['end_date'] ]) }}" class="btn btn-primary">Xem</a>
                    {{--  <a href="{{ action('InsuranceController@edit', $value->id) }}" class="btn btn-primary">Sửa</a>
                     {{ Form::open(array('method'=>'DELETE', 'action' => array('InsuranceController@destroy', $value->id), 'style' => 'display: inline-block;')) }}
                     <button class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa?');">Xóa</button>

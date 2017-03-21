@@ -72,6 +72,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::delete('/{employment}/employment-position/{id}', array('uses' => 'EmploymentHistoryController@moveHistory', 'as' => 'employment.moveHistory'));
     Route::get('/{employment}/employment-position-main/{id}', array('uses' => 'EmploymentHistoryController@mainPosition', 'as' => 'hr.is_main_position'));
     Route::get('/statistics/insurance', array('uses' => 'InsuranceController@statistics', 'as' => 'hr.statistics.insurance'));
+    Route::get('/statistics/insurance-detail/{user_id}', array('uses' => 'InsuranceController@detailSearch', 'as' => 'hr.statistics-detail.insurance'));
 
 
 
