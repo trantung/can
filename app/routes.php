@@ -73,6 +73,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/{employment}/employment-position-main/{id}', array('uses' => 'EmploymentHistoryController@mainPosition', 'as' => 'hr.is_main_position'));
     Route::get('/statistics/insurance', array('uses' => 'InsuranceController@statistics', 'as' => 'hr.statistics.insurance'));
     Route::get('/statistics/insurance-detail/{user_id}', array('uses' => 'InsuranceController@detailSearch', 'as' => 'hr.statistics-detail.insurance'));
+    Route::get('/statistics/birthday', array('uses' => 'HumanResourcesController@birthdaySearch', 'as' => 'hr.statistics.birthday'));
 
 
 

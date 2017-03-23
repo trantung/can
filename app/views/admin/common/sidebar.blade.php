@@ -141,6 +141,11 @@
                     <span>Thống kê Bảo hiểm nhân viên</span>
                 </a>
             </li>
+            <li>
+                <a href="{{ action('HumanResourcesController@birthdaySearch') }}" >
+                    <span>Danh sách sinh nhật nhân viên</span>
+                </a>
+            </li>
         </ol>
     </section>
     <!-- /.sidebar -->

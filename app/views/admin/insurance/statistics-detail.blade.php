@@ -21,7 +21,7 @@
         <div class="col-md-4">
             <div class="row">
                 <div class="col-md-3">
-                    <label>Mã nhân viên</label>
+                    <label>Mã nhân viên:</label>
                 </div>
                 <div class="col-md-9">
                     <div class="form-group">
@@ -33,7 +33,7 @@
         <div class="col-md-4">
             <div class="row">
                 <div class="col-md-3">
-                    <label>Họ tên</label>
+                    <label>Họ tên:</label>
                 </div>
                 <div class="col-md-9">
                     <div class="form-group">
@@ -48,11 +48,11 @@
         <div class="col-md-4">
             <div class="row">
                 <div class="col-md-3">
-                    <label>Từ ngày</label>
+                    <label>Từ ngày:</label>
                 </div>
                 <div class="col-md-9">
                     <div class="form-group">
-                       {{date( "d-m-Y", strtotime($search['start_date'] ) ) }}
+                       {{$search['start_date'] != null ? date( "d-m-Y", strtotime($search['start_date'] ) ):'' }}
                     </div>
                 </div>
             </div>
@@ -60,11 +60,11 @@
         <div class="col-md-4">
             <div class="row">
                 <div class="col-md-3">
-                    <label>Đến ngày</label>
+                    <label>Đến ngày:</label>
                 </div>
                 <div class="col-md-9">
                     <div class="form-group">
-                       {{date( "d-m-Y", strtotime($search['end_date'] ) ) }}
+                       {{ $search['end_date'] !=null ? date( "d-m-Y", strtotime($search['end_date'] ) ): '' }}
                     </div>
                 </div>
             </div>
@@ -111,7 +111,7 @@
 
      @include('admin.common.paginate',['input'=>$data])
      <div>
-         <h4>Tổng cộng số tiền nhân viên {{$user->ho_ten}} đã đóng từ {{date( "d-m-Y", strtotime($search['start_date'] ) ) }} đến {{date( "d-m-Y", strtotime($search['end_date'] ) ) }} :<b> {{ number_format ($BHYT+$BHXH, 0, '', '.')}}  VNĐ</b></h4>
+         <h4>Tổng cộng số tiền nhân viên {{$user->ho_ten}} đã đóng từ {{$search['start_date'] != null ? date( "d-m-Y", strtotime($search['start_date'] ) ):'--' }} đến {{ $search['end_date'] !=null ? date( "d-m-Y", strtotime($search['end_date'] ) ): '--' }} :<b> {{ number_format ($BHYT+$BHXH, 0, '', '.')}}  VNĐ</b></h4>
          <h5>Trong đó bao gồm</h5>
          <h4>- BHYT: <b>{{ number_format ($BHYT, 0, '', '.')}}  VNĐ</b></h4>
          <h4>- BHXH: <b>{{ number_format ($BHXH, 0, '', '.')}}  VNĐ</b></h4>
