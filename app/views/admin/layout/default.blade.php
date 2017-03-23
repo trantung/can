@@ -84,6 +84,7 @@ $(document).ready(function(){
         if (activeMenu == 'child-salary' ) { $('#child-salary').show(); }
         if (activeMenu == 'child-insuance' ) {$('#child-insuance').show(); }
         if (activeMenu == 'child-system' ) { $('#child-system').show(); }
+        if (activeMenu == 'child-statistic' ) { $('#child-statistic').show(); }
 
 })
 </script>

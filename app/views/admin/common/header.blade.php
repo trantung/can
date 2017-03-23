@@ -180,6 +180,7 @@
           $('#system-statistic').click(function(){
             $('.child-menu').hide();
             $('#child-statistic').show();
+            document.cookie = "activeMenu=child-statistic";
             // document.cookie = "activeMenu=child-statistic";
             // window.location.href = "{{ action('ManagerController@index')  }}";
 
