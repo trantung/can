@@ -148,7 +148,7 @@ class CompanyCategoryController extends BaseCategoryController {
         return View::make($this->viewOfActionIndex(), ['data'=>$data, 'typeName'=>$type->name]);
     }
 
-    public function buildCate($parentId = 0) {
+    public function buildCateJsTree($parentId = 0) {
         $listData = $this->model->where('parent_id', $parentId)->orderBy('id', 'asc')->get();
         $data = array();
         if (!$listData->isEmpty()) {
@@ -156,13 +156,33 @@ class CompanyCategoryController extends BaseCategoryController {
                 $data[$key] = new \stdClass();
                 $data[$key]->id = $value->id;
                 $data[$key]->text = $value->name;
+                $children = Self::buildCateJsTree($value->id);
+                if (!empty($children)) {
+                    $data[$key]->children = $children;
+                }
+            }
+        }
+        return $data;
+    }
+
+    public function buildCate($parentId = 0) {
+        $listData = $this->model->where('parent_id', $parentId)->orderBy('id', 'asc')->get();
+        $data = array();
+        if (!$listData->isEmpty()) {
+            foreach ($listData as $key => $value) {
+                $data[$key] = new \stdClass();
+                $data[$key] = $value;
                 $children = Self::buildCate($value->id);
                 if (!empty($children)) {
                     $data[$key]->children = $children;
                 }
             }
         }
+        return $data;
+    }
 
+    public function getDepartment() {
+        $data = $this->model->get();
         return $data;
     }
 
