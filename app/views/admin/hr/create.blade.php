@@ -2,9 +2,11 @@
 @section('title')
 {{ $title=' Thêm hồ sơ nhân viên' }}
 @stop
-
 @section('content')
+<link rel="stylesheet" type="text/css" href="/assets/js/combotree/themes/metro/easyui.css">
 
+<link rel="stylesheet" type="text/css" href="/assets/js/combotree/themes/icon.css">
+<link rel="stylesheet" type="text/css" href="/assets/js/combotree/demo/demo.css">
 <div class="row margin-bottom">
   <div class="col-xs-12">
     {{-- <a href="{{ action('HumanResourcesController@index') }}" class="btn btn-success"> Hồ sơ nhân viên</a> --}}
@@ -68,6 +70,11 @@
                          {{ Form::select('currency_category', $danh_sach_tien_te, Input::old('currency_category'), array('class'=>'form-control input-sm')) }}
                     </div>
                     {{-- luong_co_ban --}}
+                    <div class="form-group form-group-sm">
+                        <label class="control-label">Phòng ban</label>
+                        <input name="company_id" class="easyui-combotree" data-options="url:'/admin/test',method:'get'" style="width:100%">
+                    </div>
+                    {{-- luong_co_ban --}}
                 </div>
                 {{-- 4 --}}
             </div>
@@ -90,6 +97,7 @@
         </div>
     {{ Form::close() }}
 </div>
+<script type="text/javascript" src="/assets/js/combotree/jquery.easyui.min.js"></script>
 
 @if(isset($personal->employmentEducational))
 <hr>

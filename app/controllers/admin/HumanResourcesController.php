@@ -169,6 +169,7 @@ class HumanResourcesController extends AdminController {
                                     ->orWhere( self::ADDRESS2, 'like', '%'.$input[self::KEYWORD].'%')
                                     ->orWhere( self::MOBILE, 'like', '%'.$input[self::KEYWORD].'%')
                                     ->orWhere( self::EMAIL, 'like', '%'.$input[self::KEYWORD].'%')
+                                    ->orWhere( self::COMPANY_ID, '%'.$input[self::KEYWORD].'%')
                                     ->orWhere(self::ID, '=', intval( str_replace('NV', ' ', $input[self::KEYWORD])) );
                 }
 
@@ -265,7 +266,8 @@ class HumanResourcesController extends AdminController {
             'ngay_ket_thuc_thu_viec',
             'bank_category',
             'currency_category',
-            'luong_co_ban'
+            'luong_co_ban',
+            'company_id'
             );
     }
 
@@ -287,7 +289,6 @@ class HumanResourcesController extends AdminController {
             'ngay_cap'=>'required',
             'noi_cap'=>'required',
             );
-
             $input = $this->getInput();
             $validator =  Validator::make($input,$rules);
             if($validator->fails()) {

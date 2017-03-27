@@ -104,6 +104,7 @@ Route::group(['prefix' => 'admin'], function () {
     });
     Route::resource('/config-permission', 'ConfigPermissionController');
     Route::resource('/config-user', 'ConfigUserController');
+    Route::resource('/warehouse', 'WarehouseController');
     // Route::put('/config-user/update/{id}', 'ConfigUserController@update');
 });
 
