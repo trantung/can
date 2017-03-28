@@ -42,11 +42,11 @@
 				  <td>{{ $value->user->ho_ten }}</td>
                   <td>{{ $value->ngay_cong }}</td>
                   <td>{{ $value->ngay_di_lam }}</td>
-                  <td>{{ $value->total }}</td>
+                  <td>{{  number_format ($value->total, 0, '', '.')}} </td>
                   <td>{{ $value->kieu_luong }}</td>
                   <td>{{ $value->month }}</td>
                   <td>{{ $value->year }}</td>
-                  <td>{{ $value->pay_time }}</td>
+                  <td>{{ date( "d-m-Y", strtotime( $value->pay_time ) ) }}</td>
 				  <td>
 					<a href="{{ action('SalariesController@edit', $value->id) }}" class="btn btn-primary">Sửa</a>
 					{{ Form::open(array('method'=>'DELETE', 'action' => array('SalariesController@destroy', $value->id), 'style' => 'display: inline-block;')) }}

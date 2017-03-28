@@ -49,11 +49,27 @@
                 </div>
             </div>
 
-            <div class="form-group">
+           {{--  <div class="form-group">
               <label for="total"> Tổng tiền bảo hiểm</label>
               <div class="row">
                 <div class="col-sm-6">
                     <input type="text" class="form-control" id="total" placeholder="Tổng tiền bảo hiểm" name="total" value="{{$data->total}} ">
+                </div>
+              </div>
+            </div> --}}
+            <div class="form-group">
+              <label for="bhyt"> BHYT</label>
+              <div class="row">
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="bhyt" placeholder="BHYT" name="bhyt" value="{{$data->bhyt}}">
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="bhxh"> BHXH</label>
+              <div class="row">
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="bhxh" placeholder="BHXH" name="bhxh" value="{{$data->bhxh}}">
                 </div>
               </div>
             </div>

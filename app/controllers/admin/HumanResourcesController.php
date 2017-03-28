@@ -170,7 +170,7 @@ class HumanResourcesController extends AdminController {
                                     ->orWhere( self::MOBILE, 'like', '%'.$input[self::KEYWORD].'%')
                                     ->orWhere( self::EMAIL, 'like', '%'.$input[self::KEYWORD].'%')
                                     ->orWhere( self::COMPANY_ID, '%'.$input[self::KEYWORD].'%')
-                                    ->orWhere(self::ID, '=', intval( str_replace('NV', ' ', $input[self::KEYWORD])) );
+                                    ->orWhere(self::ID, '=', intval( str_replace(['NV','Nv','nV','nv'], [''], $input[self::KEYWORD])) );
                 }
 
                 if ($input[self::NOI_SINH]) {
@@ -457,6 +457,57 @@ class HumanResourcesController extends AdminController {
         return Redirect::action('HumanResourcesController@index');
     }
 
+    protected function buildArrayData2($data, $subTable = null)
+    {
+        $result = [
+        '' => '--',
+        ];
 
+        if ($data->count() == 0) {
+           return  $result;
+        }
+        foreach ($data as $key => $value) {
+            if ($subTable) {
+                $result[$value->$subTable] = $value->name;
+            }else{
+                $result[$value->id] = $value->name;
+            }
+        }
+
+        return $result;
+    }
+
+    public function birthdaySearch()
+    {
+        $input =  Input::only(
+            'month',
+            self::INCORPORATION
+            );
+
+        $data = PersonalInfo::where(function ($query) use ($input){
+                if ($input['month']){
+                    $query = $query->whereRaw('MONTH(nam_sinh) = ?',[$input['month']]);
+                }
+
+            })->whereHas('EmploymentMainPosition', function ($query) use ($input){
+                if ($input[self::INCORPORATION]){
+                    return $query->where('company_name', '=' ,$input[self::INCORPORATION]);
+                }
+            })->orderBy('id', 'asc');
+        // dd($data->paginate(PAGINATE)->toJson());
+        $result = [
+            'search'=> $input,
+            self::COMPANY_CATEGORY_ID       =>$this->buildArrayData2(Company::orderBy('id', 'asc')->get() ),
+            // 'data'=>$data,
+            // 'user'=>PersonalInfo::find($user_id),
+            // 'BHYT'=>$data->sum('BHYT'),
+            'position_category_id'=> $this->buildArrayData(Position::orderBy('id', 'asc')->get() ),
+            'months'=>['--','Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
+            'data'=>$data->paginate(PAGINATE)
+        ];
+
+        //
+        return View::make('admin.dashboard.birthday')->with($result);
+    }
 
 }

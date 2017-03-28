@@ -21,7 +21,7 @@ class EmploymentHistoryController extends AdminController {
     const IS_TEXT       = 'is_text';
 
     const COMPANY_CATEGORY_ID = 'company_category_id';
-    const POSITION_TO_HISTORY = 'Nghỉ kiêm nhiệm';
+    const POSITION_TO_HISTORY = 'Dừng công tác';
     const LINK              = 'attach_file';
     const FILE              = 'attach_file';
     const MODEL              = 'model';
@@ -160,7 +160,7 @@ class EmploymentHistoryController extends AdminController {
                 ];
                 Files::create($file)->id;
             }
-
+            $this->checkPosition($employment);
 
         } catch (Exception $e) {
 
@@ -172,13 +172,18 @@ class EmploymentHistoryController extends AdminController {
 
     public function mainPosition($employment, $id)
     {
-        EmploymentHistory::where('personal_id', $employment)->where('status', BONUSHISTORY)->update(['is_main_position'=>'N']);
-        EmploymentHistory::where('personal_id', $employment)->where('id', $id)->update(['is_main_position'=>'Y']);
+        $this->addMainPosition($employment, $id);
 
 
         return Redirect::action('HumanResourcesController@edit', array('id' => $employment));
     }
 
+    private function addMainPosition($employment, $id){
+        EmploymentHistory::where('personal_id', $employment)->where('status', BONUSHISTORY)->update(['is_main_position'=>'N']);
+        $result = EmploymentHistory::where('personal_id', $employment)->where('id', $id)->update(['is_main_position'=>'Y']);
+
+        // PersonalInfo::where('id', $employment)->update(['don_vi'=> $id]);
+    }
     /**
      * Show the form for editing the specified resource.
      *
@@ -341,6 +346,7 @@ class EmploymentHistoryController extends AdminController {
             }
 
             $result = EmploymentHistory::where(self::ID, $id)->update($input);
+            // $this->checkPosition($employment);
             // dd($result);
         } catch (Exception $e) {
             return $this->returnError($e);
@@ -376,6 +382,7 @@ class EmploymentHistoryController extends AdminController {
     {
         try {
             EmploymentHistory::where(self::ID, $id)->update([self::STATUS=> HISTORY, self::WHY_OUT => self::POSITION_TO_HISTORY, self::DESCRIPTION => self::POSITION_TO_HISTORY]);
+            $this->checkPosition($employment);
         } catch (Exception $e) {
             return $this->returnError($e);
         }
@@ -383,6 +390,14 @@ class EmploymentHistoryController extends AdminController {
         return Redirect::action('HumanResourcesController@edit', array('id' => $employment));
     }
 
+    protected function checkPosition($employment_id)
+    {
+        $result = EmploymentHistory::where('personal_id', '=', $employment_id)->where(self::STATUS, '=',BONUSHISTORY)->get();
+        // dd($result->count());
+        if (!$result->isEmpty() && $result->count() == 1 ) {
+            $this->addMainPosition($employment_id, $result[0]->id);
+        }
+    }
 
 
 }

@@ -6,6 +6,11 @@ class InsuranceController extends AdminController {
     const CREATED_BY        = 'created_by';
     const UPDATED_BY        = 'updated_by';
     const ID                = 'id';
+    const KEYWORD = 'keyword';
+    const COMPANY_CATEGORY_ID = 'company_category_id';
+    const INCORPORATION     = 'incorporation';
+    const FULLNAME          = 'ho_ten';
+
     /**
      * Display a listing of the resource.
      *
@@ -25,6 +30,115 @@ class InsuranceController extends AdminController {
         // }
         // $data = AdminManager::searchUserOperation($input);
         // return View::make('admin.insurance.index')->with(compact('data'));
+    }
+    public function statistics()
+    {
+        $input =  Input::only(
+            self::KEYWORD,
+            self::INCORPORATION,
+            'start_date',
+            'end_date'
+            );
+        $data = Insurance::where(function ($query) use ($input){
+                // if ($input[self::KEYWORD]) {
+                //     $query = $query ->orWhere(self::ID, '=', intval( str_replace(['NV','Nv','nV','nv'], [''], $input[self::KEYWORD])));
+
+                // }
+                if ($input['start_date']){
+                 $query = $query->where('pay_time', '>=' ,$input['start_date']);
+                }
+                if ($input['end_date']){
+                 $query = $query->where('pay_time', '<=' ,$input['end_date'].' 23:59:59');
+                                // ->orWhere( self::FULLNAME, 'like', '%'.$input[self::KEYWORD].'%')
+                                // ->orWhere( self::IDCARD, 'like', '%'.$input[self::KEYWORD].'%')
+                                // ->orWhere( self::BANK_NAME, 'like', '%'.$input[self::KEYWORD].'%')
+                                // // ->orWhere( self::FULLNAME, 'like', '%'.$input[self::KEYWORD].'%')
+                                // ->orWhere( self::ADDRESS, 'like', '%'.$input[self::KEYWORD].'%')
+                                // ->orWhere( self::ADDRESS2, 'like', '%'.$input[self::KEYWORD].'%')
+                                // ->orWhere( self::MOBILE, 'like', '%'.$input[self::KEYWORD].'%')
+                                // ->orWhere( self::EMAIL, 'like', '%'.$input[self::KEYWORD].'%')
+                                // ->orWhere(self::ID, '=', intval( str_replace(['NV','Nv','nV','nv'], [''], $input[self::KEYWORD])) );
+                }
+                if ($input['incorporation']) {
+                    $query = $query->where('incorporation', '=', $input['incorporation']);
+                }
+
+                // if ($input[self::NOI_SINH]) {
+                //     $query = $query->where(self::NOI_SINH, $input[self::NOI_SINH]);
+                // }
+            })
+            ->whereHas('user', function ($query) use ($input){
+                if ($input[self::KEYWORD]) {
+                    //
+                    if (!ctype_digit( str_replace(['NV','Nv','nV','nv'], [''], $input[self::KEYWORD]) )) {
+                        // contains non numeric characters
+                        $query = $query->where( self::FULLNAME, 'like', '%'.$input[self::KEYWORD].'%');
+                    }else{
+                        $query = $query->where(self::ID, '=', intval( str_replace(['NV','Nv','nV','nv'], [''], $input[self::KEYWORD])));
+                    }
+                }
+
+
+
+                // if ($input[self::NOI_SINH]) {
+                //     $query = $query->where(self::NOI_SINH, $input[self::NOI_SINH]);
+                // }
+            })->orderBy('id', 'asc')->paginate(PAGINATE);
+        $result = [
+            self::COMPANY_CATEGORY_ID       =>$this->buildArrayData2(Company::orderBy('id', 'asc')->get() ),
+            'search'=> $input,
+            'data'=>$data
+        ];
+
+        return View::make('admin.insurance.statistics')->with($result);
+    }
+
+    public function detailSearch($user_id)
+    {
+        $input =  Input::only(
+            'start_date',
+            'end_date'
+            );
+
+        $data = Insurance::where(function ($query) use ($input){
+                if ($input['start_date']){
+                 $query = $query->where('pay_time', '>=' ,$input['start_date']);
+                }
+                if ($input['end_date']){
+                 $query = $query->where('pay_time', '<=' ,$input['end_date'].' 23:59:59');
+                }
+            })->where('personal_id', '=', $user_id )->orderBy('id', 'asc');
+
+        $result = [
+            'search'=> $input,
+            // 'data'=>$data,
+            'user'=>PersonalInfo::find($user_id),
+            'BHYT'=>$data->sum('BHYT'),
+            'BHXH'=>$data->sum('BHXH'),
+            'data'=>$data->paginate(PAGINATE)
+        ];
+        //
+        return View::make('admin.insurance.statistics-detail')->with($result);
+    }
+
+    protected function buildArrayData2($data, $subTable = null)
+    {
+        $result = [
+        '' => '--',
+        ];
+
+        if ($data->count() == 0) {
+           return  $result;
+        }
+        foreach ($data as $key => $value) {
+            if ($subTable) {
+                $result[$value->$subTable] = $value->name;
+            }else{
+                $result[$value->id] = $value->name;
+            }
+        }
+
+        return $result;
     }
 
     protected function buildArrayData($data, $subTable = null)
@@ -67,8 +181,10 @@ class InsuranceController extends AdminController {
     {
         $rules = array(
             'personal_id'   => 'required',
-            'month'   => 'required',
-            'total'   => 'required',
+            'month'   => 'required| digits_between:1,12',
+            'bhyt'   => 'required|integer',
+            'bhxh'   => 'required|integer',
+            // 'total'   => 'required',
             // 'description'      => 'required',
             'pay_time'    => 'required',
         );
@@ -79,6 +195,12 @@ class InsuranceController extends AdminController {
                 ->withErrors($validator)
                 ->withInput(Input::except('_token'));
         } else {
+            $mainPosition = EmploymentHistory::where('personal_id', $input['personal_id'])->where('is_main_position', '=', 'Y')->first();
+            if (!$mainPosition) {
+                throw new Exception("Nhân viên được đóng bảo hiểm phải đang công tác tại vị trí cụ thể", 1);
+
+            }
+            $input['incorporation'] = $mainPosition->position;
 
             $id = Insurance::create($input)->id;
             if($id) {
@@ -133,12 +255,14 @@ class InsuranceController extends AdminController {
     {
         $rules = array(
             // 'personal_id'   => 'required',
-            // 'month'   => 'required',
-            'total'   => 'required',
+            // 'month'   => 'required| digits_between:1,12',
+            'bhyt'   => 'required|integer',
+            'bhxh'   => 'required|integer',
+            // 'total'   => 'required',
             // 'description'      => 'required',
             'pay_time'    => 'required',
         );
-        $input = Input::only('total', 'pay_time', 'description');
+        $input = Input::only('bhyt','bhxh', 'pay_time', 'description');
         $validator =  Validator::make($input,$rules);
         if($validator->fails()) {
             return Redirect::action('InsuranceController@edit',['id'=>$id])

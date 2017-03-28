@@ -106,10 +106,10 @@
             </div>
 
             <div class="form-group">
-              <label for="thuong_le_tet">thưởng lễ tết</label>
+              <label for="thuong_le_tet">Thưởng lễ tết</label>
                 <div class="row">
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" id="thuong_le_tetme" placeholder="Thời gian trả" name="thuong_le_tet" value="{{Input::old('thuong_le_tetme')}}">
+                        <input type="text" class="form-control" id="thuong_le_tetme" placeholder="Thưởng lễ tết" name="thuong_le_tet" value="{{Input::old('thuong_le_tetme')}}">
                     </div>
                 </div>
             </div>
@@ -118,7 +118,7 @@
               <label for="tong_giam_tru">Tổng giảm trừ</label>
                 <div class="row">
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" id="tong_giam_trume" placeholder="Thời gian trả" name="tong_giam_tru" value="{{Input::old('tong_giam_trume')}}">
+                        <input type="text" class="form-control" id="tong_giam_trume" placeholder="Tổng giảm trừ" name="tong_giam_tru" value="{{Input::old('tong_giam_trume')}}">
                     </div>
                 </div>
             </div>
@@ -127,7 +127,7 @@
               <label for="tien_dien_thoai">Tiền địên thoại</label>
                 <div class="row">
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" id="patien_dien_thoai" placeholder="Thời gian trả" name="tien_dien_thoai" value="{{Input::old('patien_dien_thoai')}}">
+                        <input type="text" class="form-control" id="patien_dien_thoai" placeholder="Tiền địên thoại" name="tien_dien_thoai" value="{{Input::old('patien_dien_thoai')}}">
                     </div>
                 </div>
             </div>
@@ -136,7 +136,7 @@
               <label for="thuc_linh">Thực lĩnh</label>
                 <div class="row">
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" id="thuc_linhy_time" placeholder="Thời gian trả" name="thuc_linh" value="{{Input::old('thuc_linhy_time')}}">
+                        <input type="text" class="form-control" id="thuc_linhy_time" placeholder="Thực lĩnh" name="thuc_linh" value="{{Input::old('thuc_linhy_time')}}">
                     </div>
                 </div>
             </div>

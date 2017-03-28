@@ -27,7 +27,8 @@
 				<tr>
 				  <th>#</th>
 				  <th>Tên</th>
-                  <th>Số tiền</th>
+                  <th>BHYT</th>
+                  <th>BHXH</th>
                   <th>Tháng</th>
                   <th>Năm</th>
                   <th>Ghi chú</th>
@@ -38,11 +39,12 @@
 				<tr>
 				  <td>{{ $key+1 }}</td>
 				  <td>{{  $value->user->ho_ten }}</td>
-                  <td>{{ $value->total }}</td>
+                  <td>{{  number_format ($value->bhyt, 0, '', '.')}} </td>
+                  <td>{{  number_format ($value->bhxh, 0, '', '.')}}</td>
                   <td>{{ $value->month }}</td>
                   <td>{{ $value->year }}</td>
                   <td>{{ $value->description }}</td>
-                  <td>{{ $value->pay_time }}</td>
+                  <td>{{date( "d-m-Y", strtotime( $value->pay_time ) ) }}</td>
 				  <td>
 					<a href="{{ action('InsuranceController@edit', $value->id) }}" class="btn btn-primary">Sửa</a>
 					{{ Form::open(array('method'=>'DELETE', 'action' => array('InsuranceController@destroy', $value->id), 'style' => 'display: inline-block;')) }}
