@@ -32,7 +32,6 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('/employees', 'EmployeesCategoryController');
     Route::resource('/ethnic', 'EthnicCategoryController');
     Route::resource('/company', 'CompanyCategoryController');
-    Route::get('/test', array('uses' => 'CompanyCategoryController@buildCate'));
     Route::resource('/nationality', 'NationalityCategoryController');//
     Route::resource('/industry', 'IndustryCategoryController');//
     Route::resource('/certificate', 'CertificateCategoryController');//
@@ -42,6 +41,9 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('/bank-category', 'BankCategoryController');//
     Route::resource('/currency-category', 'CurrencyCategoryController');//
     // Route::post('/vocabulary', 'Admin2Controller@store');
+    Route::get('/jstree', array('uses' => 'CompanyCategoryController@buildCateJsTree'));
+    Route::get('/combotree', array('uses' => 'CompanyCategoryController@buildCate'));
+    Route::post('/list-department', array('uses' => 'CompanyCategoryController@getDepartment'));
 
 
     Route::resource('/salaries', 'SalariesController');
@@ -107,6 +109,7 @@ Route::group(['prefix' => 'admin'], function () {
     });
     Route::resource('/config-permission', 'ConfigPermissionController');
     Route::resource('/config-user', 'ConfigUserController');
+    Route::resource('/warehouse', 'WarehouseController');
     // Route::put('/config-user/update/{id}', 'ConfigUserController@update');
 });
 

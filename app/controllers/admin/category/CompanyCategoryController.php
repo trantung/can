@@ -148,7 +148,7 @@ class CompanyCategoryController extends BaseCategoryController {
         return View::make($this->viewOfActionIndex(), ['data'=>$data, 'typeName'=>$type->name]);
     }
 
-    public function buildCate($parentId = 0) {
+    public function buildCateJsTree($parentId = 0) {
         $listData = $this->model->where('parent_id', $parentId)->orderBy('id', 'asc')->get();
         $data = array();
         if (!$listData->isEmpty()) {
@@ -156,13 +156,33 @@ class CompanyCategoryController extends BaseCategoryController {
                 $data[$key] = new \stdClass();
                 $data[$key]->id = $value->id;
                 $data[$key]->text = $value->name;
+                $children = Self::buildCateJsTree($value->id);
+                if (!empty($children)) {
+                    $data[$key]->children = $children;
+                }
+            }
+        }
+        return $data;
+    }
+
+    public function buildCate($parentId = 0) {
+        $listData = $this->model->where('parent_id', $parentId)->orderBy('id', 'asc')->get();
+        $data = array();
+        if (!$listData->isEmpty()) {
+            foreach ($listData as $key => $value) {
+                $data[$key] = new \stdClass();
+                $data[$key] = $value;
                 $children = Self::buildCate($value->id);
                 if (!empty($children)) {
                     $data[$key]->children = $children;
                 }
             }
         }
+        return $data;
+    }
 
+    public function getDepartment() {
+        $data = $this->model->get();
         return $data;
     }
 
@@ -213,17 +233,24 @@ class CompanyCategoryController extends BaseCategoryController {
    */
     public function update($id){
         try{
+            $listChild = $this->model->where(self::PARENT_ID, $id)->lists('id');
             $input = $this->getInputFieldUpdate();
+            if (in_array($input['parent_id'], $listChild) ) {
+                dd('Error');
+            }
             $validator = $this->updateValidater($input);
             $input[self::UPDATED_BY] = Auth::admin()->get()->id;
             if($validator->fails()) {
                 return Redirect::back()->withErrors($validator)->withInput($input);
             }
             $parent_node = $this->model->where(self::ID, $input[self::PARENT_ID])->first();
-            if (intval($parent_node->id) === intval($id)) {
-                // return $this->redirectBackAction();
-               dd('Error');
+            if ($parent_node) {
+                 if (intval($parent_node->id) === intval($id)) {
+                    // return $this->redirectBackAction();
+                   dd('Error');
+                }
             }
+           
             $result = $this->model->where(self::ID, $id)->update($input);
             if(!$result) {
                 dd('Error');
@@ -253,6 +280,9 @@ class CompanyCategoryController extends BaseCategoryController {
     public function destroy($id)
     {
         try {
+            if (PersonalInfo::where('company_id', $id)->exists()) {
+                dd('Không thể xóa khi có nhân viên tại đơn vị này');
+            }
             if ($this->model->where(self::PARENT_ID, $id)->exists()) {
                 dd('Không thể xóa khi có cấp con');
             } else {

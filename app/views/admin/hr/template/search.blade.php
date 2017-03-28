@@ -1,3 +1,6 @@
+<link rel="stylesheet" type="text/css" href="../assets/js/combotree/themes/metro/easyui.css">
+<link rel="stylesheet" type="text/css" href="../assets/js/combotree/themes/icon.css">
+<link rel="stylesheet" type="text/css" href="../assets/js/combotree/demo/demo.css">
 <div class="margin-bottom margin-top">
     {{ Form::open(array('action' => 'HumanResourcesController@index', 'method' => 'GET', 'id'=>'searchForm')) }}
     <div class="row">
@@ -56,14 +59,27 @@
                 </div>
             </div>
         </div>
-
     </div>
+    {{-- haind --}}
+    <div class="row">
+        <div class="col-md-4">
+            <div class="row">
+                <div class="col-md-3">
+                    <label>Phòng ban</label>
+                </div>
+                <div class="col-md-9">
+                    <input name="model_id" class="easyui-combotree" data-options="url:'test',method:'get'" style="width:100%">
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- end --}}
     <div class="row">
         <div class="col-md-4">
             <input type="checkbox" name="employment_off" value="off" {{$search['employment_off'] =='off' ? 'checked="checked"' : '' }}> nhân viên đã nghỉ việc
         </div>
     </div>
-
+    
 
         {{-- <div class="input-group" style="width: 150px; display:inline-block;">
             <label>Dân tộc</label>
@@ -117,6 +133,7 @@
 
     {{ Form::close() }}
 </div>
+<script type="text/javascript" src="../assets/js/combotree/jquery.easyui.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){
         $('#clear-search').click(function(){
