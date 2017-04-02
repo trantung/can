@@ -12,4 +12,8 @@ class Company extends Eloquent
     // {
     //     return $this->hasMany('Branch');
     // }
+
+    public function scopeLevel($query, $level) {
+		return $query->where('level', $level);
+	}
 }

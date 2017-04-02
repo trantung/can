@@ -9,10 +9,10 @@
         <a href="#tab_1_1" data-toggle="tab"> Thông tin cá nhân </a>
     </li>
     <li>
-        <a href="#tab_1_2" data-toggle="tab"> Trình độ học vấn </a>
+        <a href="#tab_1_2" data-toggle="tab"> Nơi làm việc </a>
     </li>
     <li>
-        <a href="#tab_1_3" data-toggle="tab"> Nơi làm việc </a>
+        <a href="#tab_1_3" data-toggle="tab"> Trình độ học vấn </a>
     </li>
     <li>
         <a href="#tab_1_4" data-toggle="tab"> Lịch sử công tác </a>

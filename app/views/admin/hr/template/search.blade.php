@@ -68,7 +68,7 @@
                     <label>Phòng ban</label>
                 </div>
                 <div class="col-md-9">
-                    <input name="model_id" class="easyui-combotree" data-options="url:'test',method:'get'" style="width:100%">
+                    <input name="model_id" class="easyui-combotree" data-options="url:'/admin/jstree',method:'get'" style="width:100%">
                 </div>
             </div>
         </div>

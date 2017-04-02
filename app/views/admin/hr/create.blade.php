@@ -72,7 +72,7 @@
                     {{-- luong_co_ban --}}
                     <div class="form-group form-group-sm">
                         <label class="control-label">Phòng ban</label>
-                        <input name="company_id" class="easyui-combotree" data-options="url:'/admin/test',method:'get'" style="width:100%">
+                        <input name="company_id" class="easyui-combotree" data-options="url:'/admin/jstree',method:'get'" style="width:100%">
                     </div>
                     {{-- luong_co_ban --}}
                 </div>

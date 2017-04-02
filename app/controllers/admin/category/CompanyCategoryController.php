@@ -299,4 +299,17 @@ class CompanyCategoryController extends BaseCategoryController {
         
     }
 
+    public function getDepartmentByOne($id)
+    {
+        $current = $this->model->find($id);
+        if (!$current) {
+            dd('Chi nhánh hiện tại không có trong hệ thống');
+        }
+        $listDepartment = $this->model->level($current->level)->get();
+        if (!$listDepartment) {
+            dd('Không có chi nhánh nào cùng cấp bậc');
+        }
+        return Response::json($listDepartment);
+    }
+
 }

@@ -111,6 +111,9 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('/config-user', 'ConfigUserController');
     Route::resource('/warehouse', 'WarehouseController');
     // Route::put('/config-user/update/{id}', 'ConfigUserController@update');
+    Route::group(['prefix' => 'api'], function(){
+        Route::get('/department-by-one/{id}', 'CompanyCategoryController@getDepartmentByOne');
+    });
 });
 
 
