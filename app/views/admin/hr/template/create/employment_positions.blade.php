@@ -26,7 +26,7 @@
                         {{-- <a class="btn btn-info btn-xs" href="{{ route('hr.is_main_position',[$personal->id, $value->id]  ) }}">Vị trí chính</a> --}}
                         <a href="{{ route('employment.editPositionHistory', $value->id) }}" class="btn btn-info btn-xs">Sửa</a>
                          {{ Form::open(array('method' => 'DELETE', 'route' => ['employment.moveHistory', $personal->id, $value->id], 'style'=>" display: inline-block;")) }}
-                        <input href="#" type ="submit" class="btn btn-danger btn-xs" aria-hidden="true" onclick="return confirm('Bạn có chắc chắn muốn bỏ kiêm nhiệm?');" value="Bỏ kiêm nhiệm" />
+                        <input href="#" type ="submit" class="btn btn-danger btn-xs" aria-hidden="true" onclick="return confirm('Bạn có chắc chắn muốn ngừng công tác?');" value=" Ngừng công tác" />
                         {{ Form::close() }}
                     {{-- </div> --}}
                   </td>

@@ -47,6 +47,7 @@ Route::group(['prefix' => 'admin'], function () {
 
 
     Route::resource('/salaries', 'SalariesController');
+    Route::resource('/job-industry', 'JobIndustryCategoryController');
     Route::resource('/insurance', 'InsuranceController');
     Route::resource('/salaries-category', 'SalariesCategoryController');
 
