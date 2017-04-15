@@ -37,10 +37,6 @@
                   <th>Ngày sinh</th>
                   <th>Vị trí công tác chính</th>
                   <th>Chức vụ</th>
-                  {{-- <th>Chi nhánh</th> --}}
-                  {{-- <th>Vị trí</th> --}}
-                  {{-- <th>Loại hợp đồng</th> --}}
-                  {{-- <th>Đăng nhập cuối</th> --}}
                   <th style="width:200px;">Action</th>
                 </tr>
                 @foreach($data as $key => $value)
@@ -52,19 +48,11 @@
                   <td>{{ $value->employment_main_position != null ? $value->employment_main_position->company_name_text : '' }}</td>
                   <td>
                   @if($value->employment_main_position <> null)
-                  {{-- {{ $value->employment_main_position }} --}}
                   @if(isset($position_category_id[$value->employment_main_position->position]))
-                  {{-- @if(isset($position_category_id[$value->employment_main_position])) --}}
                     {{$position_category_id[$value->employment_main_position->position]}}
                   @endif
                   @endif</td>
-                  {{-- <td>{{ isset($position_category_id[$value->employment_main_position]) ? $position_category_id[$value->employment_main_position] : '' }}</td> --}}
-                  {{-- <td>{{ $company_category_id[$value->branch_category_id] }}</td> --}}
-                  {{-- <td>{{ isset($position_category_id[$value->position_category_id]) ? $position_category_id[$value->position_category_id] : '';}}</td> --}}
-                  {{-- <td>{{ isset($employees_category_id[$value->employees_category_id]) ? $employees_category_id[$value->employees_category_id] : '';}}</td> --}}
                   <td>
-                    {{-- <a href="#" class="btn btn-success">Xem</a> --}}
-                    {{-- <a href="{{action('HumanResourcesController@changePassword', $value->id) }}" class="btn btn-primary">Change Pass</a> --}}
                     <a href="{{ action('HumanResourcesController@edit', $value->id) }}" class="btn btn-primary">Sửa</a>
                     <a href="{{ action('HumanResourcesController@show', $value->id) }}" class="btn btn-primary">Xem</a>
                     {{ Form::open(array('method'=>'DELETE', 'action' => array('HumanResourcesController@destroy', $value->id), 'style' => 'display: inline-block;')) }}
@@ -83,11 +71,5 @@
     </div>
 
     @include('admin.common.paginate',['input'=>$data])
-
-    {{-- <div class="row">
-        <div class="col-xs-12">
-            {{ $data->appends(Request::except('page'))->links() }}
-        </div>
-    </div> --}}
 
 @stop

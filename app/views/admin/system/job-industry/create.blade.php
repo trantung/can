@@ -1,14 +1,14 @@
 @extends('admin.layout.default')
 @if(Admin::isAdmin())
 @section('title')
-{{ $title='Thêm mới Công ty' }}
+{{ $title='Thêm mới Nghành nghề' }}
 @stop
 
 @section('content')
 
 <div class="row margin-bottom">
   <div class="col-xs-12">
-    <a href="{{ action('CompanyCategoryController@index') }}" class="btn btn-success">Danh sách Công ty</a>
+    <a href="{{ action('JobIndustryCategoryController@index') }}" class="btn btn-success">Danh sách Nghành nghề</a>
   </div>
 </div>
 
@@ -16,24 +16,16 @@
     <div class="col-xs-12">
         <div class="box box-primary">
         <!-- form start -->
-        {{ Form::open(array('action' => 'CompanyCategoryController@store')) }}
+        {{ Form::open(array('action' => 'JobIndustryCategoryController@store')) }}
           <div class="box-body">
             <div class="form-group">
-              <label for="username">Tên Công ty</label>
+              <label for="username">Tên Nghành nghề</label>
               <div class="row">
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" id="name" placeholder="Tên Công ty" name="name" value="{{Input::old('name')}}">
+                    <input type="text" class="form-control" id="name" placeholder="Tên Nghành nghề" name="name" value="{{Input::old('name')}}">
                 </div>
               </div>
             </div>
-            <div class="form-group">
-                  <label for="description">Diễn giải</label>
-                  <div class="row">
-                    <div class="col-sm-6">
-                        {{ Form::textarea('description', 'Diễn giải', array('class'=>'form-control input-sm')) }}
-                    </div>
-                  </div>
-                </div>
           </div>
           <!-- /.box-body -->
 

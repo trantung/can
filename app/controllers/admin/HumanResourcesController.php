@@ -49,14 +49,6 @@ class HumanResourcesController extends AdminController {
 
     protected function getAllCategory($key, $value)
     {
-        // if (debug_backtrace()[1]['function'] == 'index') {
-        //     $branch = $this->buildArrayData( Branch::orderBy('id', 'asc')->get());
-        // }else{
-
-        //     $branch = $this->buildArrayData( Company::orderBy('id', 'asc')->with('branchs')->get(),'branchs' );
-        // }
-
-        // dd(Province::get()->toArray());
        return [
             'danh_sach_dan_toc'           =>$this->buildArrayData(Ethnic::orderBy('id', 'asc')->get() ),
             'danh_sach_ton_giao'          =>$this->buildArrayData(Religion::orderBy('id', 'asc')->get() ),
@@ -82,7 +74,7 @@ class HumanResourcesController extends AdminController {
             'danh_sach_loai_nhan_vien' => $this->buildArrayData(Employees::orderBy('id', 'asc')->get()),
             'officer_category_id' => $this->buildArrayData(Officer::orderBy('id', 'asc')->get()),
             'bonus_category_id' => $this->buildArrayData(BonusCategory::orderBy('id', 'asc')->get()),
-            self::INDUSTRY_CATEGORY_ID      =>$this->buildArrayData(Industry::orderBy('id', 'asc')->get() ),
+            self::INDUSTRY_CATEGORY_ID      =>$this->buildArrayData(JobIndustryCategory::orderBy('id', 'asc')->get() ),
             self::CERTIFICATE_CATEGORY_ID   =>$this->buildArrayData(Certificate::orderBy('id', 'asc')->get() ),
             $key => $value,
         ];
@@ -112,59 +104,10 @@ class HumanResourcesController extends AdminController {
             self::INCORPORATION,
             self::CERTIFICATE_CATEGORY_ID
             );
-        // $data = PersonalInfo::where(function ($query) use ($input){
-        //     if ($input[self::KEYWORD]) {
-        //         $query = $query->where(self::EMAIL, 'like', '%'.$input[self::KEYWORD].'%')
-        //                         ->orWhere( self::NICKNAME, 'like', '%'.$input[self::KEYWORD].'%')
-        //                         ->orWhere( self::IDCARD, 'like', '%'.$input[self::KEYWORD].'%')
-        //                         ->orWhere( self::TAX_CODE, 'like', '%'.$input[self::KEYWORD].'%')
-        //                         ->orWhere( self::BANK_ID, 'like', '%'.$input[self::KEYWORD].'%')
-        //                         ->orWhere( self::BANK_NAME, 'like', '%'.$input[self::KEYWORD].'%')
-        //                         ->orWhere( self::FULLNAME, 'like', '%'.$input[self::KEYWORD].'%')
-        //                         ->orWhere( self::ID_EMPLOYEES, 'like', '%'.$input[self::KEYWORD].'%')
-        //                         ->orWhere( self::NICKNAME, 'like', '%'.$input[self::KEYWORD].'%')
-        //                         ->orWhere( self::ADDRESS, 'like', '%'.$input[self::KEYWORD].'%')
-        //                         ->orWhere( self::MOBILE, 'like', '%'.$input[self::KEYWORD].'%')
-        //                         ->orWhere( self::EMAIL, 'like', '%'.$input[self::KEYWORD].'%');
-        //     }
-        //     if ($input[self::ETHNIC_GROUP_ID]) {
-        //         $query = $query->where(self::ETHNIC_GROUP_ID, $input[self::ETHNIC_GROUP_ID]);
-        //     }
-        //     if ($input[self::RELIGION_CATEGORY_ID]) {
-        //         $query = $query->where(self::RELIGION_CATEGORY_ID, $input[self::RELIGION_CATEGORY_ID]);
-        //     }
-        //     if ($input[self::EMPLOYEES_CATEGORY_ID]) {
-        //         $query = $query->where(self::EMPLOYEES_CATEGORY_ID, $input[self::EMPLOYEES_CATEGORY_ID]);
-        //     }
-        //     if ($input[self::ID_EMPLOYEES]) {
-        //         $query = $query->where(self::ID_EMPLOYEES, $input[self::ID_EMPLOYEES]);
-        //     }
-        //     if ($input[self::BRANCH_ID]) {
-        //         $query = $query->where(self::BRANCH_ID, $input[self::BRANCH_ID]);
-        //     }
-        //     if ($input[self::POSITION_ID]) {
-        //         $query = $query->where(self::POSITION_ID, $input[self::POSITION_ID]);
-        //     }
-        //     if ($input[self::NATIONALITY_ID]) {
-        //         $query = $query->where(self::NATIONALITY_ID, $input[self::NATIONALITY_ID]);
-        //     }
-        //     if ($input[self::CONTRACT_CATEGORY_ID]) {
-        //         $query = $query->where(self::CONTRACT_CATEGORY_ID, $input[self::CONTRACT_CATEGORY_ID]);
-        //     }
-        //     if ($input[self::INDUSTRY_CATEGORY_ID]) {
-        //         $query = $query->where(self::INDUSTRY_CATEGORY_ID, $input[self::INDUSTRY_CATEGORY_ID]);
-        //     }
-        //     if ($input[self::CERTIFICATE_CATEGORY_ID]) {
-        //         $query = $query->where(self::CERTIFICATE_CATEGORY_ID, $input[self::CERTIFICATE_CATEGORY_ID]);
-        //     }
-        // })->orderBy(self::ID, 'desc')->paginate(PAGINATE);
-        // $data = PersonalInfo::orderBy(self::ID, 'desc')->with('EmploymentMainPosition')->paginate(PAGINATE);
+
         $data = PersonalInfo::where(function ($query) use ($input){
                 if ($input[self::KEYWORD]) {
                     $query = $query->orWhere( self::FULLNAME, 'like', '%'.$input[self::KEYWORD].'%')
-                                    // ->orWhere( self::IDCARD, 'like', '%'.$input[self::KEYWORD].'%')
-                                    // ->orWhere( self::BANK_NAME, 'like', '%'.$input[self::KEYWORD].'%')
-                                    // ->orWhere( self::FULLNAME, 'like', '%'.$input[self::KEYWORD].'%')
                                     ->orWhere( self::ADDRESS, 'like', '%'.$input[self::KEYWORD].'%')
                                     ->orWhere( self::ADDRESS2, 'like', '%'.$input[self::KEYWORD].'%')
                                     ->orWhere( self::MOBILE, 'like', '%'.$input[self::KEYWORD].'%')
@@ -182,40 +125,10 @@ class HumanResourcesController extends AdminController {
             ->whereWithPosition($input[self::VI_TRI])
             ->whereWithIncorporation($input[self::INCORPORATION])
 
-        // ->with(array('EmploymentMainPosition' => function($query) use ($input) {
-        //             $query->where('employment_history.position', $input[self::VI_TRI] );
-        //             dd($query);
-        //         }))
         ->orderBy(self::ID, 'desc')
-        // ->toSql();
-
-        // ->paginate(1);
         ->paginate(PAGINATE);
-                // dd($input);
-        // $data = PersonalInfo::join('employment_history', function($join)
-        // {
-        //     $join->on('employment_history.personal_id', '=', 'personal_info.id');
-        //          // ->where('employment_history.status','=',BONUSHISTORY)
-        //          // ->orWhere('employment_history.status','=',NULL);
-        //          // ->where('employment_history.is_main_position','=', 'Y');
-        // })
-        // ->join('positions', 'positions.id', '=', 'employment_history.position')
-        // // ->select(
-        // //     // 'employment_history.personal_id as personal_id',
-        // //     // 'employment_history.position as position',
-        // //     // 'employment_history.is_main_position as is_main_position',
-        // //     'employment_history.company_name_text as company_name_text',
-        // //     'personal_info.id as id',
-        // //     'personal_info.ho_ten as ho_ten',
-        // //     'personal_info.nam_sinh as nam_sinh',
-        // //     // 'positions.id as positions_id',
-        // //     'positions.name as positions_name'
-        // //     )
-        // ->paginate(PAGINATE);
-        // $data = EmploymentHistory::with('personalInfo')->with('positionHistory')->where('is_main_position', 'Y')->paginate(PAGINATE);
         $result = $this->getAllCategory('data', $data);
         $result['search'] = $input;
-        // dd($data->toJson());
         return View::make('admin.hr.index', $result);
     }
 

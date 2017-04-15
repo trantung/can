@@ -100,6 +100,7 @@ class AdminController extends BaseController {
                     ->withInput(Input::except('password'));
             } else {
                 $checkLogin = Auth::admin()->attempt($input);
+                // dd($input);
                 if($checkLogin) {
                     return Redirect::action('HumanResourcesController@index');
                 } else {
@@ -132,12 +133,12 @@ class AdminController extends BaseController {
 
     protected function buildTree($items)
     {
-        
+
         $map = array(
             0 => array('children' => array())
         );
         foreach ($items as &$item) {
-            
+
             $item['children'] = array();
             $map[$item['id']] = &$item;
         }

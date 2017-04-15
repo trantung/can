@@ -66,7 +66,7 @@ class EmploymentEducationalController extends AdminController {
         try {
             $result = [
                 self::SCHOOL                    =>EmploymentEducational::find($id),
-                self::INDUSTRY_CATEGORY_ID      =>$this->buildArrayData(Industry::orderBy('id', 'asc')->get() ),
+                self::INDUSTRY_CATEGORY_ID      =>$this->buildArrayData(JobIndustryCategory::orderBy('id', 'asc')->get() ),
                 self::CERTIFICATE_CATEGORY_ID   =>$this->buildArrayData(Certificate::orderBy('id', 'asc')->get() ),
             ];
             $industry_category_id = ['Việt Nam', 'Lào ', 'Anh', 'Mỹ'];
