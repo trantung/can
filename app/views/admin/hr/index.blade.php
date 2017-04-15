@@ -66,6 +66,7 @@
                     {{-- <a href="#" class="btn btn-success">Xem</a> --}}
                     {{-- <a href="{{action('HumanResourcesController@changePassword', $value->id) }}" class="btn btn-primary">Change Pass</a> --}}
                     <a href="{{ action('HumanResourcesController@edit', $value->id) }}" class="btn btn-primary">Sửa</a>
+                    <a href="{{ action('HumanResourcesController@show', $value->id) }}" class="btn btn-primary">Xem</a>
                     {{ Form::open(array('method'=>'DELETE', 'action' => array('HumanResourcesController@destroy', $value->id), 'style' => 'display: inline-block;')) }}
                     <button class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa?');">Xóa</button>
                     {{ Form::close() }}
