@@ -15,4 +15,8 @@ class Warehouse extends Eloquent
         return $this->hasOne('Company', 'id', 'department_id');
     }
 
+    public function scopeDepartment($query, $department) {
+		return $query->where('department_id', $department);
+	}
+
 }

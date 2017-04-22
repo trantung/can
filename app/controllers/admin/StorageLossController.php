@@ -1,6 +1,6 @@
 <?php
 
-class WarehouseController extends BaseCategoryController {
+class StorageLossController extends BaseCategoryController {
 
 
     protected $model;
@@ -10,12 +10,14 @@ class WarehouseController extends BaseCategoryController {
     const ONE        = 1;
     // field of contract table.
     const ID              = 'id';
-    const NAME            = 'name';
+    const RATIO          = 'ratio';
+    const WAREHOUSE_ID      = 'warehouse_id';
+    const MODEL_NAME      = 'model_name';
+    const MODEL_ID        = 'model_id';
     const CRETED_BY       = 'created_by';
     const UPDATED_BY      = 'created_by';
     const DELETED         = 'deleted';
-    const DEPARTMENT_ID   = 'department_id';
-    const DESCRIPTION     = 'description';
+    const STATUS     = 'status';
 
 
     function __construct(){
@@ -30,7 +32,16 @@ class WarehouseController extends BaseCategoryController {
     */
     protected function getModel()
     {
-        return new Warehouse;
+        return new StorageLoss;
+    }
+
+    /**
+    * return field before update.
+    * @param collection.
+    * @return model
+    */
+    protected function getSubTable(){
+        return [];
     }
 
     /**
@@ -39,7 +50,7 @@ class WarehouseController extends BaseCategoryController {
     * @return array
     */
     protected function getInputFieldStore(){
-        return Input::only(self::NAME, self::DEPARTMENT_ID);
+        return Input::only(self::NAME, self::RATIO, self::MODEL_ID, self::MODEL_NAME, self::WAREHOUSE_ID);
     }
 
     /**
@@ -48,7 +59,7 @@ class WarehouseController extends BaseCategoryController {
     * @return array
     */
     protected function getInputFieldUpdate(){
-        return Input::only(self::NAME, self::DEPARTMENT_ID);
+        return Input::only(self::NAME, self::RATIO, self::MODEL_ID, self::MODEL_NAME, self::WAREHOUSE_ID);
     }
 
     /**
@@ -78,14 +89,6 @@ class WarehouseController extends BaseCategoryController {
         return true;
     }
 
-    /**
-    * return field before update.
-    * @param collection.
-    * @return model
-    */
-    protected function getSubTable(){
-        return $this->buildArrayData( Company::orderBy('id', 'asc')->get());
-    }
 
     /**
     * [validator validator]
@@ -94,7 +97,7 @@ class WarehouseController extends BaseCategoryController {
     */
     protected function storeValidater(array $array){
         return Validator::make($array,[
-            self::NAME => 'required',
+            self::MODEL_NAME => 'required',
         ]);
     }
 
@@ -105,51 +108,32 @@ class WarehouseController extends BaseCategoryController {
     */
     protected function updateValidater(array $array){
         return Validator::make($array,[
-            self::NAME => 'required',
+            self::MODEL_NAME => 'required',
         ]);
     }
 
     protected function redirectBackAction(){
-        return Redirect::action('WarehouseController@index');
+        return Redirect::action('StorageLossController@index');
     }
 
 
     protected function viewOfActionIndex(){
-        return 'admin.warehouse.index';
+        return 'admin.storage-loss.index';
     }
     protected function viewOfActionCreate(){
-        return 'admin.warehouse.create';
+        return 'admin.storage-loss.create';
     }
     protected function viewOfActionShow(){
-        return 'admin.warehouse.detail';
+        return 'admin.storage-loss.detail';
     }
     protected function viewOfActionEdit(){
-        return 'admin.warehouse.edit';
+        return 'admin.storage-loss.edit';
     }
 
     public function index()
     {
-        $data = $this->model->orderBy('id', 'asc')->with('department')->paginate(10);
-        $subTable = $this->getSubTable();
-        return View::make($this->viewOfActionIndex(), ['data'=>$data, 'subTable'=>$subTable]);
-    }
-
-    public function getWarehouseByDepartment($departmentId)
-    {
-        $data = $this->model->where('department_id', $departmentId)->get();
-        if (!$data) {
-            dd('Không có kho');
-        }
-        return Response::json($data);
-    }
-
-    public function getWarehouse()
-    {
-        $data = $this->model->get();
-        if (!$data) {
-            dd('Không có kho');
-        }
-        return Response::json($data);
+        $data = $this->model->orderBy('id', 'asc')->paginate(10);
+        return View::make($this->viewOfActionIndex(), ['data'=>$data]);
     }
 
 }

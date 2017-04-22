@@ -8,4 +8,5 @@ class Department extends Eloquent
     protected $table = 'department';
     protected $fillable = ['name', 'description', 'created_by', 'updated_by'];
 
+
 }

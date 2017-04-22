@@ -40,6 +40,10 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('/bonus-category', 'BonusCategoryController');//
     Route::resource('/bank-category', 'BankCategoryController');//
     Route::resource('/currency-category', 'CurrencyCategoryController');//
+    Route::resource('/product-category', 'ProductCategoryController');
+    Route::resource('/product', 'ProductController');
+    Route::resource('/production-loss', 'ProductionLossController');
+    Route::resource('/storage-loss', 'StorageLossController');
     // Route::post('/vocabulary', 'Admin2Controller@store');
     Route::get('/jstree', array('uses' => 'CompanyCategoryController@buildCateJsTree'));
     Route::get('/combotree', array('uses' => 'CompanyCategoryController@buildCate'));
@@ -110,10 +114,16 @@ Route::group(['prefix' => 'admin'], function () {
     });
     Route::resource('/config-permission', 'ConfigPermissionController');
     Route::resource('/config-user', 'ConfigUserController');
+    Route::resource('/product-manage', 'ProductManageController');
     Route::resource('/warehouse', 'WarehouseController');
+    Route::resource('/production-auto', 'ProductionAutoController', array('except' => array('show')));
+    Route::controller('/production-auto', 'ProductionAutoController');
     // Route::put('/config-user/update/{id}', 'ConfigUserController@update');
     Route::group(['prefix' => 'api'], function(){
         Route::get('/department-by-one/{id}', 'CompanyCategoryController@getDepartmentByOne');
+        Route::get('/warehouse-by-department/{id}', 'WarehouseController@getWarehouseByDepartment');
+        Route::get('/warehouse', 'WarehouseController@getWarehouse');
+        Route::controller('/request', 'ApiController');
     });
 });
 

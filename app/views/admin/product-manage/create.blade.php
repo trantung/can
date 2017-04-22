@@ -1,14 +1,14 @@
 @extends('admin.layout.default')
 @if(Admin::isAdmin())
 @section('title')
-{{ $title='Thêm mới kho' }}
+{{ $title='Cài đặt user' }}
 @stop
 
 @section('content')
 
 <div class="row margin-bottom">
   <div class="col-xs-12">
-    <a href="{{ action('WarehouseController@index') }}" class="btn btn-success">Danh sách kho</a>
+    <a href="{{ action('ConfigPermissionController@index') }}" class="btn btn-success">Danh sách Chức danh1</a>
   </div>
 </div>
 
@@ -16,25 +16,30 @@
     <div class="col-xs-12">
         <div class="box box-primary">
         <!-- form start -->
-        {{ Form::open(array('action' => 'WarehouseController@store')) }}
+        {{ Form::open(array('action' => 'ConfigUserController@store')) }}
           <div class="box-body">
             <div class="form-group">
-              <label for="username">Tên kho</label>
+              <label for="module_id">User</label>
               <div class="row">
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" id="name" name="name" value="{{Input::old('name')}}">
+                  <select class="form-control" name="user_id">
+                      @foreach($listUser as $key => $value)
+                      <option value="{{ $value->id }}">{{ $value->username }}</option>
+                      @endforeach
+                    </select>
                 </div>
               </div>
             </div>
-
             <div class="form-group">
-              <label for="branch_id">Chi nhánh</label>
-              <div class="row">
-                <div class="col-sm-6">
-                    {{ Form::select('department_id', $subTable, Input::old('department_id'), array('class'=>'form-control input-sm')) }}
-                </div>
+              Nhân viên <span class="caret"></span>
+              @foreach($listPersonal as $k => $val)
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" name="personal[{{ $k }}]" value="true"> {{ $val->ho_ten }}
+                </label>
               </div>
-            </div>
+              @endforeach
+          </div>
 
           </div>
           <!-- /.box-body -->

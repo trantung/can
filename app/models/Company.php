@@ -16,4 +16,11 @@ class Company extends Eloquent
     public function scopeLevel($query, $level) {
 		return $query->where('level', $level);
 	}
+
+    public function warehouse()
+    {
+        return $this->hasMany('Warehouse','department_id');
+    }
+
+
 }

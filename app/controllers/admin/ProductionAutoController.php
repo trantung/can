@@ -1,6 +1,8 @@
 <?php
 
-class WarehouseController extends BaseCategoryController {
+use Carbon\Carbon;
+
+class ProductionAutoController extends BaseCategoryController {
 
 
     protected $model;
@@ -14,7 +16,6 @@ class WarehouseController extends BaseCategoryController {
     const CRETED_BY       = 'created_by';
     const UPDATED_BY      = 'created_by';
     const DELETED         = 'deleted';
-    const DEPARTMENT_ID   = 'department_id';
     const DESCRIPTION     = 'description';
 
 
@@ -30,7 +31,16 @@ class WarehouseController extends BaseCategoryController {
     */
     protected function getModel()
     {
-        return new Warehouse;
+        return new Product;
+    }
+
+    /**
+    * return field before update.
+    * @param collection.
+    * @return model
+    */
+    protected function getSubTable(){
+        return [];
     }
 
     /**
@@ -39,7 +49,7 @@ class WarehouseController extends BaseCategoryController {
     * @return array
     */
     protected function getInputFieldStore(){
-        return Input::only(self::NAME, self::DEPARTMENT_ID);
+        return Input::only(self::NAME);
     }
 
     /**
@@ -48,7 +58,7 @@ class WarehouseController extends BaseCategoryController {
     * @return array
     */
     protected function getInputFieldUpdate(){
-        return Input::only(self::NAME, self::DEPARTMENT_ID);
+        return Input::only(self::NAME);
     }
 
     /**
@@ -78,14 +88,6 @@ class WarehouseController extends BaseCategoryController {
         return true;
     }
 
-    /**
-    * return field before update.
-    * @param collection.
-    * @return model
-    */
-    protected function getSubTable(){
-        return $this->buildArrayData( Company::orderBy('id', 'asc')->get());
-    }
 
     /**
     * [validator validator]
@@ -110,46 +112,34 @@ class WarehouseController extends BaseCategoryController {
     }
 
     protected function redirectBackAction(){
-        return Redirect::action('WarehouseController@index');
+        return Redirect::action('ProductionAutoController@index');
     }
 
 
     protected function viewOfActionIndex(){
-        return 'admin.warehouse.index';
+        return 'admin.production-auto.index';
     }
     protected function viewOfActionCreate(){
-        return 'admin.warehouse.create';
+        return 'admin.production-auto.create';
     }
     protected function viewOfActionShow(){
-        return 'admin.warehouse.detail';
+        return 'admin.production-auto.detail';
     }
     protected function viewOfActionEdit(){
-        return 'admin.warehouse.edit';
+        return 'admin.production-auto.edit';
     }
 
     public function index()
     {
-        $data = $this->model->orderBy('id', 'asc')->with('department')->paginate(10);
-        $subTable = $this->getSubTable();
-        return View::make($this->viewOfActionIndex(), ['data'=>$data, 'subTable'=>$subTable]);
+        $data = $this->model->orderBy('id', 'asc')->paginate(10);
+        return View::make($this->viewOfActionIndex(), ['data'=>$data]);
     }
 
-    public function getWarehouseByDepartment($departmentId)
-    {
-        $data = $this->model->where('department_id', $departmentId)->get();
-        if (!$data) {
-            dd('Không có kho');
-        }
-        return Response::json($data);
-    }
-
-    public function getWarehouse()
-    {
-        $data = $this->model->get();
-        if (!$data) {
-            dd('Không có kho');
-        }
-        return Response::json($data);
+    public function getNumberCoupon() {
+        $result = str_pad(12, 8, "0", STR_PAD_LEFT);
+        $now = Carbon::now();
+        $coupon = $now->second . $now->minute . $now->hour . $now->day . $now->month . $now->year;
+        dd($result);
     }
 
 }
