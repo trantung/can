@@ -31,7 +31,7 @@ class ProductionAutoController extends BaseCategoryController {
     */
     protected function getModel()
     {
-        return new Product;
+        return new ProductionAuto;
     }
 
     /**

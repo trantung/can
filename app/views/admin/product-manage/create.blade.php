@@ -19,23 +19,23 @@
         {{ Form::open(array('action' => 'ProductManagerController@store')) }}
           <div class="box-body">
             <div class="form-group">
-              <label for="module_id">User</label>
+              <label for="module_id">Thành phẩm</label>
               <div class="row">
                 <div class="col-sm-6">
-                  <select class="form-control" name="user_id">
-                      @foreach($listUser as $key => $value)
-                      <option value="{{ $value->id }}">{{ $value->username }}</option>
+                  <select class="form-control" name="product_id">
+                      @foreach($listProduct as $key => $value)
+                      <option value="{{ $value->id }}">{{ $value->name }}</option>
                       @endforeach
                     </select>
                 </div>
               </div>
             </div>
             <div class="form-group">
-              Nhân viên <span class="caret"></span>
-              @foreach($listPersonal as $k => $val)
+              Nguyên liệu thô <span class="caret"></span>
+              @foreach($listProductCategory as $k => $val)
               <div class="checkbox">
                 <label>
-                  <input type="checkbox" name="personal[{{ $k }}]" value="true"> {{ $val->ho_ten }}
+                  <input type="checkbox" name="product_category[{{ $val->id }}]" value="true"> {{ $val->name }}
                 </label>
               </div>
               @endforeach

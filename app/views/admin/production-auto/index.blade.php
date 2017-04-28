@@ -8,7 +8,7 @@
 
     <div class="row margin-bottom">
         <div class="col-xs-12">
-            <a href="{{ action('ProductController@create') }}" class="btn btn-primary">Thêm mới</a>
+            <a href="{{ action('ProductionAutoController@create') }}" class="btn btn-primary">Thêm mới</a>
         </div>
     </div>
 
@@ -16,7 +16,7 @@
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Danh sách sản phẩm</h3>
+              <h3 class="box-title">Danh sách sản xuất</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body table-responsive no-padding">
@@ -31,8 +31,8 @@
                   <td>{{ $key+1 }}</td>
                   <td>{{ $value->name }}</td>
                   <td>
-                    <a href="{{ action('ProductController@edit', $value->id) }}" class="btn btn-primary">Sửa</a>
-                    {{ Form::open(array('method'=>'DELETE', 'action' => array('ProductController@destroy', $value->id), 'style' => 'display: inline-block;')) }}
+                    <a href="{{ action('ProductionAutoController@edit', $value->id) }}" class="btn btn-primary">Sửa</a>
+                    {{ Form::open(array('method'=>'DELETE', 'action' => array('ProductionAutoController@destroy', $value->id), 'style' => 'display: inline-block;')) }}
                     <button class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa?');">Xóa</button>
                     {{ Form::close() }}
 

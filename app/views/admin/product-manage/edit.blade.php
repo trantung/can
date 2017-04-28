@@ -1,7 +1,7 @@
 @extends('admin.layout.default')
 
 @section('title')
-{{ $title='Chỉnh sửa User "'. $data->username .'"' }}
+{{ $title='Chỉnh sửa' }}
 @stop
 
 @section('content')
@@ -14,19 +14,19 @@
             {{ Form::open(array('action' => array('ProductManagerController@update', $data->id), 'method' => 'PUT')) }}
                <div class="box-body">
                 <div class="form-group">
-                  <label for="module_id">User</label>
+                  <label for="module_id">Sản phẩm</label>
                   <div class="row">
                     <div class="col-sm-6">
-                      {{$data->username}}
+                      {{$data->name}}
                   </div>
                 </div>
                 <div class="form-group">
-                  Nhân viên <span class="caret"></span>
-                  @foreach($listPersonal as $k => $val)
+                  Nguyên liệu <span class="caret"></span>
+                  @foreach($listProductCategory as $k => $val)
                   <div class="checkbox">
                     <label>
-                      {{ Form::checkbox("personal[$val->id]", 'true', isChecked('UserPersonal', 'user_id', $data->id, 'personal_id', $val->id) ) }}
-                    {{ $val->ho_ten }}
+                      {{ Form::checkbox("personal[$val->id]", 'true', isChecked('ProductManage', 'product_id', $data->id, 'product_category_id', $val->id) ) }}
+                    {{ $val->name }}
                     </label>
                   </div>
                   @endforeach

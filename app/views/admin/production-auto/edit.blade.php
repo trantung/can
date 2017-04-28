@@ -9,8 +9,8 @@
 @if(Admin::isAdmin())
 <div class="row margin-bottom">
     <div class="col-xs-12">
-        <a href="{{ action('ProductController@index') }}" class="btn btn-success">Danh sách</a>
-        <a href="{{ action('ProductController@create') }}" class="btn btn-primary">Thêm</a>
+        <a href="{{ action('ProductionAutoController@index') }}" class="btn btn-success">Danh sách</a>
+        <a href="{{ action('ProductionAutoController@create') }}" class="btn btn-primary">Thêm</a>
     </div>
 </div>
 @endif
@@ -19,7 +19,7 @@
     <div class="col-xs-12">
         <div class="box box-primary">
             <!-- form start -->
-            {{ Form::open(array('action' => array('ProductController@update', $data->id), 'method' => 'PUT')) }}
+            {{ Form::open(array('action' => array('ProductionAutoController@update', $data->id), 'method' => 'PUT')) }}
                <div class="box-body">
                 <div class="form-group">
                   <label for="username">Tên</label>

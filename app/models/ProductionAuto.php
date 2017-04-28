@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\SoftDeletingTrait;
 class ProductionAuto extends Eloquent
 {
     use SoftDeletingTrait;
-    protected $table = 'products';
+    protected $table = 'production_auto';
     protected $fillable = [
 	    'department_id', 
 	    'warehouse_id', 

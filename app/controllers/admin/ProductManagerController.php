@@ -33,9 +33,9 @@ class ProductManagerController extends AdminController {
     public function store()
     {
         $input = Input::except('_token');
-        if (isset($input['product'])) {
+        if (isset($input['product_category'])) {
             $inputPrimaryKey = ['product_id' => $input['product_id']];
-            $inputSave = ['product_category_id' => array_keys($input['product'])];
+            $inputSave = ['product_category_id' => array_keys($input['product_category'])];
             Common::saveOneToMany('ProductManage', $inputPrimaryKey, $inputSave);
         }
         return Redirect::action('ProductManagerController@index');
@@ -54,7 +54,7 @@ class ProductManagerController extends AdminController {
         foreach ($listProduct as $key => $value) {
             $data[$key] = new stdClass();
             $data[$key] = $value;
-            $data[$key]->product = ProductManage::where('product_id', $value->id)->lists('product_category_id');
+            $data[$key]->products = ProductManage::where('product_id', $value->id)->lists('product_category_id');
         }
         return View::make('admin.product-manage.index')->with(compact('data', 'listProductCategory'));
     }
