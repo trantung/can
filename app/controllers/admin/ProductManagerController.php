@@ -50,6 +50,7 @@ class ProductManagerController extends AdminController {
     {
         $listProduct = Product::all();
         $listProductCategory = ProductCategory::lists('name', 'id');
+        $data = [];
         foreach ($listProduct as $key => $value) {
             $data[$key] = new stdClass();
             $data[$key] = $value;

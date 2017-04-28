@@ -8,7 +8,7 @@
 
 <div class="row margin-bottom">
   <div class="col-xs-12">
-    <a href="{{ action('ConfigPermissionController@index') }}" class="btn btn-success">Danh sách Chức danh1</a>
+    <a href="{{ action('ProductManagerController@index') }}" class="btn btn-success">Danh sách Chức danh1</a>
   </div>
 </div>
 
@@ -16,7 +16,7 @@
     <div class="col-xs-12">
         <div class="box box-primary">
         <!-- form start -->
-        {{ Form::open(array('action' => 'ConfigUserController@store')) }}
+        {{ Form::open(array('action' => 'ProductManagerController@store')) }}
           <div class="box-body">
             <div class="form-group">
               <label for="module_id">User</label>

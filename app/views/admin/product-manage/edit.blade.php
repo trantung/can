@@ -11,7 +11,7 @@
     <div class="col-xs-12">
         <div class="box box-primary">
             <!-- form start -->
-            {{ Form::open(array('action' => array('ConfigUserController@update', $data->id), 'method' => 'PUT')) }}
+            {{ Form::open(array('action' => array('ProductManagerController@update', $data->id), 'method' => 'PUT')) }}
                <div class="box-body">
                 <div class="form-group">
                   <label for="module_id">User</label>

@@ -18,6 +18,7 @@
 			"app/controllers",
 			"app/controllers/admin",
             "app/controllers/admin/category",
+            "app/controllers/api",
 			"app/models",
 			"app/services",
 			"app/database/migrations",

@@ -114,7 +114,7 @@ Route::group(['prefix' => 'admin'], function () {
     });
     Route::resource('/config-permission', 'ConfigPermissionController');
     Route::resource('/config-user', 'ConfigUserController');
-    Route::resource('/product-manage', 'ProductManageController');
+    Route::resource('/product-manage', 'ProductManagerController');
     Route::resource('/warehouse', 'WarehouseController');
     Route::resource('/production-auto', 'ProductionAutoController', array('except' => array('show')));
     Route::controller('/production-auto', 'ProductionAutoController');
@@ -124,7 +124,19 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/warehouse-by-department/{id}', 'WarehouseController@getWarehouseByDepartment');
         Route::get('/warehouse', 'WarehouseController@getWarehouse');
         Route::controller('/request', 'ApiController');
+
+        //copy
     });
 });
 
 
+Route::group(['prefix' => 'api'], function () {
+    Route::post('/importcan', 'ApiImportManagement@importBangCan');
+    Route::post('/importkiemdinh', 'ApiImportManagement@importKiemDinh');
+    Route::post('/importkhachhang', 'ApiImportManagement@importKhachHang');
+    Route::post('/import', 'ApiImportManagement@store');
+    Route::post('/changepassword', 'ApiImportManagement@changePassword');
+    Route::post('/gettype', 'ApiImportManagement@getTheLoai');
+    Route::post('/getthanhpham', 'ApiImportManagement@getThanhPham');
+
+});
