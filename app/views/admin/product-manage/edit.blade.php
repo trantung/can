@@ -25,12 +25,23 @@
                   @foreach($listProductCategory as $k => $val)
                   <div class="checkbox">
                     <label>
-                      {{ Form::checkbox("personal[$val->id]", 'true', isChecked('ProductManage', 'product_id', $data->id, 'product_category_id', $val->id) ) }}
+                      {{ Form::checkbox("product_category[$val->id]", 'true', isChecked('ProductManage', 'product_id', $data->id, 'product_category_id', $val->id) ) }}
                     {{ $val->name }}
                     </label>
                   </div>
                   @endforeach
-              </div>
+                </div>
+                Tỉ lệ hao hụt <span class="caret"></span>
+                @foreach($listProductCategory as $k => $val)
+                  <div class="form-group">
+                    <label for="username">{{ $val->name }}</label>
+                    <div class="row">
+                      <div class="col-sm-6">
+                          <input type="text" class="form-control" name="ratio[{{ $val->id }}]">
+                      </div>
+                    </div>
+                  </div>
+                @endforeach
                </div>
               <!-- /.box-body -->
 

@@ -1,14 +1,14 @@
 @extends('admin.layout.default')
 @if(Admin::isAdmin())
 @section('title')
-{{ $title='Cài đặt user' }}
+{{ $title='Cài đặt' }}
 @stop
 
 @section('content')
 
 <div class="row margin-bottom">
   <div class="col-xs-12">
-    <a href="{{ action('ProductManagerController@index') }}" class="btn btn-success">Danh sách Chức danh1</a>
+    <a href="{{ action('ProductManagerController@index') }}" class="btn btn-success">Danh sách</a>
   </div>
 </div>
 
@@ -39,8 +39,18 @@
                 </label>
               </div>
               @endforeach
-          </div>
-
+            </div>
+            Tỉ lệ hao hụt <span class="caret"></span>
+            @foreach($listProductCategory as $k => $val)
+              <div class="form-group">
+                <label for="username">{{ $val->name }}</label>
+                <div class="row">
+                  <div class="col-sm-6">
+                      <input type="text" class="form-control" name="ratio[{{ $val->id }}]">
+                  </div>
+                </div>
+              </div>
+            @endforeach
           </div>
           <!-- /.box-body -->
 

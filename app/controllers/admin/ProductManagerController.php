@@ -34,9 +34,18 @@ class ProductManagerController extends AdminController {
     {
         $input = Input::except('_token');
         if (isset($input['product_category'])) {
-            $inputPrimaryKey = ['product_id' => $input['product_id']];
-            $inputSave = ['product_category_id' => array_keys($input['product_category'])];
-            Common::saveOneToMany('ProductManage', $inputPrimaryKey, $inputSave);
+            foreach ($input['product_category'] as $categoryId => $value) {
+                if ($value) {
+                    $data[$categoryId] = array();
+                    $data[$categoryId]['product_id'] = $input['product_id'];
+                    $data[$categoryId]['product_category_id'] = $categoryId;
+                    $data[$categoryId]['ratio'] = ($input['ratio'][$categoryId] != '') ? $input['ratio'][$categoryId] : 0 ;
+                }
+            }
+            ProductManage::insert($data);
+            // $inputPrimaryKey = ['product_id' => $input['product_id']];
+            // $inputSave = ['product_category_id' => array_keys($input['product_category'])];
+            // Common::saveOneToMany('ProductManage', $inputPrimaryKey, $inputSave);
         }
         return Redirect::action('ProductManagerController@index');
     }
@@ -75,6 +84,24 @@ class ProductManagerController extends AdminController {
     public function update($id)
     {
         $input = Input::except('_token');
+        if (isset($input['product_category'])) {
+            ProductManage::where('product_id', $id)->delete();
+            foreach ($input['product_category'] as $categoryId => $value) {
+                if ($value) {
+                    $data[$categoryId] = array();
+                    $data[$categoryId]['product_id'] = $id;
+                    $data[$categoryId]['product_category_id'] = $categoryId;
+                    $data[$categoryId]['ratio'] = ($input['ratio'][$categoryId] != '') ? $input['ratio'][$categoryId] : 0 ;
+                }
+            }
+            ProductManage::insert($data);
+        }
+        return Redirect::action('ProductManagerController@index');
+    }
+
+    /*public function update($id)
+    {
+        $input = Input::except('_token');
         ProductManage::where('product_id', $id)->delete();
         if (isset($input['product'])) {
             $inputPrimaryKey = ['product_id' => $id];
@@ -82,6 +109,6 @@ class ProductManagerController extends AdminController {
             Common::saveOneToMany('ProductManage', $inputPrimaryKey, $inputSave);
         }
         return Redirect::action('ProductManagerController@index');
-    }
+    }*/
     
 }
