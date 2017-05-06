@@ -8,7 +8,7 @@
 
 <div class="row margin-bottom">
   <div class="col-xs-12">
-    <a href="{{ action('StorageLossController@index') }}" class="btn btn-success">Danh sách</a>
+    <a href="{{ action('OverloadRatioController@index') }}" class="btn btn-success">Danh sách</a>
   </div>
 </div>
 
@@ -16,7 +16,7 @@
     <div class="col-xs-12">
         <div class="box box-primary">
         <!-- form start -->
-        {{ Form::open(array('action' => 'StorageLossController@store')) }}
+        {{ Form::open(array('action' => 'OverloadRatioController@store')) }}
           <div class="box-body">
             <div class="form-group">
               <label for="username">Loại hàng</label>
@@ -34,24 +34,21 @@
                 </div>
               </div>
             </div>
-           
-            <div class="form-group">
-              <label for="username">Kho</label>
-              <div class="row">
-                <div class="col-sm-6">
-                  {{ Form::select('warehouse_id', ['' => 'Chọn'] + Warehouse::lists('name', 'id'), null,  array('class' => 'form-control'))}}
+            <?php $index = 0; ?>
+            <div id="row-promotion">
+              <div class="form-group config-data" data-row="<?= $index; ?>">
+                <label for="username">Tên</label>
+                <div class="row">
+                  <div class="col-sm-6">
+                      <input type="text" class="form-control" name="key[{{ $index }}]" value="{{Input::old('name')}}">
+                  </div>
+                  <div class="col-sm-6">
+                      <input type="text" class="form-control" name="value[{{ $index }}]" value="{{Input::old('name')}}">
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="form-group">
-              <label for="username">Tỉ lệ</label>
-              <div class="row">
-                <div class="col-sm-6">
-                    <input type="text" class="form-control" id="ratio" name="ratio" value="{{Input::old('ratio')}}">
-                </div>
-              </div>
-            </div>
-
+            <a class="add-config btn btn-primary">Thêm</a>
           </div>
           <!-- /.box-body -->
 
@@ -79,6 +76,19 @@
             var link = '/admin/api/request/all-product-category';
             getProduct(link);
           }
+      });
+      var i = 0;
+      $( ".add-config" ).click(function() {
+        i++;
+        $("#row-promotion > div:last-child").clone()
+            .attr('data-row', i)
+            .appendTo('#row-promotion');
+        var lastRow = $("#row-promotion > div:last-child :input");
+        var field = [ 'key', 'value'];
+        $.each(lastRow, function (index, item) {
+            $(lastRow[index]).attr('name', field[index] + '[' + i + ']');
+        });
+          
       });
   });
   function getProduct(link) {
