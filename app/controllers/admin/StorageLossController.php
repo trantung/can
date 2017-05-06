@@ -117,7 +117,7 @@ class StorageLossController extends BaseCategoryController {
     }
 
 
-    protected function viewOfActionIndex(){
+    public function viewOfActionIndex(){
         return 'admin.storage-loss.index';
     }
     protected function viewOfActionCreate(){

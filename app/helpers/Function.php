@@ -339,3 +339,26 @@ function isChecked($model, $field1, $value1, $field2, $value2)
 	}
 	return false;
 }
+function calculatorProductAuto($productCateogryId, $productId, $weight, $warehouseId)
+{
+	$ob = ProductManage::where('product_id', $productId)
+		->where('product_category_id', $productCateogryId)
+		->first();
+	if ($ob) {
+		$ratio = $ob->ratio;
+		$productWeight = $weight * $ratio/100;
+		$obStorage = StorageLoss::where('warehouse_id', $warehouseId)
+			->where('model_name', 'Product')
+			->where('model_id', $productId)
+			->first();
+		if ($obStorage) {
+			$ratioStorage = $obStorage->ratio;
+			$weightStorage = $ratioStorage * $productWeight/100;
+			return $weightStorage;
+		}
+		dd('khong co hao hut kho');
+	}
+	dd('khong co hao hut san xuat');
+}
+
+

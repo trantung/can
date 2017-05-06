@@ -15,7 +15,10 @@ class ProductionAuto extends Eloquent
 	    'storage_loss_id', 
 	    'status', 
 	    'created_by', 
-	    'updated_by'
+	    'updated_by',
+	    'product_category_weight',
+	    'product_weight',
+	    'storage_weight',
     ];
 
 }

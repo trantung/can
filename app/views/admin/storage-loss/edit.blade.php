@@ -25,7 +25,7 @@
                 <label for="username">Loại hàng</label>
                 <div class="row">
                   <div class="col-sm-6"> 
-                    {{ Form::select('model_name', ['' => 'Chọn', 1 => 'Nguyên liệu thô', 2 => 'Thành phẩm'], $data->model_name,  array('class' => 'form-control', 'id' => 'model_name'))}}
+                    {{ Form::select('model_name', ['' => 'Chọn', 'ProductCategory' => 'Nguyên liệu thô', 'Product' => 'Thành phẩm'], $data->model_name,  array('class' => 'form-control', 'id' => 'model_name'))}}
                   </div>
                 </div>
               </div>
