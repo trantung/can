@@ -346,6 +346,7 @@ function calculatorProductAuto($productCateogryId, $productId, $weight, $warehou
 		->first();
 	if ($ob) {
 		$ratio = $ob->ratio;
+		$ratio = 100 - $ratio;
 		$productWeight = $weight * $ratio/100;
 		$obStorage = StorageLoss::where('warehouse_id', $warehouseId)
 			->where('model_name', 'Product')
@@ -353,6 +354,7 @@ function calculatorProductAuto($productCateogryId, $productId, $weight, $warehou
 			->first();
 		if ($obStorage) {
 			$ratioStorage = $obStorage->ratio;
+			$ratioStorage = 100 - $ratioStorage;
 			$weightStorage = $ratioStorage * $productWeight/100;
 			return $weightStorage;
 		}
