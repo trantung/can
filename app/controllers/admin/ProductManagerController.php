@@ -33,13 +33,13 @@ class ProductManagerController extends AdminController {
     public function store()
     {
         $input = Input::except('_token');
-        if (isset($input['product_category'])) {
-            foreach ($input['product_category'] as $categoryId => $value) {
+        if (isset($input['product'])) {
+            foreach ($input['product'] as $productId => $value) {
                 if ($value) {
-                    $data[$categoryId] = array();
-                    $data[$categoryId]['product_id'] = $input['product_id'];
-                    $data[$categoryId]['product_category_id'] = $categoryId;
-                    $data[$categoryId]['ratio'] = ($input['ratio'][$categoryId] != '') ? $input['ratio'][$categoryId] : 0 ;
+                    $data[$productId] = array();
+                    $data[$productId]['product_id'] = $productId;
+                    $data[$productId]['product_category_id'] = $input['product_category_id'];
+                    $data[$productId]['ratio'] = ($input['ratio'][$productId] != '') ? $input['ratio'][$productId] : 0 ;
                 }
             }
             ProductManage::insert($data);
@@ -57,22 +57,22 @@ class ProductManagerController extends AdminController {
      */
     public function index()
     {
-        $listProduct = Product::all();
-        $listProductCategory = ProductCategory::lists('name', 'id');
+        $listProduct = Product::lists('name', 'id');
+        $listProductCategory = ProductCategory::all();
         $data = [];
-        foreach ($listProduct as $key => $value) {
+        foreach ($listProductCategory as $key => $value) {
             $data[$key] = new stdClass();
             $data[$key] = $value;
-            $data[$key]->products = ProductManage::where('product_id', $value->id)->lists('product_category_id');
+            $data[$key]->products = ProductManage::where('product_category_id', $value->id)->lists('product_id');
         }
-        return View::make('admin.product-manage.index')->with(compact('data', 'listProductCategory'));
+        return View::make('admin.product-manage.index')->with(compact('data', 'listProduct'));
     }
 
     public function edit($id)
     {
-        $data = Product::find($id);
-        $listProductCategory = ProductCategory::all();
-        return View::make('admin.product-manage.edit')->with(compact('data', 'listProductCategory'));
+        $data = ProductCategory::find($id);
+        $listProduct = Product::all();
+        return View::make('admin.product-manage.edit')->with(compact('data', 'listProduct'));
     }
 
     public function destroy($id)
@@ -84,14 +84,14 @@ class ProductManagerController extends AdminController {
     public function update($id)
     {
         $input = Input::except('_token');
-        if (isset($input['product_category'])) {
-            ProductManage::where('product_id', $id)->delete();
-            foreach ($input['product_category'] as $categoryId => $value) {
+        if (isset($input['product'])) {
+            ProductManage::where('product_category_id', $id)->delete();
+            foreach ($input['product'] as $productId => $value) {
                 if ($value) {
-                    $data[$categoryId] = array();
-                    $data[$categoryId]['product_id'] = $id;
-                    $data[$categoryId]['product_category_id'] = $categoryId;
-                    $data[$categoryId]['ratio'] = ($input['ratio'][$categoryId] != '') ? $input['ratio'][$categoryId] : 0 ;
+                    $data[$productId] = array();
+                    $data[$productId]['product_id'] = $productId;
+                    $data[$productId]['product_category_id'] = $id;
+                    $data[$productId]['ratio'] = ($input['ratio'][$productId] != '') ? $input['ratio'][$productId] : 0 ;
                 }
             }
             ProductManage::insert($data);

@@ -86,7 +86,7 @@
         var lastRow = $("#row-promotion > div:last-child :input");
         var field = [ 'key', 'value'];
         $.each(lastRow, function (index, item) {
-            $(lastRow[index]).attr('name', field[index] + '[' + i + ']');
+            $(lastRow[index]).attr('name', field[index] + '[' + i + ']').val('');
         });
           
       });

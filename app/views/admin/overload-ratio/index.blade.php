@@ -23,15 +23,25 @@
               <table class="table table-hover">
                 <tr>
                   <th>STT</th>
+                  <th>Kiểu sản phẩm</th>
                   <th>Tên</th>
-                  <th>Chi nhánh</th>
                   <th style="width:200px;">Action</th>
                 </tr>
                 @foreach($data as $key => $value)
                 <tr>
                   <td>{{ $key+1 }}</td>
-                  <td>{{ $value->name }}</td>
-                   <td>{{ $value->department <> null ?  $value->department->name : ''}}</td>
+                  <td>
+                    @if ($value->model_name == 'ProductCategory')
+                      Nguyên liệu
+                    @endif
+                  </td>
+                   <td>
+                    @if ($value->model_name == 'ProductCategory')
+                      {{ ProductCategory::find($value->model_id)->name }}
+                    @else
+                      {{ Product::find($value->model_id)->name }}
+                    @endif
+                   </td>
                   <td>
                     <a href="{{ action('OverloadRatioController@edit', $value->id) }}" class="btn btn-primary">Sửa</a>
                     {{ Form::open(array('method'=>'DELETE', 'action' => array('OverloadRatioController@destroy', $value->id), 'style' => 'display: inline-block;')) }}

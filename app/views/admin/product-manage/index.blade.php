@@ -16,8 +16,8 @@
               <table class="table table-hover">
                 <tr>
                   <th>STT</th>
+                  <th>Nguyên liệu</th>
                   <th>Thành phẩm</th>
-                  <th>Nguyên liẹu</th>
                   <th style="width:200px;">Action</th>
                 </tr>
                 @foreach($data as $key => $value)
@@ -27,7 +27,7 @@
                   <td>
                     @foreach($value->products as $k => $val)
                       @if($val != 0)
-                      {{ $listProductCategory[$val] }},
+                      {{ $listProduct[$val] }},
                       @endif
                     @endforeach
                   </td>

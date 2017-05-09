@@ -84,7 +84,9 @@ class OverloadRatioController extends BaseCategoryController {
     * @return model
     */
     protected function getSubTable(){
-        return [];
+        $listProduct = Product::all()->lists('name' ,'id');
+        $listProductCategory = ProductCategory::all()->lists('name' ,'id');
+        return ['product' => $listProduct, 'product_category' => $listProductCategory];
     }
 
     /**
@@ -150,6 +152,32 @@ class OverloadRatioController extends BaseCategoryController {
             }
             $id = $this->model->create($input)->id;
             if(!$id) {
+                dd('Error');
+            }
+        } catch(Exception $e){
+            return $this->returnError($e);
+        }
+
+        return $this->redirectBackAction();
+    }
+
+    /**
+   * [update update once model]
+   * @param  [int] $id [id of model need update]
+   * @return [object]     [$model]
+   */
+    public function update($id){
+        try{
+            $input = $this->getInputFieldUpdate();
+            $validator = $this->updateValidater($input);
+            $input[self::UPDATED_BY] = Auth::admin()->get()->id;
+            $input['data'] = json_encode(array_combine(Input::get('key'),Input::get('value')));
+            if($validator->fails()) {
+                return Redirect::back()->withErrors($validator)->withInput($input);
+            }
+            // dd($input);
+            $result = $this->model->where(self::ID, $id)->update($input);
+            if(!$result) {
                 dd('Error');
             }
         } catch(Exception $e){

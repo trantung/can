@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\SoftDeletingTrait;
 
 class OverloadRatio extends Eloquent
 {
- // use SoftDeletingTrait;
+	use SoftDeletingTrait;
     protected $table = 'overload_ratio';
     protected $fillable = ['model_name', 'model_id', 'data'];
     protected $dates = ['deleted_at'];

@@ -139,8 +139,6 @@ abstract class BaseCategoryController extends AdminController {
     {
         $data = $this->model->find($id);
         $subTable = $this->getSubTable();
-        // dd()
-
         return View::make($this->viewOfActionEdit(), ['data'=>$data, 'subTable'=>$subTable] );
     }
   /**
