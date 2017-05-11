@@ -183,5 +183,10 @@ abstract class BaseCategoryController extends AdminController {
 
         return $this->redirectBackAction();
     }
-
+    public function show($id)
+    {
+        $data = $this->model->find($id);
+        $subTable = $this->getSubTable();
+        return View::make($this->viewOfActionShow(), ['data'=>$data, 'subTable'=>$subTable] );
+    }
 }
