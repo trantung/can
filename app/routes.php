@@ -47,6 +47,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('/overload-ratio', 'OverloadRatioController');
     Route::resource('/scale-station', 'ScaleStationController');
     Route::controller('/scale-station', 'ScaleStationController');
+    Route::resource('/customer-group', 'CustomerGroupController');
     // Route::post('/vocabulary', 'Admin2Controller@store');
     Route::get('/jstree', array('uses' => 'CompanyCategoryController@buildCateJsTree'));
     Route::get('/combotree', array('uses' => 'CompanyCategoryController@buildCate'));

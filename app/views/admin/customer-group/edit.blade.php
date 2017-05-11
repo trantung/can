@@ -1,0 +1,46 @@
+@extends('admin.layout.default')
+
+@section('title')
+{{ $title='Chỉnh sửa khách hàng "'. $data->name .'"' }}
+@stop
+
+@section('content')
+
+@if(Admin::isAdmin())
+<div class="row margin-bottom">
+    <div class="col-xs-12">
+        <a href="{{ action('CustomerGroupController@index') }}" class="btn btn-success">Danh sách khách hàng</a>
+        <a href="{{ action('CustomerGroupController@create') }}" class="btn btn-primary">Thêm khách hàng</a>
+    </div>
+</div>
+@endif
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box box-primary">
+            <!-- form start -->
+            {{ Form::open(array('action' => array('CustomerGroupController@update', $data->id), 'method' => 'PUT')) }}
+               <div class="box-body">
+                <div class="form-group">
+                  <label for="username">Tên khách hàng</label>
+                  <div class="row">
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="name" name="name" value="{{$data->name}}">
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <!-- /.box-body -->
+
+              <div class="box-footer">
+                <input type="submit" class="btn btn-primary" value="Lưu lại" />
+                <input type="reset" class="btn btn-default" value="Nhập lại" />
+              </div>
+            {{ Form::close() }}
+        </div>
+        <!-- /.box -->
+    </div>
+</div>
+
+@stop

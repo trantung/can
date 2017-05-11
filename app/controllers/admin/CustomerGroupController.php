@@ -1,6 +1,6 @@
 <?php
 
-class ScaleStationController extends BaseCategoryController {
+class CustomerGroupController extends BaseCategoryController {
 
 
     protected $model;
@@ -14,7 +14,6 @@ class ScaleStationController extends BaseCategoryController {
     const CRETED_BY       = 'created_by';
     const UPDATED_BY      = 'created_by';
     const DELETED         = 'deleted';
-    const DEPARTMENT_ID   = 'department_id';
     const DESCRIPTION     = 'description';
 
 
@@ -30,7 +29,7 @@ class ScaleStationController extends BaseCategoryController {
     */
     protected function getModel()
     {
-        return new ScaleStation;
+        return new CustomerGroup;
     }
 
     /**
@@ -39,7 +38,9 @@ class ScaleStationController extends BaseCategoryController {
     * @return array
     */
     protected function getInputFieldStore(){
-        return Input::only(self::NAME, self::DEPARTMENT_ID);
+        return Input::only(
+            self::NAME
+        );
     }
 
     /**
@@ -48,7 +49,9 @@ class ScaleStationController extends BaseCategoryController {
     * @return array
     */
     protected function getInputFieldUpdate(){
-        return Input::only(self::NAME, self::DEPARTMENT_ID);
+        return Input::only(
+            self::NAME
+        );
     }
 
     /**
@@ -84,7 +87,7 @@ class ScaleStationController extends BaseCategoryController {
     * @return model
     */
     protected function getSubTable(){
-        return $this->buildArrayData( Company::orderBy('id', 'asc')->get());
+        return [];
     }
 
     /**
@@ -110,56 +113,28 @@ class ScaleStationController extends BaseCategoryController {
     }
 
     protected function redirectBackAction(){
-        return Redirect::action('ScaleStationController@index');
+        return Redirect::action('CustomerGroupController@index');
     }
 
 
     protected function viewOfActionIndex(){
-        return 'admin.scale-station.index';
+        return 'admin.customer-group.index';
     }
     protected function viewOfActionCreate(){
-        return 'admin.scale-station.create';
+        return 'admin.customer-group.create';
     }
     protected function viewOfActionShow(){
-        return 'admin.scale-station.detail';
+        return 'admin.customer-group.detail';
     }
     protected function viewOfActionEdit(){
-        return 'admin.scale-station.edit';
+        return 'admin.customer-group.edit';
     }
 
     public function index()
     {
-        $data = $this->model->orderBy('id', 'asc')->with('department')->paginate(10);
+        $data = $this->model->orderBy('id', 'asc')->paginate(10);
         $subTable = $this->getSubTable();
         return View::make($this->viewOfActionIndex(), ['data'=>$data, 'subTable'=>$subTable]);
     }
 
-    /**
-   * [store store new model to db]
-   * @return [object] [$model]
-   */
-    public function store(){
-        try{
-            $input = $this->getInputFieldStore();
-            $validator = $this->storeValidater($input);
-            if ($objScale = ScaleStation::orderBy('id', 'DESC')->first()) {
-                $input['code'] = 'CN_TC_'. $objScale->id;
-            } else {
-                $input['code'] = 'CN_TC_0';
-            }
-            $input[self::CREATED_BY] = Auth::admin()->get()->id;
-            $input[self::UPDATED_BY] = Auth::admin()->get()->id;
-            if($validator->fails()) {
-                return Redirect::back()->withErrors($validator)->withInput($input);
-            }
-            $id = $this->model->create($input)->id;
-            if(!$id) {
-                dd('Error');
-            }
-        } catch(Exception $e){
-            return $this->returnError($e);
-        }
-
-        return $this->redirectBackAction();
-    }
 }

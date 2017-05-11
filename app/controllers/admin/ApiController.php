@@ -51,11 +51,14 @@ class ApiController extends BaseController {
 
     public function getInstall($appId, $codeScaleStation)
     {
-        $data['company'] = Company::where('level', 2)->first();
-        $data['department'] = Company::where('level', 3)->first();
-        $data['scale_station'] = ScaleStation::where('app_id', $appId)
-                    ->where('code', $codeScaleStation)
-                    ->first();
+        if ($codeScaleStation) {
+            $data['company'] = Company::where('level', 2)->first();
+            $data['department'] = Company::where('level', 3)->first();
+            $data['scale_station'] = ScaleStation::where('app_id', $appId)
+                        ->where('code', $codeScaleStation)
+                        ->first();
+        }
+        
         $response['code'] = 200;
         $response['message'] = 'success';
         $response['data'] = $data;
@@ -81,6 +84,19 @@ class ApiController extends BaseController {
         $response['message'] = 'success';
         $response['data'] = $data;
         return Response::json($response);
+    }
+
+    public function postLogScale()
+    {
+        /**
+         * log cân
+         *  insert log cân
+         */
+
+        /**
+         * log kiểm định
+         */
+       
     }
 
 }
