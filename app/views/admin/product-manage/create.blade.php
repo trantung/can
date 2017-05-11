@@ -19,11 +19,11 @@
         {{ Form::open(array('action' => 'ProductManagerController@store')) }}
           <div class="box-body">
             <div class="form-group">
-              <label for="module_id">Thành phẩm</label>
+              <label for="module_id">Nguyên liệu</label>
               <div class="row">
                 <div class="col-sm-6">
-                  <select class="form-control" name="product_id">
-                      @foreach($listProduct as $key => $value)
+                  <select class="form-control" name="product_category_id">
+                      @foreach($listProductCategory as $key => $value)
                       <option value="{{ $value->id }}">{{ $value->name }}</option>
                       @endforeach
                     </select>
@@ -31,17 +31,17 @@
               </div>
             </div>
             <div class="form-group">
-              Nguyên liệu thô <span class="caret"></span>
-              @foreach($listProductCategory as $k => $val)
+               Thành phẩm <span class="caret"></span>
+              @foreach($listProduct as $k => $val)
               <div class="checkbox">
                 <label>
-                  <input type="checkbox" name="product_category[{{ $val->id }}]" value="true"> {{ $val->name }}
+                  <input type="checkbox" name="product[{{ $val->id }}]" value="true"> {{ $val->name }}
                 </label>
               </div>
               @endforeach
             </div>
             Tỉ lệ hao hụt <span class="caret"></span>
-            @foreach($listProductCategory as $k => $val)
+            @foreach($listProduct as $k => $val)
               <div class="form-group">
                 <label for="username">{{ $val->name }}</label>
                 <div class="row">

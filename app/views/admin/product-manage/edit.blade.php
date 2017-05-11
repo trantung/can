@@ -14,25 +14,25 @@
             {{ Form::open(array('action' => array('ProductManagerController@update', $data->id), 'method' => 'PUT')) }}
                <div class="box-body">
                 <div class="form-group">
-                  <label for="module_id">Sản phẩm</label>
+                  <label for="module_id">Nguyên liệu</label>
                   <div class="row">
                     <div class="col-sm-6">
                       {{$data->name}}
                   </div>
                 </div>
                 <div class="form-group">
-                  Nguyên liệu <span class="caret"></span>
-                  @foreach($listProductCategory as $k => $val)
+                  Thành phẩm <span class="caret"></span>
+                  @foreach($listProduct as $k => $val)
                   <div class="checkbox">
                     <label>
-                      {{ Form::checkbox("product_category[$val->id]", 'true', isChecked('ProductManage', 'product_id', $data->id, 'product_category_id', $val->id) ) }}
+                      {{ Form::checkbox("product[$val->id]", 'true', isChecked('ProductManage', 'product_category_id', $data->id, 'product_id', $val->id) ) }}
                     {{ $val->name }}
                     </label>
                   </div>
                   @endforeach
                 </div>
                 Tỉ lệ hao hụt <span class="caret"></span>
-                @foreach($listProductCategory as $k => $val)
+                @foreach($listProduct as $k => $val)
                   <div class="form-group">
                     <label for="username">{{ $val->name }}</label>
                     <div class="row">

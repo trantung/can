@@ -5,6 +5,13 @@
 @stop
 
 @section('content')
+
+    <div class="row margin-bottom">
+        <div class="col-xs-12">
+            <a href="{{ action('OverloadRatioController@create') }}" class="btn btn-primary">Thêm mới</a>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-xs-12">
           <div class="box">
@@ -16,24 +23,28 @@
               <table class="table table-hover">
                 <tr>
                   <th>STT</th>
-                  <th>Nguyên liệu</th>
-                  <th>Thành phẩm</th>
+                  <th>Kiểu sản phẩm</th>
+                  <th>Tên</th>
                   <th style="width:200px;">Action</th>
                 </tr>
                 @foreach($data as $key => $value)
                 <tr>
                   <td>{{ $key+1 }}</td>
-                  <td>{{ $value->name }}</td>
                   <td>
-                    @foreach($value->products as $k => $val)
-                      @if($val != 0)
-                      {{ $listProduct[$val] }},
-                      @endif
-                    @endforeach
+                    @if ($value->model_name == 'ProductCategory')
+                      Nguyên liệu
+                    @endif
                   </td>
+                   <td>
+                    @if ($value->model_name == 'ProductCategory')
+                      {{ ProductCategory::find($value->model_id)->name }}
+                    @else
+                      {{ Product::find($value->model_id)->name }}
+                    @endif
+                   </td>
                   <td>
-                    <a href="{{ action('ProductManagerController@edit', $value->id) }}" class="btn btn-primary">Cài đặt</a>
-                    {{ Form::open(array('method'=>'DELETE', 'action' => array('ProductManagerController@destroy', $value->id), 'style' => 'display: inline-block;')) }}
+                    <a href="{{ action('OverloadRatioController@edit', $value->id) }}" class="btn btn-primary">Sửa</a>
+                    {{ Form::open(array('method'=>'DELETE', 'action' => array('OverloadRatioController@destroy', $value->id), 'style' => 'display: inline-block;')) }}
                     <button class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa?');">Xóa</button>
                     {{ Form::close() }}
 
@@ -45,6 +56,12 @@
             <!-- /.box-body -->
           </div>
           <!-- /.box -->
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            {{ $data->appends(Request::except('page'))->links() }}
         </div>
     </div>
 

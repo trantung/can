@@ -1,117 +1,142 @@
 <?php
 
-abstract class BaseCategoryController extends AdminController {
+class OverloadRatioController extends BaseCategoryController {
+
+
     protected $model;
-    protected $view;
+
 
     const ZERO       = 0;
     const ONE        = 1;
-    const ID         = 'id';
-    const NAME       = 'name';
-    const CREATED_BY      = 'created_by';
-    const UPDATED_BY      = 'updated_by';
+    // field of contract table.
+    const ID              = 'id';
+    const MODEL_NAME            = 'model_name';
+    const CRETED_BY       = 'created_by';
+    const UPDATED_BY      = 'created_by';
     const DELETED         = 'deleted';
+    const MODEL_ID   = 'model_id';
+    const DATA   = 'data';
+
 
     function __construct(){
-        parent::__construct();
         $this->model = $this->getModel();
     }
+
+
     /**
     * return module name. use for check permission.
     *
     * @return array
     */
-    abstract protected function getModel();
+    protected function getModel()
+    {
+        return new OverloadRatio;
+    }
 
     /**
     * return field before validator and store.
     *
     * @return array
     */
-    abstract protected function getInputFieldStore();
+    protected function getInputFieldStore(){
+        return Input::only(self::MODEL_NAME, self::MODEL_ID, self::DATA);
+    }
 
     /**
     * return field before validator and update.
     *
     * @return array
     */
-    abstract protected function getInputFieldUpdate();
+    protected function getInputFieldUpdate(){
+        return Input::only(self::MODEL_NAME, self::MODEL_ID, self::DATA);
+    }
 
     /**
     * return field before update.
     * @param model
     * @return model
     */
-    abstract protected function updateMoreData($model);
+    protected function updateMoreData($model){
+        return $model;
+    }
 
     /**
     * check field exit update.
     *
     * @return boolean.
     */
-    abstract protected function relationFieldUpdateExit();
+    protected function relationFieldUpdateExit(){
+        return true;
+    }
 
     /**
     * check field exit delete.
-    * @param this collection $model.
+    *
     * @return boolean.
     */
-    abstract protected function relationFieldDeleteExit($model);
-
+    protected function relationFieldDeleteExit($model){
+        return true;
+    }
 
     /**
-    * return sub table result.
-    * @return array
+    * return field before update.
+    * @param collection.
+    * @return model
     */
-    abstract protected function getSubTable();
+    protected function getSubTable(){
+        $listProduct = Product::all()->lists('name' ,'id');
+        $listProductCategory = ProductCategory::all()->lists('name' ,'id');
+        return ['product' => $listProduct, 'product_category' => $listProductCategory];
+    }
 
     /**
     * [validator validator]
     * @param  array  $array [all input need validate]
     * @return
     */
-    abstract protected function storeValidater(array $array);
-    abstract protected function updateValidater(array $array);
+    protected function storeValidater(array $array){
+        return Validator::make($array,[
+            self::MODEL_NAME => 'required',
+        ]);
+    }
 
     /**
-    * return redirect back action
-    */
-    abstract protected function redirectBackAction();
-
-     /**
     * [validator validator]
-    * @param  this controller name
+    * @param  array  $array [all input need validate]
     * @return
     */
-    abstract protected function viewOfActionIndex();
-    abstract protected function viewOfActionCreate();
-    abstract protected function viewOfActionEdit();
-    abstract protected function viewOfActionShow();
+    protected function updateValidater(array $array){
+        return Validator::make($array,[
+            self::MODEL_NAME => 'required',
+        ]);
+    }
+
+    protected function redirectBackAction(){
+        return Redirect::action('OverloadRatioController@index');
+    }
 
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
+    protected function viewOfActionIndex(){
+        return 'admin.overload-ratio.index';
+    }
+    protected function viewOfActionCreate(){
+        return 'admin.overload-ratio.create';
+    }
+    protected function viewOfActionShow(){
+        return 'admin.overload-ratio.detail';
+    }
+    protected function viewOfActionEdit(){
+        return 'admin.overload-ratio.edit';
+    }
+
     public function index()
     {
         $data = $this->model->orderBy('id', 'asc')->paginate(10);
         $subTable = $this->getSubTable();
         return View::make($this->viewOfActionIndex(), ['data'=>$data, 'subTable'=>$subTable]);
     }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        $subTable = $this->getSubTable();
-        return View::make($this->viewOfActionCreate(), ['subTable'=>$subTable]);
-    }
 
-  /**
+    /**
    * [store store new model to db]
    * @return [object] [$model]
    */
@@ -119,6 +144,7 @@ abstract class BaseCategoryController extends AdminController {
         try{
             $input = $this->getInputFieldStore();
             $validator = $this->storeValidater($input);
+            $input['data'] = json_encode(array_combine(Input::get('key'),Input::get('value')));
             $input[self::CREATED_BY] = Auth::admin()->get()->id;
             $input[self::UPDATED_BY] = Auth::admin()->get()->id;
             if($validator->fails()) {
@@ -135,13 +161,7 @@ abstract class BaseCategoryController extends AdminController {
         return $this->redirectBackAction();
     }
 
-    public function edit($id)
-    {
-        $data = $this->model->find($id);
-        $subTable = $this->getSubTable();
-        return View::make($this->viewOfActionEdit(), ['data'=>$data, 'subTable'=>$subTable] );
-    }
-  /**
+    /**
    * [update update once model]
    * @param  [int] $id [id of model need update]
    * @return [object]     [$model]
@@ -151,6 +171,7 @@ abstract class BaseCategoryController extends AdminController {
             $input = $this->getInputFieldUpdate();
             $validator = $this->updateValidater($input);
             $input[self::UPDATED_BY] = Auth::admin()->get()->id;
+            $input['data'] = json_encode(array_combine(Input::get('key'),Input::get('value')));
             if($validator->fails()) {
                 return Redirect::back()->withErrors($validator)->withInput($input);
             }
@@ -166,27 +187,4 @@ abstract class BaseCategoryController extends AdminController {
         return $this->redirectBackAction();
     }
 
-  /**
-   * [destroy set model status is deleted]
-   * @param  [int] $id [id of model need set status is deleted]
-   * @return [status]     [true or false]
-   */
-    public function destroy( $id){
-        try {
-            $result = $this->model->where(self::ID, $id)->delete();
-            if(!$result) {
-                dd('Error');
-            }
-        } catch(Exception $e){
-            return $this->returnError($e);
-        }
-
-        return $this->redirectBackAction();
-    }
-    public function show($id)
-    {
-        $data = $this->model->find($id);
-        $subTable = $this->getSubTable();
-        return View::make($this->viewOfActionShow(), ['data'=>$data, 'subTable'=>$subTable] );
-    }
 }
