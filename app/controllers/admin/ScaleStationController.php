@@ -143,9 +143,9 @@ class ScaleStationController extends BaseCategoryController {
             $input = $this->getInputFieldStore();
             $validator = $this->storeValidater($input);
             if ($objScale = ScaleStation::orderBy('id', 'DESC')->first()) {
-                $input['code'] = 'CN_TC_'. $objScale->id;
+                $input['code'] = 'CN_TC_'. ($objScale->id + 1);
             } else {
-                $input['code'] = 'CN_TC_0';
+                $input['code'] = 'CN_TC_1';
             }
             $input[self::CREATED_BY] = Auth::admin()->get()->id;
             $input[self::UPDATED_BY] = Auth::admin()->get()->id;
