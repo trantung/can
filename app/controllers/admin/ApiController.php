@@ -53,10 +53,10 @@ class ApiController extends BaseController {
     {
         if ($codeScaleStation) {
             $data['company'] = Company::where('level', 2)->first();
-            $data['department'] = Company::where('level', 3)->first();
             $data['scale_station'] = ScaleStation::where('app_id', $appId)
                         ->where('code', $codeScaleStation)
                         ->first();
+            $data['department'] = Company::find($data['scale_station']->id);
         }
         
         $response['code'] = 200;
@@ -80,6 +80,15 @@ class ApiController extends BaseController {
     {
         $data['category_product'] = ProductCategory::lists('name', 'id');
         $data['product'] = Product::lists('name', 'id');
+        $response['code'] = 200;
+        $response['message'] = 'success';
+        $response['data'] = $data;
+        return Response::json($response);
+    }
+
+    public function getWarehouseByAllDepartment()
+    {
+        $data = Company::where('level', 3)->with('warehouse')->get();
         $response['code'] = 200;
         $response['message'] = 'success';
         $response['data'] = $data;
