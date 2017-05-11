@@ -106,6 +106,11 @@
                     <span>Hao hụt lưu kho</span>
                 </a>
             </li>
+            <li>
+                <a href="{{ action('ScaleStationController@index') }}">
+                    <span>Quản lý trạm cân</span>
+                </a>
+            </li>
 
            {{--  <li>
                 <a href="{{ action('SalariesController@index') }}">
