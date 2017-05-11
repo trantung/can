@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Eloquent\SoftDeletingTrait;
 
-class StorageLoss extends Eloquent
+class CustomerShip extends Eloquent
 {
     use SoftDeletingTrait;
     protected $table = 'customer_ships';
