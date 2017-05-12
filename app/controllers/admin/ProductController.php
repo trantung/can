@@ -132,5 +132,10 @@ class ProductController extends BaseCategoryController {
         $data = $this->model->orderBy('id', 'asc')->paginate(10);
         return View::make($this->viewOfActionIndex(), ['data'=>$data]);
     }
-
+    public function store()
+    {
+        $input = Input::except('_token');
+        Product::create($input)->id;
+        return Redirect::action('ProductController@index');
+    }
 }
