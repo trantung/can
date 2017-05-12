@@ -106,7 +106,7 @@ class ApiController extends BaseController {
      */
     public function getReinstallScaleStation($appId, $codeScaleStation)
     {
-        ScaleManage::where('scale_station_code', $scale_station_code)
+        ScaleManage::where('scale_station_code', $codeScaleStation)
                     ->where('app_id', $appId)->update(['active', DEACTIVE]);
         $dataInsert['scale_station_code'] = $codeScaleStation;
         $dataInsert['app_id'] = $appId;
@@ -126,6 +126,22 @@ class ApiController extends BaseController {
          * log kiểm định
          */
        
+    }
+
+    public function postLogin()
+    {
+        $input = Input::all();
+        $checkLogin = Auth::admin()->attempt($input);
+        if($checkLogin) {
+            $response['code'] = 200;
+            $response['message'] = 'success';
+            $response['data'] = Auth::admin()->get()->email;
+            
+        } else {
+            $response['code'] = 500;
+            $response['message'] = 'false';
+        }
+        return Response::json($response);
     }
 
 }

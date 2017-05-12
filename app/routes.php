@@ -45,7 +45,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('/production-loss', 'ProductionLossController');
     Route::resource('/storage-loss', 'StorageLossController');
     Route::resource('/overload-ratio', 'OverloadRatioController');
-    Route::resource('/scale-station', 'ScaleStationController');
+    Route::resource('/scale-station', 'ScaleStationController', array('except' => array('show')));
     Route::controller('/scale-station', 'ScaleStationController');
     Route::resource('/customer-group', 'CustomerGroupController');
     // Route::post('/vocabulary', 'Admin2Controller@store');
@@ -132,9 +132,10 @@ Route::group(['prefix' => 'admin'], function () {
         //copy
     });
 });
-
+Route::get('/login', array('uses' => 'AdminController@login', 'as' => 'admin.login'));
 
 Route::group(['prefix' => 'api'], function () {
+    Route::controller('/request', 'ApiController');
     Route::post('/importcan', 'ApiImportManagement@importBangCan');
     Route::post('/importkiemdinh', 'ApiImportManagement@importKiemDinh');
     Route::post('/importkhachhang', 'ApiImportManagement@importKhachHang');

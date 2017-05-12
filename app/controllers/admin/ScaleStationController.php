@@ -162,4 +162,16 @@ class ScaleStationController extends BaseCategoryController {
 
         return $this->redirectBackAction();
     }
+
+    public function getManage()
+    {
+        $data = ScaleManage::where('active', ACTIVE)->get();
+        return View::make('admin.scale-station.manage')->with(compact('data'));
+    }
+
+    public function putDeactive($id)
+    {
+        ScaleManage::find($id)->update(['active' => 0]);
+        return Redirect::action('ScaleStationController@getManage');
+    }
 }
