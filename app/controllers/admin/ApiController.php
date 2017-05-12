@@ -57,7 +57,6 @@ class ApiController extends BaseController {
     {
         $data = [];
         if ($codeScaleStation) {
-            $data['company'] = Company::where('level', 2)->first();
             $data['scale_station'] = ScaleManage::where('app_id', $appId)
                         ->where('scale_station_code', $codeScaleStation)
                         ->first();
@@ -73,8 +72,12 @@ class ApiController extends BaseController {
         // $dataInsert['app_id'] = $appId;
         // $dataInsert['active'] = ACTIVE;
         // ScaleManage::create($dataInsert);
-        $data['scale_station'] = ScaleManage::find($id);
-        $data['department'] = Company::find($data['scale_station']->id);
+        $scaleCode = ScaleManage::find($id)->scale_station_code;
+        $scale = ScaleStation::where('code', $scaleCode)->first();
+
+        $data['scale_station'] = $scale;
+        $data['department'] = $department = Company::find($scale->department_id);
+        $data['company'] = Company::find($department->parent_id);
         $response['code'] = 200;
         $response['message'] = 'success';
         $response['data'] = $data;
