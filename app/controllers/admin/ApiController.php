@@ -74,6 +74,7 @@ class ApiController extends BaseController {
         // $dataInsert['active'] = ACTIVE;
         // ScaleManage::create($dataInsert);
         $data['scale_station'] = ScaleManage::find($id);
+        $data['department'] = Company::find($data['scale_station']->id);
         $response['code'] = 200;
         $response['message'] = 'success';
         $response['data'] = $data;
