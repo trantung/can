@@ -148,7 +148,7 @@ class ApiController extends BaseController {
         if($checkLogin) {
             $response['code'] = 200;
             $response['message'] = 'success';
-            $response['data'] = Auth::admin()->get()->email;
+            $response['data'] = Auth::admin()->get();
             
         } else {
             $response['code'] = 500;
