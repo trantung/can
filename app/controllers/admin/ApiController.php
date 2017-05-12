@@ -157,4 +157,17 @@ class ApiController extends BaseController {
         return Response::json($response);
     }
 
+    public function getStorageLoss($productCategoryId, $productId)
+    {
+        $response['code'] = 200;
+        $response['data'] = calculatorLoss('ProductManage', ['product_id' => $productId, 'product_category_id' => $productCategoryId]);
+        return Response::json($response);
+    }
+    public function getProductionLoss($productCategoryId, $productId, $weight, $warehouseId)
+    {
+        $response['code'] = 200;
+        $response['data'] = calculatorProductAuto($productCategoryId, $productId, $weight, $warehouseId);
+        return Response::json($response);
+    }
+
 }
