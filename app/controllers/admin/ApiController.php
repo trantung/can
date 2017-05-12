@@ -55,16 +55,28 @@ class ApiController extends BaseController {
      */
     public function getInstall($appId, $codeScaleStation)
     {
+        $data = [];
         if ($codeScaleStation) {
             $data['company'] = Company::where('level', 2)->first();
-            $data['scale_station'] = ScaleStation::where('app_id', $appId)
-                        ->where('code', $codeScaleStation)
+            $data['scale_station'] = ScaleManage::where('app_id', $appId)
+                        ->where('scale_station_code', $codeScaleStation)
                         ->first();
             if ($data['scale_station']) {
-                $data['department'] = Company::find($data['scale_station']->id);
+                // $data['department'] = Company::find($data['scale_station']->id);
+                $response['code'] = 200;
+                $response['message'] = 'không cài được do tồn tại app_id';
+                return Response::json($response);
             }
-
         }
+        
+        ScaleManage::where('scale_station_code', $codeScaleStation)
+                    ->where('app_id', $appId)->update(['active', DEACTIVE]);
+        ScaleManage::create(['scale_station_code' => $codeScaleStation, 'app_id' => $appId, 'active' => ACTIVE]);
+        // $dataInsert['scale_station_code'] = $codeScaleStation;
+        // $dataInsert['app_id'] = $appId;
+        // $dataInsert['active'] = ACTIVE;
+        // ScaleManage::create($dataInsert);
+
         $response['code'] = 200;
         $response['message'] = 'success';
         $response['data'] = $data;
