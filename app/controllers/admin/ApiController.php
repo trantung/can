@@ -71,7 +71,7 @@ class ApiController extends BaseController {
         
         ScaleManage::where('scale_station_code', $codeScaleStation)
                     ->where('app_id', $appId)->update(['active', 2]);
-        $id = ScaleManage::create(['scale_station_code' => $codeScaleStation, 'app_id' => $appId, 'active' => 1]);
+        $id = ScaleManage::create(['scale_station_code' => $codeScaleStation, 'app_id' => $appId, 'active' => 1])->id;
         // $dataInsert['scale_station_code'] = $codeScaleStation;
         // $dataInsert['app_id'] = $appId;
         // $dataInsert['active'] = ACTIVE;
