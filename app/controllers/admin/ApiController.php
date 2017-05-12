@@ -5,7 +5,7 @@ class ApiController extends BaseController {
     public function getAllDepartmentByLevel($level = null)
     {
         if (!$level) {
-            $level = 3;
+            $level = 4;
         }
         if (Input::has('status')) {
             //status = trạng thái hàng chuyển kho
@@ -107,7 +107,7 @@ class ApiController extends BaseController {
 
     public function getWarehouseByAllDepartment()
     {
-        $data = Company::where('level', 3)->with('warehouse')->get();
+        $data = Company::where('level', 4)->with('warehouse')->get();
         $response['code'] = 200;
         $response['message'] = 'success';
         $response['data'] = $data;
