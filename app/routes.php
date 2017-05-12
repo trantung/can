@@ -127,7 +127,6 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/department-by-one/{id}', 'CompanyCategoryController@getDepartmentByOne');
         Route::get('/warehouse-by-department/{id}', 'WarehouseController@getWarehouseByDepartment');
         Route::get('/warehouse', 'WarehouseController@getWarehouse');
-        Route::controller('/request', 'ApiController');
 
         //copy
     });
