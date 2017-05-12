@@ -380,7 +380,7 @@ function calculatorLoss($modelName, $array)
 {
 	$ob = $modelName::where($array)->first();
 	if ($ob) {
-		$ob->ratio;
+		return $ob->ratio;
 	}
 	return 0;
 }
@@ -389,7 +389,44 @@ function calculatorWeightAfter($weight, $value)
 	$weightAfter = $weight * $value;
 	return $weightAfter;
 }
+function calculatorStorage($warehouseOriginId, $productId, $weight, $status, $warehouseOriginTargetId = null)
+{
+	//Tu SX
+	//trừ kho có nguyên liệu
+	if ($status == 6) {
+		$ob = StorageLoss::where('warehouse_id', $warehouseOriginId)
+			->where('model_name', 'ProductCategory')
+			->where('model_id', $productId)
+			->first();
+		if ($ob) {
+			$weightStorage = $ob->weight;
+			$ob->update(['weight' => ($weightStorage - $weight)]);
+			return true;
+		}
+		// $id = StorageLoss::create(['warehouse_id' => $warehouseOriginId, 
+		// 	'model_name' => 'ProductCategory',
+		// 	'model_id' => $productId,
+		// 	'weight' => $weight
+		// ]);
+		return false;
+	}
 
-
-
-
+	//Cộng vào kho có thành phẩm
+	if ($status == 7) {
+		$ob = StorageLoss::where('warehouse_id', $warehouseOriginTargetId)
+			->where('model_name', 'Product')
+			->where('model_id', $productId)
+			->first();
+		if ($ob) {
+			$weightStorage = $ob->weight;
+			$ob->update(['weight' => ($weightStorage + $weight)]);
+			return true;
+		}
+		$id = StorageLoss::create(['warehouse_id' => $warehouseOriginTargetId, 
+			'model_name' => 'Product',
+			'model_id' => $productId,
+			'weight' => $weight
+		]);
+		return true;
+	}
+}
