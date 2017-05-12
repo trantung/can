@@ -347,20 +347,26 @@ function calculatorProductAuto($productCateogryId, $productId, $weight, $warehou
 	if ($ob) {
 		$ratio = $ob->ratio;
 		$ratio = 100 - $ratio;
-		$productWeight = $weight * $ratio/100;
-		$obStorage = StorageLoss::where('warehouse_id', $warehouseId)
-			->where('model_name', 'Product')
-			->where('model_id', $productId)
-			->first();
-		if ($obStorage) {
-			$ratioStorage = $obStorage->ratio;
-			$ratioStorage = 100 - $ratioStorage;
-			$weightStorage = $ratioStorage * $productWeight/100;
-			return $weightStorage;
-		}
-		dd('khong co hao hut kho');
 	}
-	dd('khong co hao hut san xuat');
+	else {
+		$ratio = 100;
+	}
+	$productWeight = $weight * $ratio/100;
+	$obStorage = StorageLoss::where('warehouse_id', $warehouseId)
+		->where('model_name', 'Product')
+		->where('model_id', $productId)
+		->first();
+	if ($obStorage) {
+		$ratioStorage = $obStorage->ratio;
+		$ratioStorage = 100 - $ratioStorage;
+		$weightStorage = $ratioStorage * $productWeight/100;
+		return $weightStorage;
+	}
+	else {
+		$ratioStorage = 100;
+	}
+	$weightStorage = $ratioStorage * $productWeight/100;
+	return $weightStorage;
 }
 function getCodeAuto($value, $model)
 {
@@ -378,7 +384,11 @@ function calculatorLoss($modelName, $array)
 	}
 	return 0;
 }
-
+function calculatorWeightAfter($weight, $value)
+{
+	$weightAfter = $weight * $value;
+	return $weightAfter;
+}
 
 
 
