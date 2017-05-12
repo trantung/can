@@ -19,6 +19,15 @@
         {{ Form::open(array('action' => 'ProductCategoryController@store')) }}
           <div class="box-body">
             <div class="form-group">
+              <label for="username">Mã nguyên liệu</label>
+              <div class="row">
+                <div class="col-sm-6">
+                  {{ getCodeAuto('NL', 'ProductCategory') }}
+                  {{ Form::hidden('code', getCodeAuto('NL', 'ProductCategory')) }}
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
               <label for="username">Tên</label>
               <div class="row">
                 <div class="col-sm-6">
@@ -26,7 +35,14 @@
                 </div>
               </div>
             </div>
-
+            <div class="form-group">
+              <label for="username">Mô tả</label>
+              <div class="row">
+                <div class="col-sm-6">
+                  <textarea class="form-control" rows="5" name="description"></textarea>
+                </div>
+              </div>
+            </div>
           </div>
           <!-- /.box-body -->
 

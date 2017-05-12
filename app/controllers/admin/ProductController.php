@@ -56,7 +56,7 @@ class ProductController extends BaseCategoryController {
     * @return array
     */
     protected function getInputFieldUpdate(){
-        return Input::only(self::NAME);
+        return Input::only(self::NAME, self::DESCRIPTION);
     }
 
     /**

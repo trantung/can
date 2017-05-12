@@ -23,14 +23,17 @@
               <table class="table table-hover">
                 <tr>
                   <th>STT</th>
+                  <th>Mã nguyên liệu</th>
                   <th>Tên</th>
                   <th style="width:200px;">Action</th>
                 </tr>
                 @foreach($data as $key => $value)
                 <tr>
                   <td>{{ $key+1 }}</td>
+                  <td>{{ $value->code }}</td>
                   <td>{{ $value->name }}</td>
                   <td>
+                    <a href="{{ action('ProductCategoryController@show', $value->id) }}" class="btn btn-primary">Xem</a>
                     <a href="{{ action('ProductCategoryController@edit', $value->id) }}" class="btn btn-primary">Sửa</a>
                     {{ Form::open(array('method'=>'DELETE', 'action' => array('ProductCategoryController@destroy', $value->id), 'style' => 'display: inline-block;')) }}
                     <button class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa?');">Xóa</button>
