@@ -22,6 +22,14 @@
             {{ Form::open(array('action' => array('ProductCategoryController@update', $data->id), 'method' => 'PUT')) }}
                <div class="box-body">
                 <div class="form-group">
+                  <label for="username">Mã nguyên liệu</label>
+                  <div class="row">
+                    <div class="col-sm-6">
+                        {{ $data->code }}
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
                   <label for="username">Tên</label>
                   <div class="row">
                     <div class="col-sm-6">
@@ -29,7 +37,15 @@
                     </div>
                   </div>
                 </div>
+                <div class="form-group">
+                  <label>Mô tả</label>
+                  <div class="row">
+                    <div class="col-sm-6">
 
+                    {{ Form::textarea('description', $data->description, array('row' => 5, 'class' => 'form-control')) }}
+                    </div>
+                  </div>
+                </div>
               </div>
               <!-- /.box-body -->
 

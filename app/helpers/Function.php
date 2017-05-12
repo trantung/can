@@ -362,5 +362,12 @@ function calculatorProductAuto($productCateogryId, $productId, $weight, $warehou
 	}
 	dd('khong co hao hut san xuat');
 }
-
+function getCodeAuto($value, $model)
+{
+	$ob = $model::orderBy('id', 'desc')->first();
+	if ($ob) {
+		return $value . ($ob->id +1);
+	}
+	return $value. '1';
+}
 
