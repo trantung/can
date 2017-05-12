@@ -49,6 +49,10 @@ class ApiController extends BaseController {
         return Response::json($response);
     }
 
+
+    /**
+     * api install scale station
+     */
     public function getInstall($appId, $codeScaleStation)
     {
         if ($codeScaleStation) {
@@ -56,9 +60,11 @@ class ApiController extends BaseController {
             $data['scale_station'] = ScaleStation::where('app_id', $appId)
                         ->where('code', $codeScaleStation)
                         ->first();
-            $data['department'] = Company::find($data['scale_station']->id);
+            if ($data['scale_station']) {
+                $data['department'] = Company::find($data['scale_station']->id);
+            }
+
         }
-        
         $response['code'] = 200;
         $response['message'] = 'success';
         $response['data'] = $data;
@@ -73,7 +79,7 @@ class ApiController extends BaseController {
         $response['code'] = 200;
         $response['message'] = 'success';
         $response['data'] = $data;
-        return Response::json($listCustomer);
+        return Response::json($response);
     }
 
     public function getAllTypeProduct()
@@ -93,6 +99,20 @@ class ApiController extends BaseController {
         $response['message'] = 'success';
         $response['data'] = $data;
         return Response::json($response);
+    }
+
+    /**
+     * api install scale station
+     */
+    public function getReinstallScaleStation($appId, $codeScaleStation)
+    {
+        ScaleManage::where('scale_station_code', $scale_station_code)
+                    ->where('app_id', $appId)->update(['active', DEACTIVE]);
+        $dataInsert['scale_station_code'] = $codeScaleStation;
+        $dataInsert['app_id'] = $appId;
+        $dataInsert['active'] = ACTIVE;
+        ScaleManage::create($dataInsert);
+        return true;
     }
 
     public function postLogScale()
