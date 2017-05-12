@@ -370,4 +370,16 @@ function getCodeAuto($value, $model)
 	}
 	return $value. '1';
 }
+function calculatorLoss($modelName, $array)
+{
+	$ob = $modelName::where($array)->first();
+	if ($ob) {
+		$ob->ratio;
+	}
+	return 0;
+}
+
+
+
+
 
