@@ -19,15 +19,24 @@
         {{ Form::open(array('action' => 'ProductionAutoController@store')) }}
           <div class="box-body">
             <div class="form-group">
-              <label for="username">Chi nhánh</label>
+              <label for="username">Mã phiếu</label>
               <div class="row">
                 <div class="col-sm-6">
-                  {{ Form::select('department_id', ['' => 'Chọn'] + Company::level(3)->lists('name', 'id'), null,  array('class' => 'form-control', 'id' => 'department_id'))}}
+                  {{ getCodeAuto('TSX', 'ProductionAuto') }}
+                  <input type="hidden" name="code" id="code" class="form-control" value="{{ getCodeAuto('TSX', 'ProductionAuto') }}">
                 </div>
               </div>
             </div>
             <div class="form-group">
-              <label for="username">Kho</label>
+              <label for="username">Chi nhánh</label>
+              <div class="row">
+                <div class="col-sm-6">
+                  {{ Form::select('department_id', ['' => 'Chọn'] + Company::level(4)->lists('name', 'id'), null,  array('class' => 'form-control', 'id' => 'department_id'))}}
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="username">Kho nguyên liệu</label>
               <div class="row">
                 <div class="col-sm-6">
                   {{ Form::select('warehouse_id', ['' => 'Chọn'], null,  array('class' => 'form-control', 'id' => 'warehouse_id'))}}
@@ -51,10 +60,12 @@
               </div>
             </div>
             <div class="form-group">
-              <label for="username">Hao hụt lưu kho</label>
+              <label for="username">Hao hụt sản xuất</label>
               <div class="row">
-                <div class="col-sm-6 storage-loss">
-                  {{Form::hidden('storage_loss', null,  array('id' => 'storage_loss'))}}
+                <div class="col-sm-6 production-loss">
+                </div>
+                <div class="col-sm-6">
+                <input type="hidden" name="product_loss_id" id="product_loss_id" class="form-control">
                 </div>
               </div>
             </div>
@@ -67,10 +78,32 @@
               </div>
             </div>
             <div class="form-group">
-              <label for="username">Hao hụt sản xuất</label>
+              <label for="username">Kết quả</label>
               <div class="row">
-                <div class="col-sm-6 production-loss">
-                  {{Form::hidden('production_loss', null,  array('id' => 'production_loss'))}}
+                <div class="col-sm-6 result">
+                </div>
+                <div class="col-sm-6">
+                  <input type="hidden" name="product_weight" id="product_weight" class="form-control">
+                </div>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="username">Kho thành phẩm</label>
+              <div class="row">
+                <div class="col-sm-6">
+                  {{ Form::select('warehouse_output_id', ['' => 'Chọn'], null,  array('class' => 'form-control', 'id' => 'warehouse_output_id'))}}
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="username">Hao hụt lưu kho</label>
+              <div class="row">
+                <div class="col-sm-6 storage-loss">
+                </div>
+                <div class="col-sm-6">
+                <input type="hidden" name="storage_loss_id" id="storage_loss_id" class="form-control">
                 </div>
               </div>
             </div>
@@ -97,14 +130,24 @@
       $('#product_id').on('change', function (e) {
         var productId = $('#product_id').val();
         var productCategoryId = $('#product_category_id').val();
-        getStorageLoss(productCategoryId, productId);
+        getProductionLoss(productCategoryId, productId);
       });
       $("#product_category_weight").keyup(function(){
-        var productId = $('#product_id').val();
-        var productCategoryId = $('#product_category_id').val();
-        var warehouseId = $('#warehouse_id').val();
-        var weight = $('#product_category_weight').val();
-        getProductionLoss(productCategoryId, productId, weight, warehouseId);
+        setTimeout(function(){
+          var productId = $('#product_id').val();
+          var productCategoryId = $('#product_category_id').val();
+          var warehouseId = $('#warehouse_id').val();
+          var weight = $('#product_category_weight').val();
+          getResultProductionAuto(productCategoryId, productId, weight, warehouseId);
+        }, 500);
+      });
+      $('#warehouse_output_id').on('change', function (e) {
+          var id = $('#warehouse_output_id').val();
+          var productId = $('#product_id').val();
+          console.log("productId", productId);
+          if (id != 0) {
+            getStorageLoss(id, productId);
+          }
       });
   });
   function getWarehouse(id) {
@@ -119,31 +162,50 @@
                     text : item.name 
                 }));
             });
+            $('#warehouse_output_id').html('');
+            $.each(response, function (i, item) {
+                $('#warehouse_output_id').append($('<option>', { 
+                    value: item.id,
+                    text : item.name 
+                }));
+            });
         }
     });
   }
-  function getStorageLoss(productCategoryId, productId) {
+  function getProductionLoss(productCategoryId, productId) {
     $.ajax({
       type: "GET",
-      url: '/api/request/storage-loss/' + productCategoryId + '/' + productId,
+      url: '/api/request/production-loss/' + productCategoryId + '/' + productId,
       success: function(response){
         if (response.code == 200) {
-          $('.storage-loss').html(response.data + ' %');
-          $('#storage_loss').val(response.data);
+          $('.production-loss').html(response.data + ' %');
+          $('#product_loss_id').val(response.data);
         }
       }
     });
   }
-  function getProductionLoss(productCategoryId, productId, weight, warehouseId) {
+  function getStorageLoss(id, productId) {
     $.ajax({
       type: "GET",
-      url: '/api/request/production-loss/' + productCategoryId + '/' + productId + '/' + weight + '/' + warehouseId,
+      url: '/api/request/storage-loss/' + id + '/' + productId,
       success: function(response){
         if (response.code == 200) {
-          $('.production-loss').html(response.data + ' %');
-          $('#production_loss').val(response.data);
+          $('.storage-loss').html(response.data + ' %');
+          $('#storage_loss_id').val(response.data);
+        }
+      }
+    });
+  }
+  function getResultProductionAuto(productCategoryId, productId, weight, warehouseId) {
+    $.ajax({
+      type: "GET",
+      url: '/api/request/result-production-auto/' + productCategoryId + '/' + productId + '/' + weight + '/' + warehouseId,
+      success: function(response){
+        if (response.code == 200) {
+          $('.result').html(response.data + ' %');
+          $('#product_weight').val(response.data);
         } else {
-          $('.production-loss').html('Không có hao hụt kho');
+          $('.result').html('Không có hao hụt kho');
         }
       }
     });

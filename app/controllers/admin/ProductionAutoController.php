@@ -145,11 +145,13 @@ class ProductionAutoController extends BaseCategoryController {
     public function store()
     {
         $input = Input::except('_token');
-        dd($input);
+        $input['code'] = getCodeAuto('TSX', 'ProductionAuto');
+        $productionAuto = $this->model->create($input);
         $productCategoryWeight = $input['product_category_weight'];
+        return $this->redirectBackAction();
         // $weightStorage = calculatorProductAuto($input['product_category_id'], $input['product_id'], $input['product_category_weight'], $input['warehouse_id']);
-        return View::make('admin.production-auto.show')->with(compact('weightStorage', 'input'));
-        dd($input);
+        // return View::make('admin.production-auto.show')->with(compact('weightStorage', 'input'));
+        // dd($input);
     }
 
 }

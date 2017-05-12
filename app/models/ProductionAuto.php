@@ -17,6 +17,7 @@ class ProductionAuto extends Eloquent
 	    'created_by', 
 	    'updated_by',
 	    'product_category_weight',
+	    'warehouse_output_id',
 	    'product_weight',
 	    'storage_weight',
     ];

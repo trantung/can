@@ -23,20 +23,28 @@
               <table class="table table-hover">
                 <tr>
                   <th>STT</th>
-                  <th>Tên</th>
-                  <th style="width:200px;">Action</th>
+                  <th>Mã phiếu</th>
+                  <th>Kho nguyên liệu</th>
+                  <th>Nguyên liệu</th>
+                  <th>Thành phẩm</th>
+                  <th>Hao hụt sản xuất</th>
+                  <th>Hao hụt lưu kho</th>
+                  <th>Trọng lượng nguyên liệu</th>
+                  <th>Kho thành phẩm</th>
+                  <th>Trọng lượng hàng</th>
                 </tr>
                 @foreach($data as $key => $value)
                 <tr>
                   <td>{{ $key+1 }}</td>
-                  <td>{{ $value->name }}</td>
-                  <td>
-                    <a href="{{ action('ProductionAutoController@edit', $value->id) }}" class="btn btn-primary">Sửa</a>
-                    {{ Form::open(array('method'=>'DELETE', 'action' => array('ProductionAutoController@destroy', $value->id), 'style' => 'display: inline-block;')) }}
-                    <button class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa?');">Xóa</button>
-                    {{ Form::close() }}
-
-                  </td>
+                  <td>{{ $value->code }}</td>
+                  <td>{{ Warehouse::find($value->warehouse_id)->name }}</td>
+                  <td>{{ ProductCategory::find($value->product_category_id)->name }}</td>
+                  <td>{{ Product::find($value->product_id)->name }}</td>
+                  <td>{{ $value->product_loss_id }}</td>
+                  <td>{{ $value->storage_loss_id }}</td>
+                  <td>{{ $value->product_category_weight }}</td>
+                  <td>{{ Warehouse::find($value->warehouse_output_id)->name }}</td>
+                  <td>{{ $value->product_weight }}</td>
                 </tr>
                 @endforeach
               </table>

@@ -339,10 +339,10 @@ function isChecked($model, $field1, $value1, $field2, $value2)
 	}
 	return false;
 }
-function calculatorProductAuto($productCateogryId, $productId, $weight, $warehouseId)
+function calculatorProductAuto($productCategoryId, $productId, $weight, $warehouseId)
 {
 	$ob = ProductManage::where('product_id', $productId)
-		->where('product_category_id', $productCateogryId)
+		->where('product_category_id', $productCategoryId)
 		->first();
 	if ($ob) {
 		$ratio = $ob->ratio;
@@ -380,7 +380,7 @@ function calculatorLoss($modelName, $array)
 {
 	$ob = $modelName::where($array)->first();
 	if ($ob) {
-		$ob->ratio;
+		return $ob->ratio;
 	}
 	return 0;
 }
