@@ -32,9 +32,20 @@
                 @foreach($data as $key => $value)
                 <tr>
                   <td>{{ $key+1 }}</td>
-                  <td>{{ $value->model_name }}</td>
-                  <td>{{ $value->model_id }}</td>
-                  <td>{{ $value->warehouse_id }}</td>
+                  <td>
+                    @if ($value->model_name == 'ProductCategory')
+                      Nguyên liệu
+                      
+                    @else
+                      Thành phẩm
+                    @endif
+                  </td>
+                  <td><?php $model = $value->model_name; ?>{{ $model::find(2)->name }}</td>
+                  <td>
+                    @if ($warehouse = Warehouse::find($value->warehouse_id))
+                      {{ $warehouse->name }}
+                    @endif
+                  </td>
                   <td>{{ $value->ratio }}</td>
                   <td>
                     <a href="{{ action('StorageLossController@edit', $value->id) }}" class="btn btn-primary">Sửa</a>
