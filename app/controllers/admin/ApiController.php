@@ -177,5 +177,38 @@ class ApiController extends BaseController {
         $response['data'] = calculatorProductAuto($productCategoryId, $productId, $weight, $warehouseId);
         return Response::json($response);
     }
+    public function installKcs($appId, $code)
+    {
+        //check app_id va code ton tai
+        $check = KcsLogInstall::where('app_id', $appId)->where('department_code', $code)->first();
+        if ($check) {
+            $response['code'] = 200;
+            $response['message'] = 'appId và mã chi nhánh đã tồn tại';
+            return Response::json($response);
+        }
+        $data['department'] = $department = Company::where('code', $code)->first();
+        if (!$department) {
+            $response['code'] = 200;
+            $response['message'] = 'mã chi nhánh sai';
+            return Response::json($response);
+        }
+        $data['company'] = $company = Company::find($department->parent_id);
+        if (!$company) {
+            $response['code'] = 200;
+            $response['message'] = 'Chi nhánh bị lỗi';
+            return Response::json($response);
+        }
+        //tao moi KcsLogInstall
+        $kcsId = KcsLogInstall::create(['department_code' => $code, 'app_id' => $appId])->id;
+        if (!$kcsId) {
+            $response['code'] = 200;
+            $response['message'] = 'Không tạo mới được kcs';
+            return Response::json($response);
+        }
+        $response['code'] = 200;
+        $response['message'] = 'success';
+        $response['data'] = $data;
+        return Response::json($response);
+    }
 
 }

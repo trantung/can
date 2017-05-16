@@ -134,6 +134,7 @@ Route::group(['prefix' => 'admin'], function () {
 Route::get('/login', array('uses' => 'AdminController@login', 'as' => 'admin.login'));
 
 Route::group(['prefix' => 'api'], function () {
+    Route::post('/install/kcs/{appId}/{chinhanhCode}', 'ApiController@installKcs');
     Route::controller('/request', 'ApiController');
     Route::post('/importcan', 'ApiImportManagement@importBangCan');
     Route::post('/importkiemdinh', 'ApiImportManagement@importKiemDinh');
