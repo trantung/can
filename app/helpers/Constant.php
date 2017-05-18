@@ -90,5 +90,7 @@ define('HISTORY', 0);
 define('BONUSHISTORY', 1);
 define('SALARY_1', 1);
 define('SALARY_2', 2);
+define('ONLINE', 1);
+define('OFFLINE', 2);
 //Errors message
 define('INSERT_HAS_FAIL', 'Thêm mới bản ghi thất bại');

@@ -130,15 +130,44 @@ class ApiController extends BaseController {
 
     public function postLogScale()
     {
-        /**
-         * log cân
-         *  insert log cân
-         */
+        dd(Input::all());
+        $input = Input::all();
+        //check type
+        if ($input['type'] == 'KCS') {
+            //insert data KCS
+            CommonNormal::storeDataKCS($input);
+        } else {
+            if ($input['chien_dich_id'] == '') {
+                //nếu là cân thường
+                //insert data scale
+                $id = CommonNormal::storeDataScale($input);
+                //tinh khoi luong hang : nếu có lớn hơn 2 lần cân trên 1 mã phiếu
+                $obj = ScaleKCS::find($id);
+                $scale = ScaleKCS::where('number_ticket', $obj->number_ticket)
+                    ->whereNull('type')
+                    ->where('package_weight', '>', 0)
+                    ->first();
+                if ($secondTicket) {
+                    //tinh toan luu kho
 
-        /**
-         * log kiểm định
-         */
-       
+
+                    //kiểm tra xem đã kiểm định chưa ( KCS): muc dich de in chung thu
+                    $kcs = ScaleKCS::where('number_ticket', $obj->number_ticket)
+                        ->where('type', 'KCS')
+                        ->first();
+                    if ($kcs) {
+                        // tính lượng trừ
+                        CommonNormal::calcLuongTru();
+                        //lưu lượng trừ vào 1 bảng
+                    }
+                }
+                //end cân thường
+            } else {
+                //cân chiến dịch -> todo
+            }
+            
+        }
+        //nếu tồn tại cả data kiểm định + data cân cùng 1 mã phiếu thì tính số liệu
     }
 
     public function postLogin()

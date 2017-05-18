@@ -61,4 +61,126 @@ class CommonNormal
 		}
 
 	}
+
+	public static function storeDataScale($input)
+	{
+		$data = $this->getDataScale($input);
+		$data['is_online'] = ONLINE;
+		$id = ScaleKCS::create($data)->id;
+		return $id;
+	}
+
+	public static function storeDataKCS($input)
+	{
+		$data = $this->getDataKCS($input);
+		$data['is_online'] = ONLINE;
+		$id = ScaleKCS::create($data)->id;
+		return $id;
+	}
+
+	public function getDataScale($input)
+	{
+		$arrayKey = [
+			'id_user' => 'user_id',
+			'so_phieu' => 'number_ticket',
+			'so_xe' => 'number_car',
+			'id_the_loai' => 'category_id',
+			'id_kieu_can' => 'transfer_type',
+			'id_kho' => 'warehouse_id',
+			'id_chi_nhanh_xuat_nhap' => 'department_id',
+			'chien_dich_id' => 'campaign_code',
+			'chien_dich_ten' => 'campaign_name',
+			'chien_dich_phuong_tien' => 'campaign_method',
+			'id_kh' => 'customer_id',
+			'khach_hang_ten' => 'customer_name',
+			'khach_hang_sdt' => 'customer_phone',
+			'khach_hang_dia_chi' => 'customer_address',
+			'khach_hang_fax' => 'customer_fax',
+			'ngay_can' => 'scale_at',
+			'gio_can_lan_1' => 'first_scale_hour',
+			'gio_can_lan_2' => 'second_scale_hour',
+			'kl_can_lan_1' => 'first_scale_weight',
+			'kl_can_lan_2' => 'second_scale_weight',
+			'kl_hang' => 'package_weight',
+			'app_id' => 'app_id',
+			'code' => 'code'
+		];
+		return $this->prepareData($input, $arrayKey);
+	}
+
+	public function getDataKCS($input)
+	{
+		$arrayKey = [
+			'user_id' => 'user_id',
+			'soPhieu' => 'number_ticket',
+			'tongTL' => 'weight_total',
+			'tlMun' => 'trong_luong_mun',
+			'tlQuaCo' => 'trong_luong_qua_co',
+			'tlVo' => 'trong_luong_vo',
+			'tlTapChat' => 'trong_luong_tap_chat',
+			'tyLeMun' => 'ty_le_mun',
+			'tyLeQuaCo' => 'ty_le_qua_co',
+			'tyLeTapChat' => 'ty_le_tap_chat',
+			'tyLeVo' => 'ty_le_vo',
+			'doKho' => 'do_kho',
+			'thoiGian' => 'created_at',
+			'app_id' => 'app_id',
+			'code' => 'code',
+			'type' => 'type'
+		];
+		return $this->prepareData($input, $arrayKey);
+	}
+
+	public function prepareData($input, $arrayKey)
+	{
+		$data = [];
+		foreach ($input as $key => $value) {
+			if ($arrayKey[$key]) {
+				$data[$arrayKey[$key]] = $value;
+			}
+		}
+		return $data;
+	}
+
+	public static function getProductCategoryId($stringIdCategory)
+	{
+		$id = 1;
+		return $model;
+	}
+
+	public static function getOverloadRatio($stringIdCategory)
+	{
+		$model = $this->getProductCategoryId($stringIdCategory);
+		$modelId = $model[0];
+		$type = $model[1];
+		if ($type == 1) {
+			$modelName = 'Product';
+		}
+		if ($type == 2) {
+			$modelName = 'ProductCategory';
+		}
+		$data = OverloadRatio::where('model_name', $modelName)
+			->where('model_id', $modelId)
+			->orderBy('id', 'DESC')
+			->first();
+		return json_decode($data->data);
+	}
+
+	public static function calcLuongTru($objScale, $objKcs)
+	{
+		$overloadRatio = $this->getOverloadRatio($objScale->category_id);
+		foreach ($overloadRatio as $key => $value) {
+			if(isset($objKcs->$key)){
+				if ($objKcs->key > $value) {
+					$luongtru[$key] = ($objKcs->key - $value) * ($objScale->package_weight)/100;
+				}
+			}
+		}
+		$total = 0;
+		foreach ($luongtru as $k => $v) {
+			$total = $total + $v;
+		}
+		return $total;
+	}
+
 }
