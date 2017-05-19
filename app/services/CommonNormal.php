@@ -67,6 +67,10 @@ class CommonNormal
 		$data = $this->getDataScale($input);
 		$data['is_online'] = ONLINE;
 		$id = ScaleKCS::create($data)->id;
+		//update ma chien dich vao bang scale_stations
+		$obj = ScaleStation::where('app_id', $input['app_id'])
+			->where('code', $input['code'])
+			->update(['max_coupon' => $input['so_phieu'], 'max_campaign_code' => $input['chien_dich_id']]);
 		return $id;
 	}
 
