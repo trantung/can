@@ -137,16 +137,20 @@ class ApiController extends BaseController {
             CommonNormal::storeDataKCS($input);
         } else {
             if ($input['chien_dich_id'] == '') {
-                $this->common($input);
+                $idLuongtruCan = $this->common($input);
             } else {
                 //cân chiến dịch
-                $this->common($input);
+                $idLuongtruCan = $this->common($input);
             }
-            
+        }
+        if ($idLuongtruCan) {
+            $data = $idLuongtruCan;
+        } else {
+            $data = '';
         }
         $response['code'] = 200;
         $response['message'] = 'success';
-        $response['data'] = '';
+        $response['data'] = $data;
         return Response::json($response);
         //nếu tồn tại cả data kiểm định + data cân cùng 1 mã phiếu thì tính số liệu
     }
