@@ -144,7 +144,9 @@ class CommonNormal
 
 	public static function getProductCategoryId($stringIdCategory)
 	{
-		$id = 1;
+		$model = [];
+		$model[1] = $stringIdCategory[0];
+		$model[0] = substr($stringIdCategory, 1);
 		return $model;
 	}
 
@@ -182,5 +184,52 @@ class CommonNormal
 		}
 		return $total;
 	}
+	public static function saveStore($input)
+	{
+		$modelName = self::getProductCategoryId($input['id_the_loai']);
+		if ($modelName[1] == 1) {
+			$modelName = 'Product';
+		}
+		if ($modelName[1] == 2) {
+			$modelName = 'ProductCategory';
+		}
+		$modelId = $model[0];
+		$warehouseId = $input['id_kho'];
+		
+		$cal = StorageLoss::where('model_id', $modelId)
+			->where('model_name', $modelName)
+			->where('warehouse_id', $warehouseId)
+			->first();
 
+		//neu kho da co sp thi tinh toan cong(tru) va neu kho chua co sp day thi tao moi
+		if ($cal) {
+			//id_kieu_can : 1,2,3,4 tuc la xuat kho, nhap kho, chueyn xuat kho, chuyen nhap kho
+			if ($input['id_kieu_can'] == 1) {
+				$weight = $input['kl_hang'] + $cal->weight;
+				$cal->update(['weight' => $weight]);
+			}
+			if ($input['id_kieu_can'] == 2) {
+				$weight = $input['kl_hang'] - $cal->weight;
+				$cal->update(['weight' => $weight]);
+			}
+			if ($input['id_kieu_can'] == 3) {
+				$weight = $input['kl_hang'] + $cal->weight;
+				$cal->update(['weight' => $weight]);
+			}
+			if ($input['id_kieu_can'] == 4) {
+				$weight = $input['kl_hang'] - $cal->weight;
+				$cal->update(['weight' => $weight]);
+			}
+			return true;
+
+		} else {
+			$weight = $input['kl_hang'];
+			$id = StorageLoss::create(['model_id' => $modelId,
+				'model_name' => $modelName,
+				'warehouse_id' => $warehouseId,
+				'weight' => $weight,
+			])->id;
+			return true;
+		}
+	}
 }

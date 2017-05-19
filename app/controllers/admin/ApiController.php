@@ -130,7 +130,6 @@ class ApiController extends BaseController {
 
     public function postLogScale()
     {
-        dd(Input::all());
         $input = Input::all();
         //check type
         if ($input['type'] == 'KCS') {
@@ -138,35 +137,17 @@ class ApiController extends BaseController {
             CommonNormal::storeDataKCS($input);
         } else {
             if ($input['chien_dich_id'] == '') {
-                //nếu là cân thường
-                //insert data scale
-                $id = CommonNormal::storeDataScale($input);
-                //tinh khoi luong hang : nếu có lớn hơn 2 lần cân trên 1 mã phiếu
-                $obj = ScaleKCS::find($id);
-                $scale = ScaleKCS::where('number_ticket', $obj->number_ticket)
-                    ->whereNull('type')
-                    ->where('package_weight', '>', 0)
-                    ->first();
-                if ($secondTicket) {
-                    //tinh toan luu kho
-
-
-                    //kiểm tra xem đã kiểm định chưa ( KCS): muc dich de in chung thu
-                    $kcs = ScaleKCS::where('number_ticket', $obj->number_ticket)
-                        ->where('type', 'KCS')
-                        ->first();
-                    if ($kcs) {
-                        // tính lượng trừ
-                        CommonNormal::calcLuongTru();
-                        //lưu lượng trừ vào 1 bảng
-                    }
-                }
-                //end cân thường
+                $this->common($input);
             } else {
-                //cân chiến dịch -> todo
+                //cân chiến dịch
+                $this->common($input);
             }
             
         }
+        $response['code'] = 200;
+        $response['message'] = 'success';
+        $response['data'] = '';
+        return Response::json($response);
         //nếu tồn tại cả data kiểm định + data cân cùng 1 mã phiếu thì tính số liệu
     }
 
@@ -239,5 +220,34 @@ class ApiController extends BaseController {
         $response['data'] = $data;
         return Response::json($response);
     }
-
+    public function common($input)
+    {
+        $id = CommonNormal::storeDataScale($input);
+        //tinh khoi luong hang : nếu có lớn hơn 2 lần cân trên 1 mã phiếu
+        $obj = ScaleKCS::find($id);
+        $scale = ScaleKCS::where('number_ticket', $obj->number_ticket)
+            ->whereNull('type')
+            ->where('package_weight', '>', 0)
+            ->first();
+        if ($secondTicket) {
+            //tinh toan luu kho
+            CommonNormal::saveStore($input);
+            //kiểm tra xem đã kiểm định chưa ( KCS): muc dich de in chung thu
+            $kcs = ScaleKCS::where('number_ticket', $obj->number_ticket)
+                ->where('type', 'KCS')
+                ->first();
+            if ($kcs) {
+                // tính lượng trừ
+                $luongtru = CommonNormal::calcLuongTru();
+                //lưu lượng trừ vào 1 bảng
+                $inputLuongtru[] = [];
+                $inputLuongtru['ma_cd'] = $input['chien_dich_id'];
+                $inputLuongtru['ma_phieu_can'] = $input['code'];
+                $inputLuongtru['luongtru'] = $luongtru;
+                $idLuongtruCan = LuongTruCan::create($inputLuongtru)->id;
+            }
+            return $idLuongtruCan;
+        }
+        return false;
+    }
 }
