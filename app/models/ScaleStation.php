@@ -7,7 +7,7 @@ class ScaleStation extends Eloquent
 {
  // use SoftDeletingTrait;
     protected $table = 'scale_stations';
-    protected $fillable = ['name', 'department_id', 'app_id', 'code'];
+    protected $fillable = ['name', 'department_id', 'app_id', 'code', 'max_campaign_code'];
     protected $dates = ['deleted_at'];
 
     public function department()

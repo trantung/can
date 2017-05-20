@@ -69,11 +69,11 @@
             $('#model_id').html('');
           }
           if (id == 'Product') {
-            var link = '/admin/api/request/all-product';
+            var link = '/api/request/all-product';
             getProduct(link);
           }
           if (id == 'ProductCategory') {
-            var link = '/admin/api/request/all-product-category';
+            var link = '/api/request/all-product-category';
             getProduct(link);
           }
       });
