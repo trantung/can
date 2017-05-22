@@ -36,17 +36,18 @@
         window.location.href = url;
     }
     function remove(){
-        $('#btn-delete').attr('href', 'abc');
-        // var node = $('#tt').tree('getSelected');
-        // var url      = window.location.href + '/' + node.id ;
-        // console.log("url", url);
-        // $.ajax({
-        //   method: "DELETE",
-        //   url: url
-        // }).done(function() {
-        //     console.log('123');
-        //     window.reload();
-        // });
+        // $('#btn-delete').attr('href', 'abc');
+        var node = $('#tt').tree('getSelected');
+        console.log("node", node);
+        var url      = window.location.href + '/' + node.id ;
+        console.log("url", url);
+        $.ajax({
+            url: url,
+            method: 'DELETE',
+            success: function($response){
+                location.reload();
+            },
+        });
     }
 
 </script>

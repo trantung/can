@@ -5,7 +5,9 @@
 @stop
 
 @section('content')
-
+<link rel="stylesheet" type="text/css" href="/assets/js/combotree/themes/metro/easyui.css">
+<link rel="stylesheet" type="text/css" href="/assets/js/combotree/themes/icon.css">
+<link rel="stylesheet" type="text/css" href="/assets/js/combotree/demo/demo.css">
 <div class="row margin-bottom">
   <div class="col-xs-12">
     <a href="{{ action('WarehouseController@index') }}" class="btn btn-success">Danh sách kho</a>
@@ -26,24 +28,15 @@
                 </div>
               </div>
             </div>
-
-            <div class="form-group">
-              <label for="branch_id">Công ty</label>
-              <div class="row">
-                <div class="col-sm-6">
-                    {{ Form::select('department_id', Common::getCompany(), Input::old('department_id'), array('class'=>'form-control input-sm')) }}
-                </div>
-              </div>
-            </div>
             <div class="form-group">
               <label for="branch_id">Chi nhánh</label>
               <div class="row">
                 <div class="col-sm-6">
-                    {{ Form::select('department_id', $subTable, Input::old('department_id'), array('class'=>'form-control input-sm')) }}
+                    <input name="department_id" class="easyui-combotree" data-options="url:'/admin/jstree',method:'get'" style="width:100%">
                 </div>
               </div>
             </div>
-
+          
           </div>
           <!-- /.box-body -->
 
@@ -56,6 +49,6 @@
       <!-- /.box -->
     </div>
 </div>
-
+<script type="text/javascript" src="/assets/js/combotree/jquery.easyui.min.js"></script>
 @stop
 @endif

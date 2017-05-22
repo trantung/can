@@ -16,14 +16,16 @@
               <table class="table table-hover">
                 <tr>
                   <th>STT</th>
+                  <th>Mã nguyên liệu</th>
                   <th>Nguyên liệu</th>
                   <th>Thành phẩm</th>
                   <th style="width:200px;">Action</th>
                 </tr>
                 @foreach($data as $key => $value)
                 <tr>
-                  <td>{{ $key+1 }}</td>
-                  <td>{{ $value->name }}</td>
+                  <td rowspan="2">{{ $key+1 }}</td>
+                  <td rowspan="2">{{ $value->code }}</td>
+                  <td rowspan="2">{{ $value->name }}</td>
                   <td>
                     @foreach($value->products as $k => $val)
                       @if($val != 0)

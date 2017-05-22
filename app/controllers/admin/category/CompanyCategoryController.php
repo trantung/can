@@ -294,8 +294,8 @@ class CompanyCategoryController extends BaseCategoryController {
         } catch(Exception $e){
             return $this->returnError($e);
         }
-
-        return $this->redirectBackAction();
+        $response['status'] = true;
+        return Response::json($response);
         
     }
 
