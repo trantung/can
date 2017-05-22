@@ -151,5 +151,16 @@ class WarehouseController extends BaseCategoryController {
         }
         return Response::json($data);
     }
+    public function store()
+    {
+        $input = Input::except('_token');
+        $warehouseCode = Warehouse::orderBy('id', 'desc')->first();
+        $code = getCodeDependAuto('Warehouse', 'kho', 'Company', 'department_id', 'code');
+        $warehouseId = Warehouse::create(['code' => $code,
+            'department_id' => $input['department_id'],
+            'name' => $input['name'],
+        ])->id;
+        return Redirect::action('WarehouseController@index');
+    }
 
 }

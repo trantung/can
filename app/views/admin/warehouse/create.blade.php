@@ -28,6 +28,14 @@
             </div>
 
             <div class="form-group">
+              <label for="branch_id">Công ty</label>
+              <div class="row">
+                <div class="col-sm-6">
+                    {{ Form::select('department_id', Common::getCompany(), Input::old('department_id'), array('class'=>'form-control input-sm')) }}
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
               <label for="branch_id">Chi nhánh</label>
               <div class="row">
                 <div class="col-sm-6">

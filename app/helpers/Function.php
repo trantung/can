@@ -376,6 +376,21 @@ function getCodeAuto($value, $model)
 	}
 	return $value. '1';
 }
+function getCodeDependAuto($modelName, $value, $modelDepend, $fieldDepend, $codeFieldDepend)
+{
+	$input = Input::all();
+	$idDepend = $input[$fieldDepend];
+	$obDepend = $modelDepend::find($idDepend);
+	$codeDepend = $obDepend->$codeFieldDepend;
+	$ob = $modelName::orderBy('id', 'desc')->first();
+	if (!$ob) {
+		$code = $codeDepend . '_' . $value . '1';
+		return $code;
+	}
+	$code = $codeDepend . '_' . $value . ($ob->id +1);
+	return $code;
+}
+
 function calculatorLoss($modelName, $array)
 {
 	$ob = $modelName::where($array)->first();

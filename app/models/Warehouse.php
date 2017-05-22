@@ -7,7 +7,7 @@ class Warehouse extends Eloquent
 {
  // use SoftDeletingTrait;
     protected $table = 'warehouse';
-    protected $fillable = ['name', 'department_id'];
+    protected $fillable = ['name', 'department_id', 'code'];
     protected $dates = ['deleted_at'];
 
     public function department()

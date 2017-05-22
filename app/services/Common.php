@@ -25,4 +25,16 @@ class Common {
 		return true;
 	}
 
+	public static function getCompany()
+	{
+		$list = Company::where('level', 3)->lists('name', 'id');
+		return $list;
+	}
+	public static function getDepartmentByCompany($companyId)
+	{
+		$list = Company::where('level', 4)
+			->where('parent_id', $companyId)
+			->lists('name', 'id');
+		return $list;
+	}
 }

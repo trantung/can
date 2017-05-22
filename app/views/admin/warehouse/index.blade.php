@@ -23,6 +23,7 @@
               <table class="table table-hover">
                 <tr>
                   <th>STT</th>
+                  <th>Mã kho</th>
                   <th>Tên kho</th>
                   <th>Chi nhánh</th>
                   <th style="width:200px;">Action</th>
@@ -30,6 +31,7 @@
                 @foreach($data as $key => $value)
                 <tr>
                   <td>{{ $key+1 }}</td>
+                  <td>{{ $value->code }}</td>
                   <td>{{ $value->name }}</td>
                    <td>{{ $value->department <> null ?  $value->department->name : ''}}</td>
                   <td>
