@@ -71,8 +71,10 @@ class ApiController extends BaseController {
                 $response['data'] = '';
                 return Response::json($response);
             }
-            $data['scale_station'] = $scaleSave = ScaleStation::where('code', $scaleCode)->first();
-            $data['department'] = $department = Company::find($scale->department_id);
+            $scale = ScaleStation::where('code', $scaleCode)->first();
+            $data['scale_station'] = $scale;
+            $department = Company::find($scale->department_id);
+            $data['department'] = $department;
             $data['company'] = Company::find($department->parent_id);
             $response['code'] = 200;
             $response['message'] = 'success';
