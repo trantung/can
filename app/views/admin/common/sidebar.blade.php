@@ -111,7 +111,6 @@
                     <span>Quản lý trạm cân</span>
                 </a>
             </li>
-
            {{--  <li>
                 <a href="{{ action('SalariesController@index') }}">
                     <span>Lương nhân viên</span>

@@ -174,4 +174,16 @@ class ScaleStationController extends BaseCategoryController {
         ScaleManage::find($id)->update(['active' => 0]);
         return Redirect::action('ScaleStationController@getManage');
     }
+    public function destroy($id)
+    {
+        $scale = ScaleStation::find($id);
+        $scale->destroy();
+        return Redirect::action('ScaleStationController@index');
+    }
+    public function postDestroyApp($id)
+    {
+        $scale = ScaleStation::find($id);
+        $scale->update(['app_id' => '']);
+        return Redirect::action('ScaleStationController@index');
+    }
 }

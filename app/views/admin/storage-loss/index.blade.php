@@ -40,7 +40,6 @@
                       Thành phẩm
                     @endif
                   </td>
-                  <td><?php $model = $value->model_name; ?>{{ $model::find(2)->name }}</td>
                   <td>
                     @if ($warehouse = Warehouse::find($value->warehouse_id))
                       {{ $warehouse->name }}
