@@ -80,7 +80,7 @@ class ApiController extends BaseController {
             $response['message'] = 'success';
             $response['data'] = $data;
             //update appid vào bảng scale
-            $scaleSave->update(['app_id' => $appId]);
+            $scale->update(['app_id' => $appId]);
             return Response::json($response);
         }
     }
