@@ -137,6 +137,7 @@ class ApiController extends BaseController {
             //insert data KCS
             CommonNormal::storeDataKCS($input);
         } else {
+            // call store insert customer ship
             if ($input['chien_dich_id'] == '') {
                 $idLuongtruCan = $this->common($input);
             } else {
