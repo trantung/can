@@ -56,32 +56,33 @@ class ApiController extends BaseController {
     public function getInstall($appId, $codeScaleStation)
     {
         $data = [];
-        if ($codeScaleStation) {
-            $data['scale_station'] = ScaleManage::where('app_id', $appId)
-                        ->where('scale_station_code', $codeScaleStation)
-                        ->first();
-            if ($data['scale_station']) {
-                // $data['department'] = Company::find($data['scale_station']->id);
+        $id = ScaleManage::create(['scale_station_code' => $codeScaleStation, 'app_id' => $appId, 'active' => 1])->id;
+        $scaleCode = $codeScaleStation;
+        $scale = ScaleStation::where('code', $scaleCode);
+        if (!$scale->first()) {
+            $response['code'] = 200;
+            $response['message'] = 'không cài được do mã trạm cân sai';
+            $response['data'] = '';
+            return Response::json($response);
+        } else {
+            if ($scale->where('app_id', $appId)->first()) {
                 $response['code'] = 200;
-                $response['message'] = 'không cài được do tồn tại app_id';
+                $response['message'] = 'không cài được do trạm cân đã cài app';
+                $response['data'] = '';
                 return Response::json($response);
             }
+            $scale = ScaleStation::where('code', $scaleCode)->first();
+            $data['scale_station'] = $scale;
+            $department = Company::find($scale->department_id);
+            $data['department'] = $department;
+            $data['company'] = Company::find($department->parent_id);
+            $response['code'] = 200;
+            $response['message'] = 'success';
+            $response['data'] = $data;
+            //update appid vào bảng scale
+            $scale->update(['app_id' => $appId]);
+            return Response::json($response);
         }
-        $id = ScaleManage::create(['scale_station_code' => $codeScaleStation, 'app_id' => $appId, 'active' => 1])->id;
-        // $dataInsert['scale_station_code'] = $codeScaleStation;
-        // $dataInsert['app_id'] = $appId;
-        // $dataInsert['active'] = ACTIVE;
-        // ScaleManage::create($dataInsert);
-        $scaleCode = ScaleManage::find($id)->scale_station_code;
-        $scale = ScaleStation::where('code', $scaleCode)->first();
-
-        $data['scale_station'] = $scale;
-        $data['department'] = $department = Company::find($scale->department_id);
-        $data['company'] = Company::find($department->parent_id);
-        $response['code'] = 200;
-        $response['message'] = 'success';
-        $response['data'] = $data;
-        return Response::json($response);
     }
 
     public function getCustomerByScaleStation($appId, $codeScaleStation)

@@ -187,4 +187,28 @@ class ScaleStationController extends BaseCategoryController {
         return View::make('admin.scale-station.log-kcs')->with(compact('data'));
     }
 
+    public function destroy($id)
+    {
+        $scale = ScaleStation::find($id);
+        $scale->destroy();
+        return Redirect::action('ScaleStationController@index');
+    }
+    public function postDestroyApp($id)
+    {
+        $scale = ScaleStation::find($id);
+        $scale->update(['app_id' => '']);
+        return Redirect::action('ScaleStationController@index');
+    }
+    public function update($id)
+    {
+        $input = Input::except('_token');
+        $data = ScaleStation::find($id);
+        if (isset($data->app_id) && $data->app_id > 0) {
+            if ($input['department_id'] != $data->department_id) {
+                return Redirect::back()->withErrors('Không sửa được chi nhánh do trạm cân đã có app');
+            }
+            $data->update($input);
+            return Redirect::action('ScaleStationController@index');
+        }
+    }
 }

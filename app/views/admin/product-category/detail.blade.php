@@ -1,7 +1,7 @@
 @extends('admin.layout.default')
 
 @section('title')
-{{ $title='Chỉnh sửa "'. $data->name .'"' }}
+{{ $title='Xem "'. $data->name .'"' }}
 @stop
 
 @section('content')

@@ -24,17 +24,11 @@ class Admin extends Eloquent implements UserInterface, RemindableInterface {
 	 * @var array
 	 */
 	protected $hidden = array('password', 'remember_token');
-	protected $fillable = array('email', 'password', 'role_id', 'username','ip','status');
+	protected $fillable = array('email', 'password', 'role_id', 'username','ip','status', 'permission_id');
     protected $dates = ['deleted_at'];
 
     public static function isAdmin()
     {
-  //   	if(Auth::admin()->get()->role_id == ADMIN){
-		// 	return true;
-		// }
-		// else{
-		// 	return false;
-		// }
 		return true;
     }
     public static function isEditor()
@@ -58,5 +52,14 @@ class Admin extends Eloquent implements UserInterface, RemindableInterface {
     public function role()
     {
         return $this->belongsTo('Role', 'role_id', 'id');
+    }
+    public static function isHr()
+    {
+		if(Auth::admin()->get()->permission_id == HR){
+			return true;
+		}
+		else{
+			return false;
+		}
     }
 }

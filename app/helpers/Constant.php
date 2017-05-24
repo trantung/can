@@ -94,3 +94,5 @@ define('ONLINE', 1);
 define('OFFLINE', 2);
 //Errors message
 define('INSERT_HAS_FAIL', 'Thêm mới bản ghi thất bại');
+define('HR', 1);
+define('APP', 2);

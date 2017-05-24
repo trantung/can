@@ -5,7 +5,7 @@
 @stop
 
 @section('content')
-
+@include('admin.common.structure_company_css')
 @if(Admin::isAdmin())
 <div class="row margin-bottom">
     <div class="col-xs-12">
@@ -22,6 +22,14 @@
             {{ Form::open(array('action' => array('ScaleStationController@update', $data->id), 'method' => 'PUT')) }}
                <div class="box-body">
                 <div class="form-group">
+                  <label for="username">Mã trạm cân</label>
+                  <div class="row">
+                    <div class="col-sm-6">
+                        {{ $data->code }}
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
                   <label for="username">Tên</label>
                   <div class="row">
                     <div class="col-sm-6">
@@ -34,7 +42,7 @@
                   <label for="branch_id">Chi nhánh</label>
                   <div class="row">
                     <div class="col-sm-6">
-                        {{ Form::select('department_id', $subTable, $data->department_id, array('class'=>'form-control input-sm')) }}
+                        <input name="department_id" class="easyui-combotree" data-options="url:'/admin/jstree',method:'get'" style="width:100%" value="{{ $data->department_id }}">
                     </div>
                   </div>
                 </div>
@@ -51,5 +59,5 @@
         <!-- /.box -->
     </div>
 </div>
-
+@include('admin.common.structure_company_js')
 @stop

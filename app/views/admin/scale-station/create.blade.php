@@ -5,7 +5,7 @@
 @stop
 
 @section('content')
-
+@include('admin.common.structure_company_css')
 <div class="row margin-bottom">
   <div class="col-xs-12">
     <a href="{{ action('ScaleStationController@index') }}" class="btn btn-success">Danh sách</a>
@@ -31,7 +31,7 @@
               <label for="branch_id">Chi nhánh</label>
               <div class="row">
                 <div class="col-sm-6">
-                    {{ Form::select('department_id', $subTable, Input::old('department_id'), array('class'=>'form-control input-sm')) }}
+                    <input name="department_id" class="easyui-combotree" data-options="url:'/admin/jstree',method:'get'" style="width:100%">
                 </div>
               </div>
             </div>
@@ -48,6 +48,6 @@
       <!-- /.box -->
     </div>
 </div>
-
+@include('admin.common.structure_company_js')
 @stop
 @endif
