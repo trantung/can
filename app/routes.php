@@ -10,12 +10,20 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
+Route::get('/', function(){
+    dd(Admin::isHr());
+    // Admin::whereNull('permission_id')->update(['permission_id' =>1]);
+    $string = 'abcd';
+    dd($string[0]);
+    dd(substr('abcdef', 1));
+} );
 
 Route::group(['prefix' => 'admin'], function () {
 
 	Route::get('/login', array('uses' => 'AdminController@login', 'as' => 'admin.login'));
 	Route::post('/login', array('uses' => 'AdminController@doLogin'));
-	Route::get('/logout', array('uses' => 'AdminController@logout', 'as' => 'admin.logout'));
+    Route::get('/logout', array('uses' => 'AdminController@logout', 'as' => 'admin.logout'));
+	Route::get('/dashboard', array('uses' => 'AdminController@dashboard'));
 	// Route::resource('/', 'AdminController');
 
 	Route::get('/manager/changepassword/{id}', array('uses' => 'ManagerController@changePassword', 'as' => 'admin.manager.chanpassword'));
@@ -124,6 +132,9 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('/production-auto', 'ProductionAutoController', array('except' => array('show')));
     Route::controller('/production-auto', 'ProductionAutoController');
     // Route::put('/config-user/update/{id}', 'ConfigUserController@update');
+
+    Route::resource('/thongke/scale', 'ThongkeScaleController');
+
     Route::group(['prefix' => 'api'], function(){
         Route::get('/department-by-one/{id}', 'CompanyCategoryController@getDepartmentByOne');
         Route::get('/warehouse-by-department/{id}', 'WarehouseController@getWarehouseByDepartment');

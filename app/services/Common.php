@@ -37,4 +37,9 @@ class Common {
 			->lists('name', 'id');
 		return $list;
 	}
+	public static function getNameByStorageLoss($modelName, $modelId)
+	{
+		$ob = $modelName::find($modelId);
+		return $ob->name;
+	}
 }
