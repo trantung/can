@@ -18,6 +18,4 @@ class ScaleManageController extends AdminController {
     const CONTROLLER_ACTION      = 'controller_action';
     const ACTION   = 'action';
 
-    
-
 }

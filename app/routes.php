@@ -56,6 +56,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('/scale-station', 'ScaleStationController', array('except' => array('show')));
     Route::controller('/scale-station', 'ScaleStationController');
     Route::resource('/customer-group', 'CustomerGroupController');
+    Route::controller('/scale-manage', 'ScaleManageController');
     // Route::post('/vocabulary', 'Admin2Controller@store');
     Route::get('/jstree', array('uses' => 'CompanyCategoryController@buildCateJsTree'));
     Route::get('/combotree', array('uses' => 'CompanyCategoryController@buildCate'));
