@@ -174,4 +174,17 @@ class ScaleStationController extends BaseCategoryController {
         ScaleManage::find($id)->update(['active' => 0]);
         return Redirect::action('ScaleStationController@getManage');
     }
+    
+    public function getLogScale()
+    {
+        $data = ScaleKCS::whereNull('type')->paginate(PAGINATE);
+        return View::make('admin.scale-station.log-scale')->with(compact('data'));
+    }
+
+    public function getLogKcs()
+    {
+        $data = ScaleKCS::where('type', 'KCS')->paginate(PAGINATE);
+        return View::make('admin.scale-station.log-kcs')->with(compact('data'));
+    }
+
 }
