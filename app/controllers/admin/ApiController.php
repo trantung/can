@@ -133,10 +133,11 @@ class ApiController extends BaseController {
     {
         $input = Input::all();
         //check type
-        if ($input['type'] == 'KCS') {
+        if (isset($input['type']) && $input['type'] == 'KCS') {
             //insert data KCS
             CommonNormal::storeDataKCS($input);
         } else {
+            //luu khach hang vao kho kh
             if ($input['chien_dich_id'] == '') {
                 $idLuongtruCan = $this->common($input);
             } else {
@@ -234,23 +235,23 @@ class ApiController extends BaseController {
             ->whereNull('type')
             ->where('package_weight', '>', 0)
             ->first();
-        if ($secondTicket) {
+        // if ($secondTicket) {
             //tinh toan luu kho
-            CommonNormal::saveStore($input);
-            //kiểm tra xem đã kiểm định chưa ( KCS): muc dich de in chung thu
-            $kcs = ScaleKCS::where('number_ticket', $obj->number_ticket)
-                ->where('type', 'KCS')
-                ->first();
-            if ($kcs) {
-                // tính lượng trừ
-                $luongtru = CommonNormal::calcLuongTru();
-                //lưu lượng trừ vào 1 bảng
-                $inputLuongtru[] = [];
-                $inputLuongtru['ma_cd'] = $input['chien_dich_id'];
-                $inputLuongtru['ma_phieu_can'] = $input['code'];
-                $inputLuongtru['luongtru'] = $luongtru;
-                $idLuongtruCan = LuongTruCan::create($inputLuongtru)->id;
-            }
+        CommonNormal::saveStore($input);
+        //kiểm tra xem đã kiểm định chưa ( KCS): muc dich de in chung thu
+        $kcs = ScaleKCS::where('number_ticket', $obj->number_ticket)
+            ->where('type', 'KCS')
+            ->first();
+        if ($kcs) {
+            // tính lượng trừ
+            $luongtru = CommonNormal::calcLuongTru();
+            //lưu lượng trừ vào 1 bảng
+            $inputLuongtru[] = [];
+            $inputLuongtru['ma_cd'] = $input['chien_dich_id'];
+            $inputLuongtru['ma_phieu_can'] = $input['code'];
+            $inputLuongtru['luongtru'] = $luongtru;
+            $idLuongtruCan = LuongTruCan::create($inputLuongtru)->id;
+        // }
             return $idLuongtruCan;
         }
         return false;

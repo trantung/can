@@ -64,7 +64,7 @@ class CommonNormal
 
 	public static function storeDataScale($input)
 	{
-		$data = $this->getDataScale($input);
+		$data = self::getDataScale($input);
 		$data['is_online'] = ONLINE;
 		$id = ScaleKCS::create($data)->id;
 		//update ma chien dich vao bang scale_stations
@@ -82,7 +82,7 @@ class CommonNormal
 		return $id;
 	}
 
-	public function getDataScale($input)
+	public static function getDataScale($input)
 	{
 		$arrayKey = [
 			'id_user' => 'user_id',
@@ -109,10 +109,10 @@ class CommonNormal
 			'app_id' => 'app_id',
 			'code' => 'code'
 		];
-		return $this->prepareData($input, $arrayKey);
+		return self::prepareData($input, $arrayKey);
 	}
 
-	public function getDataKCS($input)
+	public static function getDataKCS($input)
 	{
 		$arrayKey = [
 			'user_id' => 'user_id',
@@ -132,10 +132,10 @@ class CommonNormal
 			'code' => 'code',
 			'type' => 'type'
 		];
-		return $this->prepareData($input, $arrayKey);
+		return self::prepareData($input, $arrayKey);
 	}
 
-	public function prepareData($input, $arrayKey)
+	public static function prepareData($input, $arrayKey)
 	{
 		$data = [];
 		foreach ($input as $key => $value) {
@@ -190,11 +190,11 @@ class CommonNormal
 	}
 	public static function saveStore($input)
 	{
-		$modelName = self::getProductCategoryId($input['id_the_loai']);
-		if ($modelName[1] == 1) {
+		$model = self::getProductCategoryId($input['id_the_loai']);
+		if ($model[1] == 1) {
 			$modelName = 'Product';
 		}
-		if ($modelName[1] == 2) {
+		if ($model[1] == 2) {
 			$modelName = 'ProductCategory';
 		}
 		$modelId = $model[0];
@@ -204,26 +204,41 @@ class CommonNormal
 			->where('model_name', $modelName)
 			->where('warehouse_id', $warehouseId)
 			->first();
-
+		// dd($cal->toArray());
 		//neu kho da co sp thi tinh toan cong(tru) va neu kho chua co sp day thi tao moi
 		if ($cal) {
 			//id_kieu_can : 1,2,3,4 tuc la xuat kho, nhap kho, chueyn xuat kho, chuyen nhap kho
-			if ($input['id_kieu_can'] == 1) {
-				$weight = $input['kl_hang'] + $cal->weight;
-				$cal->update(['weight' => $weight]);
-			}
 			if ($input['id_kieu_can'] == 2) {
-				$weight = $input['kl_hang'] - $cal->weight;
-				$cal->update(['weight' => $weight]);
-			}
-			if ($input['id_kieu_can'] == 3) {
 				$weight = $input['kl_hang'] + $cal->weight;
 				$cal->update(['weight' => $weight]);
 			}
-			if ($input['id_kieu_can'] == 4) {
-				$weight = $input['kl_hang'] - $cal->weight;
+			if ($input['id_kieu_can'] == 1) {
+				$weight = $cal->weight - $input['kl_hang'];
 				$cal->update(['weight' => $weight]);
 			}
+			//TODO
+			if ($input['id_kieu_can'] == 4) {
+				$weight = $input['kl_hang'] + $cal->weight;
+				$cal->update(['weight' => $weight]);
+			}
+
+			if ($input['id_kieu_can'] == 3) {
+				//tru kho goc
+				//truong hop 1: chuyển xuất mà cân ở gốc
+				$weight = $cal->weight - $input['kl_hang'];
+				$cal->update(['weight' => $weight]);
+				//kho đích cân lại
+				//vào bảng scale_rate tìm mã phiếu cân trùng với mã phiếu cân ở kho gốc 
+
+
+				//kho đích không cân lại 
+
+
+				//truơngf hợp 2: chuyển xuất mà ko cân ở gốc
+				//kho đích cân lại
+				//kho đích ko cân lại
+			}
+
 			return true;
 
 		} else {
