@@ -142,10 +142,13 @@ class ScaleStationController extends BaseCategoryController {
         try{
             $input = $this->getInputFieldStore();
             $validator = $this->storeValidater($input);
+            $departmentId = $input['department_id'];
+            $obDep = Company::find($departmentId);
+            $code = $obDep->code;
             if ($objScale = ScaleStation::orderBy('id', 'DESC')->first()) {
-                $input['code'] = 'CN_TC_'. ($objScale->id + 1);
+                $input['code'] = $code.'_TC_'. ($objScale->id + 1);
             } else {
-                $input['code'] = 'CN_TC_1';
+                $input['code'] = $code.'_TC_1';
             }
             $input[self::CREATED_BY] = Auth::admin()->get()->id;
             $input[self::UPDATED_BY] = Auth::admin()->get()->id;
@@ -207,6 +210,9 @@ class ScaleStationController extends BaseCategoryController {
             if ($input['department_id'] != $data->department_id) {
                 return Redirect::back()->withErrors('Không sửa được chi nhánh do trạm cân đã có app');
             }
+            $obDep = Company::find($input['department_id']);
+            $code = $obDep->code;
+            $input['code'] = $code.'_TC_'. $objScale->id;
             $data->update($input);
             return Redirect::action('ScaleStationController@index');
         }
