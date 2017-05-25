@@ -58,20 +58,20 @@ class ApiController extends BaseController {
         $data = [];
         $id = ScaleManage::create(['scale_station_code' => $codeScaleStation, 'app_id' => $appId, 'active' => 1])->id;
         $scaleCode = $codeScaleStation;
-        $scale = ScaleStation::where('code', $scaleCode);
-        if (!$scale->first()) {
+        $scale = ScaleStation::where('code', $scaleCode)->first();
+        if (!$scale) {
             $response['code'] = 200;
             $response['message'] = 'không cài được do mã trạm cân sai';
             $response['data'] = '';
             return Response::json($response);
         } else {
-            if ($scale->where('app_id', $appId)->first()) {
+            if ($scale->app_id > 0) {
                 $response['code'] = 200;
                 $response['message'] = 'không cài được do trạm cân đã cài app';
                 $response['data'] = '';
                 return Response::json($response);
             }
-            $scale = ScaleStation::where('code', $scaleCode)->first();
+            $scale = $scale;
             $data['scale_station'] = $scale;
             $department = Company::find($scale->department_id);
             $data['department'] = $department;
