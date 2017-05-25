@@ -5,9 +5,10 @@
 @stop
 
 @section('content')
+    <hr>
     <div class="row margin-bottom">
         <div class="col-xs-12">
-            <a href="{{ action('ScaleStationController@create') }}" class="btn btn-primary">Thêm mới</a>
+            @include('admin.scale-station.template.search-scale')
         </div>
     </div>
 
@@ -50,10 +51,6 @@
                   <td>{{ $value->app_id }}</td>
                   <td>{{ $value->code }}</td>
                   <td>
-                    <a href="{{ action('ScaleStationController@edit', $value->id) }}" class="btn btn-primary">Sửa</a>
-                    {{ Form::open(array('method'=>'DELETE', 'action' => array('ScaleStationController@destroy', $value->id), 'style' => 'display: inline-block;')) }}
-                    <button class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa?');">Xóa</button>
-                    {{ Form::close() }}
 
                   </td>
                 </tr>
