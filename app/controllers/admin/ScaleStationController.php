@@ -193,6 +193,9 @@ class ScaleStationController extends BaseCategoryController {
     public function destroy($id)
     {
         $scale = ScaleStation::find($id);
+        if ($scale->app_id > 0) {
+            return Redirect::back()->withErrors('Không xoá được trạm cân do đã có app');
+        }
         $scale->destroy();
         return Redirect::action('ScaleStationController@index');
     }
