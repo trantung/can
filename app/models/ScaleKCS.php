@@ -45,6 +45,7 @@ class ScaleKCS extends Eloquent
         'status',
         'number_ticket_manual',
         'created_at',
+        'process',
     ];
 
 

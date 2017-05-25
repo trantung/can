@@ -38,15 +38,8 @@ class ApiController extends BaseController {
     public function postStoreShip()
     {
         $input = Input::except('_token');
-        $id = CustomerShip::create($input);
-        if ($id) {
-            $response['code'] = 200;
-            $response['message'] = 'success';
-        } else {
-            $response['code'] = 500;
-            $response['message'] = 'fail';
-        }
-        return Response::json($response);
+        $id = CustomerShip::create($input)->id;
+        return $id;
     }
 
 
@@ -132,6 +125,19 @@ class ApiController extends BaseController {
     public function postLogScale()
     {
         $input = Input::all();
+        $scaleCode = $input['code'];
+        $appId = $input['app_id'];
+        $check = ScaleStation::where('app_id', $appId)
+            ->where('code', $scaleCode)
+            ->first();
+        $customer = [];
+        $customer['customer_name'] = $input['khach_hang_ten'];
+        $customer['customer_phone'] = $input['khach_hang_sdt'];
+        $customer['customer_address'] = $input['khach_hang_dia_chi'];
+        $customer['customer_id'] = $input['id_kh'];
+        $customer['customer_fax'] = $input['khach_hang_fax'];
+        $customer['app_code'] = $input['app_id'];
+        $this->postStoreShip($customer);
         //check type
         if (isset($input['type']) && $input['type'] == 'KCS') {
             //insert data KCS
@@ -149,6 +155,12 @@ class ApiController extends BaseController {
             $data = $idLuongtruCan;
         } else {
             $data = '';
+        }
+        if (!$check) {
+             $response['code'] = 200;
+            $response['message'] = 'trạm cân đã bị xoá app này';
+            $response['data'] = '';
+            return Response::json($response);
         }
         $response['code'] = 200;
         $response['message'] = 'success';

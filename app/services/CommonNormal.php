@@ -223,20 +223,25 @@ class CommonNormal
 				$weight = $input['kl_hang'] + $cal->weight;
 				$cal->update(['weight' => $weight]);
 				$dataCheck = ScaleKCS::where('number_ticket', $input['number_ticket_manual'])
-						->orderBy('id', 'DESC')
-						->first();
-				if ($input['kl_hang'] != '0' && $dataCheck->package_weight == '0') {
+					->where('process', 0)
+					->orderBy('id', 'DESC')
+					->first();
+				if ($input['kl_hang'] != '0' && isset($dataCheck) && $dataCheck->package_weight == '0') {
 					//check ngược mã phiếu trên kho nguồn ( bằng number_ticket_manual) có khối lượng hay ko
 					//nếu không có thì lấy số lượng được cộng trừ vào kho nguồn
 						$source = StorageLoss::find($dataCheck->department_id);
 						$source->weight = $source->weight - $input['kl_hang'];
 						$source->save();
+						self::updateProcessScaleKcs($input, 'number_ticket_manual');
 				}
-				if ($input['kl_hang'] == '0' && $dataCheck->package_weight != '0') {
-					//TH2 : khoi luong hang = 0
-					//check ngược mã phiếu trên kho nguồn ( bằng number_ticket_manual)có khối lượng hay ko 
-					//nếu có thì lấy khối lượng bị trừ trên kho nguồn + vào kho đích ( storage-loss)
-					$cal->update(['weight' => $dataCheck->package_weight + $cal->weight]);
+				if ($input['kl_hang'] == '0') {
+					$dataCheckProcess = ScaleKCS::where('number_ticket', $input['number_ticket_manual'])
+						->where('process', 1)
+						->orderBy('id', 'DESC')
+						->first();
+					if ($dataCheckProcess) {
+						$cal->update(['weight' => $dataCheckProcess->package_weight + $cal->weight]);
+					}
 				}
 			}
 
@@ -245,20 +250,11 @@ class CommonNormal
 				//truong hop 1: chuyển xuất mà cân ở gốc
 				$weight = $cal->weight - $input['kl_hang'];
 				$cal->update(['weight' => $weight]);
-				//kho đích cân lại
-				//vào bảng scale_rate tìm mã phiếu cân trùng với mã phiếu cân ở kho gốc 
-
-
-				//kho đích không cân lại 
-
-
-				//truơngf hợp 2: chuyển xuất mà ko cân ở gốc
-				//kho đích cân lại
-				//kho đích ko cân lại
+				if ($input['kl_hang'] > 0) {
+					self::updateProcessScaleKcs($input, 'number_ticket');
+				}
 			}
-
 			return true;
-
 		} else {
 			$weight = $input['kl_hang'];
 			$id = StorageLoss::create(['model_id' => $modelId,
@@ -268,5 +264,12 @@ class CommonNormal
 			])->id;
 			return true;
 		}
+	}
+	public static function updateProcessScaleKcs($input, $field)
+	{
+		ScaleKCS::where('number_ticket', $input[$field])
+			->where('process', 0)
+			->update(['process' => 1]);
+		return true;
 	}
 }
