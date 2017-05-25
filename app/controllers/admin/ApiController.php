@@ -132,6 +132,11 @@ class ApiController extends BaseController {
     public function postLogScale()
     {
         $input = Input::all();
+        $scaleCode = $input['code'];
+        $appId = $input['app_id'];
+        $check = ScaleStation::where('app_id', $appId)
+            ->where('code', $scaleCode)
+            ->first();
         //check type
         if (isset($input['type']) && $input['type'] == 'KCS') {
             //insert data KCS
@@ -149,6 +154,12 @@ class ApiController extends BaseController {
             $data = $idLuongtruCan;
         } else {
             $data = '';
+        }
+        if (!$check) {
+             $response['code'] = 200;
+            $response['message'] = 'trạm cân đã bị xoá app này';
+            $response['data'] = '';
+            return Response::json($response);
         }
         $response['code'] = 200;
         $response['message'] = 'success';
