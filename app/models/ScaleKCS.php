@@ -43,6 +43,7 @@ class ScaleKCS extends Eloquent
         'do_kho',
         'is_online',
         'status',
+        'number_ticket_manual',
         'created_at',
     ];
 
