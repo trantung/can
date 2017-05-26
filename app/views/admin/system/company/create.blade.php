@@ -61,6 +61,31 @@
                 </div>
               </div>
             </div>
+            <div class="form-group">
+              <label for="password">Email</label>
+              <div class="row">
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="address" name="email" value="{{Input::old('email')}}">
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="password">Số điện thoại</label>
+              <div class="row">
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="address" name="phone" value="{{Input::old('phone')}}">
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="password">Fax</label>
+              <div class="row">
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="address" name="fax" value="{{Input::old('fax')}}">
+                </div>
+              </div>
+            </div>
+
           </div>
           <!-- /.box-body -->
 
