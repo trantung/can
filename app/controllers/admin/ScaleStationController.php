@@ -180,7 +180,13 @@ class ScaleStationController extends BaseCategoryController {
     
     public function getLogScale()
     {
-        $data = ScaleKCS::whereNull('type')->paginate(PAGINATE);
+        $input = Input::except('page');
+        $model = new ScaleKCS();
+        $input = self::processData($input);
+        if (count($input) > 0) {
+            $model = $model->where($input);
+        }
+        $data = $model->orderBy('id', 'desc')->paginate(PAGINATE);
         return View::make('admin.scale-station.log-scale')->with(compact('data'));
     }
 
@@ -219,5 +225,17 @@ class ScaleStationController extends BaseCategoryController {
             $data->update($input);
             return Redirect::action('ScaleStationController@index');
         }
+    }
+
+    function processData($input = array())
+    {
+        if (count($input) > 0) {
+            foreach ($input as $key => $value) {
+                if ($value == '') {
+                    unset($input[$key]);
+                }
+            }
+        }
+        return $input;
     }
 }
