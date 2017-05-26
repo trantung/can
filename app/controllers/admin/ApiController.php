@@ -35,9 +35,8 @@ class ApiController extends BaseController {
         return Response::json($response);
     }
 
-    public function postStoreShip()
+    public function postStoreShip($input)
     {
-        $input = Input::except('_token');
         $id = CustomerShip::create($input)->id;
         return $id;
     }
@@ -131,6 +130,7 @@ class ApiController extends BaseController {
             ->where('code', $scaleCode)
             ->first();
         $customer = [];
+        // dd($input);
         $customer['customer_name'] = $input['khach_hang_ten'];
         $customer['customer_phone'] = $input['khach_hang_sdt'];
         $customer['customer_address'] = $input['khach_hang_dia_chi'];
