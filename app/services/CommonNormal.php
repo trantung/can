@@ -128,7 +128,6 @@ class CommonNormal
 			'tyLeTapChat' => 'ty_le_tap_chat',
 			'tyLeVo' => 'ty_le_vo',
 			'doKho' => 'do_kho',
-			'thoiGian' => 'created_at',
 			'app_id' => 'app_id',
 			'code' => 'code',
 			'type' => 'type',
@@ -167,12 +166,10 @@ class CommonNormal
 		if ($type == 2) {
 			$modelName = 'ProductCategory';
 		}
-		// dd($modelId);
 		$data = OverloadRatio::where('model_name', $modelName)
 			->where('model_id', $modelId)
 			->orderBy('id', 'DESC')
 			->first();
-			// dd($data->data);
 		return $data->data;
 	}
 
