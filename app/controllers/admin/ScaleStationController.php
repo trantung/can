@@ -183,6 +183,7 @@ class ScaleStationController extends BaseCategoryController {
     public function getStatistic()
     {
         $input = Input::except('page');
+        // dd($input);
         $model = new ScaleKCS();
         if (isset($input['from_date']) && $input['from_date'] != '') {
             $start = $input['from_date'];
@@ -192,7 +193,13 @@ class ScaleStationController extends BaseCategoryController {
             $end = $input['to_date'];
             $model = $model->where('scale_at', '<=', $end);
         }
+        if (isset($input['type_scale']) && $input['type_scale'] == '1') {
+            $model = $model->where('campaign_code', '');
+        } else {
+            $model = $model->where('campaign_code', '!=', '');
+        }
         $input = self::processData($input);
+        // dd($input);
         if (count($input) > 0) {
             $model = $model->where($input);
         }
@@ -268,7 +275,11 @@ class ScaleStationController extends BaseCategoryController {
     {
         if (count($input) > 0) {
             foreach ($input as $key => $value) {
-                if ($value == '' || $key == 'from_date' || $key == 'to_date') {
+                if ($value == '' || 
+                    $key == 'from_date' || 
+                    $key == 'to_date' || 
+                    $key == 'type_scale'
+                    ) {
                     unset($input[$key]);
                 }
             }

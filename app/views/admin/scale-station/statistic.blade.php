@@ -37,9 +37,10 @@
                   <th>Lượng trừ</th>
                   <th>Tùy chọn</th>
                 </tr>
+                <?php $index = 1; ?>
                 @foreach($data as $key => $value)
                 <tr>
-                  <td>{{ $key+1 }}</td>
+                  <td>{{ $index }}</td>
                   <td>{{ $value->number_ticket }}</td>
                   <td>{{ $value->customer_name }}</td>
                   <td>
@@ -76,6 +77,7 @@
                     <a href="{{ action('ScaleStationController@getDetail', $value->number_ticket) }}" class="btn btn-primary">Xem</a>
                   </td>
                 </tr>
+                <?php $index++; ?>
                 @endforeach
               </table>
             </div>
