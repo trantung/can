@@ -315,8 +315,6 @@ class ScaleStationController extends BaseCategoryController {
         if (!$company) {
             dd('Department not found!!');
         }
-        $logKcs = ScaleKCS::where($inputSearch)->get();
-        // $scale = ScaleKCS::where('number_ticket', $inputSearch['number_ticket'])->whereNull('type')->first();
         $productName = '';
         $campaignCode = '';
         if ($scale) {
