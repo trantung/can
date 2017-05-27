@@ -191,6 +191,7 @@ class ApiController extends BaseController {
             $response['code'] = 200;
             $response['message'] = 'success';
             $response['data'] = Auth::admin()->get();
+
             
         } else {
             $response['code'] = 500;
@@ -198,7 +199,13 @@ class ApiController extends BaseController {
         }
         return Response::json($response);
     }
-
+    public function getCustomerDataByScaleCode($code)
+    {
+        $response['data'] = CustomerShip::where('scale_code', $code)->get();
+        $response['code'] = 200;
+        $response['message'] = 'success';
+        return Response::json($response);
+    }
     public function getProductionLoss($productCategoryId, $productId)
     {
         $response['code'] = 200;
