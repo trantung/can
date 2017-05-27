@@ -20,6 +20,9 @@ class CompanyCategoryController extends BaseCategoryController {
     const PARENTS         = 'parents';
     const PARENT_ID         = 'parent_id';
     const CODE         = 'code';
+    const PHONE         = 'phone';
+    const FAX         = 'fax';
+    const EMAIL         = 'email';
 
 
 
@@ -41,7 +44,9 @@ class CompanyCategoryController extends BaseCategoryController {
     * @return array
     */
     protected function getInputFieldStore(){
-        return Input::only(self::NAME, self::DESCRIPTION, self::PARENT_ID, self::LEVEL, self::CODE);
+        return Input::only(self::NAME, self::DESCRIPTION, self::PARENT_ID,
+            self::FAX, self::PHONE, self::EMAIL,
+            self::LEVEL, self::CODE);
     }
 
     /**
@@ -50,7 +55,9 @@ class CompanyCategoryController extends BaseCategoryController {
     * @return array
     */
     protected function getInputFieldUpdate(){
-        return Input::only(self::NAME, self::DESCRIPTION, self::PARENT_ID, self::LEVEL, self::CODE);
+        return Input::only(self::NAME, self::DESCRIPTION, self::PARENT_ID,
+            self::FAX, self::PHONE, self::EMAIL,
+            self::LEVEL, self::CODE);
     }
 
     /**

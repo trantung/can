@@ -32,8 +32,10 @@
               <div class="form-group">
                 <label for="username">Sản phẩm</label>
                 <div class="row">
+                <?php $ob = $data->model_name;
+                $arr = $ob::lists('name', 'id'); ?>
                   <div class="col-sm-6">
-                    {{ Form::select('model_id', ['' => 'Chọn'], $data->model_id,  array('class' => 'form-control', 'id' => 'model_id'))}}
+                    {{ Form::select('model_id', ['' => 'Chọn']+ $arr, $data->model_id,  array('class' => 'form-control', 'id' => 'model_id'))}}
                   </div>
                 </div>
               </div>
@@ -70,13 +72,14 @@
 <script type="text/javascript">
   $(document).ready(function () {
       $('#model_name').on('change', function (e) {
+        console.log(111);
           var id = $('#model_name').val();
-          if (id == 1) {
-            var link = '/admin/api/request/all-product';
+          if (id == 'Product') {
+            var link = '/api/request/all-product';
             getProduct(link);
           }
-          if (id == 2) {
-            var link = '/admin/api/request/all-product-category';
+          if (id == 'ProductCategory') {
+            var link = '/api/request/all-product-category';
             getProduct(link);
           }
       });

@@ -35,9 +35,8 @@ class ApiController extends BaseController {
         return Response::json($response);
     }
 
-    public function postStoreShip()
+    public function postStoreShip($input)
     {
-        $input = Input::except('_token');
         $id = CustomerShip::create($input)->id;
         return $id;
     }

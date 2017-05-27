@@ -34,7 +34,7 @@
                   <label for="username">Mã</label>
                   <div class="row">
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" id="code" placeholder="Mã" name="code" value="{{$data->code}}">
+                        {{$data->code}}
                     </div>
                   </div>
                 </div>
@@ -65,6 +65,31 @@
                     </div>
                   </div>
                 </div>
+                <div class="form-group">
+                  <label for="password">Email</label>
+                  <div class="row">
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="address" name="email" value="{{$data->email}}">
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="password">Số điện thoại</label>
+                  <div class="row">
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="address" name="phone" value="{{$data->phone}}">
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="password">Fax</label>
+                  <div class="row">
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="address" name="fax" value="{{$data->fax}}">
+                    </div>
+                  </div>
+                </div>
+
               </div>
               <!-- /.box-body -->
 

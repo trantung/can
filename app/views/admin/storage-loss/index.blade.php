@@ -35,10 +35,12 @@
                   <td>
                     @if ($value->model_name == 'ProductCategory')
                       Nguyên liệu
-                      
                     @else
                       Thành phẩm
                     @endif
+                  </td>
+                  <td>
+                    {{ Common::getNameByStorageLoss($value->model_name, $value->model_id) }}
                   </td>
                   <td>
                     @if ($warehouse = Warehouse::find($value->warehouse_id))
