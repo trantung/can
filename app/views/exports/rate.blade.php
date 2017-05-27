@@ -95,7 +95,7 @@
                 {{ $product }}
               </td>
             </tr>
-            @if (isset($campaignCode))
+            @if ($campaignCode!= '' )
               <tr>
                 <td width="20%">
                   Mã chiến dịch :
