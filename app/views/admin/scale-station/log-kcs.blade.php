@@ -52,7 +52,7 @@
                 <td>{{ $value->ty_le_vo }}</td>
                 <td>{{ $value->ty_le_tap_chat }}</td>
                 <td>{{ $value->do_kho }}</td>
-                <td>{{ $value->created_at }}</td>
+                <td>{{ $value->time_kcs }}</td>
                 <td>{{ $value->app_id }}</td>
                 <td>{{ $value->code }}</td>
                 <td>
