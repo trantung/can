@@ -131,7 +131,8 @@ class CommonNormal
 			'thoiGian' => 'created_at',
 			'app_id' => 'app_id',
 			'code' => 'code',
-			'type' => 'type'
+			'type' => 'type',
+			'thoiGian' => 'time_kcs',
 		];
 		return self::prepareData($input, $arrayKey);
 	}
