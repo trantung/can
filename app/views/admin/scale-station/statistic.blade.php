@@ -1,7 +1,7 @@
 @extends('admin.layout.default')
 @if(Admin::isAdmin())
 @section('title')
-{{ $title='Danh sách' }}
+{{ $title='Thông tin chi tiết' }}
 @stop
 
 @section('content')
@@ -35,6 +35,7 @@
                   <th>KL tạp chất(kg)</th>
                   <th>Tỷ lệ tạp chất</th>
                   <th>Lượng trừ</th>
+                  <th>Tùy chọn</th>
                 </tr>
                 @foreach($data as $key => $value)
                 <tr>
@@ -42,9 +43,11 @@
                   <td>{{ $value->number_ticket }}</td>
                   <td>{{ $value->customer_name }}</td>
                   <td>
-                  @if ($value->category_id != '')
-                  <?php $modelName = CommonNormal::getNameProduct($value->category_id); ?>
-                    {{ $modelName::find(CommonNormal::getProductCategoryId($value->category_id)[1])->name }}</td>
+                  <?php $modelName = CommonNormal::getNameProduct($value->category_id);
+                  $product = $modelName::find(CommonNormal::getProductCategoryId($value->category_id)[1]);
+                  ?>
+                  @if ($value->category_id != '' && $product)
+                    {{ $$product->name }}</td>
                   @endif
                   </td>
                   
@@ -68,6 +71,9 @@
                   @if ($luongTru = LuongTruCan::where('ma_phieu_can', $value->number_ticket)->first())
                     {{ $luongTru->luongtru }}
                   @endif
+                  </td>
+                  <td>
+                    <a href="{{ action('ScaleStationController@getDetail', $value->number_ticket) }}" class="btn btn-primary">Xem</a>
                   </td>
                 </tr>
                 @endforeach

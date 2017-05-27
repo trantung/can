@@ -215,6 +215,7 @@ class ScaleStationController extends BaseCategoryController {
                 $data[$key]->do_kho = ($value->do_kho == null) ? $value->do_kho = $arrKcs[$key]->do_kho : '';
             }
         }
+        Session::put('statistic', $data);
         return View::make('admin.scale-station.statistic')->with(compact('data'));
     }
 
@@ -295,7 +296,7 @@ class ScaleStationController extends BaseCategoryController {
         $campaignCode = '';
         if ($scale) {
             $modelName = CommonNormal::getNameProduct($scale->category_id);
-            $product = $modelName::find(CommonNormal::getProductCategoryId($scale->category_id)[1]);
+            $product = $modelName::find(CommonNormal::getProductCategoryId($scale->category_id)[0]);
             if (!$product) {
                 $productName = 'Không có sản phẩm';
             } else {
@@ -320,5 +321,12 @@ class ScaleStationController extends BaseCategoryController {
     {
         $data = ScaleKCS::whereNull('type')->paginate(PAGINATE);
         return View::make('admin.scale-station.log-scale')->with(compact('data'));
+    }
+
+    public function getDetail($numberTicket)
+    {
+        $listData = Session::get('statistic');
+        $data = $listData[$numberTicket];
+        return View::make('admin.scale-station.detail')->with(compact('data'));
     }
 }
