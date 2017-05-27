@@ -1,7 +1,7 @@
 @extends('admin.layout.default')
 @if(Admin::isAdmin())
 @section('title')
-{{ $title='Danh sách' }}
+{{ $title='Cài đặt In' }}
 @stop
 
 @section('content')
@@ -9,17 +9,6 @@
   {{-- haind --}}
   <form id="searchExport">
   <div class="row">
-      <div class="col-md-4">
-          <div class="row">
-              <div class="col-md-3">
-                  <label>Số phiếu</label>
-              </div>
-              <div class="col-md-9">
-                  <input type="text" name="number_ticket" class="form-control" placeholder="Search"/>
-              </div>
-          </div>
-      </div>
-      
       <div class="col-md-4">
           <div class="row">
               <div class="col-md-3">
@@ -43,22 +32,21 @@
   </div>
   <div class="row" style="padding-top: 20px">
     <div class="col-md-4">
+        <div class="row">
+            <div class="col-md-3">
+                <label>Tìm kiếm theo</label>
+            </div>
+            <div class="col-md-9">
+                {{ Form::select('type_search', ['1' => 'Số phiếu', '2' => 'Mã chiến dịch'], null,  array('class' => 'form-control', 'id' => 'type_search'))}}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
           <div class="row">
               <div class="col-md-3">
-                  <label>Nguyên liệu</label>
               </div>
               <div class="col-md-9">
-                  {{ Form::select('product_category_id', ['' => 'Chọn'] + ProductCategory::lists('name', 'id'), null,  array('class' => 'form-control', 'id' => 'product_category_id'))}}
-              </div>
-          </div>
-      </div>
-      <div class="col-md-4">
-          <div class="row">
-              <div class="col-md-3">
-                  <label>Mã chiến dịch</label>
-              </div>
-              <div class="col-md-9">
-                  <input type="text" name="campaign_code" class="form-control" placeholder="Search"/>
+                  <input type="text" name="search" class="form-control" placeholder="Search"/>
               </div>
           </div>
       </div>

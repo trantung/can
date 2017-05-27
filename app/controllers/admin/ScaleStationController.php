@@ -274,10 +274,11 @@ class ScaleStationController extends BaseCategoryController {
 
     public function getExport() {
         $input = Input::all();
-        if ($input['campaign_code'] == '') {
-            $inputSearch = Input::except('company_id', 'product_category_id', 'campaign_code');
+        $inputSearch = Input::except('company_id', 'product_category_id');
+        if ($input['type_search'] == '1') {
+            $inputSearch['number_ticket'] = $input['search'];
         } else {
-            $inputSearch = Input::except('company_id', 'product_category_id');
+            $inputSearch['campaign_code'] = $input['search'];
         }
         $inputSearch['type'] = 'KCS';
         $company = Company::find($input['company_id']);
@@ -292,7 +293,12 @@ class ScaleStationController extends BaseCategoryController {
         $scale = ScaleKCS::where('number_ticket', $input['number_ticket'])->whereNull('type')->first();
         if ($scale) {
             $modelName = CommonNormal::getNameProduct($scale->category_id);
-            $product = $modelName::find(CommonNormal::getProductCategoryId($scale->category_id)[1])->name;
+            $product = $modelName::find(CommonNormal::getProductCategoryId($scale->category_id)[1]);
+            if (!$product) {
+                $productName = 'Không có sản phẩm';
+            } else {
+                $productName = $product->name;
+            }
             if ($scale->campaign_code != '') {
                 $campaignCode = $scale->campaign_code;
             }
@@ -300,7 +306,7 @@ class ScaleStationController extends BaseCategoryController {
         $data = [
             'company' => $company,
             'department' => $department,
-            'product' => $product,
+            'product' => $productName,
             'campaignCode' => $campaignCode,
             'log' => $logKcs,
         ];
