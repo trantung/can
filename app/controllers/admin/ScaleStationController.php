@@ -321,4 +321,10 @@ class ScaleStationController extends BaseCategoryController {
         $data = ScaleKCS::whereNull('type')->paginate(PAGINATE);
         return View::make('admin.scale-station.log-scale')->with(compact('data'));
     }
+
+    public function getDetail($id)
+    {
+        $data = ScaleKcs::find($id);
+        return View::make('admin.scale-station.detail')->with(compact('data'));
+    }
 }
