@@ -33,6 +33,8 @@
                   <td>
                     @if ($value->model_name == 'ProductCategory')
                       Nguyên liệu
+                    @else
+                      Thành phẩm
                     @endif
                   </td>
                    <td>
