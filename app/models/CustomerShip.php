@@ -17,7 +17,8 @@ class CustomerShip extends Eloquent
 	    'app_code', 
 	    'active', 
 	    'created_by', 
-	    'updated_by'
+	    'updated_by',
+	    'scale_code',
     ];
 
 }
