@@ -31,7 +31,7 @@
                     <label>Từ ngày</label>
                 </div>
                 <div class="col-md-9">
-                    <input class="form-control input-sm" type="text" name="from_date" id="datepicker6">
+                    <input class="form-control input-sm" type="text" name="from_date" id="datepicker6" value="{{ Input::old('from_date') }}">
                 </div>
             </div>
         </div>
