@@ -68,6 +68,7 @@ class ApiController extends BaseController {
             $department = Company::find($scale->department_id);
             $data['department'] = $department;
             $data['company'] = Company::find($department->parent_id);
+            $data['customer'] = CustomerShip::where('scale_code', $codeScaleStation)->get();
             $response['code'] = 200;
             $response['message'] = 'success';
             $response['data'] = $data;
@@ -77,11 +78,9 @@ class ApiController extends BaseController {
         }
     }
 
-    public function getCustomerByScaleStation($appId, $codeScaleStation)
+    public function getCustomerByScaleStation($codeScaleStation)
     {
-        $arrCustomer = Customer::where('scale_station_code', $codeScaleStation)
-                    ->lists('group_id');
-        $data = CustomerGroup::whereIn('id', $arrCustomer)->get();
+        $data = CustomerShip::where('scale_code', $codeScaleStation)->get();
         $response['code'] = 200;
         $response['message'] = 'success';
         $response['data'] = $data;
@@ -152,6 +151,8 @@ class ApiController extends BaseController {
             $customer['customer_id'] = $input['id_kh'];
             $customer['customer_fax'] = $input['khach_hang_fax'];
             $customer['app_code'] = $input['app_id'];
+            $customer['scale_code'] = $input['code'];
+
             $this->postStoreShip($customer);
             // call store insert customer ship
             if ($input['chien_dich_id'] == '') {
@@ -278,5 +279,52 @@ class ApiController extends BaseController {
             return $idLuongtruCan;
         }
         return false;
+    }
+    public function postChangePass()
+    {
+        // dd(11);
+        $input = Input::except('_token');
+        $admin = Admin::where('username', $input['user_name']);
+        if(!isset($input['old_password']))
+        {
+            $response['code'] = 200;
+            $response['message'] = 'phải nhập password cũ';
+            $response['data'] = '';
+            return Response::json($response);
+        }
+        else
+        {
+            if(!isset($input['new_password']))
+            {
+                $response['code'] = 200;
+                $response['message'] = 'phải nhập password mới';
+                $response['data'] = '';
+                return Response::json($response);
+            }
+            if(isset($input['new_password']))
+            {
+                if(Auth::admin()->attempt(['username' => $input['user_name'], 'password' => $input['old_password']]))
+                {
+                    $newPass = Hash::make($input['new_password']);
+                    $admin->update(['password' => $newPass]);
+                    $response['code'] = 200;
+                    $response['message'] = 'Cập nhật mật khẩu thành công';
+                    $response['data'] = '';
+                    return Response::json($response);
+                }else{
+                    $response['code'] = 200;
+                    $response['message'] = 'tên đăng nhập hoặc mật khẩu cũ không đúng';
+                    $response['data'] = '';
+                    return Response::json($response);
+                }
+            }
+            else
+            {
+                $response['code'] = 200;
+                $response['message'] = 'Phải nhập mật khẩu ';
+                $response['data'] = '';
+                return Response::json($response);
+            }
+        }
     }
 }
