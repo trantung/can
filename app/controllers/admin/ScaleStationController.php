@@ -1,5 +1,7 @@
 <?php
 
+use Barryvdh\DomPDF\Facade as PDF;
+
 class ScaleStationController extends BaseCategoryController {
 
 
@@ -186,7 +188,11 @@ class ScaleStationController extends BaseCategoryController {
         if (count($input) > 0) {
             $model = $model->where($input);
         }
-        $data = $model->orderBy('id', 'desc')->paginate(PAGINATE);
+        $dataScale = $model->orderBy('id', 'desc')->paginate(PAGINATE);
+        $dataKcs = ScaleKCS::orderBy('id', 'desc')->paginate(PAGINATE);
+        foreach ($dataScale as $key => $value) {
+            
+        }
         return View::make('admin.scale-station.log-scale')->with(compact('data'));
     }
 
@@ -237,5 +243,36 @@ class ScaleStationController extends BaseCategoryController {
             }
         }
         return $input;
+    }
+
+    public function getSearchExport()
+    {
+        return View::make('admin.scale-station.search-export');
+    }
+
+    public function getExport() {
+        $input = Input::all();
+        if ($input['campaign_code'] == '') {
+            $inputSearch = Input::except('company_id', 'product_category_id', 'campaign_code');
+        } else {
+            $inputSearch = Input::except('company_id', 'product_category_id');
+        }
+        $inputSearch['type'] = 'KCS';
+        $company = Company::find($input['company_id']);
+        if (!$company) {
+            dd('Không tồn tại công ty');
+        }
+        $department = Company::find($input['department_id']);
+        if (!$company) {
+            dd('Không tồn tại chi nhánh');
+        }
+        $logKcs = ScaleKCS::where($inputSearch)->get();
+        $data = [
+            'company' => $company,
+            'department' => $department,
+            'log' => $logKcs,
+        ];
+        $pdf = PDF::loadView('exports.rate', $data);
+        return $pdf->stream();
     }
 }

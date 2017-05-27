@@ -126,6 +126,7 @@ return array(
 	    // 'Barryvdh\Debugbar\ServiceProvider',
 	    'Mcamara\LaravelLocalization\LaravelLocalizationServiceProvider',
         // 'Baum\Providers\BaumServiceProvider',
+        'Barryvdh\DomPDF\ServiceProvider',
 
 	),
 
@@ -195,7 +196,7 @@ return array(
 		'View'            => 'Illuminate\Support\Facades\View',
 		// 'Debugbar' 	      => 'Barryvdh\Debugbar\Facade',
 		'LaravelLocalization'   => 'Mcamara\LaravelLocalization\Facades\LaravelLocalization',
-
+		'PDF'				=> 'Barryvdh\DomPDF\Facade',
 	),
 
 );
