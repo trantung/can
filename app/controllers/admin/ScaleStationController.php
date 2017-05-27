@@ -296,7 +296,7 @@ class ScaleStationController extends BaseCategoryController {
         $campaignCode = '';
         if ($scale) {
             $modelName = CommonNormal::getNameProduct($scale->category_id);
-            $product = $modelName::find(CommonNormal::getProductCategoryId($scale->category_id)[1]);
+            $product = $modelName::find(CommonNormal::getProductCategoryId($scale->category_id)[0]);
             if (!$product) {
                 $productName = 'Không có sản phẩm';
             } else {
