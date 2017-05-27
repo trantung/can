@@ -107,7 +107,8 @@ class CommonNormal
 			'kl_can_lan_2' => 'second_scale_weight',
 			'kl_hang' => 'package_weight',
 			'app_id' => 'app_id',
-			'code' => 'code'
+			'code' => 'code',
+			'number_ticket_manual' => 'number_ticket_manual',
 		];
 		return self::prepareData($input, $arrayKey);
 	}
