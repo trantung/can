@@ -278,8 +278,10 @@ class ScaleStationController extends BaseCategoryController {
         $inputSearch = Input::except('company_id', 'product_category_id', 'type_search', 'search');
         if (Input::get('type_search') == '1') {
             $inputSearch['number_ticket'] = Input::get('search');
+            $scale = ScaleKCS::where('number_ticket', $inputSearch['number_ticket'])->whereNull('type')->first();
         } else {
             $inputSearch['campaign_code'] = Input::get('search');
+            $scale = ScaleKCS::where('campaign_code', $inputSearch['campaign_code'])->whereNull('type')->first();
         }
         $inputSearch['type'] = 'KCS';
         $company = Company::find($input['company_id']);
@@ -291,7 +293,7 @@ class ScaleStationController extends BaseCategoryController {
             dd('Department not found!!');
         }
         $logKcs = ScaleKCS::where($inputSearch)->get();
-        $scale = ScaleKCS::where('number_ticket', $inputSearch['number_ticket'])->whereNull('type')->first();
+        // $scale = ScaleKCS::where('number_ticket', $inputSearch['number_ticket'])->whereNull('type')->first();
         $productName = '';
         $campaignCode = '';
         if ($scale) {
