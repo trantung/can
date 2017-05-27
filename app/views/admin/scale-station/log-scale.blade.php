@@ -28,7 +28,6 @@
                   <th>Khối lượng hàng</th>
                   <th>App id</th>
                   <th>Mã</th>
-                  <th style="width:200px;">Action</th>
                 </tr>
                 @foreach($data as $key => $value)
                 <tr>
@@ -44,13 +43,7 @@
                   <td>{{ $value->package_weight }}</td>
                   <td>{{ $value->app_id }}</td>
                   <td>{{ $value->code }}</td>
-                  <td>
-                    <a href="{{ action('ScaleStationController@edit', $value->id) }}" class="btn btn-primary">Sửa</a>
-                    {{ Form::open(array('method'=>'DELETE', 'action' => array('ScaleStationController@destroy', $value->id), 'style' => 'display: inline-block;')) }}
-                    <button class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa?');">Xóa</button>
-                    {{ Form::close() }}
-
-                  </td>
+                  
                 </tr>
                 @endforeach
               </table>
