@@ -156,7 +156,7 @@ class CommonNormal
 
 	public static function getOverloadRatio($stringIdCategory)
 	{
-		$model = $this->getProductCategoryId($stringIdCategory);
+		$model = self::getProductCategoryId($stringIdCategory);
 		$modelId = $model[0];
 		$type = $model[1];
 		if ($type == 1) {
@@ -165,31 +165,44 @@ class CommonNormal
 		if ($type == 2) {
 			$modelName = 'ProductCategory';
 		}
+		// dd($modelId);
 		$data = OverloadRatio::where('model_name', $modelName)
 			->where('model_id', $modelId)
 			->orderBy('id', 'DESC')
 			->first();
-		return json_decode($data->data);
+			// dd($data->data);
+		return $data->data;
 	}
 
 	public static function calcLuongTru($objScale, $objKcs)
 	{
-		$overloadRatio = $this->getOverloadRatio($objScale->category_id);
+		// dd($objScale->category_id);
+		// $arr = self::getProductCategoryId($objScale->category_id);
+		// $categoryId = $arr[0];
+		$overloadRatio = self::getOverloadRatio($objScale->category_id);
+		$luongtru = [];
+		// dd($objKcs->ty_le_mun);
 		foreach ($overloadRatio as $key => $value) {
+			// dd($objKcs->$key);
 			if(isset($objKcs->$key)){
-				if ($objKcs->key > $value) {
-					$luongtru[$key] = ($objKcs->key - $value) * ($objScale->package_weight)/100;
+				if ($objKcs->$key > $value) {
+
+					$luongtru[$key] = ($objKcs->$key - $value) * ($objScale->package_weight)/100;
 				}
 			}
 		}
+		// dd($luongtru);
 		$total = 0;
 		foreach ($luongtru as $k => $v) {
 			$total = $total + $v;
 		}
 		return $total;
 	}
-	public static function saveStore($input)
+	public static function saveStore($input, $kcs = null)
 	{
+		if ($kcs) {
+			return true;
+		}
 		$model = self::getProductCategoryId($input['id_the_loai']);
 		if ($model[1] == 1) {
 			$modelName = 'Product';

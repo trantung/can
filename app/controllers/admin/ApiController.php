@@ -125,7 +125,7 @@ class ApiController extends BaseController {
         $input = Input::all();
         $scaleCode = $input['code'];
         $appId = $input['app_id'];
-       
+        $data = '';
         $customer = [];
         //check type
         $idLuongtruCan = '';
@@ -139,8 +139,9 @@ class ApiController extends BaseController {
                 $response['data'] = '';
                 return Response::json($response);
             }
+            $idLuongtruCan = $this->common($input, 1);
             //insert data KCS
-            $data = CommonNormal::storeDataKCS($input);
+            // $data = CommonNormal::storeDataKCS($input);
         } else {
             $check = ScaleStation::where('app_id', $appId)
                 ->where('code', $scaleCode)
@@ -156,6 +157,7 @@ class ApiController extends BaseController {
             $this->postStoreShip($customer);
             // call store insert customer ship
             if ($input['chien_dich_id'] == '') {
+                // dd(11);
                 $idLuongtruCan = $this->common($input);
             } else {
                 //cân chiến dịch
@@ -250,9 +252,13 @@ class ApiController extends BaseController {
         $response['data'] = $data;
         return Response::json($response);
     }
-    public function common($input)
+    public function common($input, $kcs = null)
     {
-        $id = CommonNormal::storeDataScale($input);
+        if ($kcs) {
+             $id = CommonNormal::storeDataKCS($input);
+        } else {
+            $id = CommonNormal::storeDataScale($input);
+        }
         //tinh khoi luong hang : nếu có lớn hơn 2 lần cân trên 1 mã phiếu
         $obj = ScaleKCS::find($id);
         $scale = ScaleKCS::where('number_ticket', $obj->number_ticket)
@@ -261,18 +267,28 @@ class ApiController extends BaseController {
             ->first();
         // if ($secondTicket) {
             //tinh toan luu kho
-        CommonNormal::saveStore($input);
+        CommonNormal::saveStore($input, $kcs);
         //kiểm tra xem đã kiểm định chưa ( KCS): muc dich de in chung thu
+        // dd(1111);
         $kcs = ScaleKCS::where('number_ticket', $obj->number_ticket)
             ->where('type', 'KCS')
             ->first();
         if ($kcs) {
             // tính lượng trừ
-            $luongtru = CommonNormal::calcLuongTru();
+            $luongtru = CommonNormal::calcLuongTru($scale, $kcs);
+            // dd($luongtru);
             //lưu lượng trừ vào 1 bảng
             $inputLuongtru[] = [];
-            $inputLuongtru['ma_cd'] = $input['chien_dich_id'];
-            $inputLuongtru['ma_phieu_can'] = $input['code'];
+            
+            if (!$kcs) {
+                $inputLuongtru['ma_cd'] = $input['chien_dich_id'];
+                $inputLuongtru['ma_phieu_can'] = $input['so_phieu'];
+            }
+            else {
+                $scale = ScaleKCS::where('number_ticket', $input['soPhieu'])->whereNull('type')->first();
+                $inputLuongtru['ma_cd'] = $scale->campaign_code;
+                $inputLuongtru['ma_phieu_can'] = $input['soPhieu'];
+            }   
             $inputLuongtru['luongtru'] = $luongtru;
             $idLuongtruCan = LuongTruCan::create($inputLuongtru)->id;
         // }
