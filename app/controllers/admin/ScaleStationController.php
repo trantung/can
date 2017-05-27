@@ -298,9 +298,13 @@ class ScaleStationController extends BaseCategoryController {
         if (Input::get('type_search') == '1') {
             $inputSearch['number_ticket'] = Input::get('search');
             $scale = ScaleKCS::where('number_ticket', $inputSearch['number_ticket'])->whereNull('type')->where('package_weight', '>', 0)->first();
+            $logKcs = ScaleKCS::where($inputSearch)->get();
         } else {
             $inputSearch['campaign_code'] = Input::get('search');
             $scale = ScaleKCS::where('campaign_code', $inputSearch['campaign_code'])->whereNull('type')->where('package_weight', '>', 0)->first();
+            $logKcs = ScaleKCS::where('code', $input['code'])
+                ->where('type', 'KCS')
+                ->get();
         }
         $inputSearch['type'] = 'KCS';
         $company = Company::find($input['company_id']);
