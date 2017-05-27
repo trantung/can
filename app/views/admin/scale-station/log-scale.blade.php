@@ -33,7 +33,7 @@
                   <th>KL xe</th>
                   <th>KL tạp chất</th>
                   <th>KL hàng</th>
-                  <th>Tạp chất</th>
+                  <th>Tỷ lệ tạp chất</th>
                   <th>Lượng trừ</th>
                 </tr>
                 @foreach($data as $key => $value)
@@ -48,7 +48,7 @@
                   @endif
                   </td>
                   
-                  <td>
+                  <td>{{ $value->warehouse_id }}
                   @if ($warehouse = Warehouse::find($value->warehouse_id))
                     {{ $warehouse->name }}
                   @endif
@@ -62,6 +62,7 @@
                   <td>{{ $value->first_scale_weight }}</td>
                   <td>{{ $value->second_scale_weight }}</td>
                   <td>{{ $value->trong_luong_tap_chat }}</td>
+                  <td>{{ $value->package_weight }}</td>
                   <td>{{ $value->ty_le_tap_chat }}</td>
                   <td>
                   @if ($luongTru = LuongTruCan::where('ma_phieu_can', $value->number_ticket)->first())
