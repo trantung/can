@@ -445,3 +445,21 @@ function calculatorStorage($warehouseOriginId, $productId, $weight, $status, $wa
 		return true;
 	}
 }
+
+
+function getNameOfTransfer($type)
+{
+	if ($type == 1) {
+		$name = 'Xuất kho';
+	}
+	if ($type == 2) {
+		$name = 'Nhập kho';
+	}
+	if ($type == 3) {
+		$name = 'Chuyển Xuất kho';
+	}
+	if ($type == 4) {
+		$name = 'Chuyển nhập kho';
+	}
+	return $name;
+}

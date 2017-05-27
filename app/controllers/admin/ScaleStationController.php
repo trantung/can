@@ -188,11 +188,30 @@ class ScaleStationController extends BaseCategoryController {
         if (count($input) > 0) {
             $model = $model->where($input);
         }
-        $data = $model->orderBy('id', 'desc')->paginate(PAGINATE);
-        $dataKcs = ScaleKCS::orderBy('id', 'desc')->paginate(PAGINATE);
-        // foreach ($dataScale as $key => $value) {
-            
-        // }
+        $dataScale = $model->whereNull('type')->where('package_weight', '>', 0)->distinct('number_ticket')->get();
+        $dataKcs = ScaleKCS::where('type', 'KCS')->distinct('number_ticket')->get();
+        foreach ($dataScale as $key => $value) {
+            $arrScale[$value['number_ticket']] = $value;
+        }
+        foreach ($dataKcs as $key => $value) {
+            $arrKcs[$value['number_ticket']] = $value;
+        }
+        foreach ($arrScale as $key => $value) {
+            if (isset($arrKcs[$key])) {
+                $data[$key] = new stdClass();
+                $data[$key] = $value;
+                $data[$key]->weight_total = ($value->weight_total == null) ? $value->weight_total = $arrKcs[$key]->weight_total : '';
+                $data[$key]->trong_luong_mun = ($value->trong_luong_mun == null) ? $value->trong_luong_mun = $arrKcs[$key]->trong_luong_mun : '';
+                $data[$key]->trong_luong_qua_co = ($value->trong_luong_qua_co == null) ? $value->trong_luong_qua_co = $arrKcs[$key]->trong_luong_qua_co : '';
+                $data[$key]->trong_luong_vo = ($value->trong_luong_vo == null) ? $value->trong_luong_vo = $arrKcs[$key]->trong_luong_vo : '';
+                $data[$key]->trong_luong_tap_chat = ($value->trong_luong_tap_chat == null) ? $value->trong_luong_tap_chat = $arrKcs[$key]->trong_luong_tap_chat : '';
+                $data[$key]->ty_le_mun = ($value->ty_le_mun == null) ? $value->ty_le_mun = $arrKcs[$key]->ty_le_mun : '';
+                $data[$key]->ty_le_qua_co = ($value->ty_le_qua_co == null) ? $value->ty_le_qua_co = $arrKcs[$key]->ty_le_qua_co : '';
+                $data[$key]->ty_le_vo = ($value->ty_le_vo == null) ? $value->ty_le_vo = $arrKcs[$key]->ty_le_vo : '';
+                $data[$key]->ty_le_tap_chat = ($value->ty_le_tap_chat == null) ? $value->ty_le_tap_chat = $arrKcs[$key]->ty_le_tap_chat : '';
+                $data[$key]->do_kho = ($value->do_kho == null) ? $value->do_kho = $arrKcs[$key]->do_kho : '';
+            }
+        }
         return View::make('admin.scale-station.log-scale')->with(compact('data'));
     }
 
@@ -262,14 +281,24 @@ class ScaleStationController extends BaseCategoryController {
         if (!$company) {
             dd('Không tồn tại công ty');
         }
-        $department = Company::find($input['department_id']);
+        $department = Company::where('code', $input['code'])->first();
         if (!$company) {
             dd('Không tồn tại chi nhánh');
         }
         $logKcs = ScaleKCS::where($inputSearch)->get();
+        $scale = ScaleKCS::where('number_ticket', $input['number_ticket'])->whereNull('type')->first();
+        if ($scale) {
+            $modelName = CommonNormal::getNameProduct($scale->category_id);
+            $product = $modelName::find(CommonNormal::getProductCategoryId($scale->category_id)[1])->name;
+            if ($scale->campaign_code != '') {
+                $campaignCode = $scale->campaign_code;
+            }
+        }
         $data = [
             'company' => $company,
             'department' => $department,
+            'product' => $product,
+            'campaignCode' => $campaignCode,
             'log' => $logKcs,
         ];
         $pdf = PDF::loadView('exports.rate', $data);
