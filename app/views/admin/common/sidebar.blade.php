@@ -111,6 +111,16 @@
                     <span>Quản lý trạm cân</span>
                 </a>
             </li>
+            <li>
+                <a href="{{ action('ScaleStationController@getLogScale') }}">
+                    <span>Thống kê Cân/ KCS</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ action('ScaleStationController@getSearchExport') }}">
+                    <span>In chứng thư</span>
+                </a>
+            </li>
            {{--  <li>
                 <a href="{{ action('SalariesController@index') }}">
                     <span>Lương nhân viên</span>
