@@ -2,7 +2,7 @@
 <link rel="stylesheet" type="text/css" href="../assets/js/combotree/themes/icon.css">
 <link rel="stylesheet" type="text/css" href="../assets/js/combotree/demo/demo.css">
 <div class="margin-bottom margin-top">
-    {{ Form::open(array('action' => 'ScaleStationController@getLogScale', 'method' => 'GET', 'id'=>'searchForm')) }}
+    {{ Form::open(array('action' => 'ScaleStationController@getStatistic', 'method' => 'GET', 'id'=>'searchForm')) }}
     {{-- haind --}}
     <div class="row">
         <div class="col-md-4">
