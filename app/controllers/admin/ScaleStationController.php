@@ -190,6 +190,8 @@ class ScaleStationController extends BaseCategoryController {
         }
         $dataScale = $model->whereNull('type')->where('package_weight', '>', 0)->distinct('number_ticket')->get();
         $dataKcs = ScaleKCS::where('type', 'KCS')->distinct('number_ticket')->get();
+        $arrScale = [];
+        $arrKcs = [];
         foreach ($dataScale as $key => $value) {
             $arrScale[$value['number_ticket']] = $value;
         }
