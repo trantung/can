@@ -29,11 +29,11 @@
                   <th>Kho</th>
                   <th>Chi nhánh</th>
                   <th>Ngày cân</th>
-                  <th>KL tổng</th>
-                  <th>KL xe</th>
-                  <th>KL tạp chất</th>
-                  <th>KL hàng</th>
-                  <th>Tạp chất</th>
+                  <th>KL tổng(kg)</th>
+                  <th>KL xe(kg)</th>
+                  <th>KL hàng(kg)</th>
+                  <th>KL tạp chất(kg)</th>
+                  <th>Tỷ lệ tạp chất</th>
                   <th>Lượng trừ</th>
                 </tr>
                 @foreach($data as $key => $value)
@@ -61,6 +61,7 @@
                   <td>{{ $value->scale_at }}</td>
                   <td>{{ $value->first_scale_weight }}</td>
                   <td>{{ $value->second_scale_weight }}</td>
+                  <td>{{ $value->package_weight }}</td>
                   <td>{{ $value->trong_luong_tap_chat }}</td>
                   <td>{{ $value->ty_le_tap_chat }}</td>
                   <td>

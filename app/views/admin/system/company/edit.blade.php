@@ -35,6 +35,7 @@
                   <div class="row">
                     <div class="col-sm-6">
                         {{$data->code}}
+                        {{ Form::hidden('code', $data->code)}}
                     </div>
                   </div>
                 </div>
