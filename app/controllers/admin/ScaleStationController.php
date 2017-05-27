@@ -184,6 +184,14 @@ class ScaleStationController extends BaseCategoryController {
     {
         $input = Input::except('page');
         $model = new ScaleKCS();
+        if (isset($input['from_date']) && $input['from_date'] != '') {
+            $start = $input['from_date'];
+            $model = $model->where('scale_at', '>=', $start);
+        }
+        if (isset($input['to_date']) && $input['to_date'] != '') {
+            $end = $input['to_date'];
+            $model = $model->where('scale_at', '<=', $end);
+        }
         $input = self::processData($input);
         if (count($input) > 0) {
             $model = $model->where($input);
@@ -200,9 +208,9 @@ class ScaleStationController extends BaseCategoryController {
             $arrKcs[$value['number_ticket']] = $value;
         }
         foreach ($arrScale as $key => $value) {
+            $data[$key] = new stdClass();
+            $data[$key] = $value;
             if (isset($arrKcs[$key])) {
-                $data[$key] = new stdClass();
-                $data[$key] = $value;
                 $data[$key]->weight_total = ($value->weight_total == null) ? $value->weight_total = $arrKcs[$key]->weight_total : '';
                 $data[$key]->trong_luong_mun = ($value->trong_luong_mun == null) ? $value->trong_luong_mun = $arrKcs[$key]->trong_luong_mun : '';
                 $data[$key]->trong_luong_qua_co = ($value->trong_luong_qua_co == null) ? $value->trong_luong_qua_co = $arrKcs[$key]->trong_luong_qua_co : '';
@@ -260,7 +268,7 @@ class ScaleStationController extends BaseCategoryController {
     {
         if (count($input) > 0) {
             foreach ($input as $key => $value) {
-                if ($value == '') {
+                if ($value == '' || $key == 'from_date' || $key == 'to_date') {
                     unset($input[$key]);
                 }
             }
