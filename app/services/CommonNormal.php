@@ -285,6 +285,7 @@ class CommonNormal
 			->update(['process' => 1]);
 		return true;
 	}
+
 	public static function getNameProduct($stringIdCategory)
 	{
 		$model = self::getProductCategoryId($stringIdCategory);
@@ -294,6 +295,7 @@ class CommonNormal
 		if ($model[1] == 2) {
 			$modelName = 'ProductCategory';
 		}
+		return $modelName;
 		$modelId = $model[0];
 		$ob = $modelName::find($modelId);
 		return $ob->name;

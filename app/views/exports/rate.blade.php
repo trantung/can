@@ -92,7 +92,7 @@
                 Tên mẫu hàng :
               </td>
               <td align="left">
-                Dăm gỗ
+                {{ $product }}
               </td>
             </tr>
             @if (isset($campaignCode))
@@ -101,7 +101,7 @@
                   Mã chiến dịch :
                 </td>
                 <td align="left">
-                  Dăm gỗ
+                  {{ $campaignCode }}
                 </td>
               </tr>
             @endif

@@ -48,7 +48,7 @@
                   <label>Nguyên liệu</label>
               </div>
               <div class="col-md-9">
-                  {{ Form::select('product_category_id', ['' => 'Chọn'] + ProductCategory::lists('name', 'id'), null,  array('class' => 'form-control', 'id' => 'department_id'))}}
+                  {{ Form::select('product_category_id', ['' => 'Chọn'] + ProductCategory::lists('name', 'id'), null,  array('class' => 'form-control', 'id' => 'product_category_id'))}}
               </div>
           </div>
       </div>
