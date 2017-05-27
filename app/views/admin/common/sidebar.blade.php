@@ -112,7 +112,7 @@
                 </a>
             </li>
             <li>
-                <a href="{{ action('ScaleStationController@getLogScale') }}">
+                <a href="{{ action('ScaleStationController@getStatistic') }}">
                     <span>Thống kê Cân/ KCS</span>
                 </a>
             </li>
