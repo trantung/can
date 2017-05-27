@@ -184,6 +184,14 @@ class ScaleStationController extends BaseCategoryController {
     {
         $input = Input::except('page');
         $model = new ScaleKCS();
+        if (isset($input['from_date']) && $input['from_date'] != '') {
+            $start = strtotime($input['from_date']);
+            $model = $model->where('scale_at', '>=', $start);
+        }
+        if (isset($input['to_date']) && $input['to_date'] != '') {
+            $end = strtotime($input['to_date']);
+            $model = $model->where('scale_at', '<=', $end);
+        }
         $input = self::processData($input);
         if (count($input) > 0) {
             $model = $model->where($input);
@@ -260,7 +268,7 @@ class ScaleStationController extends BaseCategoryController {
     {
         if (count($input) > 0) {
             foreach ($input as $key => $value) {
-                if ($value == '') {
+                if ($value == '' || $key == 'from_date' || $key == 'to_date') {
                     unset($input[$key]);
                 }
             }

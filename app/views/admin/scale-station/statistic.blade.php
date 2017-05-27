@@ -44,10 +44,10 @@
                   <td>{{ $value->customer_name }}</td>
                   <td>
                   <?php $modelName = CommonNormal::getNameProduct($value->category_id);
-                  $product = $modelName::find(CommonNormal::getProductCategoryId($value->category_id)[1]);
+                  $product = $modelName::find(CommonNormal::getProductCategoryId($value->category_id)[0]);
                   ?>
-                  @if ($value->category_id != '' && $product)
-                    {{ $$product->name }}</td>
+                  @if ($value->category_id != '' && $product )
+                    {{ $product->name }}
                   @endif
                   </td>
                   

@@ -25,7 +25,16 @@
                 </div>
             </div>
         </div>
-        
+        <div class="col-md-4">
+            <div class="row">
+                <div class="col-md-3">
+                    <label>Từ ngày</label>
+                </div>
+                <div class="col-md-9">
+                    <input class="form-control input-sm" type="text" name="from_date" id="datepicker6">
+                </div>
+            </div>
+        </div>
     </div>
     <div class="row">
         <div class="col-md-4">
@@ -45,6 +54,16 @@
                 </div>
                 <div class="col-md-9">
                     {{ Form::select('department_id', ['' => 'Chọn'] + Company::level(4)->lists('name', 'id'), null,  array('class' => 'form-control', 'id' => 'department_id'))}}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="row">
+                <div class="col-md-3">
+                    <label>Đến ngày</label>
+                </div>
+                <div class="col-md-9">
+                    <input class="form-control input-sm" type="text" name="to_date" id="datepicker5">
                 </div>
             </div>
         </div>
