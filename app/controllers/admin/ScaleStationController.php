@@ -282,11 +282,11 @@ class ScaleStationController extends BaseCategoryController {
         $inputSearch['type'] = 'KCS';
         $company = Company::find($input['company_id']);
         if (!$company) {
-            dd('Không tồn tại công ty');
+            dd('Company not found!!');
         }
         $department = Company::where('code', $input['code'])->first();
         if (!$company) {
-            dd('Không tồn tại chi nhánh');
+            dd('Department not found!!');
         }
         $logKcs = ScaleKCS::where($inputSearch)->get();
         $scale = ScaleKCS::where('number_ticket', $input['number_ticket'])->whereNull('type')->first();
