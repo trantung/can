@@ -126,16 +126,26 @@ class ApiController extends BaseController {
         $input = Input::all();
         $scaleCode = $input['code'];
         $appId = $input['app_id'];
-        $check = ScaleStation::where('app_id', $appId)
-            ->where('code', $scaleCode)
-            ->first();
+       
         $customer = [];
         //check type
+        $idLuongtruCan = '';
         if (isset($input['type']) && $input['type'] == 'KCS') {
+            $check = KcsLogInstall::where('app_id', $appId)
+                ->where('department_code', $scaleCode)
+                ->first();
+            if (!$check) {
+                $response['code'] = 200;
+                $response['message'] = 'Không tồn tại Kiểm định trên chi nhánh này';
+                $response['data'] = '';
+                return Response::json($response);
+            }
             //insert data KCS
-            CommonNormal::storeDataKCS($input);
+            $data = CommonNormal::storeDataKCS($input);
         } else {
-            
+            $check = ScaleStation::where('app_id', $appId)
+                ->where('code', $scaleCode)
+                ->first();
             $customer['customer_name'] = $input['khach_hang_ten'];
             $customer['customer_phone'] = $input['khach_hang_sdt'];
             $customer['customer_address'] = $input['khach_hang_dia_chi'];
@@ -150,14 +160,15 @@ class ApiController extends BaseController {
                 //cân chiến dịch
                 $idLuongtruCan = $this->common($input);
             }
+            if ($idLuongtruCan) {
+                $data = $idLuongtruCan;
+            } else {
+                $data = '';
+            }
         }
-        if ($idLuongtruCan) {
-            $data = $idLuongtruCan;
-        } else {
-            $data = '';
-        }
+        
         if (!$check) {
-             $response['code'] = 200;
+            $response['code'] = 200;
             $response['message'] = 'trạm cân đã bị xoá app này';
             $response['data'] = '';
             return Response::json($response);

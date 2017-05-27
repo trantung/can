@@ -36,7 +36,7 @@
                   <label>Chi nhánh</label>
               </div>
               <div class="col-md-9">
-                  {{ Form::select('department_id', ['' => 'Chọn'] + Company::level(4)->lists('name', 'id'), null,  array('class' => 'form-control', 'id' => 'department_id'))}}
+                  {{ Form::select('code', ['' => 'Chọn'] + Company::level(4)->lists('name', 'code'), null,  array('class' => 'form-control', 'id' => 'code'))}}
               </div>
           </div>
       </div>

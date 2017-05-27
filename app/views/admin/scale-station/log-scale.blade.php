@@ -24,6 +24,7 @@
                 <tr>
                   <th>STT</th>
                   <th>Số phiếu</th>
+                  <th>Kiểu sản phẩm</th>
                   <th>Vật phẩm</th>
                   <th>Kiểu cân</th>
                   <th>Kho</th>
@@ -40,7 +41,8 @@
                 <tr>
                   <td>{{ $key+1 }}</td>
                   <td>{{ $value->number_ticket }}</td>
-                  <td>{{ $value->category_id }}</td>
+                  <td>{{ CommonNormal::getProductCategoryId($value->category_id)[1] }}</td>
+                  <td>{{ CommonNormal::getProductCategoryId($value->category_id)[0] }}</td>
                   <td>{{ $value->transfer_type }}</td>
                   <td>{{ $value->warehouse_id }}</td>
                   <td>{{ $value->department_id }}</td>

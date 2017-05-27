@@ -25,16 +25,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="row">
-                <div class="col-md-3">
-                    <label>App id</label>
-                </div>
-                <div class="col-md-9">
-                    <input type="text" name="app_id" class="form-control" placeholder="Search"/>
-                </div>
-            </div>
-        </div>
+        
     </div>
     <div class="row">
         <div class="col-md-4">

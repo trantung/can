@@ -188,11 +188,11 @@ class ScaleStationController extends BaseCategoryController {
         if (count($input) > 0) {
             $model = $model->where($input);
         }
-        $dataScale = $model->orderBy('id', 'desc')->paginate(PAGINATE);
+        $data = $model->orderBy('id', 'desc')->paginate(PAGINATE);
         $dataKcs = ScaleKCS::orderBy('id', 'desc')->paginate(PAGINATE);
-        foreach ($dataScale as $key => $value) {
+        // foreach ($dataScale as $key => $value) {
             
-        }
+        // }
         return View::make('admin.scale-station.log-scale')->with(compact('data'));
     }
 

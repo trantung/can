@@ -76,7 +76,7 @@ class CommonNormal
 
 	public static function storeDataKCS($input)
 	{
-		$data = $this->getDataKCS($input);
+		$data = self::getDataKCS($input);
 		$data['is_online'] = ONLINE;
 		$id = ScaleKCS::create($data)->id;
 		return $id;
@@ -115,7 +115,7 @@ class CommonNormal
 	public static function getDataKCS($input)
 	{
 		$arrayKey = [
-			'user_id' => 'user_id',
+			'id_user' => 'user_id',
 			'soPhieu' => 'number_ticket',
 			'tongTL' => 'weight_total',
 			'tlMun' => 'trong_luong_mun',

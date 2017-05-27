@@ -10,7 +10,8 @@
 		"barryvdh/laravel-debugbar": "~1.8",
 		"mcamara/laravel-localization": "0.15.*",
         "baum/baum": "*",
-        "codefocus/nestedset": "dev-master"
+        "codefocus/nestedset": "dev-master",
+        "barryvdh/laravel-dompdf": "0.4.*"
 	},
 	"autoload": {
 		"classmap": [
