@@ -291,6 +291,8 @@ class ScaleStationController extends BaseCategoryController {
         }
         $logKcs = ScaleKCS::where($inputSearch)->get();
         $scale = ScaleKCS::where('number_ticket', $inputSearch['number_ticket'])->whereNull('type')->first();
+        $productName = '';
+        $campaignCode = '';
         if ($scale) {
             $modelName = CommonNormal::getNameProduct($scale->category_id);
             $product = $modelName::find(CommonNormal::getProductCategoryId($scale->category_id)[1]);
