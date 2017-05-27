@@ -131,18 +131,19 @@ class ApiController extends BaseController {
             ->where('code', $scaleCode)
             ->first();
         $customer = [];
-        $customer['customer_name'] = $input['khach_hang_ten'];
-        $customer['customer_phone'] = $input['khach_hang_sdt'];
-        $customer['customer_address'] = $input['khach_hang_dia_chi'];
-        $customer['customer_id'] = $input['id_kh'];
-        $customer['customer_fax'] = $input['khach_hang_fax'];
-        $customer['app_code'] = $input['app_id'];
-        $this->postStoreShip($customer);
         //check type
         if (isset($input['type']) && $input['type'] == 'KCS') {
             //insert data KCS
             CommonNormal::storeDataKCS($input);
         } else {
+            
+            $customer['customer_name'] = $input['khach_hang_ten'];
+            $customer['customer_phone'] = $input['khach_hang_sdt'];
+            $customer['customer_address'] = $input['khach_hang_dia_chi'];
+            $customer['customer_id'] = $input['id_kh'];
+            $customer['customer_fax'] = $input['khach_hang_fax'];
+            $customer['app_code'] = $input['app_id'];
+            $this->postStoreShip($customer);
             // call store insert customer ship
             if ($input['chien_dich_id'] == '') {
                 $idLuongtruCan = $this->common($input);

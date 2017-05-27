@@ -33,6 +33,7 @@
             <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>  Tìm kiếm</button>
             <button type="button" class="btn btn-default" id="clear-search">Xóa bỏ</button>
             </div>
+            </div>
         </div>
     </div>
 
@@ -45,5 +46,6 @@
             document.getElementById("searchForm").reset();
             $('.form-group :input').val('');
         });
+        
     });
 </script>
