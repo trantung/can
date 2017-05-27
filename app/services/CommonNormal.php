@@ -272,4 +272,17 @@ class CommonNormal
 			->update(['process' => 1]);
 		return true;
 	}
+	public static function getNameProduct($stringIdCategory)
+	{
+		$model = self::getProductCategoryId($stringIdCategory);
+		if ($model[1] == 1) {
+			$modelName = 'Product';
+		}
+		if ($model[1] == 2) {
+			$modelName = 'ProductCategory';
+		}
+		$modelId = $model[0];
+		$ob = $modelName::find($modelId);
+		return $ob->name;
+	}
 }
