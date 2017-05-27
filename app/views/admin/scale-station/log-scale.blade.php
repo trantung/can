@@ -5,12 +5,6 @@
 @stop
 
 @section('content')
-    <hr>
-    <div class="row margin-bottom">
-        <div class="col-xs-12">
-            @include('admin.scale-station.template.search-scale')
-        </div>
-    </div>
 
     <div class="row">
         <div class="col-xs-12">
@@ -24,50 +18,38 @@
                 <tr>
                   <th>STT</th>
                   <th>Số phiếu</th>
-                  <th>Khách hàng</th>
-                  <th>Tên hàng</th>
+                  <th>Vật phẩm</th>
+                  <th>Kiểu cân</th>
                   <th>Kho</th>
                   <th>Chi nhánh</th>
+                  <th>Mã chiến dịch</th>
+                  <th>Id khách hàng</th>
                   <th>Ngày cân</th>
-                  <th>KL tổng</th>
-                  <th>KL xe</th>
-                  <th>KL tạp chất</th>
-                  <th>KL hàng</th>
-                  <th>Tỷ lệ tạp chất</th>
-                  <th>Lượng trừ</th>
+                  <th>Khối lượng hàng</th>
+                  <th>App id</th>
+                  <th>Mã</th>
+                  <th style="width:200px;">Action</th>
                 </tr>
                 @foreach($data as $key => $value)
                 <tr>
                   <td>{{ $key+1 }}</td>
                   <td>{{ $value->number_ticket }}</td>
-                  <td>{{ $value->customer_name }}</td>
-                  <td>
-                  @if ($value->category_id != '')
-                  <?php $modelName = CommonNormal::getNameProduct($value->category_id); ?>
-                    {{ $modelName::find(CommonNormal::getProductCategoryId($value->category_id)[1])->name }}</td>
-                  @endif
-                  </td>
-                  
-                  <td>{{ $value->warehouse_id }}
-                  @if ($warehouse = Warehouse::find($value->warehouse_id))
-                    {{ $warehouse->name }}
-                  @endif
-                  </td>
-                  <td>
-                  @if ($department = Company::find($value->department_id))
-                    {{ $department->name }}
-                  @endif
-                  </td>
+                  <td>{{ $value->category_id }}</td>
+                  <td>{{ $value->transfer_type }}</td>
+                  <td>{{ $value->warehouse_id }}</td>
+                  <td>{{ $value->department_id }}</td>
+                  <td>{{ $value->campaign_code }}</td>
+                  <td>{{ $value->customer_id }}</td>
                   <td>{{ $value->scale_at }}</td>
-                  <td>{{ $value->first_scale_weight }}</td>
-                  <td>{{ $value->second_scale_weight }}</td>
-                  <td>{{ $value->trong_luong_tap_chat }}</td>
                   <td>{{ $value->package_weight }}</td>
-                  <td>{{ $value->ty_le_tap_chat }}</td>
+                  <td>{{ $value->app_id }}</td>
+                  <td>{{ $value->code }}</td>
                   <td>
-                  @if ($luongTru = LuongTruCan::where('ma_phieu_can', $value->number_ticket)->first())
-                    {{ $luongTru->luongtru }}
-                  @endif
+                    <a href="{{ action('ScaleStationController@edit', $value->id) }}" class="btn btn-primary">Sửa</a>
+                    {{ Form::open(array('method'=>'DELETE', 'action' => array('ScaleStationController@destroy', $value->id), 'style' => 'display: inline-block;')) }}
+                    <button class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa?');">Xóa</button>
+                    {{ Form::close() }}
+
                   </td>
                 </tr>
                 @endforeach
@@ -76,6 +58,12 @@
             <!-- /.box-body -->
           </div>
           <!-- /.box -->
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            {{ $data->appends(Request::except('page'))->links() }}
         </div>
     </div>
 

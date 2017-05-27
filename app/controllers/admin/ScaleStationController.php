@@ -180,7 +180,7 @@ class ScaleStationController extends BaseCategoryController {
         return Redirect::action('ScaleStationController@getManage');
     }
     
-    public function getLogScale()
+    public function getStatistic()
     {
         $input = Input::except('page');
         $model = new ScaleKCS();
@@ -190,6 +190,9 @@ class ScaleStationController extends BaseCategoryController {
         }
         $dataScale = $model->whereNull('type')->where('package_weight', '>', 0)->distinct('number_ticket')->get();
         $dataKcs = ScaleKCS::where('type', 'KCS')->distinct('number_ticket')->get();
+        $arrScale = [];
+        $arrKcs = [];
+        $data = [];
         foreach ($dataScale as $key => $value) {
             $arrScale[$value['number_ticket']] = $value;
         }
@@ -212,7 +215,7 @@ class ScaleStationController extends BaseCategoryController {
                 $data[$key]->do_kho = ($value->do_kho == null) ? $value->do_kho = $arrKcs[$key]->do_kho : '';
             }
         }
-        return View::make('admin.scale-station.log-scale')->with(compact('data'));
+        return View::make('admin.scale-station.statistic')->with(compact('data'));
     }
 
     public function getLogKcs()
@@ -303,5 +306,11 @@ class ScaleStationController extends BaseCategoryController {
         ];
         $pdf = PDF::loadView('exports.rate', $data);
         return $pdf->stream();
+    }
+
+    public function getLogScale()
+    {
+        $data = ScaleKCS::whereNull('type')->paginate(PAGINATE);
+        return View::make('admin.scale-station.log-scale')->with(compact('data'));
     }
 }
