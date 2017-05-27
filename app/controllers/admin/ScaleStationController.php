@@ -215,6 +215,7 @@ class ScaleStationController extends BaseCategoryController {
                 $data[$key]->do_kho = ($value->do_kho == null) ? $value->do_kho = $arrKcs[$key]->do_kho : '';
             }
         }
+        Session::put('statistic', $data);
         return View::make('admin.scale-station.statistic')->with(compact('data'));
     }
 
@@ -322,9 +323,10 @@ class ScaleStationController extends BaseCategoryController {
         return View::make('admin.scale-station.log-scale')->with(compact('data'));
     }
 
-    public function getDetail($id)
+    public function getDetail($numberTicket)
     {
-        $data = ScaleKcs::find($id);
+        $listData = Session::get('statistic');
+        $data = $listData[$numberTicket];
         return View::make('admin.scale-station.detail')->with(compact('data'));
     }
 }

@@ -2,7 +2,7 @@
 @extends('admin.layout.default')
 
 @section('title')
-{{ $title='Chỉnh sửa "'. $data->name .'"' }}
+{{ $title='Thông tin chi tiết' }}
 @stop
 
 @section('content')
@@ -13,7 +13,7 @@
             @if ($data->number_ticket != '')
                 <tr>
                     <td>
-                        <a href="javascript:;"> Họ tên </a>
+                        <a href="javascript:;"> Số phiếu </a>
                     </td>
                     <td>  
                         {{ $data->number_ticket }}
@@ -23,7 +23,7 @@
             @if ($data->number_car != '')
                 <tr>
                     <td>
-                        <a href="javascript:;"> Họ tên </a>
+                        <a href="javascript:;"> Số xe </a>
                     </td>
                     <td>  
                         {{ $data->number_car }}
@@ -33,37 +33,41 @@
             @if ($data->transfer_type != '')
                 <tr>
                     <td>
-                        <a href="javascript:;"> Họ tên </a>
+                        <a href="javascript:;"> Kiểu cân </a>
                     </td>
                     <td>  
-                        {{ $data->transfer_type }}
+                        {{ getNameOfTransfer($data->transfer_type) }}
                     </td>
                 </tr>
             @endif
             @if ($data->warehouse_id != '')
                 <tr>
                     <td>
-                        <a href="javascript:;"> Họ tên </a>
+                        <a href="javascript:;"> Kho </a>
                     </td>
-                    <td>  
-                        {{ $data->warehouse_id }}
+                    <td> 
+                        @if ($warehouse = Warehouse::find($data->warehouse_id))
+                            {{ $warehouse->name }}
+                        @endif
                     </td>
                 </tr>
             @endif
             @if ($data->department_id != '')
                 <tr>
                     <td>
-                        <a href="javascript:;"> Họ tên </a>
+                        <a href="javascript:;"> Chi nhánh xuất nhập </a>
                     </td>
                     <td>  
-                        {{ $data->department_id }}
+                        @if ($department = Company::find($data->department_id))
+                            {{ $department->name }}
+                        @endif
                     </td>
                 </tr>
             @endif
             @if ($data->campaign_name != '')
                 <tr>
                     <td>
-                        <a href="javascript:;"> Họ tên </a>
+                        <a href="javascript:;"> Tên chiến dịch </a>
                     </td>
                     <td>  
                         {{ $data->campaign_name }}
@@ -73,7 +77,7 @@
             @if ($data->campaign_method != '')
                 <tr>
                     <td>
-                        <a href="javascript:;"> Họ tên </a>
+                        <a href="javascript:;"> Phương tiện chiến dịch </a>
                     </td>
                     <td>  
                         {{ $data->campaign_method }}
@@ -83,7 +87,7 @@
             @if ($data->campaign_code != '')
                 <tr>
                     <td>
-                        <a href="javascript:;"> Họ tên </a>
+                        <a href="javascript:;"> Mã chiến dịch </a>
                     </td>
                     <td>  
                         {{ $data->campaign_code }}
@@ -93,7 +97,7 @@
             @if ($data->customer_id != '')
                 <tr>
                     <td>
-                        <a href="javascript:;"> Họ tên </a>
+                        <a href="javascript:;"> Id khách hàng </a>
                     </td>
                     <td>  
                         {{ $data->customer_id }}
@@ -103,7 +107,7 @@
             @if ($data->customer_name != '')
                 <tr>
                     <td>
-                        <a href="javascript:;"> Họ tên </a>
+                        <a href="javascript:;"> Tên khách hàng </a>
                     </td>
                     <td>  
                         {{ $data->customer_name }}
@@ -113,7 +117,7 @@
             @if ($data->customer_phone != '')
                 <tr>
                     <td>
-                        <a href="javascript:;"> Họ tên </a>
+                        <a href="javascript:;"> SDT khách hàng </a>
                     </td>
                     <td>  
                         {{ $data->customer_phone }}
@@ -123,7 +127,7 @@
             @if ($data->customer_address != '')
                 <tr>
                     <td>
-                        <a href="javascript:;"> Họ tên </a>
+                        <a href="javascript:;"> Địa chỉ khách hàng </a>
                     </td>
                     <td>  
                         {{ $data->customer_address }}
@@ -133,7 +137,7 @@
             @if ($data->customer_fax != '')
                 <tr>
                     <td>
-                        <a href="javascript:;"> Họ tên </a>
+                        <a href="javascript:;"> Fax </a>
                     </td>
                     <td>  
                         {{ $data->customer_fax }}
@@ -143,7 +147,7 @@
             @if ($data->scale_at != '')
                 <tr>
                     <td>
-                        <a href="javascript:;"> Họ tên </a>
+                        <a href="javascript:;"> Ngày cân </a>
                     </td>
                     <td>  
                         {{ $data->scale_at }}
@@ -153,7 +157,7 @@
             @if ($data->first_scale_hour != '')
                 <tr>
                     <td>
-                        <a href="javascript:;"> Họ tên </a>
+                        <a href="javascript:;"> Giờ cân lần 1 </a>
                     </td>
                     <td>  
                         {{ $data->first_scale_hour }}
@@ -163,7 +167,7 @@
             @if ($data->second_scale_hour != '')
                 <tr>
                     <td>
-                        <a href="javascript:;"> Họ tên </a>
+                        <a href="javascript:;"> Giờ cân lần 2 </a>
                     </td>
                     <td>  
                         {{ $data->second_scale_hour }}
@@ -173,7 +177,7 @@
             @if ($data->first_scale_weight != '')
                 <tr>
                     <td>
-                        <a href="javascript:;"> Họ tên </a>
+                        <a href="javascript:;"> Trọng lượng cân lần 1 </a>
                     </td>
                     <td>  
                         {{ $data->first_scale_weight }}
@@ -183,7 +187,7 @@
             @if ($data->second_scale_weight != '')
                 <tr>
                     <td>
-                        <a href="javascript:;"> Họ tên </a>
+                        <a href="javascript:;"> Trọng lượng cân lần 2 </a>
                     </td>
                     <td>  
                         {{ $data->second_scale_weight }}
@@ -193,7 +197,7 @@
             @if ($data->package_weight != '')
                 <tr>
                     <td>
-                        <a href="javascript:;"> Họ tên </a>
+                        <a href="javascript:;"> Trọng lượng hàng </a>
                     </td>
                     <td>  
                         {{ $data->package_weight }}
@@ -203,7 +207,7 @@
             @if ($data->app_id != '')
                 <tr>
                     <td>
-                        <a href="javascript:;"> Họ tên </a>
+                        <a href="javascript:;"> App id </a>
                     </td>
                     <td>  
                         {{ $data->app_id }}
@@ -213,7 +217,7 @@
             @if ($data->code != '')
                 <tr>
                     <td>
-                        <a href="javascript:;"> Họ tên </a>
+                        <a href="javascript:;"> Mã </a>
                     </td>
                     <td>  
                         {{ $data->code }}
@@ -223,78 +227,115 @@
             @if ($data->type != '')
                 <tr>
                     <td>
-                        <a href="javascript:;"> Họ tên </a>
+                        <a href="javascript:;"> Kiểu </a>
                     </td>
                     <td>  
                         {{ $data->type }}
                     </td>
                 </tr>
             @endif
+            @if ($data->weight_total != '')
+                <tr>
+                    <td>
+                        <a href="javascript:;"> Tổng trọng lượng </a>
+                    </td>
+                    <td>  
+                        {{ $data->weight_total }}
+                    </td>
+                </tr>
+            @endif
+            @if ($data->trong_luong_mun != '')
+                <tr>
+                    <td>
+                        <a href="javascript:;"> Trọng lượng mùn </a>
+                    </td>
+                    <td>  
+                        {{ $data->trong_luong_mun }}
+                    </td>
+                </tr>
+            @endif
+            @if ($data->trong_luong_qua_co != '')
+                <tr>
+                    <td>
+                        <a href="javascript:;"> Trọng lượng quá cỡ </a>
+                    </td>
+                    <td>  
+                        {{ $data->trong_luong_qua_co }}
+                    </td>
+                </tr>
+            @endif
+            @if ($data->trong_luong_vo != '')
+                <tr>
+                    <td>
+                        <a href="javascript:;"> Trọng lượng vỏ </a>
+                    </td>
+                    <td>  
+                        {{ $data->trong_luong_vo }}
+                    </td>
+                </tr>
+            @endif
+            @if ($data->trong_luong_tap_chat != '')
+                <tr>
+                    <td>
+                        <a href="javascript:;"> TRọng lượng tạp chất </a>
+                    </td>
+                    <td>  
+                        {{ $data->trong_luong_tap_chat }}
+                    </td>
+                </tr>
+            @endif
+            @if ($data->ty_le_mun != '')
+                <tr>
+                    <td>
+                        <a href="javascript:;"> Tỷ lệ mùn </a>
+                    </td>
+                    <td>  
+                        {{ $data->ty_le_mun }}
+                    </td>
+                </tr>
+            @endif
+            @if ($data->ty_le_qua_co != '')
+                <tr>
+                    <td>
+                        <a href="javascript:;"> Tỷ lệ quá cỡ </a>
+                    </td>
+                    <td>  
+                        {{ $data->ty_le_qua_co }}
+                    </td>
+                </tr>
+            @endif
+            @if ($data->ty_le_vo != '')
+                <tr>
+                    <td>
+                        <a href="javascript:;"> Tỷ lệ vỏ </a>
+                    </td>
+                    <td>  
+                        {{ $data->ty_le_vo }}
+                    </td>
+                </tr>
+            @endif
+            @if ($data->ty_le_tap_chat != '')
+                <tr>
+                    <td>
+                        <a href="javascript:;"> Tỷ lệ tạp chất </a>
+                    </td>
+                    <td>  
+                        {{ $data->ty_le_tap_chat }}
+                    </td>
+                </tr>
+            @endif
+            @if ($data->do_kho != '')
+                <tr>
+                    <td>
+                        <a href="javascript:;"> Độ khô </a>
+                    </td>
+                    <td>  
+                        {{ $data->do_kho }}
+                    </td>
+                </tr>
+            @endif
             
-            <tr>
-                <td>
-                    <a href="javascript:;"> Tên thường gọi </a>
-                </td>
-                <td>  
-                    {{ $data->ten_thuong_goi }}
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <a href="javascript:;"> Giới tính </a>
-                </td>
-                <td>  
-                    {{ $data->gioi_tinh }}
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <a href="javascript:;"> Năm sinh </a>
-                </td>
-                <td>  
-                    {{ $data->ho_ten }}
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <a href="javascript:;"> Nơi sinh </a>
-                </td>
-                <td>  
-                    {{ $data->ho_ten }}
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <a href="javascript:;"> Địa chỉ thường trú </a>
-                </td>
-                <td>  
-                    {{ $data->dia_chi_thuong_tru }}
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <a href="javascript:;"> Địa chỉ tạm trú </a>
-                </td>
-                <td>  
-                    {{ $data->dia_chi_tam_tru }}
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <a href="javascript:;"> Số điện thoại </a>
-                </td>
-                <td>  
-                    {{ $data->mobile }}
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <a href="javascript:;"> Mã nhân viên </a>
-                </td>
-                <td>  
-                    {{ $data->ma_nv }}
-                </td>
-            </tr>
+            
         </tbody>
     </table>
 </div>

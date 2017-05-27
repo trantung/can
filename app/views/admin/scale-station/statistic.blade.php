@@ -73,7 +73,7 @@
                   @endif
                   </td>
                   <td>
-                    <a href="{{ action('ScaleStationController@getDetail', $value->id) }}" class="btn btn-primary">Xem</a>
+                    <a href="{{ action('ScaleStationController@getDetail', $value->number_ticket) }}" class="btn btn-primary">Xem</a>
                   </td>
                 </tr>
                 @endforeach
