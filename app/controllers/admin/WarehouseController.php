@@ -163,4 +163,39 @@ class WarehouseController extends BaseCategoryController {
         return Redirect::action('WarehouseController@index');
     }
 
+    public function getStatistic($id)
+    {
+        $listItem = StorageLoss::where('warehouse_id', $id)->get();
+        $data = [];
+        foreach ($listItem as $key => $value) {
+            $data[$key] = new stdClass();
+            $data[$key] = $value;
+            $model = $value->model_name;
+            $data[$key]->item = $model::find($value->model_id);
+        }
+        return View::make('admin.warehouse.statistic')->with(compact('data'));
+    }
+
+    public function getReset($id)
+    {
+        $data = StorageLoss::find($id);
+        if (!$data) {
+            dd('Không tìm thấy dữ liệu');
+        }
+        $model = $data->model_name;
+        $data->item = $model::find($data->model_id);
+        return View::make('admin.warehouse.reset')->with(compact('data'));
+    }
+
+    public function putReset($id)
+    {
+        $data = StorageLoss::find($id);
+        if (!$data) {
+            dd('Không có dữ liệu');
+        }
+        $data->weight = Input::get('weight');
+        $data->ratio = Input::get('ratio');
+        $data->save();
+        return Redirect::action('WarehouseController@index');
+    }
 }

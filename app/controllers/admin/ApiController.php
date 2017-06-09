@@ -97,9 +97,13 @@ class ApiController extends BaseController {
         return Response::json($response);
     }
 
-    public function getWarehouseByAllDepartment()
+    public function getWarehouseByAllDepartment($level = null)
     {
-        $data = Company::where('level', 4)->with('warehouse')->get();
+        $data = new Company();
+        if ($level) {
+            $data = $data->where('level', $level);
+        }
+        $data = $data->with('warehouse')->get();
         $response['code'] = 200;
         $response['message'] = 'success';
         $response['data'] = $data;

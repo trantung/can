@@ -129,7 +129,8 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('/config-user', 'ConfigUserController');
     Route::resource('/config-customer', 'ConfigCustomerController');
     Route::resource('/product-manage', 'ProductManagerController');
-    Route::resource('/warehouse', 'WarehouseController');
+    Route::resource('/warehouse', 'WarehouseController', array('except' => array('show')));
+    Route::controller('/warehouse', 'WarehouseController');
     Route::resource('/production-auto', 'ProductionAutoController', array('except' => array('show')));
     Route::controller('/production-auto', 'ProductionAutoController');
     // Route::put('/config-user/update/{id}', 'ConfigUserController@update');
