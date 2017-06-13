@@ -180,10 +180,9 @@ class ScaleStationController extends BaseCategoryController {
         return Redirect::action('ScaleStationController@getManage');
     }
     
-    public function getStatistic()
+    public function getStatistic($type = null)
     {
         $input = Input::except('page');
-        // dd($input);
         $model = new ScaleKCS();
         if (isset($input['from_date']) && $input['from_date'] != '') {
             $start = $input['from_date'];
@@ -202,6 +201,11 @@ class ScaleStationController extends BaseCategoryController {
         // dd($input);
         if (count($input) > 0) {
             $model = $model->where($input);
+        }
+        if ($type == 'campaign') {
+            $model = $model->whereNotNull('campaign_code');
+        } else {
+            $model = $model->whereNull('campaign_code');
         }
         $dataScale = $model->whereNull('type')->where('package_weight', '>', 0)->distinct('number_ticket')->get();
         $dataKcs = ScaleKCS::where('type', 'KCS')->distinct('number_ticket')->get();
@@ -231,7 +235,7 @@ class ScaleStationController extends BaseCategoryController {
             }
         }
         Session::put('statistic', $data);
-        return View::make('admin.scale-station.statistic')->with(compact('data'));
+        return View::make('admin.scale-station.statistic')->with(compact('data', 'type'));
     }
 
     public function getLogKcs()

@@ -1,7 +1,7 @@
 @extends('admin.layout.default')
 @if(Admin::isAdmin())
 @section('title')
-{{ $title='Thông tin chi tiết' }}
+{{ $title='Danh sách' }}
 @stop
 
 @section('content')

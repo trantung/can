@@ -112,8 +112,13 @@
                 </a>
             </li>
             <li>
-                <a href="{{ action('ScaleStationController@getStatistic') }}">
-                    <span>Thống kê Cân/ KCS</span>
+                <a href="{{ action('ScaleStationController@getStatistic', 'normal') }}">
+                    <span>Thống kê Cân/ KCS lẻ</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ action('ScaleStationController@getStatistic', 'campaign') }}">
+                    <span>Thống kê Cân/ KCS chiến dịch</span>
                 </a>
             </li>
             <li>

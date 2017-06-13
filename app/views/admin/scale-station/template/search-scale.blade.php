@@ -2,7 +2,7 @@
 <link rel="stylesheet" type="text/css" href="../assets/js/combotree/themes/icon.css">
 <link rel="stylesheet" type="text/css" href="../assets/js/combotree/demo/demo.css">
 <div class="margin-bottom margin-top">
-    {{ Form::open(array('action' => 'ScaleStationController@getStatistic', 'method' => 'GET', 'id'=>'searchForm')) }}
+    {{ Form::open(array('action' => array('ScaleStationController@getStatistic', $type), 'method' => 'GET', 'id'=>'searchForm')) }}
     {{-- haind --}}
     <div class="row">
         <div class="col-md-4">
@@ -18,10 +18,10 @@
         <div class="col-md-4">
             <div class="row">
                 <div class="col-md-3">
-                    <label>Mã chiến dịch</label>
+                    <label>Xuất nhập</label>
                 </div>
                 <div class="col-md-9">
-                    <input type="text" name="campaign_code" class="form-control" placeholder="Search"/>
+                    {{ Form::select('transfer_type', ['1' => 'Xuất kho', '2' => 'Nhập kho', '3' => 'Chuyển xuất', '4' => 'Chuyển nhập'] , null,  array('class' => 'form-control'))}}
                 </div>
             </div>
         </div>
@@ -36,7 +36,7 @@
             </div>
         </div>
     </div>
-    <div class="row">
+    <div class="row" style="padding-top: 20px">
         <div class="col-md-4">
             <div class="row">
                 <div class="col-md-3">
@@ -69,26 +69,20 @@
         </div>
     </div>
     <div class="row" style="padding-top: 20px">
-        <div class="col-md-4">
-            <div class="row">
-                <div class="col-md-3">
-                    <label>Xuất nhập</label>
-                </div>
-                <div class="col-md-9">
-                    {{ Form::select('transfer_type', ['1' => 'Xuất kho', '2' => 'Nhập kho', '3' => 'Chuyển xuất', '4' => 'Chuyển nhập'] , null,  array('class' => 'form-control'))}}
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="row">
-                <div class="col-md-3">
-                    <label>Kiểu cân</label>
-                </div>
-                <div class="col-md-9">
-                    {{ Form::select('type_scale', ['1' => 'Cân thường', '2' => 'Cân chiến dịch'] , null,  array('class' => 'form-control'))}}
+        
+
+        @if ($type == 'campaign')
+            <div class="col-md-4">
+                <div class="row">
+                    <div class="col-md-3">
+                        <label>Mã chiến dịch</label>
+                    </div>
+                    <div class="col-md-9">
+                        <input type="text" name="campaign_code" class="form-control" placeholder="Search"/>
+                    </div>
                 </div>
             </div>
-        </div>
+        @endif
     </div>
     {{-- end --}}
     <div class="row" style="padding-top: 20px">
