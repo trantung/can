@@ -133,6 +133,8 @@ Route::group(['prefix' => 'admin'], function () {
     Route::controller('/warehouse', 'WarehouseController');
     Route::resource('/production-auto', 'ProductionAutoController', array('except' => array('show')));
     Route::controller('/production-auto', 'ProductionAutoController');
+    Route::resource('config-property', 'ConfigPropertyController', array('except' => array('show')));
+    Route::controller('/config-property', 'ConfigPropertyController');
     // Route::put('/config-user/update/{id}', 'ConfigUserController@update');
 
     Route::resource('/thongke/scale', 'ThongkeScaleController');

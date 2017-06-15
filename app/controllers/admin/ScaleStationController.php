@@ -198,7 +198,6 @@ class ScaleStationController extends BaseCategoryController {
             $model = $model->where('campaign_code', '!=', '');
         }
         $input = self::processData($input);
-        // dd($input);
         if (count($input) > 0) {
             $model = $model->where($input);
         }

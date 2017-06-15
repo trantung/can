@@ -354,4 +354,13 @@ class ApiController extends BaseController {
             }
         }
     }
+
+    public function getConfigKey($modelName, $modelId)
+    {
+        $data = OverloadRatio::where('model_name', $modelName)->where('model_id', $modelId)->orderBy('id', 'DESC')->first();
+        $response['code'] = 200;
+        $response['message'] = 'Thành công';
+        $response['data'] = $data;
+        return Response::json($response);
+    }
 }
