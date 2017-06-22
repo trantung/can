@@ -281,7 +281,8 @@ class ScaleStationController extends BaseCategoryController {
                 if ($value == '' || 
                     $key == 'from_date' || 
                     $key == 'to_date' || 
-                    $key == 'type_scale'
+                    $key == 'type_scale'  || 
+                    $value == VALUE_SELECT_ALL
                     ) {
                     unset($input[$key]);
                 }
