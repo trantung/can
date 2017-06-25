@@ -192,11 +192,11 @@ class ScaleStationController extends BaseCategoryController {
             $end = $input['to_date'];
             $model = $model->where('scale_at', '<=', $end);
         }
-        if (isset($input['type_scale']) && $input['type_scale'] == '1') {
-            $model = $model->where('campaign_code', '');
-        } else {
-            $model = $model->where('campaign_code', '!=', '');
-        }
+        // if (isset($input['type_scale']) && $input['type_scale'] == '1') {
+        //     $model = $model->where('campaign_code', '');
+        // } else {
+        //     $model = $model->where('campaign_code', '!=', '');
+        // }
         $input = self::processData($input);
         if (count($input) > 0) {
             $model = $model->where($input);
