@@ -274,16 +274,11 @@ class ScaleStationController extends BaseCategoryController {
         }
     }
 
-    function processData($input = array())
+    function processData($input = [])
     {
         if (count($input) > 0) {
             foreach ($input as $key => $value) {
-                if ($value == '' || 
-                    $key == 'from_date' || 
-                    $key == 'to_date' || 
-                    $key == 'type_scale'  || 
-                    $value == VALUE_SELECT_ALL
-                    ) {
+                if(in_array($value, ['', VALUE_SELECT_ALL]) || in_array($key, ['to_date', 'from_date', 'type_scale'])){
                     unset($input[$key]);
                 }
             }

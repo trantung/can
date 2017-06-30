@@ -96,4 +96,4 @@ define('OFFLINE', 2);
 define('INSERT_HAS_FAIL', 'Thêm mới bản ghi thất bại');
 define('HR', 1);
 define('APP', 2);
-define('VALUE_SELECT_ALL', 0);
+define('VALUE_SELECT_ALL', '0');

@@ -21,7 +21,7 @@
                     <label>Xuất nhập</label>
                 </div>
                 <div class="col-md-9">
-                    {{ Form::select('transfer_type', ['0' => 'Chọn tất cả', '1' => 'Xuất kho', '2' => 'Nhập kho', '3' => 'Chuyển xuất', '4' => 'Chuyển nhập'] , null,  array('class' => 'form-control'))}}
+                    {{ Form::select('transfer_type', [ '' => 'Chọn tất cả', 1 => 'Xuất kho', 2 => 'Nhập kho', 3 => 'Chuyển xuất', 4 => 'Chuyển nhập'] , null,  array('class' => 'form-control'))}}
                 </div>
             </div>
         </div>
@@ -43,7 +43,7 @@
                     <label>Kho</label>
                 </div>
                 <div class="col-md-9">
-                    {{ Form::select('warehouse_id', ['0' => 'Chọn tất cả', ] + Warehouse::lists('name', 'id'), null,  array('class' => 'form-control'))}}
+                    {{ Form::select('warehouse_id', ['' => 'Chọn tất cả', ] + Warehouse::lists('name', 'id'), null,  array('class' => 'form-control'))}}
                 </div>
             </div>
         </div>
@@ -53,7 +53,7 @@
                     <label>Chi nhánh</label>
                 </div>
                 <div class="col-md-9">
-                    {{ Form::select('department_id', ['0' => 'Chọn tất cả', ] + Company::level(4)->lists('name', 'id'), null,  array('class' => 'form-control', 'id' => 'department_id'))}}
+                    {{ Form::select('department_id', ['' => 'Chọn tất cả', ] + Company::level(4)->lists('name', 'id'), null,  array('class' => 'form-control', 'id' => 'department_id'))}}
                 </div>
             </div>
         </div>
