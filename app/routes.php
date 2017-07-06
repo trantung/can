@@ -20,6 +20,8 @@ Route::get('/', function(){
 Route::get('/fixdatabase', function(){
     CustomerShip::whereNull('customer_id')->delete();
     CustomerShip::whereNull('customer_name')->delete();
+    CustomerShip::where('customer_name', '')->delete();
+    CustomerShip::whereNull('customer_name', '')->delete();
     $customers = CustomerShip::distinct('customer_id')->lists('customer_id');
     // dd($customers);
     foreach ($customers as $key => $value) {
