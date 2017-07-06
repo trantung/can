@@ -23,7 +23,7 @@ Route::get('/fixdatabase', function(){
     // dd($customers);
     foreach ($customers as $key => $value) {
         $ob = CustomerShip::where('customer_id', $value)->first();
-        if ($id) {
+        if ($ob) {
             $arr[] = $ob->id;
         }
     }
