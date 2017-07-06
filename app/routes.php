@@ -19,8 +19,16 @@ Route::get('/', function(){
 } );
 Route::get('/fixdatabase', function(){
 
-    $customers = CustomerShip::lists('customer_id', 'id');
-    dd($customers);
+    $customers = CustomerShip::distinct('customer_id')->lists('customer_id');
+    // dd($customers);
+    foreach ($customers as $key => $value) {
+        $ob = CustomerShip::where('customer_id', $value)->first();
+        if ($id) {
+            $arr[] = $ob->id;
+        }
+    }
+    CustomerShip::whereNotIn('id', $arr)->delete();
+    dd('ok');
 
 } );
 
