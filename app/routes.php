@@ -18,7 +18,7 @@ Route::get('/', function(){
     dd(substr('abcdef', 1));
 } );
 Route::get('/fixdatabase', function(){
-
+    CustomerShip::whereNull('customer_id')->delete();
     $customers = CustomerShip::distinct('customer_id')->lists('customer_id');
     // dd($customers);
     foreach ($customers as $key => $value) {
