@@ -108,7 +108,11 @@ class CommonNormal
 			'kl_hang' => 'package_weight',
 			'app_id' => 'app_id',
 			'code' => 'code',
-			'number_ticket_manual' => 'number_ticket_manual',
+			'doi_tac_ten' => 'doi_tac_ten',
+			'doi_tac_sdt' => 'doi_tac_sdt',
+			'doi_tac_dia_chi' => 'doi_tac_dia_chi',
+			'doi_tac_fax' => 'doi_tac_fax',
+			'partner_id' => 'partner_id',
 		];
 		return self::prepareData($input, $arrayKey);
 	}

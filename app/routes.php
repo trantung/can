@@ -17,6 +17,12 @@ Route::get('/', function(){
     dd($string[0]);
     dd(substr('abcdef', 1));
 } );
+Route::get('/fixdatabase', function(){
+
+    $customers = CustomerShip::lists('customer_id', 'id');
+    dd($customers);
+
+} );
 
 Route::group(['prefix' => 'admin'], function () {
 

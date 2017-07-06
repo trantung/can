@@ -35,9 +35,9 @@ class ApiController extends BaseController {
         return Response::json($response);
     }
 
-    public function postStoreShip($input)
+    public function postStoreShip($input, $modelName)
     {
-        $id = CustomerShip::create($input)->id;
+        $id = $modelName::create($input)->id;
         return $id;
     }
 
@@ -157,8 +157,26 @@ class ApiController extends BaseController {
             $customer['customer_fax'] = $input['khach_hang_fax'];
             $customer['app_code'] = $input['app_id'];
             $customer['scale_code'] = $input['code'];
+            $checkCustomer = CustomerShip::where('app_code', $input['app_id'])
+                ->where('customer_id', $input['id_kh'])->first();
+            if (!$checkCustomer) {
+                $this->postStoreShip($customer, 'CustomerShip');
+            }
 
-            $this->postStoreShip($customer);
+            //luu thong tin partner
+            $partner = [];
+            $partner['doi_tac_ten'] = $input['doi_tac_ten'];
+            $partner['doi_tac_sdt'] = $input['doi_tac_sdt'];
+            $partner['doi_tac_dia_chi'] = $input['doi_tac_dia_chi'];
+            $partner['doi_tac_fax'] = $input['doi_tac_fax'];
+            $partner['partner_id'] = $input['partner_id'];
+            $partner['app_code'] = $input['app_id'];
+            $partner['scale_code'] = $input['code'];
+            $checkPartner = Partner::where('app_code', $input['app_id'])
+                ->where('partner_id', $input['partner_id'])->first();
+            if (!$checkCustomer) {
+                $this->postStoreShip($partner, 'Partner');
+            }
             // call store insert customer ship
             if ($input['chien_dich_id'] == '') {
                 // dd(11);
