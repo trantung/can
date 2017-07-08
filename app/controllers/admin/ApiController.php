@@ -41,6 +41,12 @@ class ApiController extends BaseController {
         return $id;
     }
 
+    public function postStorePartner($input)
+    {
+        $id = PartnerShip::create($input)->id;
+        return $id;
+    }
+
 
     /**
      * api install scale station
@@ -158,8 +164,11 @@ class ApiController extends BaseController {
             $customer['app_code'] = $input['app_id'];
             $customer['scale_code'] = $input['code'];
 
-            $this->postStoreShip($customer);
             // call store insert customer ship
+            $this->postStoreShip($customer);
+            $partner['partner_code'] = $input['partner_code'];
+            $partner['app_code'] = $input['app_id'];
+            $this->postStorePartner($partner);
             if ($input['chien_dich_id'] == '') {
                 // dd(11);
                 $idLuongtruCan = $this->common($input);
@@ -303,10 +312,17 @@ class ApiController extends BaseController {
             $inputLuongtru['luongtru'] = $luongtru;
             $idLuongtruCan = LuongTruCan::create($inputLuongtru)->id;
         // }
+            //save percent ...
+            if ($scale->campaign_code) {
+                CommonNormal::savePercentCampaign($scale, $kcs);
+            } else {
+                CommonNormal::savePercent($scale, $kcs);
+            }
             return $idLuongtruCan;
         }
         return false;
     }
+
     public function postChangePass()
     {
         // dd(11);

@@ -109,6 +109,7 @@ class CommonNormal
 			'app_id' => 'app_id',
 			'code' => 'code',
 			'number_ticket_manual' => 'number_ticket_manual',
+			'partner_code' => 'partner_code',
 		];
 		return self::prepareData($input, $arrayKey);
 	}
@@ -266,6 +267,8 @@ class CommonNormal
 					self::updateProcessScaleKcs($input, 'number_ticket');
 				}
 			}
+			//kieu 5  = chuyen tiep kho noi bo, 6 = chuyen tiep kho ngoai, 7 = can ho
+			//do...
 			return true;
 		} else {
 			$weight = $input['kl_hang'];
@@ -298,5 +301,63 @@ class CommonNormal
 		$modelId = $model[0];
 		$ob = $modelName::find($modelId);
 		return $ob->name;
+	}
+
+	public static function savePercent($scale, $kcs)
+	{
+		$model = CommonNormal::getProductCategoryId($scale->category_id);
+        if ($model[1] == 1) {
+            $modelName = 'Product';
+        }
+        if ($model[1] == 2) {
+            $modelName = 'ProductCategory';
+        }
+        $modelId = $model[0];
+        $percent = PercentWarehouse::where('model_name', $modelName)
+                    ->where('model_id', $modelId)
+                    ->orderBy('id', 'DESC')
+                    ->first();
+        if (!$percent) {
+            $percentDoKho = 0;
+        } else {
+            $percentDoKho = $percent->do_kho;
+        }
+        $storageLoss = StorageLoss::where('model_name', $modelName)
+                    ->where('model_id', $modelId)
+                    ->where('warehouse_id', $scale->warehouse_id)
+                    ->orderBy('id', 'DESC')
+                    ->first();
+        $newPercentDoKho = ($scale->package_weight * $kcs->do_kho + $storageLoss->weight * $percentDoKho ) / $storageLoss->weight + $scale->package_weight;
+        $percent->do_kho = $newPercentDoKho;
+        $percent->save();
+	}
+
+	public static function savePercentCampaign($scale, $kcs)
+	{
+		$model = CommonNormal::getProductCategoryId($scale->category_id);
+        if ($model[1] == 1) {
+            $modelName = 'Product';
+        }
+        if ($model[1] == 2) {
+            $modelName = 'ProductCategory';
+        }
+        $modelId = $model[0];
+        $percent = PercentWarehouse::where('model_name', $modelName)
+                    ->where('model_id', $modelId)
+                    ->orderBy('id', 'DESC')
+                    ->first();
+        if (!$percent) {
+            $percentDoKho = 0;
+        } else {
+            $percentDoKho = $percent->do_kho;
+        }
+        $storageLoss = StorageLoss::where('model_name', $modelName)
+                    ->where('model_id', $modelId)
+                    ->where('warehouse_id', $scale->warehouse_id)
+                    ->orderBy('id', 'DESC')
+                    ->first();
+        $newPercentDoKho = ($scale->package_weight * $kcs->do_kho + $storageLoss->weight * $percentDoKho ) / $storageLoss->weight + $scale->package_weight;
+        $percent->do_kho = $newPercentDoKho;
+        $percent->save();
 	}
 }

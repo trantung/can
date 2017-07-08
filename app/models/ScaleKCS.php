@@ -46,6 +46,7 @@ class ScaleKCS extends Eloquent
         'number_ticket_manual',
         'created_at',
         'process',
+        'partner_code',
     ];
 
 
