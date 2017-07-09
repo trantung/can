@@ -17,6 +17,23 @@ Route::get('/', function(){
     dd($string[0]);
     dd(substr('abcdef', 1));
 } );
+Route::get('/fixdatabase', function(){
+    CustomerShip::whereNull('customer_id')->delete();
+    CustomerShip::whereNull('customer_name')->delete();
+    CustomerShip::where('customer_id', '')->delete();
+    CustomerShip::where('customer_name', '')->delete();
+    $customers = CustomerShip::distinct('customer_id')->lists('customer_id');
+    // dd($customers);
+    foreach ($customers as $key => $value) {
+        $ob = CustomerShip::where('customer_id', $value)->first();
+        if ($ob) {
+            $arr[] = $ob->id;
+        }
+    }
+    CustomerShip::whereNotIn('id', $arr)->delete();
+    dd('ok');
+
+} );
 
 Route::group(['prefix' => 'admin'], function () {
 
