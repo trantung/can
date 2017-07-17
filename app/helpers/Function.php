@@ -463,7 +463,7 @@ function getNameOfTransfer($type)
 	return $name;
 }
 
-function getTotalCustomerInGroup($customerId)
+function getTotalCustomerInGroup($groupId)
 {
 	if (!$groupId) {
 		return null;
