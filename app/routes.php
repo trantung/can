@@ -73,6 +73,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('/scale-station', 'ScaleStationController', array('except' => array('show')));
     Route::controller('/scale-station', 'ScaleStationController');
     Route::resource('/customer-group', 'CustomerGroupController');
+    Route::resource('/partner-group', 'PartnerGroupController');
     Route::controller('/scale-manage', 'ScaleManageController');
     // Route::post('/vocabulary', 'Admin2Controller@store');
     Route::get('/jstree', array('uses' => 'CompanyCategoryController@buildCateJsTree'));
@@ -145,6 +146,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('/config-permission', 'ConfigPermissionController');
     Route::resource('/config-user', 'ConfigUserController');
     Route::resource('/config-customer', 'ConfigCustomerController');
+    Route::resource('/config-partner', 'ConfigPartnerController');
     Route::resource('/product-manage', 'ProductManagerController');
     Route::resource('/warehouse', 'WarehouseController', array('except' => array('show')));
     Route::controller('/warehouse', 'WarehouseController');

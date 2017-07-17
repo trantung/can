@@ -41,6 +41,12 @@ class ApiController extends BaseController {
         return $id;
     }
 
+    public function postStorePartner($input)
+    {
+        $id = PartnerShip::create($input)->id;
+        return $id;
+    }
+
 
     /**
      * api install scale station
@@ -48,7 +54,6 @@ class ApiController extends BaseController {
     public function getInstall($appId, $codeScaleStation)
     {
         $data = [];
-        $id = ScaleManage::create(['scale_station_code' => $codeScaleStation, 'app_id' => $appId, 'active' => 1])->id;
         $scaleCode = $codeScaleStation;
         $scale = ScaleStation::where('code', $scaleCode)->first();
         if (!$scale) {
@@ -63,7 +68,9 @@ class ApiController extends BaseController {
                 $response['data'] = '';
                 return Response::json($response);
             }
-            $scale = $scale;
+            $id = ScaleManage::create(['scale_station_code' => $codeScaleStation, 
+                'app_id' => $appId, 'active' => 1
+            ])->id;
             $data['scale_station'] = $scale;
             $department = Company::find($scale->department_id);
             $data['department'] = $department;
@@ -163,21 +170,26 @@ class ApiController extends BaseController {
                 $this->postStoreShip($customer, 'CustomerShip');
             }
 
+
             //luu thong tin partner
-            $partner = [];
-            $partner['doi_tac_ten'] = $input['doi_tac_ten'];
-            $partner['doi_tac_sdt'] = $input['doi_tac_sdt'];
-            $partner['doi_tac_dia_chi'] = $input['doi_tac_dia_chi'];
-            $partner['doi_tac_fax'] = $input['doi_tac_fax'];
-            $partner['partner_id'] = $input['partner_id'];
-            $partner['app_code'] = $input['app_id'];
-            $partner['scale_code'] = $input['code'];
-            $checkPartner = Partner::where('app_code', $input['app_id'])
-                ->where('partner_id', $input['partner_id'])->first();
-            if (!$checkCustomer) {
-                $this->postStoreShip($partner, 'Partner');
-            }
+            // $partner = [];
+            // $partner['doi_tac_ten'] = $input['doi_tac_ten'];
+            // $partner['doi_tac_sdt'] = $input['doi_tac_sdt'];
+            // $partner['doi_tac_dia_chi'] = $input['doi_tac_dia_chi'];
+            // $partner['doi_tac_fax'] = $input['doi_tac_fax'];
+            // $partner['partner_id'] = $input['partner_id'];
+            // $partner['app_code'] = $input['app_id'];
+            // $partner['scale_code'] = $input['code'];
+            // $checkPartner = Partner::where('app_code', $input['app_id'])
+            //     ->where('partner_id', $input['partner_id'])->first();
+            // if (!$checkCustomer) {
+            //     $this->postStoreShip($partner, 'Partner');
+            // }
             // call store insert customer ship
+            // $this->postStoreShip($customer);
+            $partner['partner_code'] = $input['partner_code'];
+            $partner['app_code'] = $input['app_id'];
+            $this->postStorePartner($partner);
             if ($input['chien_dich_id'] == '') {
                 // dd(11);
                 $idLuongtruCan = $this->common($input);
@@ -321,10 +333,17 @@ class ApiController extends BaseController {
             $inputLuongtru['luongtru'] = $luongtru;
             $idLuongtruCan = LuongTruCan::create($inputLuongtru)->id;
         // }
+            //save percent ...
+            if ($scale->campaign_code) {
+                CommonNormal::savePercentCampaign($scale, $kcs);
+            } else {
+                CommonNormal::savePercent($scale, $kcs);
+            }
             return $idLuongtruCan;
         }
         return false;
     }
+
     public function postChangePass()
     {
         // dd(11);

@@ -8,7 +8,7 @@
 
 <div class="row margin-bottom">
   <div class="col-xs-12">
-    <a href="{{ action('ConfigCustomerController@index') }}" class="btn btn-success">Danh sách</a>
+    <a href="{{ action('ConfigPartnerController@index') }}" class="btn btn-success">Danh sách</a>
   </div>
 </div>
 
@@ -16,7 +16,7 @@
     <div class="col-xs-12">
         <div class="box box-primary">
         <!-- form start -->
-        {{ Form::open(array('action' => 'ConfigCustomerController@store')) }}
+        {{ Form::open(array('action' => 'ConfigPartnerController@store')) }}
           <div class="box-body">
             <div class="form-group">
               <label for="module_id">User</label>

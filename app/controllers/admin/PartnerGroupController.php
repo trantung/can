@@ -1,6 +1,6 @@
 <?php
 
-class CustomerGroupController extends BaseCategoryController {
+class PartnerGroupController extends BaseCategoryController {
 
 
     protected $model;
@@ -15,10 +15,7 @@ class CustomerGroupController extends BaseCategoryController {
     const UPDATED_BY      = 'created_by';
     const DELETED         = 'deleted';
     const DESCRIPTION     = 'description';
-    const CODE            = 'code';
-    const PHONE           = 'phone';
-    const FAX             = 'fax';
-    const EMAIL           = 'email';
+
 
     function __construct(){
         $this->model = $this->getModel();
@@ -32,7 +29,7 @@ class CustomerGroupController extends BaseCategoryController {
     */
     protected function getModel()
     {
-        return new CustomerGroup;
+        return new PartnerGroup;
     }
 
     /**
@@ -42,12 +39,7 @@ class CustomerGroupController extends BaseCategoryController {
     */
     protected function getInputFieldStore(){
         return Input::only(
-            self::NAME,
-            self::DESCRIPTION,
-            self::CODE,
-            self::PHONE,
-            self::FAX,
-            self::EMAIL
+            self::NAME
         );
     }
 
@@ -58,12 +50,7 @@ class CustomerGroupController extends BaseCategoryController {
     */
     protected function getInputFieldUpdate(){
         return Input::only(
-            self::NAME,
-            self::DESCRIPTION,
-            self::CODE,
-            self::PHONE,
-            self::FAX,
-            self::EMAIL
+            self::NAME
         );
     }
 
@@ -126,21 +113,21 @@ class CustomerGroupController extends BaseCategoryController {
     }
 
     protected function redirectBackAction(){
-        return Redirect::action('CustomerGroupController@index');
+        return Redirect::action('PartnerGroupController@index');
     }
 
 
     protected function viewOfActionIndex(){
-        return 'admin.customer-group.index';
+        return 'admin.partner-group.index';
     }
     protected function viewOfActionCreate(){
-        return 'admin.customer-group.create';
+        return 'admin.partner-group.create';
     }
     protected function viewOfActionShow(){
-        return 'admin.customer-group.detail';
+        return 'admin.partner-group.detail';
     }
     protected function viewOfActionEdit(){
-        return 'admin.customer-group.edit';
+        return 'admin.partner-group.edit';
     }
 
     public function index()
