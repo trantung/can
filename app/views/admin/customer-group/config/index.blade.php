@@ -28,7 +28,7 @@
                   <td>{{ $key+1 }}</td>
                   <td>{{ getDepartmentByScale($value->scale_code) }}</td>
                   <td>{{ $value->scale_code }}</td>
-                  <td>{{ $value->name }}</td>
+                  <td>{{ $value->customer_name }}</td>
                   <td>{{ getGroupByCustomer($value->id) }}</td>
                   <td>
                     <a href="{{ action('ConfigCustomerController@edit', $value->id) }}" class="btn btn-primary">Gộp</a>
