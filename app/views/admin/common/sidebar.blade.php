@@ -126,6 +126,17 @@
                     <span>In chứng thư</span>
                 </a>
             </li>
+            <li>
+                <a href="{{ action('CustomerGroupController@index') }}">
+                    <span>Quản lý nhóm khách hàng</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ action('ConfigCustomerController@index') }}">
+                    <span>Quản lý khách hàng</span>
+                </a>
+            </li>
+
            {{--  <li>
                 <a href="{{ action('SalariesController@index') }}">
                     <span>Lương nhân viên</span>
