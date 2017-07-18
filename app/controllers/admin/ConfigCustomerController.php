@@ -41,15 +41,15 @@ class ConfigCustomerController extends AdminController {
      */
     public function index()
     {
-        $listUser = CustomerGroup::all();
-        $listPersonal = CustomerShip::lists('customer_name', 'id');
-        $data = [];
-        foreach ($listUser as $key => $value) {
-            $data[$key] = new stdClass();
-            $data[$key] = $value;
-            $data[$key]->customers = CustomerManage::where('customer_group_id', $value->id)->lists('customer_id');
-        }
-        return View::make('admin.customer-group.config.index')->with(compact('data', 'listPersonal'));
+        // $listUser = CustomerGroup::all();
+        $data = CustomerShip::all();
+        // $data = [];
+        // foreach ($listUser as $key => $value) {
+        //     $data[$key] = new stdClass();
+        //     $data[$key] = $value;
+        //     $data[$key]->customers = CustomerManage::where('customer_group_id', $value->id)->lists('customer_id');
+        // }
+        return View::make('admin.customer-group.config.index')->with(compact('data'));
     }
 
     public function edit($id)

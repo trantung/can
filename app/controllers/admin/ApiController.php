@@ -54,7 +54,6 @@ class ApiController extends BaseController {
     public function getInstall($appId, $codeScaleStation)
     {
         $data = [];
-        $id = ScaleManage::create(['scale_station_code' => $codeScaleStation, 'app_id' => $appId, 'active' => 1])->id;
         $scaleCode = $codeScaleStation;
         $scale = ScaleStation::where('code', $scaleCode)->first();
         if (!$scale) {
@@ -69,7 +68,9 @@ class ApiController extends BaseController {
                 $response['data'] = '';
                 return Response::json($response);
             }
-            $scale = $scale;
+            $id = ScaleManage::create(['scale_station_code' => $codeScaleStation, 
+                'app_id' => $appId, 'active' => 1
+            ])->id;
             $data['scale_station'] = $scale;
             $department = Company::find($scale->department_id);
             $data['department'] = $department;

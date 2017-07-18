@@ -446,7 +446,6 @@ function calculatorStorage($warehouseOriginId, $productId, $weight, $status, $wa
 	}
 }
 
-
 function getNameOfTransfer($type)
 {
 	if ($type == 1) {
@@ -463,3 +462,47 @@ function getNameOfTransfer($type)
 	}
 	return $name;
 }
+
+function getTotalCustomerInGroup($groupId)
+{
+	if (!$groupId) {
+		return null;
+	}
+	$total = CustomerManage::where('customer_group_id', $groupId)->get();
+	return count($total);
+}
+function getDepartmentByScale($code)
+{
+	if (!$code) {
+		return null;
+	}
+	$ob = ScaleStation::where('code', $code)->first();
+	if (!$ob) {
+		return 'không có chi nhánh có mã trạm cân này';
+	}
+	$departmentId = $ob->department_id;
+	$company = Company::find($departmentId);
+	if (!$company) {
+		return 'Chi nhánh không tồn tại hoặc bị xoá';
+	}
+	return $company->name;
+}
+
+function getGroupByCustomer($customerId)
+{
+	if (!$customerId) {
+		return null;
+	}
+	$ob = CustomerManage::where('customer_id', $customerId)->first();
+	if (!$ob) {
+		return null;
+	}
+	$group = CustomerGroup::find($ob->customer_group_id);
+	if (!$group) {
+		return 'Không có nhóm khách hàng';
+	}
+	return $group->name;
+}
+
+
+

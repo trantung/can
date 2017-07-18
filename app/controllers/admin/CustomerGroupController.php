@@ -15,7 +15,10 @@ class CustomerGroupController extends BaseCategoryController {
     const UPDATED_BY      = 'created_by';
     const DELETED         = 'deleted';
     const DESCRIPTION     = 'description';
-
+    const CODE            = 'code';
+    const PHONE           = 'phone';
+    const FAX             = 'fax';
+    const EMAIL           = 'email';
 
     function __construct(){
         $this->model = $this->getModel();
@@ -39,7 +42,12 @@ class CustomerGroupController extends BaseCategoryController {
     */
     protected function getInputFieldStore(){
         return Input::only(
-            self::NAME
+            self::NAME,
+            self::DESCRIPTION,
+            self::CODE,
+            self::PHONE,
+            self::FAX,
+            self::EMAIL
         );
     }
 
@@ -50,7 +58,12 @@ class CustomerGroupController extends BaseCategoryController {
     */
     protected function getInputFieldUpdate(){
         return Input::only(
-            self::NAME
+            self::NAME,
+            self::DESCRIPTION,
+            self::CODE,
+            self::PHONE,
+            self::FAX,
+            self::EMAIL
         );
     }
 

@@ -17,25 +17,23 @@
               <table class="table table-hover">
                 <tr>
                   <th>STT</th>
-                  <th>Khách hàng</th>
-                  <th>List</th>
-                  <th style="width:200px;">Action</th>
+                  <th>Chi nhánh</th>
+                  <th>Trạm cân</th>
+                  <th>Tên khách hàng</th>
+                  <th>Nhóm khách hàng</th>
+                  <th style="width:200px;">Gộp nhóm</th>
                 </tr>
                 @foreach($data as $key => $value)
                 <tr>
                   <td>{{ $key+1 }}</td>
-                  <td>{{ $value->name }}</td>
+                  <td>{{ getDepartmentByScale($value->scale_code) }}</td>
+                  <td>{{ $value->scale_code }}</td>
+                  <td>{{ $value->customer_name }}</td>
+                  <td>{{ getGroupByCustomer($value->id) }}</td>
                   <td>
-                  @foreach($value->customers as $k => $val)
-                    @if($val != 0)
-                    {{ $listPersonal[$val] }},
-                    @endif
-                  @endforeach
-                  </td>
-                  <td>
-                    <a href="{{ action('ConfigCustomerController@edit', $value->id) }}" class="btn btn-primary">Sửa</a>
+                    <a href="{{ action('ConfigCustomerController@edit', $value->id) }}" class="btn btn-primary">Gộp</a>
                     {{ Form::open(array('method'=>'DELETE', 'action' => array('ConfigCustomerController@destroy', $value->id), 'style' => 'display: inline-block;')) }}
-                    <button class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa?');">Xóa</button>
+                    <button class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa?');">Bỏ gộp</button>
                     {{ Form::close() }}
 
                   </td>
