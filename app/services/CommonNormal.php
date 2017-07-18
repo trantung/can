@@ -108,16 +108,13 @@ class CommonNormal
 			'kl_hang' => 'package_weight',
 			'app_id' => 'app_id',
 			'code' => 'code',
-<<<<<<< HEAD
 			'number_ticket_manual' => 'number_ticket_manual',
 			'partner_code' => 'partner_code',
-=======
-			'doi_tac_ten' => 'doi_tac_ten',
-			'doi_tac_sdt' => 'doi_tac_sdt',
-			'doi_tac_dia_chi' => 'doi_tac_dia_chi',
-			'doi_tac_fax' => 'doi_tac_fax',
-			'partner_id' => 'partner_id',
->>>>>>> 25ac8374eae145f823bca2e8f0dcb7b4999070b9
+			// 'doi_tac_ten' => 'doi_tac_ten',
+			// 'doi_tac_sdt' => 'doi_tac_sdt',
+			// 'doi_tac_dia_chi' => 'doi_tac_dia_chi',
+			// 'doi_tac_fax' => 'doi_tac_fax',
+			// 'partner_id' => 'partner_id'
 		];
 		return self::prepareData($input, $arrayKey);
 	}
@@ -311,7 +308,7 @@ class CommonNormal
 		return $ob->name;
 	}
 
-	public static function savePercent($scale, $kcs)
+	public static function savePercent($scale)
 	{
 		$model = CommonNormal::getProductCategoryId($scale->category_id);
         if ($model[1] == 1) {
@@ -321,7 +318,33 @@ class CommonNormal
             $modelName = 'ProductCategory';
         }
         $modelId = $model[0];
+
+        $keyConfig = 'do_kho';
+        if ($scale->campaign_code == null) {
+        	$one = self::getVarOne($modelName, $modelId, $scale, $keyConfig);
+        } else {
+        	$listNumberTicketByCampaign = ScaleKCS::where('campaign_code', $scale->campaign_code)->list('number_ticket');
+        	$one = self::getCampaignAveragePercent($listNumberTicketByCampaign, $keyConfig, $modelName, $modelId, $scale);
+        }
+        
+        $two = self::getVarTwo($keyConfig, $modelName, $modelId, $warehouseId);
+        $warehouseWeight = self::getWarehouseWeight($modelName, $modelId, $scale->warehouse_id);
+        $packageWeight = self::getPackageWeight($modelName, $modelId, $scale->warehouse_id);
+        $newPercentDoKho = ($one + $two) / ($packageWeight + $warehouseWeight);
+
+
+
         $percent = PercentWarehouse::where('model_name', $modelName)
+                    ->where('model_id', $modelId)
+                    ->orderBy('id', 'DESC')
+                    ->first();
+        if (!$percent) {
+            dd('Không tồn tại phần trăm');
+        }
+        $percent->$keyConfig = $newPercentDoKho;
+        $percent->save();
+        return true;
+        /*$percent = PercentWarehouse::where('model_name', $modelName)
                     ->where('model_id', $modelId)
                     ->orderBy('id', 'DESC')
                     ->first();
@@ -335,37 +358,165 @@ class CommonNormal
                     ->where('warehouse_id', $scale->warehouse_id)
                     ->orderBy('id', 'DESC')
                     ->first();
+
+
+
         $newPercentDoKho = ($scale->package_weight * $kcs->do_kho + $storageLoss->weight * $percentDoKho ) / $storageLoss->weight + $scale->package_weight;
         $percent->do_kho = $newPercentDoKho;
-        $percent->save();
+        $percent->save();*/
 	}
 
-	public static function savePercentCampaign($scale, $kcs)
+	/**
+	 * lấy khối lượng hàng * phần trăm độ ẩm
+	 */
+	public function getVarOne($modelName, $modelId, $scale, $keyConfig)
 	{
-		$model = CommonNormal::getProductCategoryId($scale->category_id);
-        if ($model[1] == 1) {
-            $modelName = 'Product';
-        }
-        if ($model[1] == 2) {
-            $modelName = 'ProductCategory';
-        }
-        $modelId = $model[0];
-        $percent = PercentWarehouse::where('model_name', $modelName)
-                    ->where('model_id', $modelId)
-                    ->orderBy('id', 'DESC')
-                    ->first();
-        if (!$percent) {
-            $percentDoKho = 0;
-        } else {
-            $percentDoKho = $percent->do_kho;
-        }
+		$percent = self::getPercentKCS($keyConfig, $modelName, $modelId, $scale->warehouse_id);
+        $weight = self::getPackageWeight($scale->number_ticket, $scale->campaign_code);
+        return $weight * $percent;
+	}
+
+	/**
+	 * lấy khối lượng kho * phần trăm độ ẩm trong bảng percent
+	 */
+	public function getVarTwo($keyConfig, $modelName, $modelId, $warehouseId)
+	{
+        $percent = self::getPercent($keyConfig, $modelName, $modelId, $warehouseId);
         $storageLoss = StorageLoss::where('model_name', $modelName)
                     ->where('model_id', $modelId)
-                    ->where('warehouse_id', $scale->warehouse_id)
+                    ->where('warehouse_id', $warehouseId)
                     ->orderBy('id', 'DESC')
                     ->first();
-        $newPercentDoKho = ($scale->package_weight * $kcs->do_kho + $storageLoss->weight * $percentDoKho ) / $storageLoss->weight + $scale->package_weight;
-        $percent->do_kho = $newPercentDoKho;
-        $percent->save();
+        if (!$storageLoss) {
+        	dd('Không tồn tại sản phẩm trong kho');
+        }
+		return $storageLoss->weight * $percent;
+	}
+
+	/**
+	 * phần trăm độ ẩm trong bảng percent
+	 */
+	public function getPercent($keyConfig, $modelName, $modelId, $warehouseId)
+	{
+		$percent = 0;
+		$data = PercentWarehouse::where('model_name', $modelName)
+                    ->where('model_id', $modelId)
+                    ->orderBy('id', 'DESC')
+                    ->first();
+        if ($data) {
+            $percent = $percent->$keyConfig;
+        }
+        return $percent / 100;
+	}
+
+	/**
+	 * phần trăm kiểm định cho phiếu cân
+	 */
+
+	public function getPercentKCS($keyConfig, $numberTicket, $campaignCode = null)
+	{
+        $data = ScaleKCS::where('number_ticket', $numberTicket);
+		if ($campaignCode) {
+			$data = $data->where('campaign_code');
+		}
+        $data = $data->whereNotNull('type')
+        			->orderBy('id', 'DESC')
+                    ->first();
+        if (!$data) {
+        	dd('Không tồn tại kiểm định');
+        }
+        
+		return $data->$keyConfig / 100;
+	}
+
+	/**
+	 * lấy khối lượng kho
+	 */
+	public function getWarehouseWeight($modelName, $modelId, $warehouseId)
+	{
+		$weight = 0;
+        $storageLoss = StorageLoss::where('model_name', $modelName)
+                    ->where('model_id', $modelId)
+                    ->where('warehouse_id', $warehouseId)
+                    ->orderBy('id', 'DESC')
+                    ->first();
+        if ($storageLoss) {
+        	$weight = $storageLoss->weight;
+        }
+		return $weight;
+	}
+
+	/**
+	 * lấy khối lượng hàng
+	 */
+	public function getPackageWeight($keyConfig, $numberTicket, $campaignCode = null)
+	{
+        $data = ScaleKCS::where('number_ticket', $numberTicket);
+		if ($campaignCode) {
+			$data = $data->where('campaign_code');
+		}
+        $data = $data->where('package_weight', '>', 0)
+        			->whereNull('type')
+        			->orderBy('id', 'DESC')
+                    ->first();
+        if (!$data) {
+        	dd('Không tồn tại cân');
+        }
+		return $data->package_weight;
+	}
+
+	/**
+	 * lấy tổng khối lượng hàng cân chiến dịch
+	 */
+	public function getTotalPackageWeightCampaign($keyConfig, $numberTicket, $campaignCode = null)
+	{
+        $data = ScaleKCS::where('number_ticket', $numberTicket);
+		if ($campaignCode) {
+			$data = $data->where('campaign_code');
+		}
+        $data = $data->where('package_weight', '>', 0)
+        			->whereNull('type')
+        			->orderBy('id', 'DESC')
+                    ->get();
+        if (count($data) <= 0) {
+        	dd('Không tồn tại cân');
+        }
+        $total = 0;
+        foreach ($data as $key => $value) {
+        	$total = $total + $value->package_weight;
+        }
+		return $total;
+	}
+
+	/**
+	 * lấy phần trăm trung bình chiến dịch
+	 */
+	public function getCampaignAveragePercent($arrNumberTicket, $keyConfig, $modelName, $modelId, $scale)
+	{
+		foreach ($arrNumberTicket as $numberTicket) {
+			$scale =  ScaleKCS::where('number_ticket', $numberTicket)
+								->where('package_weight', '>', 0)
+								->whereNull('type')
+								->where('model_name', $modelName)
+								->where('model_id', $modelId)
+								->where('warehouse_id', $scale->warehouse_id)
+								->orderBy('id', 'DESC')
+								->first();
+			$kcs =  ScaleKCS::where('number_ticket', $numberTicket)
+								->whereNotNull('type')
+								->orderBy('id', 'DESC')
+								->first();
+			$arrOne[] = $scale->package_weight * $kcs->$keyConfig;
+			$arrTwo[] = $scale->package_weight;
+		}
+		$one = 0;
+        foreach ($arrOne as $value) {
+        	$one = $one + $value;
+        }
+		$two = 0;
+        foreach ($arrTwo as $value) {
+        	$two = $two + $value;
+        }
+        return $one / $two;
 	}
 }
