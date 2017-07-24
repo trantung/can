@@ -63,7 +63,7 @@ class ProductManagerController extends AdminController {
         foreach ($listProductCategory as $key => $value) {
             $data[$key] = new stdClass();
             $data[$key] = $value;
-            $data[$key]->products = ProductManage::where('product_category_id', $value->id)->lists('product_id');
+            $data[$key]->products = ProductManage::where('product_category_id', $value->id)->lists('product_id', 'ratio');
         }
         return View::make('admin.product-manage.index')->with(compact('data', 'listProduct'));
     }

@@ -351,4 +351,12 @@ class ScaleStationController extends BaseCategoryController {
         $data = $listData[$numberTicket];
         return View::make('admin.scale-station.detail')->with(compact('data'));
     }
+
+    public function getPercent($warehouseId)
+    {
+        $data = PercentWarehouse::where('warehouse_id', $warehouseId)->first();
+        $model = $data->model_name;
+        $data->item = $model::find($data->model_id);
+        return View::make('admin.scale-station.percent')->with(compact('data'));
+    }
 }

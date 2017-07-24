@@ -23,13 +23,13 @@
                 </tr>
                 @foreach($data as $key => $value)
                 <tr>
-                  <td rowspan="2">{{ $key+1 }}</td>
-                  <td rowspan="2">{{ $value->code }}</td>
-                  <td rowspan="2">{{ $value->name }}</td>
+                  <td>{{ $key+1 }}</td>
+                  <td>{{ $value->code }}</td>
+                  <td>{{ $value->name }}</td>
                   <td>
                     @foreach($value->products as $k => $val)
                       @if($val != 0)
-                      {{ $listProduct[$val] }},
+                      {{ $listProduct[$val] }} : {{ $k }} %,
                       @endif
                     @endforeach
                   </td>
