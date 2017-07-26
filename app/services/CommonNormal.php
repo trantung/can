@@ -318,31 +318,37 @@ class CommonNormal
             $modelName = 'ProductCategory';
         }
         $modelId = $model[0];
+        // get list key config
+        $config = OverloadRatio::where('model_name', $modelName)
+        						->where('model_id', $modelId)
+    							->orderBy('id', 'DESC')->first();
+		foreach ($config->data as $key => $value) {
+			$keyConfig = $key;
+	        if ($scale->campaign_code == null) {
+	        	$one = self::getVarOne($modelName, $modelId, $scale, $keyConfig);
+	        } else {
+	        	$listNumberTicketByCampaign = ScaleKCS::where('campaign_code', $scale->campaign_code)->list('number_ticket');
+	        	$one = self::getCampaignAveragePercent($listNumberTicketByCampaign, $keyConfig, $modelName, $modelId, $scale);
+	        }
+	        
+	        $two = self::getVarTwo($keyConfig, $modelName, $modelId, $warehouseId);
+	        $warehouseWeight = self::getWarehouseWeight($modelName, $modelId, $scale->warehouse_id);
+	        $packageWeight = self::getPackageWeight($modelName, $modelId, $scale->warehouse_id);
+	        $newPercentDoKho = ($one + $two) / ($packageWeight + $warehouseWeight);
 
-        $keyConfig = 'do_kho';
-        if ($scale->campaign_code == null) {
-        	$one = self::getVarOne($modelName, $modelId, $scale, $keyConfig);
-        } else {
-        	$listNumberTicketByCampaign = ScaleKCS::where('campaign_code', $scale->campaign_code)->list('number_ticket');
-        	$one = self::getCampaignAveragePercent($listNumberTicketByCampaign, $keyConfig, $modelName, $modelId, $scale);
-        }
+
+
+	        $percent = PercentWarehouse::where('model_name', $modelName)
+	                    ->where('model_id', $modelId)
+	                    ->orderBy('id', 'DESC')
+	                    ->first();
+	        if (!$percent) {
+	            dd('Không tồn tại phần trăm');
+	        }
+	        $percent->$keyConfig = $newPercentDoKho;
+	        $percent->save();
+		}
         
-        $two = self::getVarTwo($keyConfig, $modelName, $modelId, $warehouseId);
-        $warehouseWeight = self::getWarehouseWeight($modelName, $modelId, $scale->warehouse_id);
-        $packageWeight = self::getPackageWeight($modelName, $modelId, $scale->warehouse_id);
-        $newPercentDoKho = ($one + $two) / ($packageWeight + $warehouseWeight);
-
-
-
-        $percent = PercentWarehouse::where('model_name', $modelName)
-                    ->where('model_id', $modelId)
-                    ->orderBy('id', 'DESC')
-                    ->first();
-        if (!$percent) {
-            dd('Không tồn tại phần trăm');
-        }
-        $percent->$keyConfig = $newPercentDoKho;
-        $percent->save();
         return true;
         /*$percent = PercentWarehouse::where('model_name', $modelName)
                     ->where('model_id', $modelId)
