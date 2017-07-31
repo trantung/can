@@ -46,15 +46,12 @@ class ScaleKCS extends Eloquent
         'number_ticket_manual',
         'created_at',
         'process',
-<<<<<<< HEAD
         'partner_code',
-=======
         'doi_tac_ten',
         'doi_tac_sdt',
         'doi_tac_dia_chi',
         'doi_tac_fax',
         'partner_id',
->>>>>>> 25ac8374eae145f823bca2e8f0dcb7b4999070b9
     ];
 
 
