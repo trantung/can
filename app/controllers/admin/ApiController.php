@@ -62,7 +62,7 @@ class ApiController extends BaseController {
             $response['data'] = '';
             return Response::json($response);
         } else {
-            if ($scale->app_id > 0) {
+            if ($scale->app_id != 0) {
                 $response['code'] = 200;
                 $response['message'] = 'không cài được do trạm cân đã cài app';
                 $response['data'] = '';
