@@ -33,7 +33,7 @@
                   <td>
                     <a href="{{ action('ConfigCustomerController@edit', $value->id) }}" class="btn btn-primary">Gộp</a>
                     {{ Form::open(array('method'=>'DELETE', 'action' => array('ConfigCustomerController@destroy', $value->id), 'style' => 'display: inline-block;')) }}
-                    <button class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa?');">Bỏ gộp</button>
+                    <button class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn bỏ gộp?');">Bỏ gộp</button>
                     {{ Form::close() }}
 
                   </td>

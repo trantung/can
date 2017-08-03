@@ -41,6 +41,7 @@ class ConfigCustomerController extends AdminController {
      */
     public function index()
     {
+        // dd(11);
         // $listUser = CustomerGroup::all();
         $data = CustomerShip::all();
         // $data = [];
@@ -54,25 +55,36 @@ class ConfigCustomerController extends AdminController {
 
     public function edit($id)
     {
-        $data = CustomerGroup::find($id);
-        $listPersonal = CustomerShip::all();
-        return View::make('admin.customer-group.config.edit')->with(compact('data', 'listPersonal'));
+        $data = CustomerShip::find($id);
+        // dd($data);
+        $group = CustomerManage::where('customer_id', $id)->first();
+        if ($group) {
+            $customerGroup = $group->customer_group_id;
+        } else {
+            $customerGroup = null;
+        }
+        $listPersonal = CustomerGroup::lists('name', 'id');
+        return View::make('admin.customer-group.config.edit')->with(compact('data', 'listPersonal', 'customerGroup'));
     }
 
     public function destroy($id)
     {
-        CustomerManage::where('customer_group_id', $id)->delete();
+        CustomerManage::where('customer_id', $id)->delete();
         return Redirect::action('ConfigCustomerController@index');
     }
 
     public function update($id)
     {
         $input = Input::except('_token');
-        CustomerManage::where('customer_group_id', $id)->delete();
-        if (isset($input['list_customer'])) {
-            $inputPrimaryKey = ['customer_group_id' => $id];
-            $inputSave = ['customer_id' => array_keys($input['list_customer'])];
-            Common::saveOneToMany('CustomerManage', $inputPrimaryKey, $inputSave);
+        $group = CustomerManage::where('customer_id', $id)->first();
+        if ($group) {
+            $group->update(['customer_group_id' => $input['customer_group_id']]);
+        }
+        else {
+            CustomerManage::create([
+                'customer_group_id' => $input['customer_group_id'],
+                'customer_id' => $id,
+            ]);
         }
         return Redirect::action('ConfigCustomerController@index');
 

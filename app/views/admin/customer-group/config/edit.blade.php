@@ -1,11 +1,15 @@
 @extends('admin.layout.default')
 
 @section('title')
-{{ $title='Chỉnh sửa Khách hàng "'. $data->name .'"' }}
+{{ $title='Chỉnh sửa Khách hàng "'. $data->customer_name .'"' }}
 @stop
 
 @section('content')
-
+<div class="row margin-bottom">
+  <div class="col-xs-12">
+    <a href="{{ action('ConfigCustomerController@index') }}" class="btn btn-success">Danh sách</a>
+  </div>
+</div>
 <div class="row">
     <div class="col-xs-12">
         <div class="box box-primary">
@@ -16,20 +20,27 @@
                   <label for="module_id">Khách hàng</label>
                   <div class="row">
                     <div class="col-sm-6">
-                      {{$data->name}}
+                      {{ $data->customer_name }}
                   </div>
                 </div>
                 <div class="form-group">
-                  Danh sách <span class="caret"></span>
-                  @foreach($listPersonal as $k => $val)
-                  <div class="checkbox">
-                    <label>
-                      {{ Form::checkbox("list_customer[$val->id]", 'true', isChecked('CustomerManage', 'customer_group_id', $data->id, 'customer_id', $val->customer_id) ) }}
-                    {{ $val->customer_name }}
-                    </label>
+                  <label for="username">Lựa chọn nhóm khách hàng</label>
+                  <div class="row">
+                    <div class="col-sm-6">
+                      {{ Form::select('customer_group_id',['' => 'Chọn']+ $listPersonal, $customerGroup, array('class' => 'form-control'))}}
+                    </div>
                   </div>
-                  @endforeach
-              </div>
+                </div>
+                <div class="form-group">
+                  <label for="module_id">Các khách hàng trong nhóm</label>
+                  <label for="module_id">Tổng số khách hàng trong nhóm:</label>
+                  <div class="row">
+                    <div class="col-sm-6">
+                      dùng ajax để lấy
+                    </div>
+                  </div>
+                </div>
+
                </div>
               <!-- /.box-body -->
 
