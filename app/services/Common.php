@@ -40,6 +40,9 @@ class Common {
 	public static function getNameByStorageLoss($modelName, $modelId)
 	{
 		$ob = $modelName::find($modelId);
-		return $ob->name;
+		if ($ob) {
+			return $ob->name;
+		}
+		return null;
 	}
 }
