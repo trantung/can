@@ -89,5 +89,18 @@ class ConfigCustomerController extends AdminController {
         return Redirect::action('ConfigCustomerController@index');
 
     }
+    public function show($id)
+    {
+        $data = CustomerShip::find($id);
+        // dd($data);
+        $group = CustomerManage::where('customer_id', $id)->first();
+        if ($group) {
+            $customerGroup = $group->customer_group_id;
+        } else {
+            $customerGroup = null;
+        }
+        $listPersonal = CustomerGroup::lists('name', 'id');
+        return View::make('admin.customer-group.config.show')->with(compact('data', 'listPersonal', 'customerGroup'));
+    }
     
 }

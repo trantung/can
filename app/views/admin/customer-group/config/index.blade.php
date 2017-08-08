@@ -31,6 +31,7 @@
                   <td>{{ $value->customer_name }}</td>
                   <td>{{ getGroupByCustomer($value->id) }}</td>
                   <td>
+                    <a href="{{ action('ConfigCustomerController@show', $value->id) }}" class="btn btn-primary">Show</a>
                     <a href="{{ action('ConfigCustomerController@edit', $value->id) }}" class="btn btn-primary">Gộp</a>
                     {{ Form::open(array('method'=>'DELETE', 'action' => array('ConfigCustomerController@destroy', $value->id), 'style' => 'display: inline-block;')) }}
                     <button class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn bỏ gộp?');">Bỏ gộp</button>
