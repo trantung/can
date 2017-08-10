@@ -129,7 +129,13 @@ class StorageLossController extends BaseCategoryController {
     protected function viewOfActionEdit(){
         return 'admin.storage-loss.edit';
     }
-
+    public function update($id) 
+    {
+        $input = Input::except('_token');
+        $storage = StorageLoss::find($id);
+        $storage->update($input);
+        return Redirect::action('StorageLossController@index');
+    }
     public function index()
     {
         $data = $this->model->orderBy('id', 'asc')->paginate(10);

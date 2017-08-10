@@ -19,7 +19,7 @@
     <div class="col-xs-12">
         <div class="box box-primary">
             <!-- form start -->
-            {{ Form::open(array('action' => 'StorageLossController@store')) }}
+            {{ Form::open(array('action' => array('StorageLossController@update', $data->id), 'method' => 'PUT')) }}
             <div class="box-body">
               <div class="form-group">
                 <label for="username">Loại hàng</label>
