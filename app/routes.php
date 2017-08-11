@@ -68,7 +68,10 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('/product-category', 'ProductCategoryController');
     Route::resource('/product', 'ProductController');
     Route::resource('/production-loss', 'ProductionLossController');
+
+    Route::post('/storage-loss/reset/{id}', array('uses' => 'StorageLossController@reset'));
     Route::resource('/storage-loss', 'StorageLossController');
+
     Route::resource('/overload-ratio', 'OverloadRatioController');
     Route::resource('/scale-station', 'ScaleStationController', array('except' => array('show')));
     Route::controller('/scale-station', 'ScaleStationController');

@@ -504,5 +504,61 @@ function getGroupByCustomer($customerId)
 	return $group->name;
 }
 
+function numberFormate($number, $text)
+{
+	$number = $number/1000;
+	return number_format($number) . ' '. $text;
+}
+function getNameWarehouse($id)
+{
+	$warehouse = Warehouse::find($id);
+	if ($warehouse) {
+		return $warehouse->name;
+	}
+	return null;
+}
+
+function getNameProductOrCategory($storage)
+{
+	if (!$storage) {
+		return null;
+	}
+	$class = $storage->model_name;
+	$ob = $class::find($storage->model_id);
+	if (!$ob) {
+		return null;
+	}
+	return $ob->name;
+
+}
+function getNameByStorageLoss($storage)
+{
+	if (!$storage) {
+		return null;
+	}
+	if ($storage->model_name == 'Product') {
+		return 'Thành phẩm';
+	}
+	if ($storage->model_name == 'ProductCategory') {
+		return 'Nguyên liệu';
+	}
+	return null;
+
+}
+function getDetailStorageLossSave($warehouseId)
+{
+	$data = StorageLoss::where('warehouse_id', $warehouseId)->get();
+	// $data = StorageLoss::where('warehouse_id', 20)->get(['model_id', 'model_name']);
+	$text = '';
+	foreach ($data as $value) {
+		if ($value->ratio > 0) {
+			$ratio = $value->ratio . '%';
+		} else {
+			$ratio = 'Chưa có';
+		}
+		$text .= '<b>'.getNameByStorageLoss($value) .'</b>'. ':' . getNameProductOrCategory($value) . ' có tổng trọng lượng là: ' . numberFormate($value->weight, 'tấn') .' và có tỉ lệ hao hụt: ' . $ratio . '<br/>';
+	}
+	return $text;
+}
 
 

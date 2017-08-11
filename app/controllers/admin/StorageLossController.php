@@ -108,7 +108,7 @@ class StorageLossController extends BaseCategoryController {
     */
     protected function updateValidater(array $array){
         return Validator::make($array,[
-            self::MODEL_NAME => 'required',
+            // self::MODEL_NAME => 'required',
         ]);
     }
 
@@ -131,15 +131,25 @@ class StorageLossController extends BaseCategoryController {
     }
     public function update($id) 
     {
-        $input = Input::except('_token');
-        $storage = StorageLoss::find($id);
-        $storage->update($input);
+        $input = Input::except('_token', '_method');
+        foreach ($input['ratio'] as $key => $value) {
+            $storage = StorageLoss::find($key);
+            if ($storage) {
+                $storage->update(['ratio' => $value]);
+            }
+        }
         return Redirect::action('StorageLossController@index');
     }
     public function index()
     {
-        $data = $this->model->orderBy('id', 'asc')->paginate(10);
+        $data = Warehouse::orderBy('id', 'asc')->paginate(10);
+        // $data = $this->model->orderBy('id', 'asc')->paginate(10);
         return View::make($this->viewOfActionIndex(), ['data'=>$data]);
+    }
+    public function reset($id)
+    {
+        $data = StorageLoss::where('warehouse_id', $id)->update(['ratio' => 0]);
+        return Redirect::action('StorageLossController@index');
     }
 
 }

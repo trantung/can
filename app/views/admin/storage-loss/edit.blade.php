@@ -1,7 +1,7 @@
 @extends('admin.layout.default')
 
 @section('title')
-{{ $title='Chỉnh sửa "'. $data->name .'"' }}
+{{ $title='Chỉnh sửa '. getNameWarehouse($data->id) }}
 @stop
 
 @section('content')
@@ -18,53 +18,30 @@
 <div class="row">
     <div class="col-xs-12">
         <div class="box box-primary">
+          <div class="form-group">
+            <label for="username">{{getDetailStorageLossSave($data->id)}}</label>
+          </div>
             <!-- form start -->
-            {{ Form::open(array('action' => array('StorageLossController@update', $data->id), 'method' => 'PUT')) }}
-            <div class="box-body">
-              <div class="form-group">
-                <label for="username">Loại hàng</label>
-                <div class="row">
-                  <div class="col-sm-6"> 
-                    {{ Form::select('model_name', ['' => 'Chọn', 'ProductCategory' => 'Nguyên liệu thô', 'Product' => 'Thành phẩm'], $data->model_name,  array('class' => 'form-control', 'id' => 'model_name'))}}
-                  </div>
+        {{ Form::open(array('action' => array('StorageLossController@update', $data->id), 'method' => 'PUT')) }}
+          <div class="box-body">
+          @foreach(StorageLoss::where('warehouse_id', $data->id)->get() as $value)
+            <div class="form-group">
+              <div class="row">
+                <div class="col-sm-6">
+                <label for="username">{{ getNameByStorageLoss($value) }} {{ getNameProductOrCategory($value) }}</label>
+                {{ Form::text("ratio[$value->id]", $value->ratio,array('class' => 'form-control')) }}
                 </div>
               </div>
-              <div class="form-group">
-                <label for="username">Sản phẩm</label>
-                <div class="row">
-                <?php $ob = $data->model_name;
-                $arr = $ob::lists('name', 'id'); ?>
-                  <div class="col-sm-6">
-                    {{ Form::select('model_id', ['' => 'Chọn']+ $arr, $data->model_id,  array('class' => 'form-control', 'id' => 'model_id'))}}
-                  </div>
-                </div>
-              </div>
-             
-              <div class="form-group">
-                <label for="username">Kho</label>
-                <div class="row">
-                  <div class="col-sm-6">
-                    {{ Form::select('warehouse_id', ['' => 'Chọn'] + Warehouse::lists('name', 'id'), $data->warehouse_id,  array('class' => 'form-control'))}}
-                  </div>
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="username">Tỉ lệ</label>
-                <div class="row">
-                  <div class="col-sm-6">
-                    {{ Form::text('ratio', $data->ratio , textParentCategory('ratio')) }}
-                  </div>
-                </div>
-              </div>
-
             </div>
-            <!-- /.box-body -->
+          @endforeach
+          </div>
+          <!-- /.box-body -->
 
-            <div class="box-footer">
-              <input type="submit" class="btn btn-primary" value="Lưu lại" />
-              <input type="reset" class="btn btn-default" value="Nhập lại" />
-            </div>
-          {{ Form::close() }}
+          <div class="box-footer">
+            <input type="submit" class="btn btn-primary" value="Lưu lại" />
+            <input type="reset" class="btn btn-default" value="Nhập lại" />
+          </div>
+        {{ Form::close() }}
         </div>
         <!-- /.box -->
     </div>
