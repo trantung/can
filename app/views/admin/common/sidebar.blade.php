@@ -136,6 +136,16 @@
                     <span>Quản lý khách hàng</span>
                 </a>
             </li>
+            <li>
+                <a href="{{ action('PartnerController@index') }}">
+                    <span>Quản lý nhóm đối tác</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ action('ManagePartnerController@index') }}">
+                    <span>Quản lý đối tác</span>
+                </a>
+            </li>
 
            {{--  <li>
                 <a href="{{ action('SalariesController@index') }}">
