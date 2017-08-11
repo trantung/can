@@ -39,7 +39,7 @@
                    <td>{{ $value->department <> null ?  $value->department->name : ''}}</td>
                   <td>
                     <a href="{{ action('ScaleStationController@edit', $value->id) }}" class="btn btn-primary">Sửa</a>
-                    <a href="{{ action('ScaleStationController@getPercent', $value->id) }}" class="btn btn-primary">Phần trăm</a>
+                    
                     {{ Form::open(array('method'=>'DELETE', 'action' => array('ScaleStationController@destroy', $value->id), 'style' => 'display: inline-block;')) }}
                     <button class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa?');">Xóa trạm cân</button>
                     {{ Form::close() }}

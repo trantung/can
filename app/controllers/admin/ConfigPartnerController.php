@@ -23,7 +23,7 @@ class ConfigPartnerController extends AdminController {
      *
      * @return Response
      */
-    public function store()
+    /*public function store()
     {
         $input = Input::except('_token');
         if (isset($input['personal'])) {
@@ -32,7 +32,7 @@ class ConfigPartnerController extends AdminController {
             Common::saveOneToMany('PartnerManage', $inputPrimaryKey, $inputSave);
         }
         return Redirect::action('ConfigPartnerController@index');
-    }
+    }*/
 
     /**
      * Display a listing of the resource.
@@ -42,7 +42,7 @@ class ConfigPartnerController extends AdminController {
     public function index()
     {
         $listUser = PartnerGroup::all();
-        $listPersonal = PartnerShip::lists('partner_code', 'id');
+        $listPersonal = Partner::lists('doi_tac_ten', 'id');
         $data = [];
         foreach ($listUser as $key => $value) {
             $data[$key] = new stdClass();
@@ -55,7 +55,7 @@ class ConfigPartnerController extends AdminController {
     public function edit($id)
     {
         $data = PartnerGroup::find($id);
-        $listPersonal = PartnerShip::all();
+        $listPersonal = Partner::all();
         return View::make('admin.partner-group.config.edit')->with(compact('data', 'listPersonal'));
     }
 

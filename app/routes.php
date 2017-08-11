@@ -146,6 +146,8 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('/config-permission', 'ConfigPermissionController');
     Route::resource('/config-user', 'ConfigUserController');
     Route::resource('/config-customer', 'ConfigCustomerController');
+    Route::resource('/partner', 'PartnerController');
+    Route::resource('/manage-partner', 'ManagePartnerController');
     Route::resource('/config-partner', 'ConfigPartnerController');
     Route::resource('/product-manage', 'ProductManagerController');
     Route::resource('/warehouse', 'WarehouseController', array('except' => array('show')));

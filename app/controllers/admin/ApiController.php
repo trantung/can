@@ -171,25 +171,25 @@ class ApiController extends BaseController {
             }
 
 
-            //luu thong tin partner
-            // $partner = [];
-            // $partner['doi_tac_ten'] = $input['doi_tac_ten'];
-            // $partner['doi_tac_sdt'] = $input['doi_tac_sdt'];
-            // $partner['doi_tac_dia_chi'] = $input['doi_tac_dia_chi'];
-            // $partner['doi_tac_fax'] = $input['doi_tac_fax'];
-            // $partner['partner_id'] = $input['partner_id'];
-            // $partner['app_code'] = $input['app_id'];
-            // $partner['scale_code'] = $input['code'];
-            // $checkPartner = Partner::where('app_code', $input['app_id'])
-            //     ->where('partner_id', $input['partner_id'])->first();
-            // if (!$checkCustomer) {
-            //     $this->postStoreShip($partner, 'Partner');
-            // }
+            // luu thong tin partner
+            $partner = [];
+            $partner['doi_tac_ten'] = $input['doi_tac_ten'];
+            $partner['doi_tac_sdt'] = $input['doi_tac_sdt'];
+            $partner['doi_tac_dia_chi'] = $input['doi_tac_dia_chi'];
+            $partner['doi_tac_fax'] = $input['doi_tac_fax'];
+            $partner['partner_id'] = $input['partner_id'];
+            $partner['app_code'] = $input['app_id'];
+            $partner['scale_code'] = $input['code'];
+            $checkPartner = Partner::where('app_code', $input['app_id'])
+                ->where('partner_id', $input['partner_id'])->first();
+            if (!$checkCustomer) {
+                $this->postStoreShip($partner, 'Partner');
+            }
             // call store insert customer ship
             // $this->postStoreShip($customer);
-            $partner['partner_code'] = $input['partner_code'];
+            /*$partner['partner_code'] = $input['doi_tac_ten'];
             $partner['app_code'] = $input['app_id'];
-            $this->postStorePartner($partner);
+            $this->postStorePartner($partner);*/
             if ($input['chien_dich_id'] == '') {
                 // dd(11);
                 $idLuongtruCan = $this->common($input);
@@ -398,6 +398,26 @@ class ApiController extends BaseController {
         $response['code'] = 200;
         $response['message'] = 'Thành công';
         $response['data'] = $data;
+        return Response::json($response);
+    }
+
+    public function getCustomerByGroup($id)
+    {
+        $listId = CustomerManage::where('customer_group_id', $id)->lists('customer_id');
+        $listCustomer = CustomerShip::whereIn('id', $listId)->get()->toArray();
+        $response['code'] = 200;
+        $response['message'] = 'Thành công';
+        $response['data'] = $listCustomer;
+        return Response::json($response);
+    }
+
+    public function getPartnerByGroup($id)
+    {
+        $listId = PartnerManage::where('partner_group_id', $id)->lists('partner_id');
+        $listCustomer = Partner::whereIn('id', $listId)->get()->toArray();
+        $response['code'] = 200;
+        $response['message'] = 'Thành công';
+        $response['data'] = $listCustomer;
         return Response::json($response);
     }
 }

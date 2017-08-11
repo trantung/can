@@ -13,7 +13,7 @@
             {{ Form::open(array('action' => array('ConfigPartnerController@update', $data->id), 'method' => 'PUT')) }}
                <div class="box-body">
                 <div class="form-group">
-                  <label for="module_id">đối tác</label>
+                  <label for="module_id">Đối tác</label>
                   <div class="row">
                     <div class="col-sm-6">
                       {{$data->name}}
@@ -25,7 +25,7 @@
                   <div class="checkbox">
                     <label>
                       {{ Form::checkbox("list_partner[$val->id]", 'true', isChecked('PartnerManage', 'partner_group_id', $data->id, 'partner_id', $val->id) ) }}
-                    {{ $val->partner_code }}
+                    {{ $val->doi_tac_ten }}
                     </label>
                   </div>
                   @endforeach

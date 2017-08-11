@@ -355,6 +355,9 @@ class ScaleStationController extends BaseCategoryController {
     public function getPercent($warehouseId)
     {
         $data = PercentWarehouse::where('warehouse_id', $warehouseId)->first();
+        if (!$data) {
+            dd('chưa có phần trăm cho kho này');
+        }
         $model = $data->model_name;
         $data->item = $model::find($data->model_id);
         return View::make('admin.scale-station.percent')->with(compact('data'));

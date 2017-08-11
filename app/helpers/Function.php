@@ -471,6 +471,16 @@ function getTotalCustomerInGroup($groupId)
 	$total = CustomerManage::where('customer_group_id', $groupId)->get();
 	return count($total);
 }
+
+function getTotalParterInGroup($groupId)
+{
+	if (!$groupId) {
+		return null;
+	}
+	$total = PartnerManage::where('partner_group_id', $groupId)->get();
+	return count($total);
+}
+
 function getDepartmentByScale($code)
 {
 	if (!$code) {
@@ -500,6 +510,22 @@ function getGroupByCustomer($customerId)
 	$group = CustomerGroup::find($ob->customer_group_id);
 	if (!$group) {
 		return 'Không có nhóm khách hàng';
+	}
+	return $group->name;
+}
+
+function getGroupByPartner($customerId)
+{
+	if (!$customerId) {
+		return null;
+	}
+	$ob = PartnerManage::where('partner_id', $customerId)->first();
+	if (!$ob) {
+		return null;
+	}
+	$group = PartnerGroup::find($ob->partner_group_id);
+	if (!$group) {
+		return 'Không có nhóm đối tác';
 	}
 	return $group->name;
 }
