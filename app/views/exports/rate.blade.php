@@ -166,7 +166,7 @@
             @foreach ($log as $key => $value)
               <tr>
                 <td>{{ $key + 1 }}</td>
-                <td>{{ $value->number_ticket }}</td>
+                <td>{{ $value->number_car }}</td>
                 <td>{{ $value->number_ticket }}</td>
                 <td>{{ $value->created_at }}</td>
                 <td>{{ $value->do_kho }}</td>
