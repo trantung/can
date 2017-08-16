@@ -1,3 +1,9 @@
+<style type="text/css">
+.sidebar ol.sidebar-menu ol.dropdown-menu{
+    position: relative;
+    float: none;
+}
+</style>
 {{-- <aside class="main-sidebar"> --}}
   <aside class="control-sidebar control-sidebar-light">
     <!-- sidebar: style can be found in sidebar.less -->
@@ -76,76 +82,98 @@
                     <span>Cấu hình sản phẩm</span>
                 </a>
             </li>
-            <li>
-                <a href="{{ action('WarehouseController@index') }}">
-                    <span>Danh sách kho</span>
-                </a>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Quản lý kho<span class="caret"></span></a>
+                <ol class="dropdown-menu">
+                    <li>
+                        <a href="{{ action('WarehouseController@index') }}">
+                            <span>Danh sách kho</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ action('StorageLossController@index') }}">
+                            <span>Hao hụt lưu kho</span>
+                        </a>
+                    </li>
+                </ol>
             </li>
-            <li>
-                <a href="{{ action('ProductionAutoController@index') }}">
-                    <span>Tự sản xuất</span>
-                </a>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Sản phẩm & sản xuất<span class="caret"></span></a>
+                <ol class="dropdown-menu">
+                    <li>
+                        <a href="{{ action('ProductionAutoController@index') }}">
+                            <span>Tự sản xuất</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ action('ProductCategoryController@index') }}">
+                            <span>Danh sách nguyên liệu</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ action('ProductController@index') }}">
+                            <span>Danh sách thành phẩm</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ action('ProductionLossController@index') }}">
+                            <span>Hao hụt sản xuất</span>
+                        </a>
+                    </li>
+                </ol>
             </li>
-            <li>
-                <a href="{{ action('ProductCategoryController@index') }}">
-                    <span>Danh sách nguyên liệu</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ action('ProductController@index') }}">
-                    <span>Danh sách thành phẩm</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ action('ProductionLossController@index') }}">
-                    <span>Hao hụt sản xuất</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ action('StorageLossController@index') }}">
-                    <span>Hao hụt lưu kho</span>
-                </a>
-            </li>
+            
             <li>
                 <a href="{{ action('ScaleStationController@index') }}">
                     <span>Quản lý trạm cân</span>
                 </a>
             </li>
-            <li>
-                <a href="{{ action('ScaleStationController@getStatistic', 'normal') }}">
-                    <span>Thống kê Cân/ KCS lẻ</span>
-                </a>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Báo cáo thống kê<span class="caret"></span></a>
+                <ol class="sub dropdown-menu">
+                    <li>
+                        <a href="{{ action('ScaleStationController@getStatistic', 'normal') }}">
+                            <span>Thống kê Cân/ KCS lẻ</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ action('ScaleStationController@getStatistic', 'campaign') }}">
+                            <span>Thống kê Cân/ KCS chiến dịch</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ action('ScaleStationController@getSearchExport') }}">
+                            <span>In chứng thư</span>
+                        </a>
+                    </li>
+                </ol>
             </li>
-            <li>
-                <a href="{{ action('ScaleStationController@getStatistic', 'campaign') }}">
-                    <span>Thống kê Cân/ KCS chiến dịch</span>
-                </a>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Khách hàng & đối tác<span class="caret"></span></a>
+                <ol class="sub dropdown-menu">
+                    <li>
+                        <a href="{{ action('CustomerGroupController@index') }}">
+                            <span>Quản lý nhóm khách hàng</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ action('ConfigCustomerController@index') }}">
+                            <span>Quản lý khách hàng</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ action('PartnerController@index') }}">
+                            <span>Quản lý nhóm đối tác</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ action('ManagePartnerController@index') }}">
+                            <span>Quản lý đối tác</span>
+                        </a>
+                    </li>
+                </ol>
             </li>
-            <li>
-                <a href="{{ action('ScaleStationController@getSearchExport') }}">
-                    <span>In chứng thư</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ action('CustomerGroupController@index') }}">
-                    <span>Quản lý nhóm khách hàng</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ action('ConfigCustomerController@index') }}">
-                    <span>Quản lý khách hàng</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ action('PartnerController@index') }}">
-                    <span>Quản lý nhóm đối tác</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ action('ManagePartnerController@index') }}">
-                    <span>Quản lý đối tác</span>
-                </a>
-            </li>
+            
 
            {{--  <li>
                 <a href="{{ action('SalariesController@index') }}">
