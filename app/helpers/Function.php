@@ -514,7 +514,7 @@ function getGroupByCustomer($customerId)
 	return $group->name;
 }
 
-function numberFormate($number, $text)
+function numberFormat($number, $text)
 {
 	$number = $number/1000;
 	return number_format($number) . ' '. $text;
@@ -527,7 +527,6 @@ function getNameWarehouse($id)
 	}
 	return null;
 }
-
 function getNameProductOrCategory($storage)
 {
 	if (!$storage) {
@@ -566,7 +565,7 @@ function getDetailStorageLossSave($warehouseId)
 		} else {
 			$ratio = 'Chưa có';
 		}
-		$text .= '<b>'.getNameByStorageLoss($value) .'</b>'. ':' . getNameProductOrCategory($value) . ' có tổng trọng lượng là: ' . numberFormate($value->weight, 'tấn') .' và có tỉ lệ hao hụt: ' . $ratio . '<br/>';
+		$text .= '<b>'.getNameByStorageLoss($value) .'</b>'. ':' . getNameProductOrCategory($value) . ' có tổng trọng lượng là: ' . numberFormat($value->weight, 'tấn') .' và có tỉ lệ hao hụt: ' . $ratio . '<br/>';
 	}
 	return $text;
 }
@@ -585,6 +584,16 @@ function getGroupByPartner($customerId)
 	}
 	return $group->name;
 }
-
+function getStaticPercentWarehouse($storage, $field)
+{
+	$warehouse = PercentWarehouse::where('warehouse_id', $storage->warehouse_id)
+		->where('model_name', $storage->model_name)
+		->where('model_id', $storage->model_id)
+		->first();
+	if (!$warehouse) {
+		return 0;
+	}
+	return $warehouse->$field;
+}
 
 

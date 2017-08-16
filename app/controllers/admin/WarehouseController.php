@@ -165,14 +165,15 @@ class WarehouseController extends BaseCategoryController {
 
     public function getStatistic($id)
     {
-        $listItem = StorageLoss::where('warehouse_id', $id)->get();
-        $data = [];
-        foreach ($listItem as $key => $value) {
-            $data[$key] = new stdClass();
-            $data[$key] = $value;
-            $model = $value->model_name;
-            $data[$key]->item = $model::find($value->model_id);
-        }
+        $data = StorageLoss::where('warehouse_id', $id)->get();
+        // $data = [];
+        // foreach ($listItem as $key => $value) {
+        //     $data[$key] = new stdClass();
+        //     $data[$key] = $value;
+        //     $model = $value->model_name;
+        //     $data[$key]->item = $model::find($value->model_id);
+        // }
+        // $data = getStaticPercentWarehouse($id);
         return View::make('admin.warehouse.statistic')->with(compact('data'));
     }
 
@@ -182,9 +183,12 @@ class WarehouseController extends BaseCategoryController {
         if (!$data) {
             dd('Không tìm thấy dữ liệu');
         }
-        $model = $data->model_name;
-        $data->item = $model::find($data->model_id);
-        return View::make('admin.warehouse.reset')->with(compact('data'));
+        $listPercent = PercentWarehouse::where('model_name', $data->model_name)
+            ->where('model_id', $data->model_id)
+            ->where('warehouse_id', $data->warehouse_id)
+            ->first();
+        // $data->item = $model::find($data->model_id);
+        return View::make('admin.warehouse.form_reset')->with(compact('data', 'listPercent'));
     }
 
     public function putReset($id)
@@ -197,5 +201,19 @@ class WarehouseController extends BaseCategoryController {
         $data->ratio = Input::get('ratio');
         $data->save();
         return Redirect::action('WarehouseController@index');
+    }
+
+    public function postResetPercent($storageLossId, $percentId)
+    {
+        $input = Input::all();
+        $inputPercent = Input::except('_token', 'weight');
+        $data = StorageLoss::find($storageLossId);
+        $percent = PercentWarehouse::find($percentId);
+        if (!$data || !$percent) {
+            dd('Không tìm thấy dữ liệu');
+        }
+        $data->update(['weight' => $input['weight']]);
+        $percent->update($inputPercent);
+        return Redirect::action('WarehouseController@getStatistic', $storageLossId);
     }
 }
