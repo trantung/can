@@ -514,10 +514,13 @@ function getGroupByCustomer($customerId)
 	return $group->name;
 }
 
-function numberFormat($number, $text)
+function numberFormat($number, $text = null)
 {
 	$number = $number/1000;
-	return number_format($number) . ' '. $text;
+	if ($text) {
+		return number_format($number) . ' '. $text;
+	}
+	return $number;
 }
 function getNameWarehouse($id)
 {

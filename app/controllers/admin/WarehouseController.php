@@ -203,17 +203,28 @@ class WarehouseController extends BaseCategoryController {
         return Redirect::action('WarehouseController@index');
     }
 
-    public function postResetPercent($storageLossId, $percentId)
+    public function postResetPercent($storageLossId)
     {
         $input = Input::all();
         $inputPercent = Input::except('_token', 'weight');
         $data = StorageLoss::find($storageLossId);
-        $percent = PercentWarehouse::find($percentId);
-        if (!$data || !$percent) {
+        $percent = PercentWarehouse::where('model_name', $data->model_name)
+            ->where('model_id', $data->model_id)
+            ->where('warehouse_id', $data->warehouse_id)
+            ->first();
+        // $percent = PercentWarehouse::find($percentId);
+        if (!$data) {
             dd('Không tìm thấy dữ liệu');
+        }
+        if (!$percent) {
+            $inputPercent['model_name'] = $data->model_name;
+            $inputPercent['model_id'] = $data->model_id;
+            $inputPercent['warehouse_id'] = $data->warehouse_id;
+            PercentWarehouse::create($inputPercent);
+            return Redirect::action('WarehouseController@getStatistic', $data->warehouse_id);
         }
         $data->update(['weight' => $input['weight']]);
         $percent->update($inputPercent);
-        return Redirect::action('WarehouseController@getStatistic', $storageLossId);
+        return Redirect::action('WarehouseController@getStatistic', $data->warehouse_id);
     }
 }
