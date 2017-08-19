@@ -5,7 +5,7 @@
 @stop
 
 @section('content')
-
+@include('admin.storage-loss.search')
     <div class="row margin-bottom">
         <div class="col-xs-12">
             <a href="{{ action('StorageLossController@create') }}" class="btn btn-primary">Thêm mới</a>

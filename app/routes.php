@@ -72,6 +72,8 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('/production-loss', 'ProductionLossController');
 
     Route::post('/storage-loss/reset/{id}', array('uses' => 'StorageLossController@reset'));
+    Route::get('/storage-loss/search', 'StorageLossController@search');
+    Route::get('/storage-loss/cancel/search', 'StorageLossController@cancelSearch');
     Route::resource('/storage-loss', 'StorageLossController');
 
     Route::resource('/overload-ratio', 'OverloadRatioController');

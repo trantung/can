@@ -152,4 +152,24 @@ class StorageLossController extends BaseCategoryController {
         return Redirect::action('StorageLossController@index');
     }
 
+    public function search()
+    {
+        $input = Input::all();
+        // dd($input);
+        $departmentId = $input['department_id'];
+        $deparment = Company::find($departmentId);
+        $dataSearch = getChild($deparment);
+        // dd($dataSearch);
+        // $data = $this->model->orderBy('id', 'asc')->with('department')->paginate(10);
+        $data = Warehouse::whereIn('department_id', $dataSearch)
+            ->orderBy('id', 'desc')
+            ->paginate(10);
+        // dd($data);
+        return View::make('admin.storage-loss.index')->with(compact('data'));
+    }
+    public function cancelSearch()
+    {
+        return Redirect::action('StorageLossController@index');
+    }
+
 }

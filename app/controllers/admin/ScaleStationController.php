@@ -347,9 +347,15 @@ class ScaleStationController extends BaseCategoryController {
 
     public function getDetail($numberTicket)
     {
-        $listData = Session::get('statistic');
-        $data = $listData[$numberTicket];
-        return View::make('admin.scale-station.detail')->with(compact('data'));
+        // $listData = Session::get('statistic');
+        // $data = $listData[$numberTicket];
+        $data = ScaleKCS::where('number_ticket', $numberTicket)
+            ->where('second_scale_weight', '>', 0)
+            ->first();
+        $kcs = ScaleKCS::where('number_ticket', $numberTicket)
+            ->where('type', 'KCS')
+            ->first();
+        return View::make('admin.scale-station.detail')->with(compact('data', 'kcs'));
     }
 
     public function getPercent($warehouseId)

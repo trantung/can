@@ -10,6 +10,12 @@
 <div class="row">
     <table class="table table-striped table-bordered table-advance table-hover">
         <tbody>
+            <tr>
+                <td colspan="2" class="text-center">
+                    <H1><a href="javascript:;">Cân</a></H1>
+                </td>
+                
+            </tr>
             @if ($data->number_ticket != '')
                 <tr>
                     <td>
@@ -217,120 +223,115 @@
             @if ($data->code != '')
                 <tr>
                     <td>
-                        <a href="javascript:;"> Mã </a>
+                        <a href="javascript:;"> Mã trạm cân</a>
                     </td>
                     <td>  
                         {{ $data->code }}
                     </td>
                 </tr>
             @endif
-            @if ($data->type != '')
-                <tr>
-                    <td>
-                        <a href="javascript:;"> Kiểu </a>
-                    </td>
-                    <td>  
-                        {{ $data->type }}
-                    </td>
-                </tr>
-            @endif
-            @if ($data->weight_total != '')
+            <tr>
+                <td colspan="2" class="text-center">
+                    <a href="javascript:;"><H1>Kiểm định</H1></a>
+                </td>
+            </tr>
+            @if ($kcs->weight_total != '')
                 <tr>
                     <td>
                         <a href="javascript:;"> Tổng trọng lượng </a>
                     </td>
                     <td>  
-                        {{ $data->weight_total }}
+                        {{ $kcs->weight_total }}
                     </td>
                 </tr>
             @endif
-            @if ($data->trong_luong_mun != '')
+            @if ($kcs->trong_luong_mun != '')
                 <tr>
                     <td>
                         <a href="javascript:;"> Trọng lượng mùn </a>
                     </td>
                     <td>  
-                        {{ $data->trong_luong_mun }}
+                        {{ $kcs->trong_luong_mun }}
                     </td>
                 </tr>
             @endif
-            @if ($data->trong_luong_qua_co != '')
+            @if ($kcs->trong_luong_qua_co != '')
                 <tr>
                     <td>
                         <a href="javascript:;"> Trọng lượng quá cỡ </a>
                     </td>
                     <td>  
-                        {{ $data->trong_luong_qua_co }}
+                        {{ $kcs->trong_luong_qua_co }}
                     </td>
                 </tr>
             @endif
-            @if ($data->trong_luong_vo != '')
+            @if ($kcs->trong_luong_vo != '')
                 <tr>
                     <td>
                         <a href="javascript:;"> Trọng lượng vỏ </a>
                     </td>
                     <td>  
-                        {{ $data->trong_luong_vo }}
+                        {{ $kcs->trong_luong_vo }}
                     </td>
                 </tr>
             @endif
-            @if ($data->trong_luong_tap_chat != '')
+            @if ($kcs->trong_luong_tap_chat != '')
                 <tr>
                     <td>
                         <a href="javascript:;"> TRọng lượng tạp chất </a>
                     </td>
                     <td>  
-                        {{ $data->trong_luong_tap_chat }}
+                        {{ $kcs->trong_luong_tap_chat }}
                     </td>
                 </tr>
             @endif
-            @if ($data->ty_le_mun != '')
+            @if ($kcs->ty_le_mun != '')
                 <tr>
                     <td>
                         <a href="javascript:;"> Tỷ lệ mùn </a>
                     </td>
                     <td>  
-                        {{ $data->ty_le_mun }}
+                        {{ $kcs->ty_le_mun }}
                     </td>
                 </tr>
             @endif
-            @if ($data->ty_le_qua_co != '')
+            @if ($kcs->ty_le_qua_co != '')
                 <tr>
                     <td>
                         <a href="javascript:;"> Tỷ lệ quá cỡ </a>
                     </td>
                     <td>  
-                        {{ $data->ty_le_qua_co }}
+                        {{ $kcs->ty_le_qua_co }}
                     </td>
                 </tr>
             @endif
-            @if ($data->ty_le_vo != '')
+            @if ($kcs->ty_le_vo != '')
                 <tr>
                     <td>
                         <a href="javascript:;"> Tỷ lệ vỏ </a>
                     </td>
                     <td>  
-                        {{ $data->ty_le_vo }}
+                        {{ $kcs->ty_le_vo }}
                     </td>
                 </tr>
             @endif
-            @if ($data->ty_le_tap_chat != '')
+            @if ($kcs->ty_le_tap_chat != '')
                 <tr>
                     <td>
                         <a href="javascript:;"> Tỷ lệ tạp chất </a>
                     </td>
                     <td>  
-                        {{ $data->ty_le_tap_chat }}
+                        {{ $kcs->ty_le_tap_chat }}
                     </td>
                 </tr>
             @endif
-            @if ($data->do_kho != '')
+            @if ($kcs->do_kho != '')
                 <tr>
                     <td>
                         <a href="javascript:;"> Độ khô </a>
                     </td>
                     <td>  
-                        {{ $data->do_kho }}
+                        {{ $kcs->do_kho }}
                     </td>
                 </tr>
             @endif
