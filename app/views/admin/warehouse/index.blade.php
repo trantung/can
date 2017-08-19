@@ -5,7 +5,7 @@
 @stop
 
 @section('content')
-
+@include('admin.warehouse.search')
     <div class="row margin-bottom">
         <div class="col-xs-12">
             <a href="{{ action('WarehouseController@create') }}" class="btn btn-primary">Thêm mới kho</a>
@@ -45,7 +45,7 @@
                    <td>{{ $nameLevel }}</td>
                   <td>
                     <a href="{{ action('WarehouseController@getStatistic', $value->id) }}" class="btn btn-primary">Thống kê</a>
-                    <a href="{{ action('WarehouseController@getReset', $value->id) }}" class="btn btn-primary">Reset</a>
+                    <!-- <a href="{{ action('WarehouseController@getReset', $value->id) }}" class="btn btn-primary">Reset</a> -->
                     <!-- <a href="{{ action('ScaleStationController@getPercent', $value->id) }}" class="btn btn-primary">Phần trăm</a> -->
                     <a href="{{ action('WarehouseController@edit', $value->id) }}" class="btn btn-primary">Sửa</a>
                     {{ Form::open(array('method'=>'DELETE', 'action' => array('WarehouseController@destroy', $value->id), 'style' => 'display: inline-block;')) }}

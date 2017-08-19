@@ -227,4 +227,24 @@ class WarehouseController extends BaseCategoryController {
         $percent->update($inputPercent);
         return Redirect::action('WarehouseController@getStatistic', $data->warehouse_id);
     }
+
+    public function search()
+    {
+        $input = Input::all();
+        // dd($input);
+        $departmentId = $input['department_id'];
+        $deparment = Company::find($departmentId);
+        $dataSearch = getChild($deparment);
+        // dd($dataSearch);
+        // $data = $this->model->orderBy('id', 'asc')->with('department')->paginate(10);
+        $data = Warehouse::whereIn('department_id', $dataSearch)
+            ->orderBy('id', 'desc')
+            ->paginate(10);
+        return View::make('admin.warehouse.index')->with(compact('data'));
+    }
+    public function getCancelSearch()
+    {
+        return Redirect::action('WarehouseController@index');
+    }
+
 }

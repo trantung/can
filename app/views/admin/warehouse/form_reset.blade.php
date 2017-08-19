@@ -3,6 +3,11 @@
 @stop
 @section('content')
 @include('admin.common.structure_company_css')
+<div class="row margin-bottom">
+  <div class="col-xs-12">
+    <a href="{{ action('WarehouseController@getStatistic', $data->warehouse_id) }}" class="btn btn-success">Chi tiết kho</a>
+  </div>
+</div>
 <div class="row">
     <div class="col-xs-12">
         <div class="box box-primary">

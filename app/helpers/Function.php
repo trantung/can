@@ -599,4 +599,20 @@ function getStaticPercentWarehouse($storage, $field)
 	return $warehouse->$field;
 }
 
+function getChild($company)
+{
+	// dd($company);
+	$array = [$company->id];
+	$company = Company::where('parent_id', $company->id)->get();
+    foreach ($company as $key => $value)
+    {
+        $array = array_merge($array, [$value->id]);
+        if (count(Company::where('parent_id', $value->id)->get()) > 0)
+        {
+            $array = array_merge($array, getChild($value));
+        }
+    }
+    return $array;
+}
+
 

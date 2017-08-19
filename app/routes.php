@@ -11,6 +11,8 @@
 |
 */
 Route::get('/', function(){
+    $company = Company::find(33);
+    dd(getChild($company));
     dd(Admin::isHr());
     // Admin::whereNull('permission_id')->update(['permission_id' =>1]);
     $string = 'abcd';
@@ -153,6 +155,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('/manage-partner', 'ManagePartnerController');
     Route::resource('/config-partner', 'ConfigPartnerController');
     Route::resource('/product-manage', 'ProductManagerController');
+    Route::get('/warehouse/search', 'WarehouseController@search');
     Route::resource('/warehouse', 'WarehouseController', array('except' => array('show')));
     Route::controller('/warehouse', 'WarehouseController');
     Route::resource('/production-auto', 'ProductionAutoController', array('except' => array('show')));

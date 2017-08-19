@@ -5,11 +5,10 @@
 @stop
 
 @section('content')
-
     <div class="row margin-bottom">
-        <div class="col-xs-12">
-            <a href="{{ action('WarehouseController@create') }}" class="btn btn-primary">Thêm mới kho</a>
-        </div>
+      <div class="col-xs-12">
+        <a href="{{ action('WarehouseController@index') }}" class="btn btn-success">Danh sách kho</a>
+      </div>
     </div>
 
     <div class="row">
