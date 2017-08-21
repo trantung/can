@@ -23,7 +23,7 @@
     <a href="{{ action('WarehouseController@getCancelSearch') }}" class="btn btn-primary">Huỷ search</a>
 
 </div>
-<script type="text/javascript" src="../assets/js/combotree/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="{{ url('/assets/js/combotree/jquery.easyui.min.js') }}"></script>
 <script type="text/javascript">
     $(document).ready(function(){
         $('#clear-search').click(function(){
