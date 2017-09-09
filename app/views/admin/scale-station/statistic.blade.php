@@ -23,59 +23,35 @@
               <table class="table table-hover">
                 <tr>
                   <th>STT</th>
-                  <th>Số phiếu</th>
-                  <th>Khách hàng</th>
-                  <th>Tên hàng</th>
+                  <th>Mã chiến dịch</th>
+                  <th>Tên chiến dịch</th>
+                  <th>Nhóm Khách hàng</th>
+                  <th>Khách </th>
+                  <th>Nhóm partner</th>
+                  <th>Partner</th>
                   <th>Kho</th>
                   <th>Chi nhánh</th>
-                  <th>Ngày cân</th>
-                  <th>KL tổng(kg)</th>
-                  <th>KL xe(kg)</th>
                   <th>KL hàng(kg)</th>
-                  <th>KL tạp chất(kg)</th>
-                  <th>Tỷ lệ tạp chất</th>
                   <th>Lượng trừ</th>
+                  <th>Số chuyến</th>
                   <th>Tùy chọn</th>
                 </tr>
                 <?php $index = 1; ?>
                 @foreach($data as $key => $value)
                 <tr>
                   <td>{{ $index }}</td>
-                  <td>{{ $value->number_ticket }}</td>
+                  <td>{{ $value->campaign_code }}</td>
+                  <td>{{ $value->campaign_name }}</td>
+                  <td>{{ getCustomerGroup() }}</td>
                   <td>{{ $value->customer_name }}</td>
-                  <td>
-                  <?php $modelName = CommonNormal::getNameProduct($value->category_id);
-                  $product = $modelName::find(CommonNormal::getProductCategoryId($value->category_id)[0]);
-                  ?>
-                  @if ($value->category_id != '' && $product )
-                    {{ $product->name }}
-                  @endif
-                  </td>
-                  
-                  <td>
-                  @if ($warehouse = Warehouse::find($value->warehouse_id))
-                    {{ $warehouse->name }}
-                  @endif
-                  </td>
-                  <td>
-                  @if ($department = Company::find($value->department_id))
-                    {{ $department->name }}
-                  @endif
-                  </td>
-                  <td>{{ $value->scale_at }}</td>
-                  <td>{{ $value->first_scale_weight }}</td>
-                  <td>{{ $value->second_scale_weight }}</td>
-                  <td>{{ $value->package_weight }}</td>
-                  <td>{{ $value->trong_luong_tap_chat }}</td>
-                  <td>{{ $value->ty_le_tap_chat }}</td>
-                  <td>
-                  @if ($luongTru = LuongTruCan::where('ma_phieu_can', $value->number_ticket)->first())
-                    {{ $luongTru->luongtru }}
-                  @endif
-                  </td>
-                  <td>
-                    <a href="{{ action('ScaleStationController@getDetail', $value->number_ticket) }}" class="btn btn-primary">Xem</a>
-                  </td>
+                  <td>{{ getPartnerGroup() }}</td>
+                  <td>{{ $value->doi_tac_ten }}</td>
+                  <td>{{ getNameWarehouse($value->warehouse_id) }}</td>
+                  <td>{{ getNameCompany($value->department_id) }}</td>
+                  <td>{{ getWeightTotalCampagin($value->campaign_code) }}</td>
+                  <td>{{ getLuongTruCampaign($value->campaign_code) }}</td>
+                  <td>{{ getSochuyen($value->campaign_code) }}</td>
+                  <td>Tuỳ chọn</td>
                 </tr>
                 <?php $index++; ?>
                 @endforeach

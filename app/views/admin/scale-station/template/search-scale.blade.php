@@ -5,7 +5,7 @@
     {{ Form::open(array('action' => array('ScaleStationController@getStatistic', $type), 'method' => 'GET', 'id'=>'searchForm')) }}
     {{-- haind --}}
     <div class="row">
-        <div class="col-md-4">
+        <!-- <div class="col-md-4">
             <div class="row">
                 <div class="col-md-3">
                     <label>Số phiếu</label>
@@ -14,7 +14,20 @@
                     <input type="text" name="number_ticket" class="form-control" placeholder="Search"/>
                 </div>
             </div>
+        </div> -->
+        @if ($type == 'campaign')
+
+        <div class="col-md-4">
+            <div class="row">
+                <div class="col-md-3">
+                    <label>Mã chiến dịch</label>
+                </div>
+                <div class="col-md-9">
+                    <input type="text" name="campaign_code" class="form-control" placeholder="Search"/>
+                </div>
+            </div>
         </div>
+        @endif
         <div class="col-md-4">
             <div class="row">
                 <div class="col-md-3">
@@ -25,16 +38,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="row">
-                <div class="col-md-3">
-                    <label>Từ ngày</label>
-                </div>
-                <div class="col-md-9">
-                    <input class="form-control input-sm" type="text" name="from_date" id="datepicker6" value="{{ Input::old('from_date') }}">
-                </div>
-            </div>
-        </div>
+    
     </div>
     <div class="row" style="padding-top: 20px">
         <div class="col-md-4">
@@ -60,10 +64,10 @@
         <div class="col-md-4">
             <div class="row">
                 <div class="col-md-3">
-                    <label>Đến ngày</label>
+                    <label>Từ ngày</label>
                 </div>
                 <div class="col-md-9">
-                    <input class="form-control input-sm" type="text" name="to_date" id="datepicker5">
+                    <input class="form-control input-sm" type="text" name="from_date" id="datepicker5" value="{{ Input::old('from_date') }}">
                 </div>
             </div>
         </div>
@@ -71,24 +75,23 @@
     <div class="row" style="padding-top: 20px">
         
 
-        @if ($type == 'campaign')
-            <div class="col-md-4">
-                <div class="row">
-                    <div class="col-md-3">
-                        <label>Mã chiến dịch</label>
-                    </div>
-                    <div class="col-md-9">
-                        <input type="text" name="campaign_code" class="form-control" placeholder="Search"/>
-                    </div>
+        <div class="col-md-4">
+            <div class="row">
+                <div class="col-md-3">
+                    <label>Đến ngày</label>
+                </div>
+                <div class="col-md-9">
+                    <input class="form-control input-sm" type="text" name="to_date" id="datepicker6" value="{{ Input::old('to_date') }}">
                 </div>
             </div>
-        @endif
+        </div>
     </div>
     {{-- end --}}
     <div class="row" style="padding-top: 20px">
         <div class="col-md-12" style=" text-align: center;">
             <div class="form-group">
-            <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>  Tìm kiếm</button>
+                <a href="{{ action('/admin/scale-station/statistic/campaign') }}"><button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>Huỷ tìm kiếm</button></a>
+                <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>Tìm kiếm</button>
             </div>
         </div>
     </div>

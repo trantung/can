@@ -601,7 +601,6 @@ function getStaticPercentWarehouse($storage, $field)
 
 function getChild($company)
 {
-	// dd($company);
 	$array = [$company->id];
 	$company = Company::where('parent_id', $company->id)->get();
     foreach ($company as $key => $value)
@@ -614,5 +613,35 @@ function getChild($company)
     }
     return $array;
 }
-
-
+function getCustomerGroup()
+{
+	return 'nhom khach hang';
+}
+function getPartnerGroup()
+{
+	return 'nhom partner';
+}
+function getNameCompany($companyId)
+{
+	$company = Company::find($companyId);
+	if ($company) {
+		return $company->name;
+	}
+	return 'Không có công ty';
+}
+function getWeightTotalCampagin($campaignCode)
+{
+	$weight = ScaleKCS::where('campaign_code', $campaignCode)->sum('package_weight');
+	return $weight;
+}
+function getLuongTruCampaign($campaignCode)
+{
+	$luongtru = LuongTruCan::where('ma_cd', $campaignCode)->avg('luongtru');
+    return $luongtru;
+}
+function getSochuyen($campaignCode)
+{
+	$sochuyen = ScaleKCS::where('campaign_code', $campaignCode)->lists('number_ticket');
+	$sochuyen = count($sochuyen);
+    return $sochuyen;
+}

@@ -183,57 +183,76 @@ class ScaleStationController extends BaseCategoryController {
     public function getStatistic($type = null)
     {
         $input = Input::except('page');
-        $model = new ScaleKCS();
-        if (isset($input['from_date']) && $input['from_date'] != '') {
-            $start = $input['from_date'];
-            $model = $model->where('scale_at', '>=', $start);
+        // dd($input);
+        
+        if (isset($input['campaign_code']) 
+            && isset($input['transfer_type']) 
+            && isset($input['warehouse_id'])
+            && isset($input['department_id'])
+            && isset($input['from_date'])
+            && isset($input['to_date'])) 
+        {
+            $data = $this->search($input);
+            return View::make('admin.scale-station.statistic')->with(compact('data', 'type'));
+            
         }
-        if (isset($input['to_date']) && $input['to_date'] != '') {
-            $end = $input['to_date'];
-            $model = $model->where('scale_at', '<=', $end);
-        }
+        // $model = new ScaleKCS();
+        // if (isset($input['from_date']) && $input['from_date'] != '') {
+        //     $start = $input['from_date'];
+        //     $model = $model->where('scale_at', '>=', $start);
+        // }
+        // if (isset($input['to_date']) && $input['to_date'] != '') {
+        //     $end = $input['to_date'];
+        //     $model = $model->where('scale_at', '<=', $end);
+        // }
         // if (isset($input['type_scale']) && $input['type_scale'] == '1') {
         //     $model = $model->where('campaign_code', '');
         // } else {
         //     $model = $model->where('campaign_code', '!=', '');
         // }
-        $input = self::processData($input);
-        if (count($input) > 0) {
-            $model = $model->where($input);
-        }
+        // $input = self::processData($input);
+        // if (count($input) > 0) {
+        //     $model = $model->where($input);
+        // }
         if ($type == 'campaign') {
-            $model = $model->whereNotNull('campaign_code');
+            //get all campaign
+            $data = ScaleKCS::where('campaign_code', '!=', '')->get(['campaign_code',
+                'campaign_name', 'warehouse_id',
+                'customer_name', 'department_id',
+            ]);
+            return View::make('admin.scale-station.statistic')->with(compact('data', 'type'));
+            // $model = $model->whereNotNull('campaign_code');
         } else {
             $model = $model->whereNull('campaign_code');
         }
-        $dataScale = $model->whereNull('type')->where('package_weight', '>', 0)->distinct('number_ticket')->get();
-        $dataKcs = ScaleKCS::where('type', 'KCS')->distinct('number_ticket')->get();
-        $arrScale = [];
-        $arrKcs = [];
-        $data = [];
-        foreach ($dataScale as $key => $value) {
-            $arrScale[$value['number_ticket']] = $value;
-        }
-        foreach ($dataKcs as $key => $value) {
-            $arrKcs[$value['number_ticket']] = $value;
-        }
-        foreach ($arrScale as $key => $value) {
-            $data[$key] = new stdClass();
-            $data[$key] = $value;
-            if (isset($arrKcs[$key])) {
-                $data[$key]->weight_total = ($value->weight_total == null) ? $value->weight_total = $arrKcs[$key]->weight_total : '';
-                $data[$key]->trong_luong_mun = ($value->trong_luong_mun == null) ? $value->trong_luong_mun = $arrKcs[$key]->trong_luong_mun : '';
-                $data[$key]->trong_luong_qua_co = ($value->trong_luong_qua_co == null) ? $value->trong_luong_qua_co = $arrKcs[$key]->trong_luong_qua_co : '';
-                $data[$key]->trong_luong_vo = ($value->trong_luong_vo == null) ? $value->trong_luong_vo = $arrKcs[$key]->trong_luong_vo : '';
-                $data[$key]->trong_luong_tap_chat = ($value->trong_luong_tap_chat == null) ? $value->trong_luong_tap_chat = $arrKcs[$key]->trong_luong_tap_chat : '';
-                $data[$key]->ty_le_mun = ($value->ty_le_mun == null) ? $value->ty_le_mun = $arrKcs[$key]->ty_le_mun : '';
-                $data[$key]->ty_le_qua_co = ($value->ty_le_qua_co == null) ? $value->ty_le_qua_co = $arrKcs[$key]->ty_le_qua_co : '';
-                $data[$key]->ty_le_vo = ($value->ty_le_vo == null) ? $value->ty_le_vo = $arrKcs[$key]->ty_le_vo : '';
-                $data[$key]->ty_le_tap_chat = ($value->ty_le_tap_chat == null) ? $value->ty_le_tap_chat = $arrKcs[$key]->ty_le_tap_chat : '';
-                $data[$key]->do_kho = ($value->do_kho == null) ? $value->do_kho = $arrKcs[$key]->do_kho : '';
-            }
-        }
-        Session::put('statistic', $data);
+        // $dataScale = $model->whereNull('type')->where('package_weight', '>', 0)->distinct('number_ticket')->get();
+        // $dataKcs = ScaleKCS::where('type', 'KCS')->distinct('number_ticket')->get();
+        // $arrScale = [];
+        // $arrKcs = [];
+        // $data = [];
+        // foreach ($dataScale as $key => $value) {
+        //     $arrScale[$value['number_ticket']] = $value;
+        // }
+        // foreach ($dataKcs as $key => $value) {
+        //     $arrKcs[$value['number_ticket']] = $value;
+        // }
+        // foreach ($arrScale as $key => $value) {
+        //     $data[$key] = new stdClass();
+        //     $data[$key] = $value;
+        //     if (isset($arrKcs[$key])) {
+        //         $data[$key]->weight_total = ($value->weight_total == null) ? $value->weight_total = $arrKcs[$key]->weight_total : '';
+        //         $data[$key]->trong_luong_mun = ($value->trong_luong_mun == null) ? $value->trong_luong_mun = $arrKcs[$key]->trong_luong_mun : '';
+        //         $data[$key]->trong_luong_qua_co = ($value->trong_luong_qua_co == null) ? $value->trong_luong_qua_co = $arrKcs[$key]->trong_luong_qua_co : '';
+        //         $data[$key]->trong_luong_vo = ($value->trong_luong_vo == null) ? $value->trong_luong_vo = $arrKcs[$key]->trong_luong_vo : '';
+        //         $data[$key]->trong_luong_tap_chat = ($value->trong_luong_tap_chat == null) ? $value->trong_luong_tap_chat = $arrKcs[$key]->trong_luong_tap_chat : '';
+        //         $data[$key]->ty_le_mun = ($value->ty_le_mun == null) ? $value->ty_le_mun = $arrKcs[$key]->ty_le_mun : '';
+        //         $data[$key]->ty_le_qua_co = ($value->ty_le_qua_co == null) ? $value->ty_le_qua_co = $arrKcs[$key]->ty_le_qua_co : '';
+        //         $data[$key]->ty_le_vo = ($value->ty_le_vo == null) ? $value->ty_le_vo = $arrKcs[$key]->ty_le_vo : '';
+        //         $data[$key]->ty_le_tap_chat = ($value->ty_le_tap_chat == null) ? $value->ty_le_tap_chat = $arrKcs[$key]->ty_le_tap_chat : '';
+        //         $data[$key]->do_kho = ($value->do_kho == null) ? $value->do_kho = $arrKcs[$key]->do_kho : '';
+        //     }
+        // }
+        // Session::put('statistic', $data);
         return View::make('admin.scale-station.statistic')->with(compact('data', 'type'));
     }
 
@@ -368,4 +387,38 @@ class ScaleStationController extends BaseCategoryController {
         $data->item = $model::find($data->model_id);
         return View::make('admin.scale-station.percent')->with(compact('data'));
     }
+    public function search($input)
+    {
+        if (isset($input['campaign_code']) 
+            && isset($input['transfer_type']) 
+            && isset($input['warehouse_id'])
+            && isset($input['department_id'])
+            && isset($input['from_date'])
+            && isset($input['to_date'])) 
+        {
+            $data = ScaleKCS::where('campaign_code', '!=', '')
+                ->where(function ($query) use ($input) {
+                if($input['campaign_code']) {
+                    $query = $query->where('campaign_code', 'like', '%'.$input['campaign_code'].'%');;
+                }
+                if($input['transfer_type']) {
+                    $query = $query->where('transfer_type', $input['transfer_type']);
+                }
+                if($input['warehouse_id']) {
+                    $query = $query->where('warehouse_id', $input['warehouse_id']);;
+                }
+                if($input['department_id']) {
+                    $query = $query->where('department_id',  $input['department_id']);;
+                }
+                if($input['from_date']) {
+                    $query = $query->where('created_at', '>=', $input['from_date']);
+                }
+                if($input['to_date']) {
+                    $query = $query->where('created_at', '<=', $input['to_date']);
+                }
+            })->get();
+            return $data;
+        }
+        return null;
+    }   
 }
