@@ -216,7 +216,9 @@ class ScaleStationController extends BaseCategoryController {
         // }
         if ($type == 'campaign') {
             //get all campaign
-            $data = ScaleKCS::where('campaign_code', '!=', '')->get(['campaign_code',
+            $data = ScaleKCS::where('campaign_code', '!=', '')
+                ->distinct('campaign_code')
+                ->get(['campaign_code',
                 'campaign_name', 'warehouse_id',
                 'customer_name', 'department_id',
             ]);
