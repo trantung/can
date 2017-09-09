@@ -77,7 +77,6 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('/storage-loss', 'StorageLossController');
 
     Route::resource('/overload-ratio', 'OverloadRatioController');
-    Route::resource('/scale-station', 'ScaleStationController', array('except' => array('show')));
     Route::controller('/scale-station', 'ScaleStationController');
     Route::resource('/customer-group', 'CustomerGroupController');
     Route::resource('/partner-group', 'PartnerGroupController');
