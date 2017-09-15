@@ -19,6 +19,10 @@ Route::get('/', function(){
     dd($string[0]);
     dd(substr('abcdef', 1));
 } );
+Route::post('/testshipchung', function(){
+    $input = Input::all();
+    dd($input);
+});
 Route::get('/fixdatabase', function(){
     CustomerShip::whereNull('customer_id')->delete();
     CustomerShip::whereNull('customer_name')->delete();
