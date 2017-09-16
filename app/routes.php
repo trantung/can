@@ -21,7 +21,10 @@ Route::get('/', function(){
 } );
 Route::post('/testshipchung', function(){
     $input = Input::all();
-    dd($input);
+    // dd($input);
+    DB::table('shipchung')->insert([
+        'log' => Input::get('TrackingCode')
+    ]);
 });
 Route::get('/fixdatabase', function(){
     CustomerShip::whereNull('customer_id')->delete();
