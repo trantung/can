@@ -22,6 +22,7 @@ Route::get('/', function(){
 Route::post('/testshipchung', function(){
     $input = Input::all();
     // dd($input);
+    $input = json_encode($input);
     DB::table('shipchung')->insert([
         'log' => $input 
     ]);
