@@ -23,7 +23,7 @@ Route::post('/testshipchung', function(){
     $input = Input::all();
     // dd($input);
     DB::table('shipchung')->insert([
-        'log' => Input::get('TrackingCode')
+        'log' => $input 
     ]);
 });
 Route::get('/fixdatabase', function(){
