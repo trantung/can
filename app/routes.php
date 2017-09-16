@@ -24,12 +24,12 @@ Route::post('/testshipchung', function(){
     // dd($input);
     // {"TrackingCode":"SC596073702",
     // "StatusId":"16","StatusName":"\u0110\u00e3 l\u1ea5y h\u00e0ng","TimeStamp":1505576172610}
-    $input = json_encode($input);
+    $inputAll = json_encode($input);
     $ship['tracking_code'] = $input->TrackingCode;
     $ship['status_id'] = $input->StatusId;
     $ship['status_name'] = $input->StatusName;
     $ship['time'] = $input->TimeStamp;
-    $ship['log'] = $input;
+    $ship['log'] = $inputAll;
     DB::table('shipchung')->insert($ship);
 });
 Route::get('/fixdatabase', function(){
