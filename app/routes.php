@@ -22,10 +22,15 @@ Route::get('/', function(){
 Route::post('/testshipchung', function(){
     $input = Input::all();
     // dd($input);
+    // {"TrackingCode":"SC596073702",
+    // "StatusId":"16","StatusName":"\u0110\u00e3 l\u1ea5y h\u00e0ng","TimeStamp":1505576172610}
     $input = json_encode($input);
-    DB::table('shipchung')->insert([
-        'log' => $input 
-    ]);
+    $ship['tracking_code'] = $input->TrackingCode;
+    $ship['status_id'] = $input->StatusId;
+    $ship['status_name'] = $input->StatusName;
+    $ship['time'] = $input->TimeStamp;
+    $ship['log'] = $input;
+    DB::table('shipchung')->insert($ship);
 });
 Route::get('/fixdatabase', function(){
     CustomerShip::whereNull('customer_id')->delete();
