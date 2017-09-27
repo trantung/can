@@ -273,7 +273,7 @@ class CommonNormal
 				}
 			}
 			//kieu 5  = chuyen tiep kho noi bo, 6 = chuyen tiep kho ngoai, 7 = can ho
-			//do...
+			//TODO
 			return true;
 		} else {
 			$weight = $input['kl_hang'];

@@ -45,4 +45,15 @@ class Common {
 		}
 		return null;
 	}
+	public static function getCustomerGroup()
+	{
+		$group = CustomerGroup::lists('name', 'id');
+		return $group;
+	}
+	public static function getCustomerList()
+	{
+		$customerList = CustomerShip::lists('customer_name', 'id');
+		return $customerList;
+	}
+
 }

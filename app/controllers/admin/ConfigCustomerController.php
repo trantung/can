@@ -43,7 +43,8 @@ class ConfigCustomerController extends AdminController {
     {
         // dd(11);
         // $listUser = CustomerGroup::all();
-        $data = CustomerShip::all();
+        $data = CustomerShip::distinct('customer_id')->get();
+        // dd(11);
         // $data = [];
         // foreach ($listUser as $key => $value) {
         //     $data[$key] = new stdClass();

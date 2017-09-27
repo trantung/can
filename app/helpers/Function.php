@@ -613,9 +613,20 @@ function getChild($company)
     }
     return $array;
 }
-function getCustomerGroup()
+function getCustomerGroup($input)
 {
-	return 'nhom khach hang';
+	$customerId = $input->customer_id;
+	$customerShip = CustomerShip::where('customer_id', $customerId)->first();
+	if (!$customerShip) {
+		return $input->customer_id;
+	}
+	$customerGroup = CustomerManage::where('customer_id',$customerShip->id)->first();
+	if (!$customerGroup) {
+		return 'chưa có nhom khach hang';
+	}
+	$ob = CustomerGroup::find($customerGroup->customer_group_id);
+	$name = $ob->name;
+	return $name;
 }
 function getPartnerGroup()
 {

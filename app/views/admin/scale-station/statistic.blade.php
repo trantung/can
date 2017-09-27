@@ -42,7 +42,7 @@
                   <td>{{ $index }}</td>
                   <td>{{ $value->campaign_code }}</td>
                   <td>{{ $value->campaign_name }}</td>
-                  <td>{{ getCustomerGroup() }}</td>
+                  <td>{{ getCustomerGroup($value) }}</td>
                   <td>{{ $value->customer_name }}</td>
                   <td>{{ getPartnerGroup() }}</td>
                   <td>{{ $value->doi_tac_ten }}</td>

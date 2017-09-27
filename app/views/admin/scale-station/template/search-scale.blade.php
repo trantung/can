@@ -73,8 +73,6 @@
         </div>
     </div>
     <div class="row" style="padding-top: 20px">
-        
-
         <div class="col-md-4">
             <div class="row">
                 <div class="col-md-3">
@@ -82,6 +80,30 @@
                 </div>
                 <div class="col-md-9">
                     <input class="form-control input-sm" type="text" name="to_date" id="datepicker6" value="{{ Input::old('to_date') }}">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="padding-top: 20px">
+        <div class="col-md-4">
+            <div class="row">
+                <div class="col-md-3">
+                    <label>Nhóm khách hàng</label>
+                </div>
+                <div class="col-md-9">
+                    {{ Form::select('customer_group_id', ['' => 'Chọn']+Common::getCustomerGroup(), array('class' => 'form-control')) }} 
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="padding-top: 20px">
+        <div class="col-md-4">
+            <div class="row">
+                <div class="col-md-3">
+                    <label>Khách hàng</label>
+                </div>
+                <div class="col-md-9">
+                    {{ Form::select('customer_id', ['' => 'Chọn']+Common::getCustomerList(), array('class' => 'form-control')) }} 
                 </div>
             </div>
         </div>

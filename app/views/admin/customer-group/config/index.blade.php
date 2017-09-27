@@ -25,7 +25,7 @@
                 </tr>
                 @foreach($data as $key => $value)
                 <tr>
-                  <td>{{ $key+1 }}</td>
+                  <td>{{ $value->id }}</td>
                   <td>{{ getDepartmentByScale($value->scale_code) }}</td>
                   <td>{{ $value->scale_code }}</td>
                   <td>{{ $value->customer_name }}</td>

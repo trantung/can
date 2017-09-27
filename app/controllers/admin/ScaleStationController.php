@@ -184,18 +184,23 @@ class ScaleStationController extends BaseCategoryController {
     {
         $input = Input::except('page');
         // dd($input);
-        
-        if (isset($input['campaign_code']) 
+        if (
+            isset($input['campaign_code']) 
             && isset($input['transfer_type']) 
             && isset($input['warehouse_id'])
             && isset($input['department_id'])
             && isset($input['from_date'])
-            && isset($input['to_date'])) 
+            && isset($input['to_date'])
+            // && isset($input['customer_id'])
+            // && isset($input['customer_group_id'])
+            ) 
         {
+            // dd(111);
             $data = $this->search($input);
             return View::make('admin.scale-station.statistic')->with(compact('data', 'type'));
             
         }
+        // dd($input);
         // $model = new ScaleKCS();
         // if (isset($input['from_date']) && $input['from_date'] != '') {
         //     $start = $input['from_date'];
@@ -217,15 +222,13 @@ class ScaleStationController extends BaseCategoryController {
         if ($type == 'campaign') {
             //get all campaign
             $data = ScaleKCS::where('campaign_code', '!=', '')
-                ->distinct('campaign_code')
-                ->get(['campaign_code',
-                'campaign_name', 'warehouse_id',
-                'customer_name', 'department_id',
-            ]);
+                ->groupBy('campaign_code')
+                ->get();
             return View::make('admin.scale-station.statistic')->with(compact('data', 'type'));
             // $model = $model->whereNotNull('campaign_code');
         } else {
-            $model = $model->whereNull('campaign_code');
+            // dd($model);
+            $data = ScaleKCS::whereNull('campaign_code')->get();
         }
         // $dataScale = $model->whereNull('type')->where('package_weight', '>', 0)->distinct('number_ticket')->get();
         // $dataKcs = ScaleKCS::where('type', 'KCS')->distinct('number_ticket')->get();
@@ -396,29 +399,46 @@ class ScaleStationController extends BaseCategoryController {
             && isset($input['warehouse_id'])
             && isset($input['department_id'])
             && isset($input['from_date'])
-            && isset($input['to_date'])) 
+            && isset($input['to_date'])
+            && isset($input['customer_id'])
+            && isset($input['customer_group_id'])
+            ) 
         {
             $data = ScaleKCS::where('campaign_code', '!=', '')
                 ->where(function ($query) use ($input) {
+                if($input['customer_group_id']) {
+                    $customerShipListId = CustomerManage::where('customer_group_id', $input['customer_group_id'])
+                        ->lists('customer_id');
+                    $customerListId = CustomerShip::whereIn('id', $customerShipListId)
+                        ->lists('customer_id');
+                    // dd($customerListId);
+                    $query = $query->whereIn('customer_id', $customerListId);
+                }
+
                 if($input['campaign_code']) {
-                    $query = $query->where('campaign_code', 'like', '%'.$input['campaign_code'].'%');;
+                    $query = $query->where('campaign_code', 'like', '%'.$input['campaign_code'].'%');
                 }
                 if($input['transfer_type']) {
                     $query = $query->where('transfer_type', $input['transfer_type']);
                 }
                 if($input['warehouse_id']) {
-                    $query = $query->where('warehouse_id', $input['warehouse_id']);;
+                    $query = $query->where('warehouse_id', $input['warehouse_id']);
                 }
                 if($input['department_id']) {
-                    $query = $query->where('department_id',  $input['department_id']);;
+                    $query = $query->where('department_id',  $input['department_id']);
                 }
+                if($input['customer_id']) {
+                    $query = $query->where('customer_id',  $input['customer_id']);;
+                }
+
                 if($input['from_date']) {
                     $query = $query->where('created_at', '>=', $input['from_date']);
                 }
                 if($input['to_date']) {
                     $query = $query->where('created_at', '<=', $input['to_date']);
                 }
-            })->get();
+            })->groupBy('campaign_code')->get();
+            // dd($data);
             return $data;
         }
         return null;
