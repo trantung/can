@@ -638,7 +638,7 @@ function getNameCompany($companyId)
 	if ($company) {
 		return $company->name;
 	}
-	return 'Không có công ty';
+	return 'Không có công ty chi nhánh';
 }
 function getWeightTotalCampagin($campaignCode)
 {

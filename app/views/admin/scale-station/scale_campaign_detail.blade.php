@@ -44,7 +44,7 @@
                   <td>{{ $value->doi_tac_ten }}</td>
                   <td>{{ getNameWarehouse($value->warehouse_id) }}</td>
                   <td>{{ getNameCompany($value->department_id) }}</td>
-                  <td>{{ getWeightTotalCampagin($value->campaign_code) }}</td>
+                  <td>{{ getWeightTotalCampagin($value->package_weight) }}</td>
                   <td>{{ getLuongTruCan($value->number_ticket) }}</td>
                   <td>
                     Xem chi tiet
