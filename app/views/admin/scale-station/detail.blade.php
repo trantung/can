@@ -235,105 +235,113 @@
                     <a href="javascript:;"><H1>Kiểm định</H1></a>
                 </td>
             </tr>
-            @if ($kcs->weight_total != '')
-                <tr>
-                    <td>
-                        <a href="javascript:;"> Tổng trọng lượng </a>
-                    </td>
-                    <td>  
-                        {{ $kcs->weight_total }}
-                    </td>
-                </tr>
-            @endif
-            @if ($kcs->trong_luong_mun != '')
-                <tr>
-                    <td>
-                        <a href="javascript:;"> Trọng lượng mùn </a>
-                    </td>
-                    <td>  
-                        {{ $kcs->trong_luong_mun }}
-                    </td>
-                </tr>
-            @endif
-            @if ($kcs->trong_luong_qua_co != '')
-                <tr>
-                    <td>
-                        <a href="javascript:;"> Trọng lượng quá cỡ </a>
-                    </td>
-                    <td>  
-                        {{ $kcs->trong_luong_qua_co }}
-                    </td>
-                </tr>
-            @endif
-            @if ($kcs->trong_luong_vo != '')
-                <tr>
-                    <td>
-                        <a href="javascript:;"> Trọng lượng vỏ </a>
-                    </td>
-                    <td>  
-                        {{ $kcs->trong_luong_vo }}
-                    </td>
-                </tr>
-            @endif
-            @if ($kcs->trong_luong_tap_chat != '')
-                <tr>
-                    <td>
-                        <a href="javascript:;"> TRọng lượng tạp chất </a>
-                    </td>
-                    <td>  
-                        {{ $kcs->trong_luong_tap_chat }}
-                    </td>
-                </tr>
-            @endif
-            @if ($kcs->ty_le_mun != '')
-                <tr>
-                    <td>
-                        <a href="javascript:;"> Tỷ lệ mùn </a>
-                    </td>
-                    <td>  
-                        {{ $kcs->ty_le_mun }}
-                    </td>
-                </tr>
-            @endif
-            @if ($kcs->ty_le_qua_co != '')
-                <tr>
-                    <td>
-                        <a href="javascript:;"> Tỷ lệ quá cỡ </a>
-                    </td>
-                    <td>  
-                        {{ $kcs->ty_le_qua_co }}
-                    </td>
-                </tr>
-            @endif
-            @if ($kcs->ty_le_vo != '')
-                <tr>
-                    <td>
-                        <a href="javascript:;"> Tỷ lệ vỏ </a>
-                    </td>
-                    <td>  
-                        {{ $kcs->ty_le_vo }}
-                    </td>
-                </tr>
-            @endif
-            @if ($kcs->ty_le_tap_chat != '')
-                <tr>
-                    <td>
-                        <a href="javascript:;"> Tỷ lệ tạp chất </a>
-                    </td>
-                    <td>  
-                        {{ $kcs->ty_le_tap_chat }}
-                    </td>
-                </tr>
-            @endif
-            @if ($kcs->do_kho != '')
-                <tr>
-                    <td>
-                        <a href="javascript:;"> Độ khô </a>
-                    </td>
-                    <td>  
-                        {{ $kcs->do_kho }}
-                    </td>
-                </tr>
+            @if($kcs)
+                @if ($kcs->weight_total != '')
+                    <tr>
+                        <td>
+                            <a href="javascript:;"> Tổng trọng lượng </a>
+                        </td>
+                        <td>  
+                            {{ $kcs->weight_total }}
+                        </td>
+                    </tr>
+                @endif
+                @if ($kcs->trong_luong_mun != '')
+                    <tr>
+                        <td>
+                            <a href="javascript:;"> Trọng lượng mùn </a>
+                        </td>
+                        <td>  
+                            {{ $kcs->trong_luong_mun }}
+                        </td>
+                    </tr>
+                @endif
+                @if ($kcs->trong_luong_qua_co != '')
+                    <tr>
+                        <td>
+                            <a href="javascript:;"> Trọng lượng quá cỡ </a>
+                        </td>
+                        <td>  
+                            {{ $kcs->trong_luong_qua_co }}
+                        </td>
+                    </tr>
+                @endif
+                @if ($kcs->trong_luong_vo != '')
+                    <tr>
+                        <td>
+                            <a href="javascript:;"> Trọng lượng vỏ </a>
+                        </td>
+                        <td>  
+                            {{ $kcs->trong_luong_vo }}
+                        </td>
+                    </tr>
+                @endif
+                @if ($kcs->trong_luong_tap_chat != '')
+                    <tr>
+                        <td>
+                            <a href="javascript:;"> TRọng lượng tạp chất </a>
+                        </td>
+                        <td>  
+                            {{ $kcs->trong_luong_tap_chat }}
+                        </td>
+                    </tr>
+                @endif
+                @if ($kcs->ty_le_mun != '')
+                    <tr>
+                        <td>
+                            <a href="javascript:;"> Tỷ lệ mùn </a>
+                        </td>
+                        <td>  
+                            {{ $kcs->ty_le_mun }}
+                        </td>
+                    </tr>
+                @endif
+                @if ($kcs->ty_le_qua_co != '')
+                    <tr>
+                        <td>
+                            <a href="javascript:;"> Tỷ lệ quá cỡ </a>
+                        </td>
+                        <td>  
+                            {{ $kcs->ty_le_qua_co }}
+                        </td>
+                    </tr>
+                @endif
+                @if ($kcs->ty_le_vo != '')
+                    <tr>
+                        <td>
+                            <a href="javascript:;"> Tỷ lệ vỏ </a>
+                        </td>
+                        <td>  
+                            {{ $kcs->ty_le_vo }}
+                        </td>
+                    </tr>
+                @endif
+                @if ($kcs->ty_le_tap_chat != '')
+                    <tr>
+                        <td>
+                            <a href="javascript:;"> Tỷ lệ tạp chất </a>
+                        </td>
+                        <td>  
+                            {{ $kcs->ty_le_tap_chat }}
+                        </td>
+                    </tr>
+                @endif
+                @if ($kcs->do_kho != '')
+                    <tr>
+                        <td>
+                            <a href="javascript:;"> Độ khô </a>
+                        </td>
+                        <td>  
+                            {{ $kcs->do_kho }}
+                        </td>
+                    </tr>
+                @endif
+            @else
+            <tr>
+                <td colspan="2" class="text-center">
+                    <a href="javascript:;"><H1>Không có KCS</H1></a>
+                </td>
+            </tr>
             @endif
             
             

@@ -90,7 +90,9 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('/storage-loss', 'StorageLossController');
 
     Route::resource('/overload-ratio', 'OverloadRatioController');
-    Route::post('/scale-station/detail/{id}', array('uses' => 'ScaleStationController@showDetail'));
+    Route::get('/scale-station/export-excel-campaign', array('uses' => 'ScaleStationController@exportExcel'));
+    Route::get('/scale-station/detail/{id}', array('uses' => 'ScaleStationController@showDetail'));
+    Route::get('/scale-station/get-detail/{id}', array('uses' => 'ScaleStationController@getDetail'));
     Route::resource('/scale-station', 'ScaleStationController', array('except' => array('show')));
     Route::controller('/scale-station', 'ScaleStationController');
     Route::resource('/customer-group', 'CustomerGroupController');

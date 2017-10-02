@@ -38,7 +38,6 @@
                 </div>
             </div>
         </div>
-    
     </div>
     <div class="row" style="padding-top: 20px">
         <div class="col-md-4">
@@ -104,6 +103,13 @@
                 </div>
                 <div class="col-md-9">
                     {{ Form::select('customer_id', ['' => 'Chọn']+Common::getCustomerList(), array('class' => 'form-control')) }} 
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="row">
+                <div class="col-md-3">
+                    <a href="{{ action('ScaleStationController@exportExcel') }}" class="btn btn-primary">Xuất excel</a>
                 </div>
             </div>
         </div>

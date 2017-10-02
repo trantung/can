@@ -36,7 +36,7 @@
                 <?php $index = 1; ?>
                 @foreach($listScale as $key => $value)
                 <tr>
-                  <td>{{ $index }}</td>
+                  <td>{{ $value->id }}</td>
                   <td>{{ $value->number_ticket }}</td>
                   <td>{{ getCustomerGroup($value) }}</td>
                   <td>{{ $value->customer_name }}</td>
@@ -44,10 +44,10 @@
                   <td>{{ $value->doi_tac_ten }}</td>
                   <td>{{ getNameWarehouse($value->warehouse_id) }}</td>
                   <td>{{ getNameCompany($value->department_id) }}</td>
-                  <td>{{ getWeightTotalCampagin($value->package_weight) }}</td>
+                  <td>{{ $value->package_weight }}</td>
                   <td>{{ getLuongTruCan($value->number_ticket) }}</td>
                   <td>
-                    Xem chi tiet
+                    <a href="{{ action('ScaleStationController@getDetail', $value->number_ticket) }}" class="btn btn-primary">Xem</a>
                   </td>
                 </tr>
                 <?php $index++; ?>

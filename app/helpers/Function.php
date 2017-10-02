@@ -645,6 +645,10 @@ function getWeightTotalCampagin($campaignCode)
 	$weight = ScaleKCS::where('campaign_code', $campaignCode)->sum('package_weight');
 	return $weight;
 }
+function getWeightCan($input)
+{
+	return $input->package_weight;
+}
 function getLuongTruCampaign($campaignCode)
 {
 	$luongtru = LuongTruCan::where('ma_cd', $campaignCode)->avg('luongtru');
@@ -652,7 +656,7 @@ function getLuongTruCampaign($campaignCode)
 }
 function getLuongTruCan($code)
 {
-	$luongtru = LuongTruCan::where('ma_phieu_can', $code)->first();
+	$luongtru = LuongTruCan::where('ma_phieu_can', $code)->orderby('id', 'desc')->first();
 	if ($luongtru) {
     	return $luongtru->luongtru;
 	}

@@ -258,7 +258,7 @@ class ScaleStationController extends BaseCategoryController {
         //     }
         // }
         // Session::put('statistic', $data);
-        return View::make('admin.scale-station.statistic')->with(compact('data', 'type'));
+        return View::make('admin.scale-station.statistic_odd')->with(compact('data', 'type'));
     }
 
     public function getLogKcs()
@@ -443,10 +443,28 @@ class ScaleStationController extends BaseCategoryController {
         }
         return null;
     }
-    public function showDetail($id)
+    public function showDetail($campaignCode)
     {
-        $data = ScaleKCS::find($id);
-        $listScale = ScaleKCS::where('campaign_code', $data->campaign_code)->get();
+        // $data = ScaleKCS::find($id);
+        // dd($campaignCode);
+        $listScale = ScaleKCS::where('campaign_code', $campaignCode)
+            ->where('package_weight', '>', 0)
+            // ->distinct('number_ticket')
+            ->get();
+            // dd($listScale->toArray());
         return View::make('admin.scale-station.scale_campaign_detail')->with(compact('listScale'));
+    } 
+    public function exportExcel()
+    {
+        dd(11);
+        // $data = ScaleKCS::find($id);
+        // dd($campaignCode);
+        // $listScale = ScaleKCS::where('campaign_code', $campaignCode)
+        //     ->where('package_weight', '>', 0)
+        //     // ->distinct('number_ticket')
+        //     ->get();
+        //     // dd($listScale->toArray());
+        // return View::make('admin.scale-station.scale_campaign_detail')->with(compact('listScale'));
     }   
+
 }

@@ -127,6 +127,8 @@ return array(
 	    'Mcamara\LaravelLocalization\LaravelLocalizationServiceProvider',
         // 'Baum\Providers\BaumServiceProvider',
         'Barryvdh\DomPDF\ServiceProvider',
+        'Maatwebsite\Excel\ExcelServiceProvider',
+
 
 	),
 
@@ -197,6 +199,7 @@ return array(
 		// 'Debugbar' 	      => 'Barryvdh\Debugbar\Facade',
 		'LaravelLocalization'   => 'Mcamara\LaravelLocalization\Facades\LaravelLocalization',
 		'PDF'				=> 'Barryvdh\DomPDF\Facade',
+		'Excel' => 'Maatwebsite\Excel\Facades\Excel',
 	),
 
 );

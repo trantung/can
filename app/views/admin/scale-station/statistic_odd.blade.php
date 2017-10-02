@@ -52,7 +52,7 @@
                   <td>{{ getLuongTruCampaign($value->campaign_code) }}</td>
                   <td>{{ getSochuyen($value->campaign_code) }}</td>
                   <td>
-                    <a href="{{ action('ScaleStationController@showDetail', $value->campaign_code) }}" class="btn btn-primary">Xem</a>
+                    <a href="{{ action('ScaleStationController@getDetail', $value->number_ticket) }}" class="btn btn-primary">Xem</a>
                   </td>
                 </tr>
                 <?php $index++; ?>
