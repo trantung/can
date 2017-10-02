@@ -650,6 +650,15 @@ function getLuongTruCampaign($campaignCode)
 	$luongtru = LuongTruCan::where('ma_cd', $campaignCode)->avg('luongtru');
     return $luongtru;
 }
+function getLuongTruCan($code)
+{
+	$luongtru = LuongTruCan::where('ma_phieu_can', $code)->first();
+	if ($luongtru) {
+    	return $luongtru;
+	}
+	return null;
+}
+
 function getSochuyen($campaignCode)
 {
 	$sochuyen = ScaleKCS::where('campaign_code', $campaignCode)->lists('number_ticket');
