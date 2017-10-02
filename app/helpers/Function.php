@@ -654,7 +654,7 @@ function getLuongTruCan($code)
 {
 	$luongtru = LuongTruCan::where('ma_phieu_can', $code)->first();
 	if ($luongtru) {
-    	return $luongtru;
+    	return $luongtru->luongtru;
 	}
 	return null;
 }
