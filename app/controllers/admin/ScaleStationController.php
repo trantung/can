@@ -442,5 +442,11 @@ class ScaleStationController extends BaseCategoryController {
             return $data;
         }
         return null;
+    }
+    public function showDetail($id)
+    {
+        $data = ScaleKCS::find($id);
+        $listScale = ScaleKCS::where('campaign_code', $data->campaign_code)->get();
+        return View::make('admin.scale-station.scale_campaign_detail')->with(compact('listScale'));
     }   
 }

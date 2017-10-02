@@ -90,6 +90,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('/storage-loss', 'StorageLossController');
 
     Route::resource('/overload-ratio', 'OverloadRatioController');
+    Route::post('/scale-station/detail/{id}', array('uses' => 'ScaleStationController@showDetail'));
     Route::resource('/scale-station', 'ScaleStationController', array('except' => array('show')));
     Route::controller('/scale-station', 'ScaleStationController');
     Route::resource('/customer-group', 'CustomerGroupController');

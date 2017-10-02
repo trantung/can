@@ -8,7 +8,6 @@
     <hr>
     <div class="row margin-bottom">
         <div class="col-xs-12">
-            @include('admin.scale-station.template.search-scale')
         </div>
     </div>
 
@@ -23,8 +22,7 @@
               <table class="table table-hover">
                 <tr>
                   <th>STT</th>
-                  <th>Mã chiến dịch</th>
-                  <th>Tên chiến dịch</th>
+                  <th>Mã cân</th>
                   <th>Nhóm Khách hàng</th>
                   <th>Khách </th>
                   <th>Nhóm partner</th>
@@ -33,15 +31,13 @@
                   <th>Chi nhánh</th>
                   <th>KL hàng(kg)</th>
                   <th>Lượng trừ</th>
-                  <th>Số chuyến</th>
                   <th>Tùy chọn</th>
                 </tr>
                 <?php $index = 1; ?>
-                @foreach($data as $key => $value)
+                @foreach($listScale as $key => $value)
                 <tr>
                   <td>{{ $index }}</td>
-                  <td>{{ $value->campaign_code }}</td>
-                  <td>{{ $value->campaign_name }}</td>
+                  <td>{{ $value->number_ticket }}</td>
                   <td>{{ getCustomerGroup($value) }}</td>
                   <td>{{ $value->customer_name }}</td>
                   <td>{{ getPartnerGroup() }}</td>
@@ -49,12 +45,9 @@
                   <td>{{ getNameWarehouse($value->warehouse_id) }}</td>
                   <td>{{ getNameCompany($value->department_id) }}</td>
                   <td>{{ getWeightTotalCampagin($value->campaign_code) }}</td>
-                  <td>{{ getLuongTruCampaign($value->campaign_code) }}</td>
-                  <td>{{ getSochuyen($value->campaign_code) }}</td>
+                  <td>{{ getLuongTruCan($value->number_ticket) }}</td>
                   <td>
-                    {{ Form::open(array('method'=>'POST', 'action' => array('ScaleStationController@showDetail', $value->id), 'style' => 'display: inline-block;')) }}
-                      <button class="btn btn-confirm" onclick="return confirm('Bạn có chắc chắn muốn xem');">Xem</button>
-                    {{ Form::close() }}
+                    Xem chi tiet
                   </td>
                 </tr>
                 <?php $index++; ?>
