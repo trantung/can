@@ -456,15 +456,45 @@ class ScaleStationController extends BaseCategoryController {
     } 
     public function exportExcel()
     {
-        dd(11);
-        // $data = ScaleKCS::find($id);
-        // dd($campaignCode);
-        // $listScale = ScaleKCS::where('campaign_code', $campaignCode)
-        //     ->where('package_weight', '>', 0)
-        //     // ->distinct('number_ticket')
-        //     ->get();
-        //     // dd($listScale->toArray());
-        // return View::make('admin.scale-station.scale_campaign_detail')->with(compact('listScale'));
+        $array1 = [
+            'mã chiến dịch',
+            'tên chiến dịch', 
+            'Nhóm khách hàng', 
+            'Khách',
+            'Nhóm partner', 
+            'Partner', 
+            'Kho', 
+            'Chi nhánh', 
+            'Khối lượng hàng', 
+            'Lượng trừ',
+            'Số chuyến'
+        ];
+        $list = ScaleKCS::where('campaign_code', '!=', '')
+            ->groupBy('campaign_code')
+            ->get();
+        Excel::create('Filename', function($excel) use($array1, $list) {
+            $excel->sheet('Sheetname', function($sheet) use($array1, $list) {
+                $sheet->row(1, $array1);
+                $i = 2;
+                foreach ($list as $key => $value) {
+                    $data = [
+                        $value->campaign_code,
+                        $value->campaign_name,
+                        getCustomerGroup($value),
+                        $value->customer_name,
+                        getPartnerGroup(),
+                        $value->doi_tac_ten,
+                        getNameWarehouse($value->warehouse_id),
+                        getNameCompany($value->department_id),
+                        getWeightTotalCampagin($value->campaign_code),
+                        getLuongTruCampaign($value->campaign_code),
+                        getSochuyen($value->campaign_code),
+                    ];
+                    $sheet->row($i, $data);
+                    $i++;
+                }
+            });
+        })->export('xls');
     }   
 
 }
