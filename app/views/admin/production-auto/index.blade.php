@@ -35,15 +35,32 @@
                 </tr>
                 @foreach($data as $key => $value)
                 <tr>
-                  <td>{{ $key+1 }}</td>
+                  <td>{{ $value->id }}</td>
                   <td>{{ $value->code }}</td>
-                  <td>{{ Warehouse::find($value->warehouse_id)->name }}</td>
-                  <td>{{ ProductCategory::find($value->product_category_id)->name }}</td>
-                  <td>{{ Product::find($value->product_id)->name }}</td>
+                  
+                  <td>
+                  @if(Warehouse::find($value->warehouse_id))
+                    {{ Warehouse::find($value->warehouse_id)->name }}
+                  @endif
+                  </td>
+                  <td>
+                  @if(ProductCategory::find($value->product_category_id))
+                    {{ ProductCategory::find($value->product_category_id)->name }}
+                  @endif
+                  </td>
+                  <td>
+                  @if(Product::find($value->product_id))
+                    {{ Product::find($value->product_id)->name }}
+                  @endif
+                  </td>
                   <td>{{ $value->product_loss_id }}</td>
                   <td>{{ $value->storage_loss_id }}</td>
                   <td>{{ $value->product_category_weight }}</td>
-                  <td>{{ Warehouse::find($value->warehouse_output_id)->name }}</td>
+                  <td>
+                  @if(Warehouse::find($value->warehouse_output_id))
+                    {{ Warehouse::find($value->warehouse_output_id)->name }}
+                  @endif
+                  </td>
                   <td>{{ $value->product_weight }}</td>
                 </tr>
                 @endforeach
