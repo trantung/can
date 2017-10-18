@@ -20,6 +20,8 @@ class ProductionAuto extends Eloquent
 	    'warehouse_output_id',
 	    'product_weight',
 	    'storage_weight',
+	    'code',
+	    'department_output_id',
     ];
 
 }

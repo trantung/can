@@ -339,8 +339,9 @@ function isChecked($model, $field1, $value1, $field2, $value2)
 	}
 	return false;
 }
-function calculatorProductAuto($productCategoryId, $productId, $weight, $warehouseId)
+function calculatorProductAuto($productCategoryId, $productId, $weight, $warehouseId, $warehouseOutputId)
 {
+	//hao hut san xuat
 	$ob = ProductManage::where('product_id', $productId)
 		->where('product_category_id', $productCategoryId)
 		->first();
@@ -351,8 +352,10 @@ function calculatorProductAuto($productCategoryId, $productId, $weight, $warehou
 	else {
 		$ratio = 100;
 	}
+
 	$productWeight = $weight * $ratio/100;
-	$obStorage = StorageLoss::where('warehouse_id', $warehouseId)
+	//hao hut luu kho dich
+	$obStorage = StorageLoss::where('warehouse_id', $warehouseOutputId)
 		->where('model_name', 'Product')
 		->where('model_id', $productId)
 		->first();
@@ -366,7 +369,7 @@ function calculatorProductAuto($productCategoryId, $productId, $weight, $warehou
 		$ratioStorage = 100;
 	}
 	$weightStorage = $ratioStorage * $productWeight/100;
-	return $weightStorage;
+	return $weightStorage. '-' .$warehouseOutputId . '-'. $warehouseId;
 }
 function getCodeAuto($value, $model)
 {

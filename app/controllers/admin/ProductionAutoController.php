@@ -145,6 +145,7 @@ class ProductionAutoController extends BaseCategoryController {
     public function store()
     {
         $input = Input::except('_token');
+        dd($input);
         $input['code'] = getCodeAuto('TSX', 'ProductionAuto');
         $productionAuto = $this->model->create($input);
         $productCategoryWeight = $input['product_category_weight'];

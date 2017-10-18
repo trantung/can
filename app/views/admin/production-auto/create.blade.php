@@ -21,9 +21,10 @@
             <div class="form-group">
               <label for="username">Mã phiếu</label>
               <div class="row">
+                <div class="col-sm-6 production-loss-department_id">
+                </div>
                 <div class="col-sm-6">
-                  {{ getCodeAuto('TSX', 'ProductionAuto') }}
-                  <input type="hidden" name="code" id="code" class="form-control" value="{{ getCodeAuto('TSX', 'ProductionAuto') }}">
+                  <input type="hidden" name="production-loss-department_id" id="production-loss-department_id" class="form-control">
                 </div>
               </div>
             </div>
@@ -69,6 +70,18 @@
                 </div>
               </div>
             </div>
+
+            <div class="form-group">
+              <label for="username">Khối lượng trong kho</label>
+              <div class="row">
+                <div class="col-sm-6 production-auto_weight_stock">
+                </div>
+                <div class="col-sm-6">
+                  <input type="hidden" name="production-auto_weight_stock" id="production-auto_weight_stock" class="form-control">
+                </div>
+              </div>
+            </div>
+
             <div class="form-group">
               <label for="username">Khối lượng nguyên liệu</label>
               <div class="row">
@@ -77,16 +90,7 @@
                 </div>
               </div>
             </div>
-            <div class="form-group">
-              <label for="username">Kết quả</label>
-              <div class="row">
-                <div class="col-sm-6 result">
-                </div>
-                <div class="col-sm-6">
-                  <input type="hidden" name="product_weight" id="product_weight" class="form-control">
-                </div>
-              </div>
-            </div>
+            
             
             <div class="form-group">
               <label for="username">Kho thành phẩm</label>
@@ -107,6 +111,16 @@
                 </div>
               </div>
             </div>
+            <div class="form-group">
+              <label for="username">Kết quả</label>
+              <div class="row">
+                <div class="col-sm-6 result">
+                </div>
+                <div class="col-sm-6">
+                  <input type="hidden" name="product_weight" id="product_weight" class="form-control">
+                </div>
+              </div>
+            </div>
           </div>
           <!-- /.box-body -->
           
@@ -123,6 +137,7 @@
   $(document).ready(function () {
       $('#department_id').on('change', function (e) {
           var id = $('#department_id').val();
+          getProductionCode(id);
           if (id != 0) {
             getWarehouse(id);
           }
@@ -132,23 +147,39 @@
         var productCategoryId = $('#product_category_id').val();
         getProductionLoss(productCategoryId, productId);
       });
-      $("#product_category_weight").keyup(function(){
+
+      $('#product_category_id, #warehouse_id').on('change', function (e) {
+        var productCategoryId = $('#product_category_id').val();
+        var productionAutoWeightStock = $('#warehouse_id').val();
+        if (productCategoryId != '' && productionAutoWeightStock != '') {
+          getProductionAutoWeightStock(productionAutoWeightStock, productCategoryId);
+        };
+      });
+
+      // $("#product_category_weight").keyup(function(){
+      $('#warehouse_output_id').on('change', function (e) {
         setTimeout(function(){
           var productId = $('#product_id').val();
           var productCategoryId = $('#product_category_id').val();
           var warehouseId = $('#warehouse_id').val();
           var weight = $('#product_category_weight').val();
-          getResultProductionAuto(productCategoryId, productId, weight, warehouseId);
+          var warehouse_output_id = $('#warehouse_output_id').val();
+          getStorageLoss(warehouse_output_id, productId);
+          getResultProductionAuto(productCategoryId, productId, weight, warehouseId, warehouse_output_id);
         }, 500);
       });
-      $('#warehouse_output_id').on('change', function (e) {
-          var id = $('#warehouse_output_id').val();
-          var productId = $('#product_id').val();
-          console.log("productId", productId);
-          if (id != 0) {
-            getStorageLoss(id, productId);
-          }
-      });
+      // $('#warehouse_output_id').on('change', function (e) {
+      //     var id = $('#warehouse_output_id').val();
+      //     var productId = $('#product_id').val();
+      //     console.log("productId", productId);
+      //     if (id != 0) {
+      //       getStorageLoss(id, productId);
+      //     }
+      // });
+      // $('.production-loss-department_id').on('change', function (e) {
+      //   var departmentId = $('.production-loss-department_id').val();
+      //   getProductionCode(departmentId);
+      // });
   });
   function getWarehouse(id) {
     $.ajax({
@@ -173,6 +204,7 @@
     });
   }
   function getProductionLoss(productCategoryId, productId) {
+    console.log(productCategoryId);
     $.ajax({
       type: "GET",
       url: '/api/request/production-loss/' + productCategoryId + '/' + productId,
@@ -184,6 +216,32 @@
       }
     });
   }
+  function getProductionCode(departmentId) {
+    $.ajax({
+      type: "GET",
+      url: '/api/request/production-loss-department/' + departmentId,
+      success: function(response){
+        if (response.code == 200) {
+          $('.production-loss-department_id').html(response.data );
+          $('#production-loss-department_id').val(response.data);
+        }
+      }
+    });
+  }
+  function getProductionAutoWeightStock(warehouseId, productCategoryId) {
+    console.log(productCategoryId);
+    $.ajax({
+      type: "GET",
+      url: '/api/request/production-auto-weight-stock/' + warehouseId + '/' + productCategoryId,
+      success: function(response){
+        if (response.code == 200) {
+          $('.production-auto_weight_stock').html(response.data_format );
+          $('#production-auto_weight_stock').val(response.data);
+        }
+      }
+    });
+  }
+  
   function getStorageLoss(id, productId) {
     $.ajax({
       type: "GET",
@@ -196,13 +254,13 @@
       }
     });
   }
-  function getResultProductionAuto(productCategoryId, productId, weight, warehouseId) {
+  function getResultProductionAuto(productCategoryId, productId, weight, warehouseId, warehouse_output_id) {
     $.ajax({
       type: "GET",
-      url: '/api/request/result-production-auto/' + productCategoryId + '/' + productId + '/' + weight + '/' + warehouseId,
+      url: '/api/request/result-production-auto/' + productCategoryId + '/' + productId + '/' + weight + '/' + warehouseId + '/' + warehouse_output_id,
       success: function(response){
         if (response.code == 200) {
-          $('.result').html(response.data + ' %');
+          $('.result').html(response.data + 'kg');
           $('#product_weight').val(response.data);
         } else {
           $('.result').html('Không có hao hụt kho');

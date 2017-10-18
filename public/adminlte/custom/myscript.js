@@ -25,17 +25,17 @@ $(document).ready(function(){
 		$(clone).find('select').empty().append(origin_option);
 
 		/// kiem tra cac gia tri select da duoc nhap truoc do
-		var selected = [];
-		$('.add-multi-collapse .form-collapse select').each(function(){
-			selected.push($(this).val());
-		})
+		// var selected = [];
+		// $('.add-multi-collapse .form-collapse select').each(function(){
+		// 	selected.push($(this).val());
+		// })
 
-		if(selected.length){
-			$.each(selected, function(key,value){
-				$(clone).find('select option[value='+value+']').remove();
-			})
-		}
-		if($(clone).find('select option').length <= 1) return false;
+		// if(selected.length){
+		// 	$.each(selected, function(key,value){
+		// 		$(clone).find('select option[value='+value+']').remove();
+		// 	})
+		// }
+		// if($(clone).find('select option').length <= 1) return false;
 
 		$('.add-multi-collapse').append(clone);
 		$(clone).slideToggle('fast');

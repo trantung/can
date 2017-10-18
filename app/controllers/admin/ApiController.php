@@ -246,6 +246,28 @@ class ApiController extends BaseController {
         $response['data'] = calculatorLoss('ProductManage', ['product_id' => $productId, 'product_category_id' => $productCategoryId]);
         return Response::json($response);
     }
+    public function getProductionLossDepartment($departmentId)
+    {
+        $response['code'] = 200;
+        $response['data'] = getCodeAuto('TSX_'. 'CN'.$departmentId.'_', 'ProductionAuto');
+        return Response::json($response);
+    }
+    public function getProductionAutoWeightStock($warehouseId, $productCategoryId)
+    {
+        $response['code'] = 200;
+        $data = StorageLoss::where('model_name', 'ProductCategory')
+            ->where('model_id', $productCategoryId)
+            ->where('warehouse_id', $warehouseId)
+            ->first();
+        if ($data) {
+            $weight = $data->weight;
+        } else {
+            $weight = 0;
+        }
+        $response['data'] = $weight;
+        $response['data_format'] = numberFormat($weight, 'tan');
+        return Response::json($response);
+    }
 
     public function getStorageLoss($warehouseId, $productId)
     {
@@ -254,10 +276,10 @@ class ApiController extends BaseController {
         return Response::json($response);
     }
 
-    public function getResultProductionAuto($productCategoryId, $productId, $weight, $warehouseId)
+    public function getResultProductionAuto($productCategoryId, $productId, $weight, $warehouseId, $warehouseOutputId)
     {
         $response['code'] = 200;
-        $response['data'] = calculatorProductAuto($productCategoryId, $productId, $weight, $warehouseId);
+        $response['data'] = calculatorProductAuto($productCategoryId, $productId, $weight, $warehouseId, $warehouseOutputId);
         return Response::json($response);
     }
     public function installKcs($appId, $code)
