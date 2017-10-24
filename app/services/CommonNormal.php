@@ -110,11 +110,11 @@ class CommonNormal
 			'code' => 'code',
 			'number_ticket_manual' => 'number_ticket_manual',
 			'partner_code' => 'partner_code',
-			// 'doi_tac_ten' => 'doi_tac_ten',
-			// 'doi_tac_sdt' => 'doi_tac_sdt',
-			// 'doi_tac_dia_chi' => 'doi_tac_dia_chi',
-			// 'doi_tac_fax' => 'doi_tac_fax',
-			// 'partner_id' => 'partner_id'
+			'doi_tac_ten' => 'doi_tac_ten',
+			'doi_tac_sdt' => 'doi_tac_sdt',
+			'doi_tac_dia_chi' => 'doi_tac_dia_chi',
+			'doi_tac_fax' => 'doi_tac_fax',
+			'partner_id' => 'partner_id',
 		];
 		return self::prepareData($input, $arrayKey);
 	}

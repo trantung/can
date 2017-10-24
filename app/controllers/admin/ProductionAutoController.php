@@ -145,10 +145,57 @@ class ProductionAutoController extends BaseCategoryController {
     public function store()
     {
         $input = Input::except('_token');
-        dd($input);
-        $input['code'] = getCodeAuto('TSX', 'ProductionAuto');
-        $productionAuto = $this->model->create($input);
-        $productCategoryWeight = $input['product_category_weight'];
+        //tru khoi luong nguyen lieu(product category) o kho warehouse_id,
+        $categoryProduct = StorageLoss::where('model_name', 'ProductCategory')
+            ->where('model_id', $input['product_category_id'])
+            ->where('warehouse_id', $input['warehouse_id'])
+            ->first();
+        if (!$categoryProduct) {
+            dd('sai kho');
+        }
+        $categoryProductWeight = $categoryProduct->weight;
+        if (!$categoryProductWeight) {
+            dd('sai khoi luong');
+        }
+        $categoryProduct->update([
+            'weight' => $categoryProductWeight - $input['product_category_weight']
+        ]);
+        //cong them khoi luong thanh pham(product) vao kho warehouse_output_id
+        $product = StorageLoss::where('model_name', 'Product')
+            ->where('model_id', $input['product_id'])
+            ->where('warehouse_id', $input['warehouse_output_id'])
+            ->first();
+        //neu chua co thi tao moi 
+        if (!$product) {
+            $product = StorageLoss::create([
+                'model_id' => $input['model_id'],
+                'model_name' => 'Product',
+                'warehouse_id' => $input['warehouse_output_id'],
+                'model_id' => $input['model_id'],
+                'weight' => $input['product_weight'],
+            ]);
+        }
+        //neu da co san pham thi cong them khoi luong product vao
+        else {
+            $product->update([
+                'weight' => $product->weight + $input['product_weight']
+            ]);
+        }
+        //tao moi tu san xuat
+        $productAuto['code'] = $input['production-loss-department_id'];
+        $productAuto['department_id'] = $input['department_id'];
+        $productAuto['warehouse_id'] = $input['warehouse_id'];
+        $productAuto['product_category_id'] = $input['product_category_id'];
+        $productAuto['product_id'] = $input['product_id'];
+        $productAuto['storage_loss_id'] = $input['storage_loss_id'];
+        $productAuto['product_loss_id'] = $input['product_loss_id'];
+        $productAuto['product_category_weight'] = $input['product_category_weight'];
+        $productAuto['product_weight'] = $input['product_weight'];
+        $productAuto['warehouse_output_id'] = $input['warehouse_output_id'];
+        $productAuto['product_weight'] = $input['product_weight'];
+        $productAuto['department_output_id'] = $input['department_id'];
+        $productAuto['storage_weight'] = $product->weight;
+        ProductionAuto::create($productAuto);
         return $this->redirectBackAction();
         // $weightStorage = calculatorProductAuto($input['product_category_id'], $input['product_id'], $input['product_category_weight'], $input['warehouse_id']);
         // return View::make('admin.production-auto.show')->with(compact('weightStorage', 'input'));
