@@ -55,5 +55,17 @@ class Common {
 		$customerList = CustomerShip::lists('customer_name', 'id');
 		return $customerList;
 	}
-
+	public static function getKieuCan()
+	{
+		$array = [ '' => 'Chọn tất cả',
+			1 => 'Xuất kho',
+			2 => 'Nhập kho', 
+			3 => 'Chuyển xuất',
+			4 => 'Chuyển nhập',
+			5 => 'Chuyển tiếp kho nội bộ',
+			6 => 'Chuyển tiếp kho ngoài',
+			7 => 'Cân hộ',
+		];
+		return $array;
+	}
 }

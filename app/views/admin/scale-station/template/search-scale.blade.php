@@ -34,7 +34,7 @@
                     <label>Xuất nhập</label>
                 </div>
                 <div class="col-md-9">
-                    {{ Form::select('transfer_type', [ '' => 'Chọn tất cả', 1 => 'Xuất kho', 2 => 'Nhập kho', 3 => 'Chuyển xuất', 4 => 'Chuyển nhập'] , null,  array('class' => 'form-control'))}}
+                    {{ Form::select('transfer_type', Common::getKieuCan(), null, array('class' => 'form-control'))}}
                 </div>
             </div>
         </div>
