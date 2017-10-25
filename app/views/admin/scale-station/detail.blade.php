@@ -16,6 +16,19 @@
                 </td>
                 
             </tr>
+            @if ($data->user_id != '')
+                <tr>
+                    <td>
+                        <a href="javascript:;"> Người cân </a>
+                    </td>
+                    <td>
+                        @if($user = Admin::find($data->user_id))
+                            {{ $user->username }}
+                        @endif
+                    </td>
+                </tr>
+            @endif
+
             @if ($data->number_ticket != '')
                 <tr>
                     <td>
@@ -236,6 +249,16 @@
                 </td>
             </tr>
             @if($kcs)
+                @if($user = Admin::find($data->user_id))
+                    <tr>
+                        <td>
+                            <a href="javascript:;">Người KCS</a>
+                        </td>
+                        <td>  
+                            {{ $user->username }}
+                        </td>
+                    </tr>
+                @endif
                 @if ($kcs->weight_total != '')
                     <tr>
                         <td>
