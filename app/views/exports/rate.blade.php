@@ -1,11 +1,33 @@
 <html>
     <head>
        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-           <title>Document</title>
-           <style>
-           body{font-family: 'dejavu sans';
-           color: #000;}
-           </style>
+          <title>Document</title>
+          <style>
+            body{
+              font-family: 'dejavu sans';
+              color: #000;
+            }
+            table{
+              font-size: 12px;
+              border-collapse: collapse;
+            }
+            .content{
+              margin: 5px 0;
+            }
+            .content th{
+              text-align: center;
+              font-weight: 500;
+            }
+            .content th{
+              font-weight: 600;
+            }
+            .content th, .content td{
+              border: 1px solid #ddd;
+              padding: 5px;
+              vertical-align: middle;
+              line-height: 1.5;
+            }
+          </style>
        </head>
     <body>
         <table width="100%" border="0" style="font-size: 12px">
@@ -151,6 +173,7 @@
           <tbody>
             <tr>
               <td rowspan="2">STT</td>
+              <td rowspan="2">id</td>
               <td rowspan="2">PHƯƠNG TIỆN</td>
               <td colspan="2" align="center">KÝ HIỆU MẪU</td>
               <td rowspan="2">ĐỘ KHÔ</td>
@@ -166,6 +189,7 @@
             @foreach ($log as $key => $value)
               <tr>
                 <td>{{ $key + 1 }}</td>
+                <td>{{ $value->id }}</td>
                 <td>{{ $value->number_car }}</td>
                 <td>{{ $value->number_ticket }}</td>
                 <td>{{ $value->created_at }}</td>
