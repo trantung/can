@@ -462,7 +462,7 @@ class ScaleStationController extends BaseCategoryController {
             // ->distinct('number_ticket')
             ->get();
             // dd($listScale->toArray());
-        return View::make('admin.scale-station.scale_campaign_detail')->with(compact('listScale'));
+        return View::make('admin.scale-station.scale_campaign_detail')->with(compact('listScale','campaignCode'));
     } 
     public function exportExcel()
     {
@@ -507,4 +507,55 @@ class ScaleStationController extends BaseCategoryController {
         })->export('xls');
     }   
 
+    public function searchDetailCampaign()
+    {
+        $input = Input::all();
+        dd($input);
+    }
+    public function exportExcelDetailCampaign($campaignCode)
+    {
+        // dd($campaignCode);
+        $list = ScaleKCS::where('campaign_code', $campaignCode)
+            ->where('package_weight', '>', 0)
+            ->get();
+        // dd($list->toArray());
+        $array1 = [
+            'mã cân',
+            'Nhóm khách hàng', 
+            'Khách',
+            'Nhóm partner', 
+            'Partner', 
+            'Kho', 
+            'Chi nhánh', 
+            'Khối lượng hàng', 
+            'Lượng trừ',
+            'Kiểu cân',
+            'Nhân viên cân',
+            'Nhân viên KCS',
+        ];
+        Excel::create('Filename', function($excel) use($array1, $list) {
+            $excel->sheet('Sheetname', function($sheet) use($array1, $list) {
+                $sheet->row(1, $array1);
+                $i = 2;
+                foreach ($list as $key => $value) {
+                    $data = [
+                        $value->number_ticket,
+                        getCustomerGroup($value),
+                        $value->customer_name,
+                        getPartnerGroup(),
+                        $value->doi_tac_ten,
+                        getNameWarehouse($value->warehouse_id),
+                        getNameCompany($value->department_id),
+                        getWeightTotalCampagin($value->package_weight),
+                        getLuongTruCan($value->number_ticket),
+                        Common::getNameKieuCan($value->transfer_type),
+                        Common::getNhanviencanKcs($value->id),
+                        Common::getNhanviencanKcs($value->id, 'KCS'),
+                    ];
+                    $sheet->row($i, $data);
+                    $i++;
+                }
+            });
+        })->export('xls');
+    }
 }

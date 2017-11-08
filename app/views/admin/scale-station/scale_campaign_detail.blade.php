@@ -8,6 +8,7 @@
     <hr>
     <div class="row margin-bottom">
         <div class="col-xs-12">
+            @include('admin.scale-station.template.search_detail_campaign')
         </div>
     </div>
 
@@ -50,8 +51,8 @@
                   <td>{{ $value->package_weight }}</td>
                   <td>{{ getLuongTruCan($value->number_ticket) }}</td>
                   <td>{{ Common::getNameKieuCan($value->transfer_type) }}</td>
-                  <td>{{ Common::getNhanviencanKcs($value->user_id) }}</td>
-                  <td>{{ Common::getNhanviencanKcs($value->user_id) }}</td>
+                  <td>{{ Common::getNhanviencanKcs($value->id) }}</td>
+                  <td>{{ Common::getNhanviencanKcs($value->id, 'KCS') }}</td>
                   <td>
                     <a href="{{ action('ScaleStationController@getDetail', $value->number_ticket) }}" class="btn btn-primary">Xem</a>
                   </td>

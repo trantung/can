@@ -76,12 +76,30 @@ class Common {
 		}
 		return null;
 	}
-	public static function getNhanviencanKcs($adminId)
+	public static function getNhanviencanKcs($scaleRateId, $kcs = null)
 	{
-		$admin = Admin::find($adminId);
-		if ($admin) {
-			return $admin->username;
+		$scale =ScaleKCS::find($scaleRateId);
+		if ($scale) {
+			if ($kcs) {
+				$kcsDetail = ScaleKCS::where('type', 'KCS')
+					->where('number_ticket', $scale->number_ticket)
+					->orderBy('id', 'desc')
+					->first();
+				if ($kcsDetail) {
+					$adminId = $kcsDetail->user_id;
+				} else {
+					return 'không xác định nhân viên KCS';
+				}
+			} else {
+				$adminId = $scale->user_id;
+			}
+			$admin = Admin::find($adminId);
+			if ($admin) {
+				return $admin->username;
+			}
+			
 		}
-		return 'không xác định';
+		return 'không xác định được nhân viên cân';
+		
 	}
 }
