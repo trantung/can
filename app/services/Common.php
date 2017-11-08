@@ -68,4 +68,20 @@ class Common {
 		];
 		return $array;
 	}
+	public static function getNameKieuCan($type)
+	{
+		$array = self::getKieuCan();
+		if ($array[$type]) {
+			return $array[$type];
+		}
+		return null;
+	}
+	public static function getNhanviencanKcs($adminId)
+	{
+		$admin = Admin::find($adminId);
+		if ($admin) {
+			return $admin->username;
+		}
+		return 'không xác định';
+	}
 }

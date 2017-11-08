@@ -31,6 +31,9 @@
                   <th>Chi nhánh</th>
                   <th>KL hàng(kg)</th>
                   <th>Lượng trừ</th>
+                  <th>Kiểu cân</th>
+                  <th>Nhân viên cân</th>
+                  <th>Nhân viên KCS</th>
                   <th>Tùy chọn</th>
                 </tr>
                 <?php $index = 1; ?>
@@ -46,6 +49,9 @@
                   <td>{{ getNameCompany($value->department_id) }}</td>
                   <td>{{ $value->package_weight }}</td>
                   <td>{{ getLuongTruCan($value->number_ticket) }}</td>
+                  <td>{{ Common::getNameKieuCan($value->transfer_type) }}</td>
+                  <td>{{ Common::getNhanviencanKcs($value->user_id) }}</td>
+                  <td>{{ Common::getNhanviencanKcs($value->user_id) }}</td>
                   <td>
                     <a href="{{ action('ScaleStationController@getDetail', $value->number_ticket) }}" class="btn btn-primary">Xem</a>
                   </td>
