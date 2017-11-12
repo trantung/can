@@ -318,50 +318,120 @@ class ScaleStationController extends BaseCategoryController {
     public function getExport() {
         $input = Input::all();
         $inputSearch = Input::except('company_id', 'product_category_id', 'type_search', 'search');
-        if (Input::get('type_search') == '1') {
-            $inputSearch['number_ticket'] = Input::get('search');
-            $scale = ScaleKCS::where('number_ticket', $inputSearch['number_ticket'])->whereNull('type')->where('package_weight', '>', 0)->first();
-            $logKcs = ScaleKCS::where($inputSearch)->get();
-        } else {
-            $inputSearch['campaign_code'] = Input::get('search');
-            $scale = ScaleKCS::where('campaign_code', $inputSearch['campaign_code'])->whereNull('type')->where('package_weight', '>', 0)->first();
-            $logKcsList = ScaleKCS::where('code', $input['code'])
-                ->where('type', 'KCS')
-                ->select('number_ticket')
-                ->distinct('number_ticket')
-                ->get();
-            $logKcs = [];
-            foreach ($logKcsList as $key => $value) {
-                $logKcs[] = ScaleKCS::where('code', $input['code'])
-                    ->where('type', 'KCS')
-                    ->where('number_ticket', $value->number_ticket)
-                    ->orderBy('id', 'desc')
-                    ->first();
-            }
-        }
-        $inputSearch['type'] = 'KCS';
         $company = Company::find($input['company_id']);
         if (!$company) {
             dd('Company not found!!');
         }
-        $department = Company::where('code', $input['code'])->first();
-        if (!$company) {
+        $department = Company::find($input['department_id']);
+        if (!$department) {
             dd('Department not found!!');
         }
         $productName = '';
         $campaignCode = '';
-        if ($scale) {
-            $modelName = CommonNormal::getNameProduct($scale->category_id);
-            $product = $modelName::find(CommonNormal::getProductCategoryId($scale->category_id)[0]);
-            if (!$product) {
-                $productName = 'Không có sản phẩm';
-            } else {
-                $productName = $product->name;
+        // $scale = ScaleKCS::where('number_ticket', $inputSearch['number_ticket'])
+        //     ->whereNull('type')
+        //     ->where('package_weight', '>', 0)
+        //     ->first();
+        // if ($scale) {
+        //     $modelName = CommonNormal::getNameProduct($scale->category_id);
+        //     $product = $modelName::find(CommonNormal::getProductCategoryId($scale->category_id)[0]);
+        //     if (!$product) {
+        //         $productName = 'Không có sản phẩm';
+        //     } else {
+        //         $productName = $product->name;
+        //     }
+        //     if ($scale->campaign_code != '') {
+        //         $campaignCode = $scale->campaign_code;
+        //     }
+        // }
+        //neu la can chien dich Input::get('type_search') !=1
+        if (Input::get('type_search') != '1') {
+        //lay toàn bộ các mã phiếu cân lẻ mà có kcs với mã chiến dịch = mã chiến dịch truyền vào
+            //lấy các mã phiếu cân lẻ có mã chiến dịch = mã chiến dịch truyền vào
+            $inputSearch['campaign_code'] = Input::get('search');
+            $ob = ScaleKCS::where('campaign_code', $inputSearch['campaign_code'])
+                ->whereNull('type')
+                ->where('code', $inputSearch['code'])
+                ->where('package_weight', '>', 0);
+            $scaleList = $ob->distinct('number_ticket')->get();
+            $scale = $ob->first();
+            if ($scale) {
+                $modelName = CommonNormal::getNameProduct($scale->category_id);
+                $product = $modelName::find(CommonNormal::getProductCategoryId($scale->category_id)[0]);
+                if (!$product) {
+                    $productName = 'Không có sản phẩm';
+                } else {
+                    $productName = $product->name;
+                }
+                if ($scale->campaign_code != '') {
+                    $campaignCode = $scale->campaign_code;
+                }
             }
-            if ($scale->campaign_code != '') {
-                $campaignCode = $scale->campaign_code;
+                // ->get();
+            //loại bỏ những mã phiếu cân lẻ mà ko có kcs
+            $logKcs = [];
+            foreach ($scaleList as $key => $value) {
+                $kcs = ScaleKCS::where('number_ticket', $value->number_ticket)
+                    ->where('type', 'KCS')
+                    ->orderBy('id', 'desc')
+                    ->first();
+                if (!$kcs) {
+                     unset($kcs[$key]);
+                } else {
+                //lấy kcs cuối cùng cho phiếu cân đấy   
+                    $logKcs[] = $kcs;
+                }
+                
             }
         }
+
+
+        // if (Input::get('type_search') == '1') {
+        //     $inputSearch['number_ticket'] = Input::get('search');
+        //     $scale = ScaleKCS::where('number_ticket', $inputSearch['number_ticket'])->whereNull('type')->where('package_weight', '>', 0)->first();
+        //     $logKcs = ScaleKCS::where($inputSearch)->get();
+        // } else {
+        //     // $inputSearch['campaign_code'] = Input::get('search');
+
+        //     // $scale = ScaleKCS::where('campaign_code', $inputSearch['campaign_code'])->whereNull('type')->where('package_weight', '>', 0)->first();
+        //     // dd($scale);
+        //     // $logKcsList = ScaleKCS::where('code', $input['code'])
+        //     //     ->where('type', 'KCS')
+        //     //     ->select('number_ticket')
+        //     //     ->distinct('number_ticket')
+        //     //     ->get();
+        //     // $logKcs = [];
+        //     // foreach ($logKcsList as $key => $value) {
+        //     //     $logKcs[] = ScaleKCS::where('code', $input['code'])
+        //     //         ->where('type', 'KCS')
+        //     //         ->where('number_ticket', $value->number_ticket)
+        //     //         ->orderBy('id', 'desc')
+        //     //         ->first();
+        //     // }
+        // }
+        $inputSearch['type'] = 'KCS';
+        // $company = Company::find($input['company_id']);
+        // if (!$company) {
+        //     dd('Company not found!!');
+        // }
+        // $department = Company::where('code', $input['code'])->first();
+        // if (!$company) {
+        //     dd('Department not found!!');
+        // }
+        // $productName = '';
+        // $campaignCode = '';
+        // if ($scale) {
+        //     $modelName = CommonNormal::getNameProduct($scale->category_id);
+        //     $product = $modelName::find(CommonNormal::getProductCategoryId($scale->category_id)[0]);
+        //     if (!$product) {
+        //         $productName = 'Không có sản phẩm';
+        //     } else {
+        //         $productName = $product->name;
+        //     }
+        //     if ($scale->campaign_code != '') {
+        //         $campaignCode = $scale->campaign_code;
+        //     }
+        // }
         $data = [
             'company' => $company,
             'department' => $department,
