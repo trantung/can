@@ -71,6 +71,7 @@ class CommonNormal
 		if (!$scaleStation) {
 			dd('sai mã app vì mã app_id không có config với chi nhánh trạm cân nào');
 		}
+		$data['department_id'] = $scaleStation->department_id;
 		$id = ScaleKCS::create($data)->id;
 		//update ma chien dich vao bang scale_stations
 		$obj = ScaleStation::where('app_id', $input['app_id'])
