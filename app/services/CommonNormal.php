@@ -66,6 +66,11 @@ class CommonNormal
 	{
 		$data = self::getDataScale($input);
 		$data['is_online'] = ONLINE;
+		$scaleStation = ScaleStation::where('app_id', $input['app_id'])
+			->first();
+		if (!$scaleStation) {
+			dd('sai mã app vì mã app_id không có config với chi nhánh trạm cân nào');
+		}
 		$id = ScaleKCS::create($data)->id;
 		//update ma chien dich vao bang scale_stations
 		$obj = ScaleStation::where('app_id', $input['app_id'])
