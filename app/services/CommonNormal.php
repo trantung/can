@@ -77,6 +77,12 @@ class CommonNormal
 	public static function storeDataKCS($input)
 	{
 		$data = self::getDataKCS($input);
+		$scaleStation = ScaleStation::where('app_id', $input['app_id'])
+			->first();
+		if (!$scaleStation) {
+			dd('sai mã app vì mã app_id không có config với chi nhánh trạm cân nào');
+		}
+		$data['department_id'] = $scaleStation->department_id;
 		$data['is_online'] = ONLINE;
 		$id = ScaleKCS::create($data)->id;
 		return $id;
