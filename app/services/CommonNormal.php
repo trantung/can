@@ -69,7 +69,11 @@ class CommonNormal
 		$scaleStation = ScaleStation::where('app_id', $input['app_id'])
 			->first();
 		if (!$scaleStation) {
-			dd('sai mã app vì mã app_id không có config với chi nhánh trạm cân nào');
+			$kcs = KcsLogInstall::where('app_id', $input['app_id'])
+				->first();
+			if (!$kcs) {
+				dd('sai mã app vì mã app_id không có config với chi nhánh trạm cân nào');
+			}
 		}
 		$data['department_id'] = $scaleStation->department_id;
 		$id = ScaleKCS::create($data)->id;
@@ -86,7 +90,11 @@ class CommonNormal
 		$scaleStation = ScaleStation::where('app_id', $input['app_id'])
 			->first();
 		if (!$scaleStation) {
-			dd('sai mã app vì mã app_id không có config với chi nhánh trạm cân nào');
+			$kcs = KcsLogInstall::where('app_id', $input['app_id'])
+				->first();
+			if (!$kcs) {
+				dd('sai mã app vì mã app_id không có config với chi nhánh trạm cân nào');
+			}
 		}
 		$data['department_id'] = $scaleStation->department_id;
 		$data['is_online'] = ONLINE;
