@@ -357,7 +357,8 @@ class ApiController extends BaseController {
         // }
             //save percent ...
             if ($scale->campaign_code) {
-                CommonNormal::savePercentCampaign($scale, $kcs);
+                //todo
+                // CommonNormal::savePercentCampaign($scale, $kcs);
             } else {
                 CommonNormal::savePercent($scale, $kcs);
             }
