@@ -196,7 +196,7 @@
             @if ($data->first_scale_weight != '')
                 <tr>
                     <td>
-                        <a href="javascript:;"> Trọng lượng cân lần 1 </a>
+                        <a href="javascript:;"> Trọng lượng cân lần 1(kg) </a>
                     </td>
                     <td>  
                         {{ number_format($data->first_scale_weight) }}
@@ -206,7 +206,7 @@
             @if ($data->second_scale_weight != '')
                 <tr>
                     <td>
-                        <a href="javascript:;"> Trọng lượng cân lần 2 </a>
+                        <a href="javascript:;"> Trọng lượng cân lần 2(kg) </a>
                     </td>
                     <td>  
                         {{ number_format($data->second_scale_weight) }}
@@ -216,7 +216,7 @@
             @if ($data->package_weight != '')
                 <tr>
                     <td>
-                        <a href="javascript:;"> Trọng lượng hàng </a>
+                        <a href="javascript:;"> Trọng lượng hàng (kg)</a>
                     </td>
                     <td>  
                         {{ $data->package_weight }}

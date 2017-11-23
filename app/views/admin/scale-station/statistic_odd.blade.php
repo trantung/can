@@ -29,7 +29,7 @@
                   <th>Kho</th>
                   <th>Chi nhánh</th>
                   <th>KL hàng(kg)</th>
-                  <th>Lượng trừ</th>
+                  <th>Lượng trừ(kg)</th>
                   <th>Nhân viên cân</th>
                   <th>Nhân viên KCS</th>
                   <th>Tùy chọn</th>
@@ -43,8 +43,8 @@
                   <td>{{ $value->customer_name }}</td>
                   <td>{{ getNameWarehouse($value->warehouse_id) }}</td>
                   <td>{{ getNameCompany($value->department_id) }}</td>
-                  <td>{{ $value->package_weight }}</td>
-                  <td>{{ getLuongTruCan($value->number_ticket) }}</td>
+                  <td>{{ number_format($value->package_weight) }}</td>
+                  <td>{{ number_format(getLuongTruCan($value->number_ticket)) }}</td>
                   <td>{{ Common::getNhanviencanKcs($value->id) }}</td>
                   <td>{{ Common::getNhanviencanKcs($value->id, 'KCS') }}</td>
                   <td>
