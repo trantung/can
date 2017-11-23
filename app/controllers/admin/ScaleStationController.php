@@ -228,7 +228,8 @@ class ScaleStationController extends BaseCategoryController {
             // $model = $model->whereNotNull('campaign_code');
         } else {
             // dd($model);
-            $data = ScaleKCS::whereNull('campaign_code')->get();
+            $data = ScaleKCS::where('campaign_code', '=', '')
+                ->whereNull('type')->get();
         }
         // $dataScale = $model->whereNull('type')->where('package_weight', '>', 0)->distinct('number_ticket')->get();
         // $dataKcs = ScaleKCS::where('type', 'KCS')->distinct('number_ticket')->get();

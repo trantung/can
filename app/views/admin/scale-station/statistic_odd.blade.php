@@ -23,34 +23,32 @@
               <table class="table table-hover">
                 <tr>
                   <th>STT</th>
-                  <th>Mã chiến dịch</th>
-                  <th>Tên chiến dịch</th>
+                  <th>Mã cân</th>
                   <th>Nhóm Khách hàng</th>
                   <th>Khách </th>
-                  <th>Nhóm partner</th>
-                  <th>Partner</th>
                   <th>Kho</th>
                   <th>Chi nhánh</th>
                   <th>KL hàng(kg)</th>
                   <th>Lượng trừ</th>
                   <th>Số chuyến</th>
+                  <th>Nhân viên cân</th>
+                  <th>Nhân viên KCS</th>
                   <th>Tùy chọn</th>
                 </tr>
                 <?php $index = 1; ?>
                 @foreach($data as $key => $value)
                 <tr>
                   <td>{{ $index }}</td>
-                  <td>{{ $value->campaign_code }}</td>
-                  <td>{{ $value->campaign_name }}</td>
+                  <td>{{ $value->number_ticket }}</td>
                   <td>{{ getCustomerGroup($value) }}</td>
                   <td>{{ $value->customer_name }}</td>
-                  <td>{{ getPartnerGroup() }}</td>
-                  <td>{{ $value->doi_tac_ten }}</td>
                   <td>{{ getNameWarehouse($value->warehouse_id) }}</td>
                   <td>{{ getNameCompany($value->department_id) }}</td>
                   <td>{{ getWeightTotalCampagin($value->campaign_code) }}</td>
                   <td>{{ getLuongTruCampaign($value->campaign_code) }}</td>
                   <td>{{ getSochuyen($value->campaign_code) }}</td>
+                  <td>{{ Common::getNhanviencanKcs($value->id) }}</td>
+                  <td>{{ Common::getNhanviencanKcs($value->id, 'KCS') }}</td>
                   <td>
                     <a href="{{ action('ScaleStationController@getDetail', $value->number_ticket) }}" class="btn btn-primary">Xem</a>
                   </td>
