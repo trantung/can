@@ -101,7 +101,7 @@ class Common {
 				if ($kcsDetail) {
 					$adminId = $kcsDetail->user_id;
 				} else {
-					return 'không xác định nhân viên KCS';
+					return 'N/A';
 				}
 			} else {
 				$adminId = $scale->user_id;

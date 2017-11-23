@@ -625,7 +625,7 @@ function getCustomerGroup($input)
 	}
 	$customerGroup = CustomerManage::where('customer_id',$customerShip->id)->first();
 	if (!$customerGroup) {
-		return 'chưa có nhom khach hang';
+		return 'N/A';
 	}
 	$ob = CustomerGroup::find($customerGroup->customer_group_id);
 	$name = $ob->name;
