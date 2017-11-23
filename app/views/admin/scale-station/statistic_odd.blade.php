@@ -30,7 +30,6 @@
                   <th>Chi nhánh</th>
                   <th>KL hàng(kg)</th>
                   <th>Lượng trừ</th>
-                  <th>Số chuyến</th>
                   <th>Nhân viên cân</th>
                   <th>Nhân viên KCS</th>
                   <th>Tùy chọn</th>
@@ -46,7 +45,6 @@
                   <td>{{ getNameCompany($value->department_id) }}</td>
                   <td>{{ getWeightTotalCampagin($value->campaign_code) }}</td>
                   <td>{{ getLuongTruCampaign($value->campaign_code) }}</td>
-                  <td>{{ getSochuyen($value->campaign_code) }}</td>
                   <td>{{ Common::getNhanviencanKcs($value->id) }}</td>
                   <td>{{ Common::getNhanviencanKcs($value->id, 'KCS') }}</td>
                   <td>
