@@ -199,7 +199,7 @@
                         <a href="javascript:;"> Trọng lượng cân lần 1 </a>
                     </td>
                     <td>  
-                        {{ $data->first_scale_weight }}
+                        {{ number_format($data->first_scale_weight) }}
                     </td>
                 </tr>
             @endif
@@ -209,7 +209,7 @@
                         <a href="javascript:;"> Trọng lượng cân lần 2 </a>
                     </td>
                     <td>  
-                        {{ $data->second_scale_weight }}
+                        {{ number_format($data->second_scale_weight) }}
                     </td>
                 </tr>
             @endif
@@ -265,7 +265,7 @@
                             <a href="javascript:;"> Tổng trọng lượng </a>
                         </td>
                         <td>  
-                            {{ $kcs->weight_total }}
+                            {{ $kcs->weight_total }} (g)
                         </td>
                     </tr>
                 @endif
@@ -275,7 +275,7 @@
                             <a href="javascript:;"> Trọng lượng mùn </a>
                         </td>
                         <td>  
-                            {{ $kcs->trong_luong_mun }}
+                            {{ $kcs->trong_luong_mun }} (g)
                         </td>
                     </tr>
                 @endif
@@ -285,7 +285,7 @@
                             <a href="javascript:;"> Trọng lượng quá cỡ </a>
                         </td>
                         <td>  
-                            {{ $kcs->trong_luong_qua_co }}
+                            {{ $kcs->trong_luong_qua_co }} (g)
                         </td>
                     </tr>
                 @endif
@@ -295,7 +295,7 @@
                             <a href="javascript:;"> Trọng lượng vỏ </a>
                         </td>
                         <td>  
-                            {{ $kcs->trong_luong_vo }}
+                            {{ $kcs->trong_luong_vo }} (g)
                         </td>
                     </tr>
                 @endif
@@ -305,14 +305,14 @@
                             <a href="javascript:;"> TRọng lượng tạp chất </a>
                         </td>
                         <td>  
-                            {{ $kcs->trong_luong_tap_chat }}
+                            {{ $kcs->trong_luong_tap_chat }}(g)
                         </td>
                     </tr>
                 @endif
                 @if ($kcs->ty_le_mun != '')
                     <tr>
                         <td>
-                            <a href="javascript:;"> Tỷ lệ mùn </a>
+                            <a href="javascript:;"> Tỷ lệ mùn (%)</a>
                         </td>
                         <td>  
                             {{ $kcs->ty_le_mun }}
@@ -322,7 +322,7 @@
                 @if ($kcs->ty_le_qua_co != '')
                     <tr>
                         <td>
-                            <a href="javascript:;"> Tỷ lệ quá cỡ </a>
+                            <a href="javascript:;"> Tỷ lệ quá cỡ (%)</a>
                         </td>
                         <td>  
                             {{ $kcs->ty_le_qua_co }}
@@ -332,7 +332,7 @@
                 @if ($kcs->ty_le_vo != '')
                     <tr>
                         <td>
-                            <a href="javascript:;"> Tỷ lệ vỏ </a>
+                            <a href="javascript:;"> Tỷ lệ vỏ (%)</a>
                         </td>
                         <td>  
                             {{ $kcs->ty_le_vo }}
@@ -342,7 +342,7 @@
                 @if ($kcs->ty_le_tap_chat != '')
                     <tr>
                         <td>
-                            <a href="javascript:;"> Tỷ lệ tạp chất </a>
+                            <a href="javascript:;"> Tỷ lệ tạp chất (%) </a>
                         </td>
                         <td>  
                             {{ $kcs->ty_le_tap_chat }}
@@ -352,10 +352,20 @@
                 @if ($kcs->do_kho != '')
                     <tr>
                         <td>
-                            <a href="javascript:;"> Độ khô </a>
+                            <a href="javascript:;"> Độ khô(%) </a>
                         </td>
                         <td>  
                             {{ $kcs->do_kho }}
+                        </td>
+                    </tr>
+                @endif
+                @if ($kcs->do_kho != '')
+                    <tr>
+                        <td>
+                            <a href="javascript:;"> Thời gian KCS </a>
+                        </td>
+                        <td>  
+                            {{ $kcs->created_at }}
                         </td>
                     </tr>
                 @endif
