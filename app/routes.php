@@ -91,6 +91,7 @@ Route::group(['prefix' => 'admin'], function () {
 
     Route::resource('/overload-ratio', 'OverloadRatioController');
     Route::get('/scale-station/export-excel-campaign', array('uses' => 'ScaleStationController@exportExcel'));
+    Route::get('/scale-station/export-excel-odd', array('uses' => 'ScaleStationController@exportExcelOdd'));
     Route::get('/scale-station/export-excel-campaign-detail/{campaignCode}', array('uses' => 'ScaleStationController@exportExcelDetailCampaign'));
     Route::get('/scale-station/detail/{id}', array('uses' => 'ScaleStationController@showDetail'));
     Route::get('/scale-station/get-detail/{id}', array('uses' => 'ScaleStationController@getDetail'));

@@ -579,7 +579,74 @@ class ScaleStationController extends BaseCategoryController {
             });
         })->export('xls');
     }   
-
+    public function exportExcelOdd()
+    {
+        $list = ScaleKCS::where('campaign_code', '=', '')
+            ->whereNull('type')
+            ->where('package_weight', '>', 0)
+            ->get();
+        // dd($list->toArray());
+        $array1 = [
+            'mã cân',
+            'Nhóm khách hàng', 
+            'Khách',
+            'Kho', 
+            'Chi nhánh', 
+            'Khối lượng hàng', 
+            'Lượng trừ',
+            'Kiểu cân',
+            'Nhân viên cân',
+            'Nhân viên KCS',
+            'Tỷ lệ mùn (%)',
+            'Tỷ lệ quá cỡ (%)',
+            'Tỷ lệ vỏ (%)',
+            'Tỷ lệ tạp chất (%)',
+            'Độ khô(%)',
+        ];
+        Excel::create('Filename', function($excel) use($array1, $list) {
+            $excel->sheet('Sheetname', function($sheet) use($array1, $list) {
+                $sheet->row(1, $array1);
+                $i = 2;
+                foreach ($list as $key => $value) {
+                    $kcs = ScaleKCS::where('number_ticket', $value->number_ticket)
+                        ->where('type', 'KCS')
+                        ->first();
+                    if (!$kcs) {
+                        $tyLeMun = 0;
+                        $tyLeQuaCo = 0;
+                        $tyLeVo = 0;
+                        $tyLeTapChat = 0;
+                        $doKho = 0;
+                    } else {
+                        $tyLeMun = $kcs->ty_le_mun;
+                        $tyLeQuaCo = $kcs->ty_le_qua_co;
+                        $tyLeVo = $kcs->ty_le_vo;
+                        $tyLeTapChat = $kcs->ty_le_tap_chat;
+                        $doKho = $kcs->do_kho;
+                    }
+                    $data = [
+                        $value->number_ticket,
+                        getCustomerGroup($value),
+                        $value->customer_name,
+                        getNameWarehouse($value->warehouse_id),
+                        getNameCompany($value->department_id),
+                        $value->package_weight,
+                        getLuongTruCan($value->number_ticket),
+                        Common::getNameKieuCan($value->transfer_type),
+                        Common::getNhanviencanKcs($value->id),
+                        Common::getNhanviencanKcs($value->id, 'KCS'),
+                        $tyLeMun,
+                        $tyLeQuaCo,
+                        $tyLeVo,
+                        $tyLeTapChat,
+                        $doKho,
+                    ];
+                    $sheet->row($i, $data);
+                    $i++;
+                }
+            });
+        })->export('xls');
+    }
     public function searchDetailCampaign()
     {
         $input = Input::all();

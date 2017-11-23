@@ -94,7 +94,7 @@
         <div class="col-md-4">
             <div class="row">
                 <div class="col-md-3">
-                    <a href="{{ action('ScaleStationController@exportExcel') }}" class="btn btn-primary">Xuất excel</a>
+                    <a href="{{ action('ScaleStationController@exportExcelOdd') }}" class="btn btn-primary">Xuất excel</a>
                 </div>
             </div>
         </div>
