@@ -8,7 +8,7 @@
     <hr>
     <div class="row margin-bottom">
         <div class="col-xs-12">
-            @include('admin.scale-station.template.search-scale')
+            @include('admin.scale-station.template.search-scale-odd')
         </div>
     </div>
 
