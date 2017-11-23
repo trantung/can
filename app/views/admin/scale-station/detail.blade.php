@@ -219,7 +219,7 @@
                         <a href="javascript:;"> Trọng lượng hàng (kg)</a>
                     </td>
                     <td>  
-                        {{ $data->package_weight }}
+                        {{ number_format($data->package_weight) }}
                     </td>
                 </tr>
             @endif
