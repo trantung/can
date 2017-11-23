@@ -200,6 +200,22 @@ class ScaleStationController extends BaseCategoryController {
             return View::make('admin.scale-station.statistic')->with(compact('data', 'type'));
             
         }
+
+        if (
+            isset($input['number_ticket']) 
+            && isset($input['transfer_type']) 
+            && isset($input['warehouse_id'])
+            && isset($input['department_id'])
+            && isset($input['from_date'])
+            && isset($input['to_date'])
+            // && isset($input['customer_id'])
+            // && isset($input['customer_group_id'])
+        ){
+            $data = $this->searchOdd($input);
+            return View::make('admin.scale-station.statistic_odd')->with(compact('data', 'type'));
+            
+        }
+
         // dd($input);
         // $model = new ScaleKCS();
         // if (isset($input['from_date']) && $input['from_date'] != '') {
@@ -521,6 +537,58 @@ class ScaleStationController extends BaseCategoryController {
                     $query = $query->where('created_at', '<=', $input['to_date']);
                 }
             })->groupBy('campaign_code')->get();
+            // dd($data);
+            return $data;
+        }
+        return null;
+    }
+    public function searchOdd($input)
+    {
+        if (
+            isset($input['number_ticket']) 
+            && isset($input['transfer_type']) 
+            && isset($input['warehouse_id'])
+            && isset($input['department_id'])
+            && isset($input['from_date'])
+            && isset($input['to_date'])
+            // && isset($input['customer_id'])
+            // && isset($input['customer_group_id'])
+        ) {
+            $data = ScaleKCS::where('campaign_code', '=', '')
+                ->where('package_weight', '>', 0)
+                ->whereNull('type')
+                ->where(function ($query) use ($input) {
+                if($input['customer_group_id']) {
+                    $customerShipListId = CustomerManage::where('customer_group_id', $input['customer_group_id'])
+                        ->lists('customer_id');
+                    $customerListId = CustomerShip::whereIn('id', $customerShipListId)
+                        ->lists('customer_id');
+                    // dd($customerListId);
+                    $query = $query->whereIn('customer_id', $customerListId);
+                }
+                if($input['number_ticket']) {
+                    $query = $query->where('number_ticket', '=', $input['number_ticket']);
+                }
+                if($input['transfer_type']) {
+                    $query = $query->where('transfer_type', $input['transfer_type']);
+                }
+                if($input['warehouse_id']) {
+                    $query = $query->where('warehouse_id', $input['warehouse_id']);
+                }
+                if($input['department_id']) {
+                    $query = $query->where('department_id',  $input['department_id']);
+                }
+                if($input['customer_id']) {
+                    $query = $query->where('customer_id',  $input['customer_id']);;
+                }
+
+                if($input['from_date']) {
+                    $query = $query->where('created_at', '>=', $input['from_date']);
+                }
+                if($input['to_date']) {
+                    $query = $query->where('created_at', '<=', $input['to_date']);
+                }
+            })->groupBy('number_ticket')->get();
             // dd($data);
             return $data;
         }

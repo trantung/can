@@ -11,7 +11,7 @@
                     <label>Mã phiếu cân</label>
                 </div>
                 <div class="col-md-9">
-                    <input class="form-control input-sm" type="text" name="number_ticker" value="{{ Input::old('number_ticker') }}">
+                    <input class="form-control input-sm" type="text" name="number_ticket" value="{{ Input::old('number_ticket') }}">
                 </div>
             </div>
         </div>
