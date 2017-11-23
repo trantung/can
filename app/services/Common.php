@@ -1,6 +1,19 @@
 <?php
 class Common {
 
+	public static function hasRole($roleID){
+		if( !Auth::admin()->check() ){
+			return false;
+		}
+		$userid = Auth::admin()->get()->id;
+		$listRole = RoleUser::where('user_id', $userid)->lists('role_id');
+		
+		if( in_array($roleID, $listRole) | in_array(ADMIN, $listRole) ){
+			return true;
+		}
+		return false;
+	}
+
 	public static function getPermissionByModule($moduleId)
 	{
 		return Permission::where('module_id', $moduleId)->lists('name', 'id');

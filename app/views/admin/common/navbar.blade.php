@@ -9,35 +9,36 @@
   <!-- Header Navbar: style can be found in header.less -->
   <nav class="navbar navbar-static-top" role="navigation">
     <!-- Sidebar toggle button-->
-     <ul class="nav navbar-nav">
-
-        <li>
-            <a href="javascript: void(0)" id="hr-menu">
-                <i class="fa fa-users"></i> <span>Quản lý nhân sự</span>
-            </a>
-        </li>
-        <li>
-            <a href="javascript: void(0)" id="salary-menu">
-                <span>Lương </span>
-            </a>
-        </li>
-        <li>
-            <a href="javascript: void(0)" id="insuance-menu">
-                <span>Bảo hiểm</span>
-            </a>
-        </li>
-        <li>
-            <a href="javascript: void(0)" id="system-menu">
-                <span>Cài đặt hệ thống</span>
-            </a>
-        </li>
-        <li>
-            <a href="javascript: void(0)" id="system-statistic" data-toggle="control-sidebar">
-                <span>Thống kê</span>
-            </a>
-        </li>
-
-      </ul>
+      @if ( Common::hasRole(EDITOR) )
+        <ul class="nav navbar-nav">
+          <li>
+              <a href="javascript: void(0)" id="hr-menu">
+                  <i class="fa fa-users"></i> <span>Quản lý nhân sự</span>
+              </a>
+          </li>
+          <li>
+              <a href="javascript: void(0)" id="salary-menu">
+                  <span>Lương </span>
+              </a>
+          </li>
+          <li>
+              <a href="javascript: void(0)" id="insuance-menu">
+                  <span>Bảo hiểm</span>
+              </a>
+          </li>
+          <li>
+              <a href="javascript: void(0)" id="system-menu">
+                  <span>Cài đặt hệ thống</span>
+              </a>
+          </li>
+          <li>
+              <a href="javascript: void(0)" id="system-statistic" data-toggle="control-sidebar">
+                  <span>Thống kê</span>
+              </a>
+          </li>
+        </ul>
+      @endif
+      
 
     <div class="navbar-custom-menu">
       <ul class="nav navbar-nav">

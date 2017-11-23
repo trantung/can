@@ -6,9 +6,10 @@ define('CONTENT', 2);
 
 define('CONTENT_SEGMENT', 'content');
 //permission role
-define('ADMIN', 1);
-define('EDITOR', 2);
-define('SEO', 3);
+define('ADMIN', 1); /// Quan tri vien
+define('EDITOR', 2); /// Phong nhan su
+define('EMPLOYEES', 3); /// Nhan vien can
+define('SEO', 4); /// Nhan vien SEO
 
 //pagination manager admin
 define('PAGINATE', 10);
