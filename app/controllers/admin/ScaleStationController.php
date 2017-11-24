@@ -595,7 +595,7 @@ class ScaleStationController extends BaseCategoryController {
                 if ($input['category_id']) {
                     $query = $query->where('category_id', $input['category_id']);
                 }
-            })->groupBy('number_ticket')->get();
+            })->orderBy('id', 'desc')->groupBy('number_ticket')->get();
             return $data;
         }
         return null;
