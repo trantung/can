@@ -11,7 +11,7 @@
                     <label>Mã phiếu cân</label>
                 </div>
                 <div class="col-md-9">
-                    <input class="form-control input-sm" type="text" name="number_ticket" value="{{ Input::old('number_ticket') }}">
+                    <input class="form-control input-sm" type="text" name="number_ticket" value="{{ Input::get('number_ticket') }}">
                 </div>
             </div>
         </div>
@@ -21,7 +21,7 @@
                     <label>Chi nhánh</label>
                 </div>
                 <div class="col-md-9">
-                    {{ Form::select('department_id', ['' => 'Chọn tất cả', ] + Company::level(4)->lists('name', 'id'), null,  array('class' => 'form-control', 'id' => 'department_id'))}}
+                    {{ Form::select('department_id', ['' => 'Chọn tất cả', ] + Company::level(4)->lists('name', 'id'), Input::get('department_id'),  array('class' => 'form-control', 'id' => 'department_id'))}}
                 </div>
             </div>
         </div>
@@ -50,7 +50,7 @@
                     <label>Xuất nhập</label>
                 </div>
                 <div class="col-md-9">
-                    {{ Form::select('transfer_type', Common::getKieuCan(), null, array('class' => 'form-control'))}}
+                    {{ Form::select('transfer_type', Common::getKieuCan(), Input::get('transfer_type'), array('class' => 'form-control'))}}
                 </div>
             </div>
         </div>
@@ -60,7 +60,7 @@
                     <label>Từ ngày</label>
                 </div>
                 <div class="col-md-9">
-                    <input class="form-control input-sm" type="text" name="from_date" id="datepicker5" value="{{ Input::old('from_date') }}">
+                    <input class="form-control input-sm" type="text" name="from_date" id="datepicker5" value="{{ Input::get('from_date') }}">
                 </div>
             </div>
         </div>
@@ -70,7 +70,7 @@
                     <label>Đến ngày</label>
                 </div>
                 <div class="col-md-9">
-                    <input class="form-control input-sm" type="text" name="to_date" id="datepicker6" value="{{ Input::old('to_date') }}">
+                    <input class="form-control input-sm" type="text" name="to_date" id="datepicker6" value="{{ Input::get('to_date') }}">
                 </div>
             </div>
         </div>
@@ -82,7 +82,7 @@
                     <label>Loại sản phẩm</label>
                 </div>
                 <div class="col-md-9">
-                    {{ Form::select('category_id', ['' => 'Chọn']+Common::listNameProductAndCategory(), null, array('class' => 'form-control')) }} 
+                    {{ Form::select('category_id', ['' => 'Chọn']+Common::listNameProductAndCategory(), Input::get('category_id'), array('class' => 'form-control')) }} 
                 </div>
             </div>
         </div>
@@ -92,7 +92,7 @@
                     <label>Nhóm khách hàng</label>
                 </div>
                 <div class="col-md-9">
-                    {{ Form::select('customer_group_id', ['' => 'Chọn']+Common::getCustomerGroup(), null, array('class' => 'form-control')) }} 
+                    {{ Form::select('customer_group_id', ['' => 'Chọn']+Common::getCustomerGroup(), Input::get('customer_group_id'), array('class' => 'form-control')) }} 
                 </div>
             </div>
         </div>
