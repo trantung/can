@@ -112,7 +112,21 @@ class Common {
 			}
 			
 		}
-		return 'không xác định được nhân viên cân';
-		
+		return 'N/A';
+	}
+	public static function listNameProductAndCategory()
+	{
+		$listProduct = Product::all();
+		$listProductCategory = ProductCategory::all();
+		$array = [];
+		foreach ($listProduct as $key => $value) {
+			$modelId = PRODUCT.$value->id;
+			$array[$modelId] = $value->name;
+		}
+		foreach ($listProductCategory as $k => $v) {
+			$modelCategoryId = PRODUCTCATEGORY.$v->id;
+			$array[$modelCategoryId] = $v->name;
+		}
+		return $array;
 	}
 }

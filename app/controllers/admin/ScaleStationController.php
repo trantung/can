@@ -591,6 +591,9 @@ class ScaleStationController extends BaseCategoryController {
                 if($input['to_date']) {
                     $query = $query->where('created_at', '<=', $input['to_date']);
                 }
+                if ($input['category_id']) {
+                    $query = $query->where('category_id', $input['category_id']);
+                }
             })->groupBy('number_ticket')->get();
             return $data;
         }
