@@ -124,14 +124,14 @@
         <div class="col-md-4">
             <div class="row">
                 <div class="col-md-3">
-                    <a href="{{ action('ScaleStationController@exportExcelOdd') }}" class="btn btn-primary">Xuất excel</a>
+                    <a href="{{ action('ScaleStationController@exportExcelOdd', Input::all()) }}" class="btn btn-primary">Xuất excel</a>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="row">
                 <div class="col-md-3">
-                    <a href="{{ url('/admin/scale-station/statistic/normal') }}" class="btn btn-primary">
+                    <a href="{{ url('/admin/scale-station/statistic/normal') }}" class="btn btn-danger">
                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>Huỷ tìm kiếm</a>
                 </div>
             </div>
@@ -139,7 +139,7 @@
         <div class="col-md-4">
             <div class="row">
                 <div class="col-md-3">
-                    <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>Tìm kiếm</button>
+                    <button type="submit" class="btn btn-warning"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>Tìm kiếm</button>
                 </div>
             </div>
         </div>

@@ -656,7 +656,9 @@ class ScaleStationController extends BaseCategoryController {
     public function exportExcelOdd()
     {
         $input = Input::all();
+        // dd($input);
         if ($input) {
+            // dd(11);
             $list = $this->searchOdd($input);
         } else {
             $list = ScaleKCS::where('campaign_code', '=', '')
@@ -664,7 +666,7 @@ class ScaleStationController extends BaseCategoryController {
                 ->where('package_weight', '>', 0)
                 ->get();
         }
-        
+        dd($list);
         // dd($list->toArray());
         $array1 = [
             'mã cân',
