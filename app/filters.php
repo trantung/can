@@ -59,6 +59,9 @@ Route::filter('checkPermission', function()
 {
 	$userid = Auth::admin()->get()->id;
     $listRole = RoleUser::where('user_id', $userid)->lists('role_id');
+    if (!in_array(1, $listRole) && !in_array(2, $listRole) && !in_array(3, $listRole) ) {
+    	return View::make('errors.404');
+    }
     $listPermission = RolePermission::whereIn('role_id', $listRole)->lists('permission_id');
     $listPermissionPrivate = PermissionUser::where('user_id', $userid)->lists('permission_id');
     $approvePermission = array_merge($listPermission, $listPermissionPrivate);
