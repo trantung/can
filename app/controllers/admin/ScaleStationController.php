@@ -554,6 +554,7 @@ class ScaleStationController extends BaseCategoryController {
             // && isset($input['customer_id'])
             // && isset($input['customer_group_id'])
         ) {
+            // dd($input);
             $data = ScaleKCS::where('campaign_code', '=', '')
                 ->where('package_weight', '>', 0)
                 ->whereNull('type')
@@ -565,6 +566,12 @@ class ScaleStationController extends BaseCategoryController {
                         ->lists('customer_id');
                     // dd($customerListId);
                     $query = $query->whereIn('customer_id', $customerListId);
+                }
+                if($input['customer_id']) {
+                    $customer = CustomerShip::find($input['customer_id']);
+                    $customerId = $customer->customer_id;
+                    // dd($customerId);
+                    $query = $query->where('customer_id', $customerId);
                 }
                 if($input['number_ticket']) {
                     $query = $query->where('number_ticket', '=', $input['number_ticket']);
@@ -578,10 +585,6 @@ class ScaleStationController extends BaseCategoryController {
                 if($input['department_id']) {
                     $query = $query->where('department_id',  $input['department_id']);
                 }
-                if($input['customer_id']) {
-                    $query = $query->where('customer_id',  $input['customer_id']);;
-                }
-
                 if($input['from_date']) {
                     $query = $query->where('created_at', '>=', $input['from_date']);
                 }
@@ -589,7 +592,6 @@ class ScaleStationController extends BaseCategoryController {
                     $query = $query->where('created_at', '<=', $input['to_date']);
                 }
             })->groupBy('number_ticket')->get();
-            // dd($data);
             return $data;
         }
         return null;
