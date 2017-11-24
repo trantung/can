@@ -10,6 +10,26 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
+// App::missing(function($exception)
+// {
+//     $segment = Request::segment(1);
+//     dd($segment);
+
+//     // if(Request::segment(3) && strpos(Request::url(), '/games/')){
+//     //     $errorType = ERROR_TYPE_MISSING;
+//     // } else {
+//     //     $errorType = ERROR_TYPE_404;
+//     // }
+//     // // Log::error( Request::url() );
+//     // return CommonLog::logErrors($errorType);
+// });
+
+App::error(function(Exception $exception)
+{
+    return Redirect::action('AdminController@login');
+    // Log::error($exception);
+});
+
 Route::get('/', function(){
     $company = Company::find(33);
     dd(getChild($company));
