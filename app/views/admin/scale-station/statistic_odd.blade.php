@@ -40,7 +40,7 @@
                   <td>{{ $index }}</td>
                   <td>{{ $value->number_ticket }}</td>
                   <td>{{ getCustomerGroup($value) }}</td>
-                  <td>{{ $value->customer_name }}</td>
+                  <td>{{ $value->customer_name }}--- {{$value->customer_id}}</td>
                   <td>{{ getNameWarehouse($value->warehouse_id) }}</td>
                   <td>{{ getNameCompany($value->department_id) }}</td>
                   <td>{{ number_format($value->package_weight) }}</td>

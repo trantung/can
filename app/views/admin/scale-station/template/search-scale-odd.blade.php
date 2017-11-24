@@ -79,6 +79,16 @@
         <div class="col-md-4">
             <div class="row">
                 <div class="col-md-3">
+                    <label>Loại sản phẩm</label>
+                </div>
+                <div class="col-md-9">
+                    {{ Form::select('category_id', ['' => 'Chọn']+Common::listNameProductAndCategory(), null, array('class' => 'form-control')) }} 
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="row">
+                <div class="col-md-3">
                     <label>Nhóm khách hàng</label>
                 </div>
                 <div class="col-md-9">

@@ -319,10 +319,10 @@ class CommonNormal
 	public static function getNameProduct($stringIdCategory)
 	{
 		$model = self::getProductCategoryId($stringIdCategory);
-		if ($model[1] == 1) {
+		if ($model[1] == PRODUCT) {
 			$modelName = 'Product';
 		}
-		if ($model[1] == 2) {
+		if ($model[1] == PRODUCTCATEGORY) {
 			$modelName = 'ProductCategory';
 		}
 		return $modelName;
