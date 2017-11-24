@@ -1,6 +1,7 @@
 <link rel="stylesheet" type="text/css" href="../assets/js/combotree/themes/metro/easyui.css">
 <link rel="stylesheet" type="text/css" href="../assets/js/combotree/themes/icon.css">
 <link rel="stylesheet" type="text/css" href="../assets/js/combotree/demo/demo.css">
+@include('admin.scale-station.template.search-scale-odd-js')
 <div class="margin-bottom margin-top">
     {{ Form::open(array('action' => array('ScaleStationController@getStatistic', $type), 'method' => 'GET', 'id'=>'searchForm')) }}
     {{-- haind --}}
@@ -92,7 +93,7 @@
                     <label>Nhóm khách hàng</label>
                 </div>
                 <div class="col-md-9">
-                    {{ Form::select('customer_group_id', ['' => 'Chọn']+Common::getCustomerGroup(), Input::get('customer_group_id'), array('class' => 'form-control')) }} 
+                    {{ Form::select('customer_group_id', ['' => 'Chọn']+Common::getCustomerGroup(), Input::get('customer_group_id'), array('class' => 'form-control', 'id' => 'customer_group_id')) }} 
                 </div>
             </div>
         </div>
