@@ -31,7 +31,14 @@
                     <label>Kho</label>
                 </div>
                 <div class="col-md-9">
-                    {{ Form::select('warehouse_id', ['' => 'Chọn tất cả', ] + Warehouse::lists('name', 'id'), null,  array('class' => 'form-control'))}}
+                    <?php $warehouselist = Warehouse::select(['department_id', 'id', 'name'])->get(); ?>
+                    <select name="warehouse_id" id="warehouse_id" class="form-control">
+                        <option value="">Chọn tất cả</option>
+                        @foreach ($warehouselist as $key => $value)
+                            <option style="display:{{ (Input::get('department_id') != $value->department_id ) ? 'none' : 'block' }}" {{ (Input::get('warehouse_id') == $value->id ) ? 'selected' : '' }} department-id="{{ $value->department_id }}" value="{{ $value->id }}">{{ $value->name }}</option>
+                        @endforeach
+                    </select>
+                    {{-- {{ Form::select('warehouse_id', ['' => 'Chọn tất cả', ] + Warehouse::lists('name', 'id', 'department_id'), null,  array('class' => 'form-control'))}} --}}
                 </div>
             </div>
         </div>
@@ -85,7 +92,19 @@
                     <label>Khách hàng</label>
                 </div>
                 <div class="col-md-9">
-                    {{ Form::select('customer_id', ['' => 'Chọn']+Common::getCustomerList(), null, array('class' => 'form-control')) }} 
+                    <?php 
+                    $customerShip = CustomerShip::select(['customer_ships.id as customer_ships_id', 'customer_ships.customer_name as customer_ships_name', 'customer_groups.id as customer_groups_id'])
+                        ->join('customer_manage', 'customer_manage.customer_id', '=', 'customer_ships.id')
+                        ->join('customer_groups', 'customer_manage.customer_group_id', '=', 'customer_groups.id')
+                        ->get();
+                    // dd($customerShip->toArray()); ?>
+                    <select name="customer_id" id="customer_id" class="form-control">
+                        <option value="">Chọn tất cả</option>
+                        @foreach ($customerShip as $key => $value)
+                            <option style="display:{{ (Input::get('customer_group_id') != $value->customer_groups_id ) ? 'none' : 'block' }}" {{ (Input::get('customer_id') == $value->customer_ships_id ) ? 'selected' : '' }} customer-groups-id="{{ $value->customer_groups_id }}" value="{{ $value->customer_ships_id }}">{{ $value->customer_ships_name }}</option>
+                        @endforeach
+                    </select>
+                    {{-- {{ Form::select('customer_id', ['' => 'Chọn']+Common::getCustomerList(), null, array('class' => 'form-control')) }}  --}}
                 </div>
             </div>
         </div>

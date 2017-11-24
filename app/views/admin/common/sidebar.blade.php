@@ -120,11 +120,11 @@
                                 <span>Danh sách thành phẩm</span>
                             </a>
                         </li>
-                        <li>
+                        {{-- <li>
                             <a href="{{ action('ProductionLossController@index') }}">
                                 <span>Hao hụt sản xuất</span>
                             </a>
-                        </li>
+                        </li> --}}
                     </ol>
                 </li>
                 
