@@ -666,7 +666,6 @@ class ScaleStationController extends BaseCategoryController {
                 ->where('package_weight', '>', 0)
                 ->get();
         }
-        dd($list);
         // dd($list->toArray());
         $array1 = [
             'mã cân',
