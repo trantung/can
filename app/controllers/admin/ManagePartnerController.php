@@ -23,6 +23,9 @@ class ManagePartnerController extends AdminController {
      *
      * @return Response
      */
+    function __construct(){
+        $this->beforeFilter('checkPermission', array('except'=>array('login','doLogin','logout')));
+    }
     public function store()
     {
         $input = Input::except('_token');

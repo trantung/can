@@ -30,7 +30,67 @@ App::error(function(Exception $exception)
     // Log::error($exception);
 });
 
-Route::get('/', function(){
+Route::get('/insert-permission', function(){
+    $array = [
+        'Quản lý nhóm khách hàng' => "CustomerGroupController",
+        'Quản lý khách hàng' => "ConfigCustomerController",
+        'Quản lý đối tác' => "ManagePartnerController",
+        'Quản lý nhóm đối tác' =>"PartnerController",
+        'Danh sách thành phẩm' =>"ProductController",
+        'Cấu hình sản phẩm' =>"ProductManagerController",
+        'Tự sản xuất' =>"ProductionAutoController",
+        'Danh sách nguyên liệu' =>"ProductCategoryController",
+        'Quản lý trạm cân, thống kê cân lẻ/chiến dịch, in chứng thư' =>"ScaleStationController",
+        'Hao hụt lưu kho' =>"StorageLossController",
+        'Danh sách kho' =>"WarehouseController",
+    ];
+    $array1 = [
+        '__construct',
+        'login',
+        'doLogin',
+        'logout',
+        'beforeFilter',
+        'afterFilter',
+        'forgetBeforeFilter',
+        'forgetAfterFilter',
+        'getBeforeFilters',
+        'getAfterFilters',
+        'getFilterer',
+        'setFilterer',
+        'callAction',
+        'missingMethod',
+        '__call'
+    ];
+    // $ob = get_class_methods('CustomerGroupController');
+    // $arrayDiff = array_diff($ob, $array1);
+    // dd($arrayDiff);
+    // $string = implode(',', $arrayDiff);
+    // dd(implode(',', $ob));
+    // dd(get_class_methods('ScaleStationController'));
+    foreach ($array as $key => $value) {
+        $listMethodClass = get_class_methods($value);
+        $arrayDiff = array_diff($listMethodClass, $array1);
+        // dd($arrayDiff);
+        $string = implode(',', $arrayDiff);
+        Permission::create([
+            'name' => $key,
+            'module_id' => 8,
+            'controller_action' => $value,
+            'action' => $string,
+        ]);
+    }
+dd(1);
+    // $ob = files('hr');
+    $path = app_path();
+    // $controllers = $path[4];
+    // dd($path);
+    $files = scandir($path.'/controllers/admin');
+    unset($files[0]);
+    unset($files[1]);
+    unset($files[29]);
+    dd($files);
+
+
     $company = Company::find(33);
     dd(getChild($company));
     dd(Admin::isHr());

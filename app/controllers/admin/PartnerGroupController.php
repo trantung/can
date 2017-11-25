@@ -117,7 +117,7 @@ class PartnerGroupController extends BaseCategoryController {
     }
 
 
-    protected function viewOfActionIndex(){
+    protected function viewOfActionIndex(){tác
         return 'admin.partner-group.index';
     }
     protected function viewOfActionCreate(){

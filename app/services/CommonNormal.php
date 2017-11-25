@@ -295,7 +295,7 @@ class CommonNormal
 					self::updateProcessScaleKcs($input, 'number_ticket');
 				}
 			}
-			//kieu 5  = chuyen tiep kho noi bo, 6 = chuyen tiep kho ngoai, 7 = can ho
+			//kieu 6  = chuyen tiep kho noi bo, 5 = chuyen tiep kho ngoai, 7 = can ho
 			//TODO
 			return true;
 		} else {

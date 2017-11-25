@@ -10,13 +10,7 @@
     <section class="sidebar">
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ol class="sidebar-menu child-menu" id="child-hr">
-
-           {{--  <li>
-                <a href="{{ action('HumanResourcesController@index') }}">
-                    <i class="fa fa-users"></i> <span>Danh sách nhân viên</span>
-                </a>
-            </li> --}}
-            @if ( Common::hasRole(EDITOR) )
+            @if (Common::hasRoleNhansu())
                 <li>
                     <a href="{{ action('CompanyCategoryController@index') }}">
                         <span>Cơ cấu tổ chức</span>
@@ -80,8 +74,7 @@
                 </li>
                 
             @endif
-
-            @if ( Common::hasRole(EMPLOYEES) )
+            @if ( Common::hasRoleScale() )
                 <li>
                     <a href="{{ action('ProductManagerController@index') }}">
                         <span>Cấu hình sản phẩm</span>
@@ -179,18 +172,6 @@
                     </ol>
                 </li>
             @endif
-            
-
-           {{--  <li>
-                <a href="{{ action('SalariesController@index') }}">
-                    <span>Lương nhân viên</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ action('InsuranceController@index') }}">
-                    <span>Bảo hiểm nhân viên</span>
-                </a>
-            </li> --}}
         </ol>
         <ol class="child-menu sidebar-menu" id="child-system" style="display: none">
             @if(Admin::isAdmin())

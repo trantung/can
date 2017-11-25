@@ -133,8 +133,6 @@ class PermissionController extends AdminController {
 			$inputSave = ['permission_id' => array_keys($input['permission'])];
 			Common::saveOneToMany('PermissionUser', $inputPrimaryKey, $inputSave);
 		}
-		
-		dd(44);
 		return Redirect::action('PermissionController@index');
 	}
 

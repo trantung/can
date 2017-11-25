@@ -57,50 +57,22 @@ Route::filter('admin', function()
 
 Route::filter('checkPermission', function()
 {
-	$userid = Auth::admin()->get()->id;
-    $listRole = RoleUser::where('user_id', $userid)->lists('role_id');
-    if (!in_array(1, $listRole) && !in_array(2, $listRole) && !in_array(3, $listRole) ) {
-    	return View::make('errors.404');
-    }
+	$userId = Auth::admin()->get()->id;
+    $listRole = RoleUser::where('user_id', $userId)->lists('role_id');
     $listPermission = RolePermission::whereIn('role_id', $listRole)->lists('permission_id');
-    $listPermissionPrivate = PermissionUser::where('user_id', $userid)->lists('permission_id');
-    $approvePermission = array_merge($listPermission, $listPermissionPrivate);
-    $permissions = Permission::whereIn('id', $approvePermission)->get();
-			$list = '';
-	foreach ($permissions as $key => $value) {
-		$previous = $key - 1;
-		$data[$key] = new stdClass();
-		$data[$key] = $value;
-		if (isset($data[$previous])) {
-			if ($value->controller_action == $data[$previous]['controller_action']) {
-    			$list .= $value->action .',';
-				$arrayPermission[$value->controller_action] = $list;
-    		}
-		}
-
-	}
+    $listPermissionPrivate = PermissionUser::where('user_id', $userId)->lists('permission_id');
+    $approvePermission = array_unique(array_merge($listPermission, $listPermissionPrivate));
+    $permissions = Permission::whereIn('id', $approvePermission)->lists('action', 'controller_action');
     $route = Route::getCurrentRoute()->getActionName();
     $controller_action = explode('@', $route)[0];
     $action = explode('@', $route)[1];
-	if (!isset($arrayPermission[$controller_action])) {
+	if (!isset($permissions[$controller_action])) {
         return View::make('errors.404');
 	}
-	$arrPer = explode(',', $arrayPermission[$controller_action]);
+	$arrPer = explode(',', $permissions[$controller_action]);
 	if (!in_array($action, $arrPer)) {
         return View::make('errors.404');
     }
-	// dd($ab2);
- //    $listController = array_values($permissions);
- //    $listAction = array_keys($permissions);
-
- //    if (!in_array($controller_action, $listController)) {
- //        dd('Khong co quyen');
- //    }
- //    $test = implode(',', $listAction);
- //    $arrTest = explode(',', $test);
- //    if (!in_array($action, $arrTest)) {
- //        return 'sai cmnr';
- //    }
 });
 
 Route::filter('auth.basic', function()

@@ -21,6 +21,7 @@ class CustomerGroupController extends BaseCategoryController {
     const EMAIL           = 'email';
 
     function __construct(){
+        $this->beforeFilter('checkPermission', array('except'=>array('login','doLogin','logout')));
         $this->model = $this->getModel();
     }
 

@@ -9,7 +9,7 @@
   <!-- Header Navbar: style can be found in header.less -->
   <nav class="navbar navbar-static-top" role="navigation">
     <!-- Sidebar toggle button-->
-      @if ( Common::hasRole(EDITOR) )
+      @if ( Common::hasRoleNhansu() )
         <ul class="nav navbar-nav">
           <li>
               <a href="javascript: void(0)" id="hr-menu">

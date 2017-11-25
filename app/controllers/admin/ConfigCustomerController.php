@@ -17,7 +17,9 @@ class ConfigCustomerController extends AdminController {
     const MODULE_ID     = 'module_id';
     const CONTROLLER_ACTION      = 'controller_action';
     const ACTION   = 'action';
-
+    function __construct(){
+        $this->beforeFilter('checkPermission', array('except'=>array('login','doLogin','logout')));
+    }
     /**
      * Store a newly created resource in storage.
      *
