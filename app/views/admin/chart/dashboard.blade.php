@@ -63,16 +63,19 @@
 </div> <!-- End statistic-list --> --}}
 <?php
 $scale_arr = [];
-foreach ($scale_rate as $key => $value) {
-	if( in_array($value->transfer_type, [2,4]) ){
-		///// Nhap kho
-		$scale_arr[$value->created]['import'][] = (int)$value->package_weight;
-	}
-	else{
-		// Xuat kho
-		$scale_arr[$value->created]['export'][] = (int)$value->package_weight;
+if (isset($scale_rate)) {
+	foreach ($scale_rate as $key => $value) {
+		if( in_array($value->transfer_type, [2,4]) ){
+			///// Nhap kho
+			$scale_arr[$value->created]['import'][] = (int)$value->package_weight;
+		}
+		else{
+			// Xuat kho
+			$scale_arr[$value->created]['export'][] = (int)$value->package_weight;
+		}
 	}
 }
+
 // dd($scale_arr);
 ?>
 
