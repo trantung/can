@@ -26,8 +26,6 @@
                   <th>Mã cân</th>
                   <th>Nhóm Khách hàng</th>
                   <th>Khách </th>
-                  <th>Nhóm partner</th>
-                  <th>Partner</th>
                   <th>Kho</th>
                   <th>Chi nhánh</th>
                   <th>KL hàng(kg)</th>
@@ -44,8 +42,6 @@
                   <td>{{ $value->number_ticket }}</td>
                   <td>{{ getCustomerGroup($value) }}</td>
                   <td>{{ $value->customer_name }}</td>
-                  <td>{{ getPartnerGroup() }}</td>
-                  <td>{{ $value->doi_tac_ten }}</td>
                   <td>{{ getNameWarehouse($value->warehouse_id) }}</td>
                   <td>{{ getNameCompany($value->department_id) }}</td>
                   <td>{{ $value->package_weight }}</td>
