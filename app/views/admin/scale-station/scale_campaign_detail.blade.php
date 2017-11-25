@@ -38,7 +38,7 @@
                 <?php $index = 1; ?>
                 @foreach($listScale as $key => $value)
                 <tr>
-                  <td>{{ $value->id }}</td>
+                  <td>{{ $index }}</td>
                   <td>{{ $value->number_ticket }}</td>
                   <td>{{ getCustomerGroup($value) }}</td>
                   <td>{{ $value->customer_name }}</td>
