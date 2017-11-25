@@ -731,6 +731,62 @@ class ScaleStationController extends BaseCategoryController {
     public function searchDetailCampaign()
     {
         $input = Input::all();
+        $campaignCode = $input['campaign_code'];
+        //TODO 
+        // return View::make('admin.scale-station.scale_campaign_detail')->with(compact('listScale','campaignCode'));
+        if (
+            isset($input['number_ticket']) 
+            && isset($input['transfer_type']) 
+            && isset($input['warehouse_id'])
+            && isset($input['department_id'])
+            && isset($input['from_date'])
+            && isset($input['to_date'])
+            // && isset($input['customer_id'])
+            // && isset($input['customer_group_id'])
+        ) {
+            // dd($input);
+            $listScale = ScaleKCS::where('campaign_code', $input['campaign_code'])
+                ->where('package_weight', '>', 0)
+                ->whereNull('type')
+                ->where(function ($query) use ($input) {
+                if($input['customer_group_id']) {
+                    $customerShipListId = CustomerManage::where('customer_group_id', $input['customer_group_id'])
+                        ->lists('customer_id');
+                    $customerListId = CustomerShip::whereIn('id', $customerShipListId)
+                        ->lists('customer_id');
+                    // dd($customerListId);
+                    $query = $query->whereIn('customer_id', $customerListId);
+                }
+                if($input['customer_id']) {
+                    $customer = CustomerShip::find($input['customer_id']);
+                    $customerId = $customer->customer_id;
+                    // dd($customerId);
+                    $query = $query->where('customer_id', $customerId);
+                }
+                if($input['number_ticket']) {
+                    $query = $query->where('number_ticket', '=', $input['number_ticket']);
+                }
+                if($input['transfer_type']) {
+                    $query = $query->where('transfer_type', $input['transfer_type']);
+                }
+                if($input['warehouse_id']) {
+                    $query = $query->where('warehouse_id', $input['warehouse_id']);
+                }
+                if($input['department_id']) {
+                    $query = $query->where('department_id',  $input['department_id']);
+                }
+                if($input['from_date']) {
+                    $query = $query->where('created_at', '>=', $input['from_date']);
+                }
+                if($input['to_date']) {
+                    $query = $query->where('created_at', '<=', $input['to_date']);
+                }
+                if ($input['category_id']) {
+                    $query = $query->where('category_id', $input['category_id']);
+                }
+            })->orderBy('id', 'desc')->groupBy('number_ticket')->get();
+            return View::make('admin.scale-station.scale_campaign_detail')->with(compact('listScale','campaignCode'));
+        }
         dd($input);
     }
     public function exportExcelDetailCampaign($campaignCode)

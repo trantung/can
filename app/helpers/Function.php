@@ -668,7 +668,9 @@ function getLuongTruCan($code)
 
 function getSochuyen($campaignCode)
 {
-	$sochuyen = ScaleKCS::where('campaign_code', $campaignCode)->lists('number_ticket');
+	$sochuyen = ScaleKCS::where('campaign_code', $campaignCode)
+		->groupBy('number_ticket')
+		->lists('number_ticket');
 	$sochuyen = count($sochuyen);
     return $sochuyen;
 }

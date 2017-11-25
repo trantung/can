@@ -131,7 +131,7 @@
         <div class="col-md-4">
             <div class="row">
                 <div class="col-md-3">
-                    <a href="{{ url('/admin/scale-station/statistic/normal') }}" class="btn btn-danger">
+                    <a href="{{ url('/admin/scale-station/statistic/campaign') }}" class="btn btn-danger">
                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>Huỷ tìm kiếm</a>
                 </div>
             </div>

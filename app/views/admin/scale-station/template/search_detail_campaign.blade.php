@@ -4,9 +4,9 @@
 @include('admin.scale-station.template.search-scale-odd-js')
 <div class="margin-bottom margin-top">
     {{ Form::open(array('action' => array('ScaleStationController@searchDetailCampaign'), 'method' => 'GET', 'id'=>'searchForm')) }}
-    {{-- haind --}}
+    {{ Form::hidden('campaign_code', $campaignCode) }}
     <div class="row">
-        <!-- <div class="col-md-4">
+        <div class="col-md-4">
             <div class="row">
                 <div class="col-md-3">
                     <label>Mã phiếu cân</label>
@@ -15,7 +15,7 @@
                     <input class="form-control input-sm" type="text" name="number_ticket" value="{{ Input::get('number_ticket') }}">
                 </div>
             </div>
-        </div> -->
+        </div>
         <div class="col-md-4">
             <div class="row">
                 <div class="col-md-3">
@@ -131,7 +131,7 @@
         <div class="col-md-4">
             <div class="row">
                 <div class="col-md-3">
-                    <a href="{{ url('/admin/scale-station/statistic/normal') }}" class="btn btn-danger">
+                    <a href="{{ action('ScaleStationController@showDetail', $campaignCode) }}" class="btn btn-danger">
                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>Huỷ tìm kiếm</a>
                 </div>
             </div>
