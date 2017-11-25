@@ -390,11 +390,16 @@ class ScaleStationController extends BaseCategoryController {
                      unset($scaleList[$key]);
                 } else {
                 //lấy kcs cuối cùng cho phiếu cân đấy   
+                //thêm các giá trị cho object kcs
+                    $kcs->number_ticket = $value->number_ticket;
+                    $kcs->number_car = $value->number_car;
+                    $kcs->created_at = $value->created_at;
+                    $kcs->package_weight = $value->package_weight;
                     $logKcs[] = $kcs;
                 }
                 
             }
-            dd($logKcs);
+            // dd($logKcs);
             $data = [
                 'company' => $company,
                 'department' => $department,

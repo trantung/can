@@ -173,7 +173,6 @@
           <tbody>
             <tr>
               <td rowspan="2">STT</td>
-              <td rowspan="2">id</td>
               <td rowspan="2">PHƯƠNG TIỆN</td>
               <td colspan="2" align="center">KÝ HIỆU MẪU</td>
               <td rowspan="2">ĐỘ KHÔ</td>
@@ -189,7 +188,6 @@
             @foreach ($log as $key => $value)
               <tr>
                 <td>{{ $key + 1 }}</td>
-                <td>{{ $value->id }}</td>
                 <td>{{ $value->number_car }}</td>
                 <td>{{ $value->number_ticket }}</td>
                 <td>{{ $value->created_at }}</td>
@@ -218,11 +216,11 @@
             @if ($howMany > 0)
               <tr>
                 <td colspan="4">KẾT QUẢ TRUNG BÌNH</td>
-                <td>{{ $totalDoKho / $howMany }}</td>
-                <td>{{ $totalMun / $howMany }}</td>
-                <td>{{ $totalQuaCo / $howMany }}</td>
-                <td>{{ $totalVo / $howMany }}</td>
-                <td>{{ $totalLuongHang / $howMany }}</td>
+                <td>{{ round($totalDoKho / $howMany, 2) }}</td>
+                <td>{{ round($totalMun / $howMany, 2) }}</td>
+                <td>{{ round($totalQuaCo / $howMany, 2) }}</td>
+                <td>{{ round($totalVo / $howMany, 2) }}</td>
+                <td>{{ round($totalLuongHang / $howMany, 2) }}</td>
               </tr>
             @endif
           </tbody>
