@@ -6,24 +6,21 @@
 
 @section('content')
 
-<div class="clearfix" style="margin: 15px 0">
-	<select class="js-example-basic-single">
-		<option value="">Chọn sản phẩm</option>
-		<option value="/tét">Sản phẩm 1</option>
-		<option value="/tét">Sản phẩm 2</option>
-		<option value="/tét">Sản phẩm 3</option>
-		<option value="/tét">Sản phẩm 4</option>
-		<option value="/tét">Sản phẩm 5</option>
-	</select>
-	<button class="btn btn-primary" href="#">Xem</button>
-	<script type="text/javascript">
-		$(document).ready(function() {
-			$(".js-example-basic-single").select2();
-		});
-	</script>
-</div> <!-- End select product -->
+<!-- Chart -->
+{{ HTML::script('adminlte/plugins/chartjs/Chart.min.js') }}
+<?php $color = ['#FF5A5E', '#46BFBD', '#FDB45C', '#00a65a', '#3c8dbc', '#01a758'] ?>
+<br>
 
-<div class="statistic-list">
+{{ Form::open(['action' => ['StatisticsChartController@index'], 'method' => 'GET']) }}
+	<div class="form-group pull-left">
+		{{ Form::select('product', ['' => 'Chọn sản phẩm', '22' => 'Than'], Input::get('product'), ['class' => 'form-control']) }}
+	</div>
+	<div class="form-group"><button class="btn btn-primary" type="submit">Xem</button></div>
+{{ Form::close() }}
+
+<div class="clear clearfix"></div>
+
+{{-- <div class="statistic-list">
 	<div class="row">
 		<div class="col-xs-12 col-sm-3">
 			<div class="item col-1">
@@ -63,81 +60,112 @@
 			</div>
 		</div>
 	</div> <!-- End row -->
-</div> <!-- End statistic-list -->
+</div> <!-- End statistic-list --> --}}
+<?php
+$scale_arr = [];
+foreach ($scale_rate as $key => $value) {
+	if( in_array($value->transfer_type, [2,4]) ){
+		///// Nhap kho
+		$scale_arr[$value->created]['import'][] = (int)$value->package_weight;
+	}
+	else{
+		// Xuat kho
+		$scale_arr[$value->created]['export'][] = (int)$value->package_weight;
+	}
+}
+// dd($scale_arr);
+?>
 
-<div class="row">
-	<div class="col-xs-12 col-sm-8 chart-box">
-		<div class="box box-success">
-			<div class="box-header with-border">
-				<h3 class="box-title">Biểu đồ nhập/xuất năm 2017</h3>
-				<div class="box-tools pull-right">
-					<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-					</button>
+@if( !empty(Input::all()) )
+	<div class="row">
+		<div class="col-xs-12 col-sm-8 chart-box">
+			<div class="box box-success">
+				<div class="box-header with-border">
+					<h3 class="box-title">Biểu đồ nhập/xuất năm 2017</h3>
+					<div class="box-tools pull-right">
+						<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+						</button>
+					</div>
 				</div>
+				<div class="box-body">
+					<div class="chart bar">
+						<div class="unit-y pull-left">Khối lượng(tấn)</div>
+						<canvas id="barChart" style="height:230px"></canvas>
+						<div class="unit-x text-center">
+							<span class="sub"><span class="color" style="background: #d0d8dd"></span>Nhập</span>
+							<span class="sub"><span class="color" style="background: #01a758"></span>Xuất</span>
+						</div>
+					</div>
+				</div><!-- /.box-body -->
 			</div>
-			<div class="box-body">
-				<div class="chart bar">
-					<div class="unit-y pull-left">Khối lượng(tấn)</div>
-					<canvas id="barChart" style="height:230px"></canvas>
-					<div class="unit-x text-center">
-						<span class="sub"><span class="color" style="background: #d0d8dd"></span>Nhập</span>
-						<span class="sub"><span class="color" style="background: #01a758"></span>Xuất</span>
+		</div>
+
+		<div class="col-xs-12 col-sm-4 chart-box">
+			<div class="box box-success">
+				<div class="box-header with-border">
+					<h3 class="box-title">Kho dăm tại các chi nhánh</h3>
+					<div class="box-tools pull-right">
+						<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+						</button>
 					</div>
 				</div>
-			</div><!-- /.box-body -->
-		</div>
-	</div>
-
-	<div class="col-xs-12 col-sm-4 chart-box">
-		<div class="box box-success">
-			<div class="box-header with-border">
-				<h3 class="box-title">Kho dăm tại các chi nhánh</h3>
-				<div class="box-tools pull-right">
-					<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-					</button>
-				</div>
+				<div class="box-body">
+					<div class="chart doughnut">
+						<div class="col-xs-12 col-sm-7">
+							<canvas id="doughnutChart" style="height:220px" class="pull-left"></canvas>
+						</div>
+						<div class="col-xs-12 col-sm-5 description">
+							@foreach( $strorage_loss as $key => $value )
+								<div class="item"><span class="circle" style="border:3px solid {{ (isset($color[$key]) ? $color[$key] : '#F7464A') }}"></span>{{ $value->name }}</div>
+							@endforeach
+						</div>
+						<div class="details col-xs-12">
+							@foreach( $strorage_loss as $key => $value )
+								<div class="item">{{ $value->name }}: {{ floor($value->weight/1000) }} tấn</div>
+							@endforeach
+						</div>
+					</div>
+				</div><!-- /.box-body -->
 			</div>
-			<div class="box-body">
-				<div class="chart doughnut">
-					<div class="col-xs-12 col-sm-7">
-						<canvas id="doughnutChart" style="height:220px" class="pull-left"></canvas>
-					</div>
-					<div class="col-xs-12 col-sm-5 description">
-						<div class="item"><span class="circle" style="border:3px solid #F7464A"></span>Thái Nguyên</div>
-						<div class="item"><span class="circle" style="border:3px solid #46BFBD"></span>Hạ Long</div>
-						<div class="item"><span class="circle" style="border:3px solid #FDB45C"></span>Bố Hạ</div>
-					</div>
-					<div class="details col-xs-12">
-						<div class="item">Thái Nguyên: 100 tấn</div>
-						<div class="item">Hạ Long: 50 tấn</div>
-						<div class="item">Bố Hạ: 100 tấn</div>
-					</div>
-				</div>
-			</div><!-- /.box-body -->
+			<script type="text/javascript">
+				//-------------
+			    //- doughnut CHART -
+			    //-------------
+			    var doughnutChart = new Chart($("#doughnutChart").get(0).getContext("2d"));
+			    var doughnutChartData = [
+		    		@foreach( $strorage_loss as $key => $value )
+						{
+							value: {{ floor($value->weight/1000) }},
+							color:"{{ (isset($color[$key]) ? $color[$key] : '#F7464A') }}",
+							highlight: "#FF5A5E",
+							label: "{{ $value->name }}"
+						},
+					@endforeach
+				];
+			    doughnutChart.Doughnut(doughnutChartData, {});
+			</script>
 		</div>
-	</div>
 
-	<div class="col-xs-12 col-sm-8 chart-box">
-		<div class="box box-success">
-			<div class="box-header with-border">
-				<h3 class="box-title">Biểu đồ nhập/xuất năm 2017</h3>
-				<div class="box-tools pull-right">
-					<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-					</button>
+		<div class="col-xs-12 col-sm-8 chart-box">
+			<div class="box box-success">
+				<div class="box-header with-border">
+					<h3 class="box-title">Biểu đồ nhập/xuất năm 2017</h3>
+					<div class="box-tools pull-right">
+						<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+						</button>
+					</div>
 				</div>
+				<div class="box-body">
+					<div class="chart line">
+						<div class="unit-y pull-left">Khối lượng(tấn)</div>
+						<canvas id="lineChart" style="height:230px"></canvas>
+					</div>
+				</div><!-- /.box-body -->
 			</div>
-			<div class="box-body">
-				<div class="chart line">
-					<div class="unit-y pull-left">Khối lượng(tấn)</div>
-					<canvas id="lineChart" style="height:230px"></canvas>
-				</div>
-			</div><!-- /.box-body -->
 		</div>
-	</div>
-</div> <!-- End row -->
+	</div> <!-- End row -->
+@endif
 
-<!-- Chart -->
-{{ HTML::script('adminlte/plugins/chartjs/Chart.min.js') }}
 <script type="text/javascript">
 $(function () {
 	//-------------
@@ -145,7 +173,11 @@ $(function () {
     //-------------
     var barChart = new Chart($("#barChart").get(0).getContext("2d"));
     var barChartData = {
-	    labels: ["1/2017", "2/2017", "3/2017", "4/2017", "5/2017", "6/2017", "7/2017"],
+	    labels: [
+	    	@foreach ($scale_arr as $key => $value)
+	    		'{{ $key }}',
+	    	@endforeach
+	    ],
 	    datasets: [
 	      {
 	        label: "Nhập",
@@ -153,7 +185,11 @@ $(function () {
 	        pointStrokeColor: "#c1c7d1",
 	        pointHighlightFill: "#fff",
 	        pointHighlightStroke: "rgba(220,220,220,1)",
-	        data: [65, 59, 80, 81, 56, 55, 40]
+	        data: [
+	        	@foreach ($scale_arr as $key => $value)
+		    		{{ (isset($value['import'])) ? floor(array_sum($value['import'])/1000) : 0 }},
+		    	@endforeach
+	        ]
 	      },
 	      {
 	        label: "Xuất",
@@ -161,7 +197,11 @@ $(function () {
 	        pointStrokeColor: "rgba(60,141,188,1)",
 	        pointHighlightFill: "#fff",
 	        pointHighlightStroke: "rgba(60,141,188,1)",
-	        data: [28, 48, 40, 19, 86, 27, 90]
+	        data: [
+	        	@foreach ($scale_arr as $key => $value)
+		    		{{ (isset($value['export'])) ? floor(array_sum($value['export'])/1000) : 0 }},
+		    	@endforeach
+	        ]
 	      }
 	    ]
 	};
@@ -172,37 +212,15 @@ $(function () {
     });
 
 	//-------------
-    //- doughnut CHART -
-    //-------------
-    var doughnutChart = new Chart($("#doughnutChart").get(0).getContext("2d"));
-    var doughnutChartData = [
-		{
-			value: 300,
-			color:"#F7464A",
-			highlight: "#FF5A5E",
-			label: "Thái Nguyên"
-		},
-		{
-			value: 50,
-			color: "#46BFBD",
-			highlight: "#5AD3D1",
-			label: "Hạ Long"
-		},
-		{
-			value: 100,
-			color: "#FDB45C",
-			highlight: "#FFC870",
-			label: "Bố Hạ"
-		}
-	];
-    doughnutChart.Doughnut(doughnutChartData, {});
-
-	//-------------
     //- LINE CHART -
     //-------------
     var lineChart = new Chart($("#lineChart").get(0).getContext("2d"));
     var lineChartData = {
-    	labels: ["1/2017", "2/2017", "3/2017", "4/2017", "5/2017", "6/2017", "7/2017"],
+    	labels: [
+	    	@foreach ($scale_arr as $key => $value)
+	    		'{{ $key }}',
+	    	@endforeach
+	    ],
 		datasets: [{
 			label: "My First dataset",
 			fillColor: "rgba(220,220,220,0.2)",
@@ -211,7 +229,11 @@ $(function () {
 			pointStrokeColor: "#fff",
 			pointHighlightFill: "#fff",
 			pointHighlightStroke: "rgba(220,220,220,1)",
-			data: [65, 59, 80, 81, 56, 55, 40]
+			data: [
+	        	@foreach ($scale_arr as $key => $value)
+		    		{{ (isset($value['import'])) ? floor(array_sum($value['import'])/1000) : 0 }},
+		    	@endforeach
+	        ]
 		},
 		{
 			label: "My Second dataset",
@@ -221,7 +243,11 @@ $(function () {
 			pointStrokeColor: "#fff",
 			pointHighlightFill: "#fff",
 			pointHighlightStroke: "rgba(151,187,205,1)",
-			data: [28, 48, 40, 19, 86, 27, 90]
+			data: [
+	        	@foreach ($scale_arr as $key => $value)
+		    		{{ (isset($value['export'])) ? floor(array_sum($value['export'])/1000) : 0 }},
+		    	@endforeach
+	        ]
 		}]
 	};
     lineChart.Line(lineChartData, {});

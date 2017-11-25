@@ -24,11 +24,11 @@
 //     // return CommonLog::logErrors($errorType);
 // });
 
-App::error(function(Exception $exception)
-{
-    return Redirect::action('AdminController@login');
-    // Log::error($exception);
-});
+// App::error(function(Exception $exception)
+// {
+    
+//     return Redirect::action('AdminController@login');
+// });
 
 Route::get('/', function(){
     $company = Company::find(33);
@@ -163,10 +163,9 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/statistics/insurance-detail/{user_id}', array('uses' => 'InsuranceController@detailSearch', 'as' => 'hr.statistics-detail.insurance'));
     Route::get('/statistics/birthday', array('uses' => 'HumanResourcesController@birthdaySearch', 'as' => 'hr.statistics.birthday'));
 
-    //tantan
-    Route::get('/statistic/dashboard', ['as' => 'statisticChart', function(){
-        return View::make('admin.chart.dashboard');
-    }]);
+    // tantan add chart
+    Route::get('/statistic/chart/search', ['uses' => 'StatisticsChartController@search', 'as' => 'ChartFilter']);
+    Route::resource('/statistic/chart', 'StatisticsChartController');
 
     Route::get('/nhap-luong/{object_id}', 'EmploymentHistoryController@buildCompanyText');
     Route::group(['prefix' => 'permission'], function(){
