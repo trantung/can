@@ -39,7 +39,6 @@
                             <option style="display:{{ (Input::get('department_id') != $value->department_id ) ? 'none' : 'block' }}" {{ (Input::get('warehouse_id') == $value->id ) ? 'selected' : '' }} department-id="{{ $value->department_id }}" value="{{ $value->id }}">{{ $value->name }}</option>
                         @endforeach
                     </select>
-                    {{-- {{ Form::select('warehouse_id', ['' => 'Chọn tất cả', ] + Warehouse::lists('name', 'id', 'department_id'), null,  array('class' => 'form-control'))}} --}}
                 </div>
             </div>
         </div>

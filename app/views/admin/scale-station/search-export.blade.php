@@ -5,6 +5,7 @@
 @stop
 
 @section('content')
+@include('admin.scale-station.template.scale-export-js')
   <hr>
   {{-- haind --}}
   <form id="searchExport">
@@ -22,20 +23,26 @@
       <div class="col-md-4">
           <div class="row">
               <div class="col-md-3">
-                  <label>Trạm cân</label>
+                  <label>Chi nhánh</label>
               </div>
               <div class="col-md-9">
-                  {{ Form::select('code', ['' => 'Chọn'] + ScaleStation::lists('name', 'code'), null,  array('class' => 'form-control', 'id' => 'code'))}}
+                  {{ Form::select('department_id', ['' => 'Chọn tất cả', ] + Company::level(4)->lists('name', 'id'), Input::get('department_id'),  array('class' => 'form-control', 'id' => 'department_id'))}}
               </div>
           </div>
       </div>
       <div class="col-md-4">
           <div class="row">
               <div class="col-md-3">
-                  <label>Chi nhánh</label>
+                  <label>Trạm cân</label>
               </div>
               <div class="col-md-9">
-                  {{ Form::select('department_id', ['' => 'Chọn'] + Company::level(4)->lists('name', 'id'), null,  array('class' => 'form-control', 'id' => 'code'))}}
+                  <?php $scaleList = ScaleStation::select(['department_id', 'id', 'name'])->get(); ?>
+                  <select name="code" id="code" class="form-control">
+                      <option value="">Chọn tất cả</option>
+                      @foreach ($scaleList as $key => $value)
+                          <option style="display:{{ (Input::get('department_id') != $value->department_id ) ? 'none' : 'block' }}" {{ (Input::get('code') == $value->id ) ? 'selected' : '' }} department-id="{{ $value->department_id }}" value="{{ $value->id }}">{{ $value->name }}</option>
+                      @endforeach
+                  </select>
               </div>
           </div>
       </div>
