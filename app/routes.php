@@ -72,6 +72,10 @@ Route::get('/fixdatabase', function(){
 
 Route::group(['prefix' => 'admin'], function () {
 
+    Route::get('chart', function(){
+        return View::make('admin.chart.bar');
+    });
+
 	Route::get('/login', array('uses' => 'AdminController@login', 'as' => 'admin.login'));
 	Route::post('/login', array('uses' => 'AdminController@doLogin'));
     Route::get('/logout', array('uses' => 'AdminController@logout', 'as' => 'admin.logout'));
@@ -159,7 +163,10 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/statistics/insurance-detail/{user_id}', array('uses' => 'InsuranceController@detailSearch', 'as' => 'hr.statistics-detail.insurance'));
     Route::get('/statistics/birthday', array('uses' => 'HumanResourcesController@birthdaySearch', 'as' => 'hr.statistics.birthday'));
 
-
+    //tantan
+    Route::get('/statistic/dashboard', ['as' => 'statisticChart', function(){
+        return View::make('admin.chart.dashboard');
+    }]);
 
     Route::get('/nhap-luong/{object_id}', 'EmploymentHistoryController@buildCompanyText');
     Route::group(['prefix' => 'permission'], function(){
