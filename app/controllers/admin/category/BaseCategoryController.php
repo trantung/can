@@ -13,7 +13,7 @@ abstract class BaseCategoryController extends AdminController {
     const DELETED         = 'deleted';
 
     function __construct(){
-        parent::__construct();
+        // parent::__construct();
         $this->model = $this->getModel();
     }
     /**
