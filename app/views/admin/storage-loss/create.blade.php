@@ -1,5 +1,4 @@
 @extends('admin.layout.default')
-@if(Admin::isAdmin())
 @section('title')
 {{ $title='Thêm mới' }}
 @stop
@@ -100,4 +99,3 @@
   }
 </script>
 @stop
-@endif

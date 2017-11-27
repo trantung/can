@@ -1,5 +1,4 @@
 @extends('admin.layout.default')
-@if(Admin::isAdmin())
 @section('title')
 {{ $title='Thêm mới nhóm đối tác' }}
 @stop

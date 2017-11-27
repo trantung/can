@@ -1,5 +1,4 @@
 @extends('admin.layout.default')
-  @if(Admin::isAdmin())
 @stop
 @section('content')
 @include('admin.common.structure_company_css')
@@ -77,4 +76,3 @@
 </div>
 @include('admin.common.structure_company_js')
 @stop
-@endif

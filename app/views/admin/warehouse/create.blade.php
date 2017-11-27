@@ -1,5 +1,4 @@
 @extends('admin.layout.default')
-@if(Admin::isAdmin())
 @section('title')
 {{ $title='Thêm mới kho' }}
 @stop
@@ -49,4 +48,3 @@
 </div>
 @include('admin.common.structure_company_js')
 @stop
-@endif

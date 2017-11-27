@@ -1,5 +1,4 @@
 @extends('admin.layout.default')
-@if(Admin::isAdmin())
 @section('title')
 {{ $title='Danh sách' }}
 @stop
@@ -54,4 +53,3 @@
     </div>
 
 @stop
-@endif
