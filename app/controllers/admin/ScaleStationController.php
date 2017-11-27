@@ -369,6 +369,7 @@ class ScaleStationController extends BaseCategoryController {
             $scaleList = $ob->distinct('number_ticket')->get();
             $scale = $ob->first();
             if ($scale) {
+                dd(111);
                 $modelName = CommonNormal::getNameProduct($scale->category_id);
                 $product = $modelName::find(CommonNormal::getProductCategoryId($scale->category_id)[0]);
                 if (!$product) {
@@ -637,7 +638,6 @@ class ScaleStationController extends BaseCategoryController {
         $input = Input::all();
         // dd($input);
         if ($input) {
-            dd(11);
             $list = $this->searchOdd($input);
         } else {
             $list = ScaleKCS::where('campaign_code', '=', '')
