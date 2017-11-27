@@ -99,7 +99,7 @@ class AdminController extends BaseController {
                     ->withErrors($validator)
                     ->withInput(Input::except('password'));
             } else {
-                $checkLogin = Auth::admin()->attempt($input);
+                $checkLogin = Auth::admin()->attempt($input, true);
                 // dd($input);
                 if($checkLogin) {
                     return Redirect::action('HumanResourcesController@index');

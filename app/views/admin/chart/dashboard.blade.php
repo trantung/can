@@ -4,18 +4,46 @@
 {{ $title='Báo cáo thống kế' }}
 @stop
 
+
 @section('content')
+@include('admin.scale-station.template.search-scale-odd-js')
 
 <!-- Chart -->
 {{ HTML::script('adminlte/plugins/chartjs/Chart.min.js') }}
 <?php $color = ['#FF5A5E', '#46BFBD', '#FDB45C', '#00a65a', '#3c8dbc', '#01a758'] ?>
 <br>
 
-{{ Form::open(['action' => ['StatisticsChartController@index'], 'method' => 'GET']) }}
-	<div class="form-group pull-left">
-		{{ Form::select('product', ['' => 'Chọn sản phẩm', '22' => 'Than'], Input::get('product'), ['class' => 'form-control']) }}
+{{ Form::open(['action' => ['StatisticsChartController@index'], 'method' => 'GET', 'class'=> 'form form-group']) }}
+	<div class="input-group" style="display: inline-block; vertical-align: bottom;">
+		<label>Chọn sản phẩm</label>
+		{{ Form::select('product', ['' => 'Chọn sản phẩm'] + Common::listNameProductAndCategory(), Input::get('product'), ['class' => 'form-control', 'required' => 'true']) }}
 	</div>
-	<div class="form-group"><button class="btn btn-primary" type="submit">Xem</button></div>
+	<div class="input-group" style="display: inline-block; vertical-align: bottom;">
+		<label>Chọn chi nhánh</label>
+		{{ Form::select('department_id', ['' => 'Chọn chi nhánh'] + Company::level(4)->lists('name', 'id'), Input::get('department_id'), ['class' => 'form-control', 'id' => 'department_id', 'required' => 'true']) }}
+	</div>
+	<div class="input-group" style="display: inline-block; vertical-align: bottom;">
+		<label>Chọn kho</label>
+		<?php $warehouselist = Warehouse::select(['department_id', 'id', 'name'])->get(); ?>
+        <select name="warehouse_id" id="warehouse_id" class="form-control">
+            <option value="">Chọn tất cả</option>
+            @foreach ($warehouselist as $key => $value)
+                <option style="display:{{ (Input::get('department_id') != $value->department_id ) ? 'none' : 'block' }}" {{ (Input::get('warehouse_id') == $value->id ) ? 'selected' : '' }} department-id="{{ $value->department_id }}" value="{{ $value->id }}">{{ $value->name }}</option>
+            @endforeach
+        </select>
+	</div>
+	<div class="input-group" style="display: inline-block; vertical-align: bottom;">
+		<label>Thời gian từ:</label>
+		{{ Form::text('start_date', Input::get('start_date'), ['class' => 'form-control', 'id' => 'start_date', 'required' => 'true']) }}
+	</div>
+	<div class="input-group" style="display: inline-block; vertical-align: bottom;">
+		<label>Thời gian đến:</label>
+		{{ Form::text('end_date', Input::get('end_date'), ['class' => 'form-control', 'id' => 'end_date']) }}
+	</div>
+	<div class="input-group" style="display: inline-block; vertical-align: bottom;">
+		<button class="btn btn-primary" type="submit">Xem</button>
+		{{-- <input type="reset" value="Nhập lại" class="btn btn-info"> --}}
+	</div>
 {{ Form::close() }}
 
 <div class="clear clearfix"></div>
@@ -79,26 +107,137 @@ if (isset($scale_rate)) {
 // dd($scale_arr);
 ?>
 
-@if( !empty(Input::all()) )
+@if( !empty(Input::all()) && count($strorage_loss) )
 	<div class="row">
 		<div class="col-xs-12 col-sm-8 chart-box">
 			<div class="box box-success">
 				<div class="box-header with-border">
-					<h3 class="box-title">Biểu đồ nhập/xuất năm 2017</h3>
+					<h3 class="box-title">Biểu đồ nhập/xuất từ {{ date_format(date_create(Input::get('start_date')), 'm-Y') }} đến {{ date_format(date_create(Input::get('end_date')), 'm-Y') }}</h3>
 					<div class="box-tools pull-right">
 						<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
 						</button>
 					</div>
 				</div>
 				<div class="box-body">
-					<div class="chart bar">
-						<div class="unit-y pull-left">Khối lượng(tấn)</div>
-						<canvas id="barChart" style="height:230px"></canvas>
-						<div class="unit-x text-center">
-							<span class="sub"><span class="color" style="background: #d0d8dd"></span>Nhập</span>
-							<span class="sub"><span class="color" style="background: #01a758"></span>Xuất</span>
+					@if (count($scale_arr))
+						<div class="chart bar">
+							<div class="unit-y pull-left">Khối lượng(tấn)</div>
+							<canvas id="barChart" style="height:230px"></canvas>
+							<div class="unit-x text-center">
+								<span class="sub"><span class="color" style="background: #d0d8dd"></span>Nhập</span>
+								<span class="sub"><span class="color" style="background: #01a758"></span>Xuất</span>
+							</div>
 						</div>
+						<script type="text/javascript">
+							//-------------
+						    //- BAR CHART -
+						    //-------------
+						    var barChart = new Chart($("#barChart").get(0).getContext("2d"));
+						    var barChartData = {
+							    labels: [
+							    	@foreach ($scale_arr as $key => $value)
+							    		'{{ $key }}',
+							    	@endforeach
+							    ],
+							    datasets: [
+							      {
+							        label: "Nhập",
+							        fillColor: "#ccc",
+							        pointStrokeColor: "#c1c7d1",
+							        pointHighlightFill: "#fff",
+							        pointHighlightStroke: "rgba(220,220,220,1)",
+							        data: [
+							        	@foreach ($scale_arr as $key => $value)
+								    		{{ (isset($value['import'])) ? floor(array_sum($value['import'])/1000) : 0 }},
+								    	@endforeach
+							        ]
+							      },
+							      {
+							        label: "Xuất",
+							        fillColor: "#01a758",
+							        pointStrokeColor: "rgba(60,141,188,1)",
+							        pointHighlightFill: "#fff",
+							        pointHighlightStroke: "rgba(60,141,188,1)",
+							        data: [
+							        	@foreach ($scale_arr as $key => $value)
+								    		{{ (isset($value['export'])) ? floor(array_sum($value['export'])/1000) : 0 }},
+								    	@endforeach
+							        ]
+							      }
+							    ]
+							};
+						    barChart.Bar(barChartData, {
+						    	datasetFill: false,
+						    	barShowStroke: false,
+						    	barValueSpacing: 10,
+						    });
+						</script>
+					@else
+						<em>Không có dữ liệu</em>
+					@endif
+					
+				</div><!-- /.box-body -->
+			</div>
+			<div class="box box-success">
+				<div class="box-header with-border">
+					<h3 class="box-title">Biểu đồ nhập/xuất từ {{ date_format(date_create(Input::get('start_date')), 'm-Y') }} đến {{ date_format(date_create(Input::get('end_date')), 'm-Y') }}</h3>
+					<div class="box-tools pull-right">
+						<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+						</button>
 					</div>
+				</div>
+				<div class="box-body">
+					@if (count($scale_arr))
+						<div class="chart line">
+							<div class="unit-y pull-left">Khối lượng(tấn)</div>
+							<canvas id="lineChart" style="height:230px"></canvas>
+						</div>
+
+						<script type="text/javascript">
+							//-------------
+						    //- LINE CHART -
+						    //-------------
+						    var lineChart = new Chart($("#lineChart").get(0).getContext("2d"));
+						    var lineChartData = {
+						    	labels: [
+							    	@foreach ($scale_arr as $key => $value)
+							    		'{{ $key }}',
+							    	@endforeach
+							    ],
+								datasets: [{
+									label: "My First dataset",
+									fillColor: "rgba(220,220,220,0.2)",
+									strokeColor: "rgba(220,220,220,1)",
+									pointColor: "rgba(220,220,220,1)",
+									pointStrokeColor: "#fff",
+									pointHighlightFill: "#fff",
+									pointHighlightStroke: "rgba(220,220,220,1)",
+									data: [
+							        	@foreach ($scale_arr as $key => $value)
+								    		{{ (isset($value['import'])) ? floor(array_sum($value['import'])/1000) : 0 }},
+								    	@endforeach
+							        ]
+								},
+								{
+									label: "My Second dataset",
+									fillColor: "rgba(151,187,205,0.2)",
+									strokeColor: "rgba(151,187,205,1)",
+									pointColor: "rgba(151,187,205,1)",
+									pointStrokeColor: "#fff",
+									pointHighlightFill: "#fff",
+									pointHighlightStroke: "rgba(151,187,205,1)",
+									data: [
+							        	@foreach ($scale_arr as $key => $value)
+								    		{{ (isset($value['export'])) ? floor(array_sum($value['export'])/1000) : 0 }},
+								    	@endforeach
+							        ]
+								}]
+							};
+						    lineChart.Line(lineChartData, {});
+						</script>
+					@else
+						<em>Không có dữ liệu</em>
+					@endif
 				</div><!-- /.box-body -->
 			</div>
 		</div>
@@ -106,7 +245,7 @@ if (isset($scale_rate)) {
 		<div class="col-xs-12 col-sm-4 chart-box">
 			<div class="box box-success">
 				<div class="box-header with-border">
-					<h3 class="box-title">Kho dăm tại các chi nhánh</h3>
+					<h3 class="box-title">Kho {{ (!empty(Input::get('product')) && isset(Common::listNameProductAndCategory()[Input::get('product')])) ? Common::listNameProductAndCategory()[Input::get('product')] : 'nguyên liệu/sản phẩm' }} tại các chi nhánh</h3>
 					<div class="box-tools pull-right">
 						<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
 						</button>
@@ -119,12 +258,14 @@ if (isset($scale_rate)) {
 						</div>
 						<div class="col-xs-12 col-sm-5 description">
 							@foreach( $strorage_loss as $key => $value )
-								<div class="item"><span class="circle" style="border:3px solid {{ (isset($color[$key]) ? $color[$key] : '#F7464A') }}"></span>{{ $value->name }}</div>
+								@if( (int)$value->weight > 0 )
+									<div class="item"><span class="circle" style="border:3px solid {{ (isset($color[$key]) ? $color[$key] : '#F7464A') }}"></span>{{ $value->name }}</div>
+								@endif
 							@endforeach
 						</div>
 						<div class="details col-xs-12">
 							@foreach( $strorage_loss as $key => $value )
-								<div class="item">{{ $value->name }}: {{ floor($value->weight/1000) }} tấn</div>
+								<div class="item">{{ $value->name }}: {{ $value->weight/1000 }} tấn</div>
 							@endforeach
 						</div>
 					</div>
@@ -138,7 +279,7 @@ if (isset($scale_rate)) {
 			    var doughnutChartData = [
 		    		@foreach( $strorage_loss as $key => $value )
 						{
-							value: {{ floor($value->weight/1000) }},
+							value: {{ $value->weight/1000 }},
 							color:"{{ (isset($color[$key]) ? $color[$key] : '#F7464A') }}",
 							highlight: "#FF5A5E",
 							label: "{{ $value->name }}"
@@ -150,113 +291,13 @@ if (isset($scale_rate)) {
 		</div>
 
 		<div class="col-xs-12 col-sm-8 chart-box">
-			<div class="box box-success">
-				<div class="box-header with-border">
-					<h3 class="box-title">Biểu đồ nhập/xuất năm 2017</h3>
-					<div class="box-tools pull-right">
-						<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-						</button>
-					</div>
-				</div>
-				<div class="box-body">
-					<div class="chart line">
-						<div class="unit-y pull-left">Khối lượng(tấn)</div>
-						<canvas id="lineChart" style="height:230px"></canvas>
-					</div>
-				</div><!-- /.box-body -->
-			</div>
+
 		</div>
 	</div> <!-- End row -->
+
+@else
+<div class="alert alert-error">Không có dữ liệu.</div>
 @endif
-
-<script type="text/javascript">
-$(function () {
-	//-------------
-    //- BAR CHART -
-    //-------------
-    var barChart = new Chart($("#barChart").get(0).getContext("2d"));
-    var barChartData = {
-	    labels: [
-	    	@foreach ($scale_arr as $key => $value)
-	    		'{{ $key }}',
-	    	@endforeach
-	    ],
-	    datasets: [
-	      {
-	        label: "Nhập",
-	        fillColor: "#ccc",
-	        pointStrokeColor: "#c1c7d1",
-	        pointHighlightFill: "#fff",
-	        pointHighlightStroke: "rgba(220,220,220,1)",
-	        data: [
-	        	@foreach ($scale_arr as $key => $value)
-		    		{{ (isset($value['import'])) ? floor(array_sum($value['import'])/1000) : 0 }},
-		    	@endforeach
-	        ]
-	      },
-	      {
-	        label: "Xuất",
-	        fillColor: "#01a758",
-	        pointStrokeColor: "rgba(60,141,188,1)",
-	        pointHighlightFill: "#fff",
-	        pointHighlightStroke: "rgba(60,141,188,1)",
-	        data: [
-	        	@foreach ($scale_arr as $key => $value)
-		    		{{ (isset($value['export'])) ? floor(array_sum($value['export'])/1000) : 0 }},
-		    	@endforeach
-	        ]
-	      }
-	    ]
-	};
-    barChart.Bar(barChartData, {
-    	datasetFill: false,
-    	barShowStroke: false,
-    	barValueSpacing: 10,
-    });
-
-	//-------------
-    //- LINE CHART -
-    //-------------
-    var lineChart = new Chart($("#lineChart").get(0).getContext("2d"));
-    var lineChartData = {
-    	labels: [
-	    	@foreach ($scale_arr as $key => $value)
-	    		'{{ $key }}',
-	    	@endforeach
-	    ],
-		datasets: [{
-			label: "My First dataset",
-			fillColor: "rgba(220,220,220,0.2)",
-			strokeColor: "rgba(220,220,220,1)",
-			pointColor: "rgba(220,220,220,1)",
-			pointStrokeColor: "#fff",
-			pointHighlightFill: "#fff",
-			pointHighlightStroke: "rgba(220,220,220,1)",
-			data: [
-	        	@foreach ($scale_arr as $key => $value)
-		    		{{ (isset($value['import'])) ? floor(array_sum($value['import'])/1000) : 0 }},
-		    	@endforeach
-	        ]
-		},
-		{
-			label: "My Second dataset",
-			fillColor: "rgba(151,187,205,0.2)",
-			strokeColor: "rgba(151,187,205,1)",
-			pointColor: "rgba(151,187,205,1)",
-			pointStrokeColor: "#fff",
-			pointHighlightFill: "#fff",
-			pointHighlightStroke: "rgba(151,187,205,1)",
-			data: [
-	        	@foreach ($scale_arr as $key => $value)
-		    		{{ (isset($value['export'])) ? floor(array_sum($value['export'])/1000) : 0 }},
-		    	@endforeach
-	        ]
-		}]
-	};
-    lineChart.Line(lineChartData, {});
-
-});
-</script>
 
 <style type="text/css">
 .statistic-list .item{
