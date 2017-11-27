@@ -265,7 +265,8 @@ class ApiController extends BaseController {
             $weight = 0;
         }
         $response['data'] = $weight;
-        $response['data_format'] = numberFormat($weight, 'tan');
+        // $response['data_format'] = numberFormat($weight);
+        $response['data_format'] = number_format($weight);
         return Response::json($response);
     }
 
@@ -279,7 +280,7 @@ class ApiController extends BaseController {
     public function getResultProductionAuto($productCategoryId, $productId, $weight, $warehouseId, $warehouseOutputId)
     {
         $response['code'] = 200;
-        $response['data'] = calculatorProductAuto($productCategoryId, $productId, $weight, $warehouseId, $warehouseOutputId);
+        $response['data'] = number_format(calculatorProductAuto($productCategoryId, $productId, $weight, $warehouseId, $warehouseOutputId));
         return Response::json($response);
     }
     public function installKcs($appId, $code)

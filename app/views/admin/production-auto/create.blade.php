@@ -71,7 +71,7 @@
             </div>
 
             <div class="form-group">
-              <label for="username">Khối lượng trong kho</label>
+              <label for="username">Khối lượng trong kho(kg)</label>
               <div class="row">
                 <div class="col-sm-6 production-auto_weight_stock">
                 </div>
@@ -82,7 +82,7 @@
             </div>
 
             <div class="form-group">
-              <label for="username">Khối lượng nguyên liệu</label>
+              <label for="username">Khối lượng nguyên liệu(kg)</label>
               <div class="row">
                 <div class="col-sm-6">
                   {{ Form::text('product_category_weight', null,  array('class' => 'form-control', 'id' => 'product_category_weight'))}}
