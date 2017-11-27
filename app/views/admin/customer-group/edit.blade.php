@@ -6,15 +6,12 @@
 
 @section('content')
 
-@if(Admin::isAdmin())
 <div class="row margin-bottom">
     <div class="col-xs-12">
         <a href="{{ action('CustomerGroupController@index') }}" class="btn btn-success">Danh sách nhóm khách hàng</a>
         <a href="{{ action('CustomerGroupController@create') }}" class="btn btn-primary">Thêm nhóm khách hàng</a>
     </div>
 </div>
-@endif
-
 <div class="row">
     <div class="col-xs-12">
         <div class="box box-primary">

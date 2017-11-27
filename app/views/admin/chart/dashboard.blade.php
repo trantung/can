@@ -45,7 +45,6 @@
 		{{-- <input type="reset" value="Nhập lại" class="btn btn-info"> --}}
 	</div>
 {{ Form::close() }}
-
 <div class="clear clearfix"></div>
 
 {{-- <div class="statistic-list">
@@ -106,7 +105,6 @@ if (isset($scale_rate)) {
 
 // dd($scale_arr);
 ?>
-
 @if( !empty(Input::all()) && count($strorage_loss) )
 	<div class="row">
 		<div class="col-xs-12 col-sm-8 chart-box">
@@ -294,7 +292,7 @@ if (isset($scale_rate)) {
 
 		</div>
 	</div> <!-- End row -->
-
+	
 @else
 <div class="alert alert-error">Không có dữ liệu.</div>
 @endif
