@@ -43,8 +43,8 @@
                   <td>{{ $value->customer_name }}</td>
                   <td>{{ getNameWarehouse($value->warehouse_id) }}</td>
                   <td>{{ getNameCompany($value->department_id) }}</td>
-                  <td>{{ $value->package_weight }}</td>
-                  <td>{{ getLuongTruCan($value->number_ticket) }}</td>
+                  <td>{{ number_format($value->package_weight) }}</td>
+                  <td>{{ number_format(getLuongTruCan($value->number_ticket)) }}</td>
                   <td>{{ Common::getNameKieuCan($value->transfer_type) }}</td>
                   <td>{{ Common::getNhanviencanKcs($value->id) }}</td>
                   <td>{{ Common::getNhanviencanKcs($value->id, 'KCS') }}</td>
