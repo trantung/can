@@ -239,6 +239,7 @@ class ScaleStationController extends BaseCategoryController {
         if ($type == 'campaign') {
             //get all campaign
             $data = ScaleKCS::where('campaign_code', '!=', '')
+                ->orderBy('id', 'desc')
                 ->groupBy('campaign_code')
                 ->get();
             return View::make('admin.scale-station.statistic')->with(compact('data', 'type'));
