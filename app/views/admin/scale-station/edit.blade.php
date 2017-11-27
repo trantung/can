@@ -6,14 +6,12 @@
 
 @section('content')
 @include('admin.common.structure_company_css')
-@if(Admin::isAdmin())
 <div class="row margin-bottom">
     <div class="col-xs-12">
         <a href="{{ action('ScaleStationController@index') }}" class="btn btn-success">Danh sách</a>
         <a href="{{ action('ScaleStationController@create') }}" class="btn btn-primary">Thêm</a>
     </div>
 </div>
-@endif
 
 <div class="row">
     <div class="col-xs-12">
