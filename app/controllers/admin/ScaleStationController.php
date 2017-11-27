@@ -433,7 +433,6 @@ class ScaleStationController extends BaseCategoryController {
             } else {
                 $logKcs = $kcs;
             }
-            dd($logKcs);
             $data = [
                 'company' => $company,
                 'department' => $department,
