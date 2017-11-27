@@ -601,9 +601,7 @@ class ScaleStationController extends BaseCategoryController {
             'tên chiến dịch', 
             'Nhóm khách hàng', 
             'Khách',
-            'Nhóm partner', 
-            'Partner', 
-            'Kho', 
+            'Kho',
             'Chi nhánh', 
             'Khối lượng hàng', 
             'Lượng trừ',
@@ -612,6 +610,7 @@ class ScaleStationController extends BaseCategoryController {
         $list = ScaleKCS::where('campaign_code', '!=', '')
             ->groupBy('campaign_code')
             ->get();
+        dd(111);
         Excel::create('Filename', function($excel) use($array1, $list) {
             $excel->sheet('Sheetname', function($sheet) use($array1, $list) {
                 $sheet->row(1, $array1);
@@ -622,8 +621,6 @@ class ScaleStationController extends BaseCategoryController {
                         $value->campaign_name,
                         getCustomerGroup($value),
                         $value->customer_name,
-                        getPartnerGroup(),
-                        $value->doi_tac_ten,
                         getNameWarehouse($value->warehouse_id),
                         getNameCompany($value->department_id),
                         getWeightTotalCampagin($value->campaign_code),
