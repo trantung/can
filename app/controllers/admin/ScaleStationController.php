@@ -369,7 +369,6 @@ class ScaleStationController extends BaseCategoryController {
             $scaleList = $ob->distinct('number_ticket')->get();
             $scale = $ob->first();
             if ($scale) {
-                dd(111);
                 $modelName = CommonNormal::getNameProduct($scale->category_id);
                 $product = $modelName::find(CommonNormal::getProductCategoryId($scale->category_id)[0]);
                 if (!$product) {
@@ -424,6 +423,7 @@ class ScaleStationController extends BaseCategoryController {
             if (!$ob) {
                 dd('Không có mã cân lẻ này');
             }
+            dd(333);
             $kcs = ScaleKCS::where('number_ticket', $numberTicket)
                 ->where('type', 'KCS')
                 ->orderBy('id', 'desc')
