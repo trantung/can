@@ -610,7 +610,6 @@ class ScaleStationController extends BaseCategoryController {
         $list = ScaleKCS::where('campaign_code', '!=', '')
             ->groupBy('campaign_code')
             ->get();
-        dd(111);
         Excel::create('Filename', function($excel) use($array1, $list) {
             $excel->sheet('Sheetname', function($sheet) use($array1, $list) {
                 $sheet->row(1, $array1);
@@ -664,6 +663,7 @@ class ScaleStationController extends BaseCategoryController {
             'Tỷ lệ tạp chất (%)',
             'Độ khô(%)',
         ];
+        dd(123);
         Excel::create('Filename', function($excel) use($array1, $list) {
             $excel->sheet('Sheetname', function($sheet) use($array1, $list) {
                 $sheet->row(1, $array1);
