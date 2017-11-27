@@ -423,7 +423,6 @@ class ScaleStationController extends BaseCategoryController {
             if (!$ob) {
                 dd('Không có mã cân lẻ này');
             }
-            dd(333);
             $kcs = ScaleKCS::where('number_ticket', $numberTicket)
                 ->where('type', 'KCS')
                 ->orderBy('id', 'desc')
@@ -434,6 +433,7 @@ class ScaleStationController extends BaseCategoryController {
             } else {
                 $logKcs = $kcs;
             }
+            dd($logKcs);
             $data = [
                 'company' => $company,
                 'department' => $department,
