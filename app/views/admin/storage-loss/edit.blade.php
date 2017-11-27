@@ -6,14 +6,12 @@
 
 @section('content')
 
-@if(Admin::isAdmin())
 <div class="row margin-bottom">
     <div class="col-xs-12">
         <a href="{{ action('StorageLossController@index') }}" class="btn btn-success">Danh sách</a>
         <a href="{{ action('StorageLossController@create') }}" class="btn btn-primary">Thêm</a>
     </div>
 </div>
-@endif
 
 <div class="row">
     <div class="col-xs-12">

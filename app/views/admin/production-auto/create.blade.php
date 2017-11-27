@@ -269,4 +269,3 @@
   }
 </script>
 @stop
-@endif

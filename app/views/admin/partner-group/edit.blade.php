@@ -6,14 +6,12 @@
 
 @section('content')
 
-@if(Admin::isAdmin())
 <div class="row margin-bottom">
     <div class="col-xs-12">
         <a href="{{ action('PartnerGroupController@index') }}" class="btn btn-success">Danh sách đối tác</a>
         <a href="{{ action('PartnerGroupController@create') }}" class="btn btn-primary">Thêm đối tác</a>
     </div>
 </div>
-@endif
 
 <div class="row">
     <div class="col-xs-12">

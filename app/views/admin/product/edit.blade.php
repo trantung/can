@@ -6,13 +6,11 @@
 
 @section('content')
 
-@if(Admin::isAdmin())
 <div class="row margin-bottom">
     <div class="col-xs-12">
         <a href="{{ action('ProductController@index') }}" class="btn btn-success">Danh sách</a>
     </div>
 </div>
-@endif
 
 <div class="row">
     <div class="col-xs-12">

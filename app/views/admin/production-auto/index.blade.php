@@ -76,6 +76,4 @@
             {{ $data->appends(Request::except('page'))->links() }}
         </div>
     </div>
-
 @stop
-@endif
