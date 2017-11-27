@@ -43,8 +43,8 @@
                   <td>{{ $value->customer_name }}</td>
                   <td>{{ getNameWarehouse($value->warehouse_id) }}</td>
                   <td>{{ getNameCompany($value->department_id) }}</td>
-                  <td>{{ getWeightTotalCampagin($value->campaign_code) }}</td>
-                  <td>{{ getLuongTruCampaign($value->campaign_code) }}</td>
+                  <td>{{ number_format(getWeightTotalCampagin($value->campaign_code)) }}</td>
+                  <td>{{ number_format(getLuongTruCampaign($value->campaign_code)) }}</td>
                   <td>{{ getSochuyen($value->campaign_code) }}</td>
                   <td>
                     <a href="{{ action('ScaleStationController@showDetail', $value->campaign_code) }}" class="btn btn-primary">Xem</a>
