@@ -188,10 +188,54 @@
             @foreach ($log as $key => $value)
               <tr>
                 <td>{{ $key + 1 }}</td>
-                
+                @if($value)
+                <td>{{ $value->number_car }}</td>
+                <td>{{ $value->number_ticket }}</td>
+                <td>{{ $value->created_at }}</td>
+                <td>{{ $value->do_kho }}</td>
+                <td>{{ $value->ty_le_mun }}</td>
+                <td>{{ $value->ty_le_qua_co }}</td>
+                <td>{{ $value->ty_le_vo }}</td>
+                <td>{{ $value->package_weight }}</td>
+                @else
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                @endif
               </tr>
             @endforeach
-           
+            <?php
+              $totalDoKho = 0;
+              $totalMun = 0;
+              $totalQuaCo = 0;
+              $totalVo = 0;
+              $totalLuongHang = 0;
+              $howMany = count($log);
+              foreach ($log as $key => $value) {
+                if ($value) {
+                  $totalDoKho = $totalDoKho + $value->do_kho;
+                  $totalMun = $totalMun + $value->ty_le_mun;
+                  $totalQuaCo = $totalQuaCo + $value->ty_le_qua_co;
+                  $totalVo = $totalVo + $value->ty_le_vo;
+                  $totalLuongHang = $totalLuongHang + $value->package_weight;
+                } 
+              }
+              ?>
+            @if ($howMany > 0)
+              <tr>
+                <td colspan="4">KẾT QUẢ TRUNG BÌNH</td>
+                <td>{{ round($totalDoKho / $howMany, 2) }}</td>
+                <td>{{ round($totalMun / $howMany, 2) }}</td>
+                <td>{{ round($totalQuaCo / $howMany, 2) }}</td>
+                <td>{{ round($totalVo / $howMany, 2) }}</td>
+                <td>{{ round($totalLuongHang / $howMany, 2) }}</td>
+              </tr>
+            @endif
           </tbody>
         </table>
         <table width="100%" border="0" style="font-size: 12px">
